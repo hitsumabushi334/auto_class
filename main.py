@@ -9,7 +9,7 @@ import logging  # logging モジュールをインポート
 import traceback  # スタックトレース取得のため
 
 import win32gui  # ウィンドウ操作のため追加
-from google import genai  # Gemini APIのため追加
+import google.generativeai as genai  # Gemini APIのため追加
 from docx import Document  # Wordファイル生成のため追加
 from docx.shared import Inches  # Wordファイル生成のため追加 (必要に応じて)
 import sounddevice as sd  # 音声録音のため追加

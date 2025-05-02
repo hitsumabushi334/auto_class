@@ -1,0 +1,53 @@
+2025-05-02 17:16:47,738 - WARNING - MainThread - 環境変数 GEMINI_API_KEY が設定されていません。ノート作成機能は利用できません。
+2025-05-02 17:18:34,534 - INFO - MainThread - アプリケーションを初期化しました。
+2025-05-02 17:18:34,535 - INFO - MainThread - ウィンドウリストを更新します。
+2025-05-02 17:18:34,560 - INFO - MainThread - 12 個のウィンドウが見つかりました。
+2025-05-02 17:18:40,080 - INFO - MainThread - ウィンドウが選択されました: _SoftwareUpdateNotificationService_Window (HWND: 67294) (HWND: 67294)
+2025-05-02 17:18:41,149 - INFO - MainThread - ウィンドウが選択されました: pip install -q -U - Google Chrome (HWND: 263202) (HWND: 263202)
+2025-05-02 17:18:50,641 - INFO - MainThread - ウィンドウが選択されました: ae4c01802_0003.jpeg (2082×1546) - Google Chrome (HWND: 2101356) (HWND: 2101356)
+2025-05-02 17:18:52,613 - INFO - MainThread - フォルダ名が未入力のため、デフォルト名を設定: capture_20250502_171852
+2025-05-02 17:18:52,614 - INFO - MainThread - 保存先フォルダの絶対パス: C:\Users\石田翔大\auto_class\capture_20250502_171852
+2025-05-02 17:18:52,614 - INFO - MainThread - フォルダが存在しないため作成します: C:\Users\石田翔大\auto_class\capture_20250502_171852
+2025-05-02 17:18:52,615 - INFO - MainThread - フォルダを作成しました: C:\Users\石田翔大\auto_class\capture_20250502_171852
+2025-05-02 17:18:52,616 - INFO - ScreenshotCaptureThread - スクリーンショットキャプチャループを開始します。
+2025-05-02 17:18:52,747 - INFO - MainThread - スクリーンショットキャプチャを開始しました。保存先: C:\Users\石田翔大\auto_class\capture_20250502_171852
+2025-05-02 17:18:52,748 - INFO - MainThread - 録画を開始します。対象ウィンドウハンドル: 2101356
+2025-05-02 17:18:52,831 - INFO - ScreenshotCaptureThread - 最初のスクリーンショット画像を取得しました。保存します。
+2025-05-02 17:18:52,847 - ERROR - ScreenshotCaptureThread - エラー (保存): cv2.imwrite が False を返しました。ファイル書き込みに失敗した可能性があります。
+ - 保存試行パス: C:\Users\石田翔大\auto_class\capture_20250502_171852\screenshot_20250502_171852_832.png
+ - 画像サイズ: (1080, 1920, 3)
+ - 考えられる原因: 書き込み権限不足、ディスク容量不足、パス名の問題、画像データ破損など
+2025-05-02 17:19:05,513 - INFO - ScreenshotCaptureThread - 新しいスクリーンショット画像または類似していない画像を検出しました。保存します。
+2025-05-02 17:19:05,516 - ERROR - ScreenshotCaptureThread - エラー (保存): cv2.imwrite が False を返しました。ファイル書き込みに失敗した可能性があります。
+ - 保存試行パス: C:\Users\石田翔大\auto_class\capture_20250502_171852\screenshot_20250502_171905_515.png
+ - 画像サイズ: (1080, 1920, 3)
+ - 考えられる原因: 書き込み権限不足、ディスク容量不足、パス名の問題、画像データ破損など
+2025-05-02 17:19:07,617 - INFO - ScreenshotCaptureThread - 新しいスクリーンショット画像または類似していない画像を検出しました。保存します。
+2025-05-02 17:19:07,618 - ERROR - ScreenshotCaptureThread - エラー (保存): cv2.imwrite が False を返しました。ファイル書き込みに失敗した可能性があります。
+ - 保存試行パス: C:\Users\石田翔大\auto_class\capture_20250502_171852\screenshot_20250502_171907_618.png
+ - 画像サイズ: (1080, 1920, 3)
+ - 考えられる原因: 書き込み権限不足、ディスク容量不足、パス名の問題、画像データ破損など
+2025-05-02 17:19:09,701 - INFO - ScreenshotCaptureThread - 新しいスクリーンショット画像または類似していない画像を検出しました。保存します。
+2025-05-02 17:19:09,702 - ERROR - ScreenshotCaptureThread - エラー (保存): cv2.imwrite が False を返しました。ファイル書き込みに失敗した可能性があります。
+ - 保存試行パス: C:\Users\石田翔大\auto_class\capture_20250502_171852\screenshot_20250502_171909_702.png
+ - 画像サイズ: (1080, 1920, 3)
+ - 考えられる原因: 書き込み権限不足、ディスク容量不足、パス名の問題、画像データ破損など
+2025-05-02 17:19:13,870 - INFO - ScreenshotCaptureThread - 新しいスクリーンショット画像または類似していない画像を検出しました。保存します。
+2025-05-02 17:19:13,871 - ERROR - ScreenshotCaptureThread - エラー (保存): cv2.imwrite が False を返しました。ファイル書き込みに失敗した可能性があります。
+ - 保存試行パス: C:\Users\石田翔大\auto_class\capture_20250502_171852\screenshot_20250502_171913_871.png
+ - 画像サイズ: (1080, 1920, 3)
+ - 考えられる原因: 書き込み権限不足、ディスク容量不足、パス名の問題、画像データ破損など
+2025-05-02 17:19:14,123 - WARNING - MainThread - 既にタスクが実行中です。
+2025-05-02 17:19:15,204 - INFO - MainThread - ウィンドウが選択されました: タスクリスト - Obsidian- - Obsidian v1.8.10 (HWND: 1511898) (HWND: 1511898)
+2025-05-02 17:19:26,383 - INFO - ScreenshotCaptureThread - 新しいスクリーンショット画像または類似していない画像を検出しました。保存します。
+2025-05-02 17:19:26,384 - ERROR - ScreenshotCaptureThread - エラー (保存): cv2.imwrite が False を返しました。ファイル書き込みに失敗した可能性があります。
+ - 保存試行パス: C:\Users\石田翔大\auto_class\capture_20250502_171852\screenshot_20250502_171926_384.png
+ - 画像サイズ: (1080, 1920, 3)
+ - 考えられる原因: 書き込み権限不足、ディスク容量不足、パス名の問題、画像データ破損など
+2025-05-02 17:19:26,679 - INFO - MainThread - ユーザー操作により終了します...
+2025-05-02 17:19:26,680 - INFO - MainThread - すべてのタスクの停止を試みます...
+2025-05-02 17:19:26,680 - INFO - MainThread - スクリーンショットキャプチャ停止処理を開始します。
+2025-05-02 17:19:26,680 - INFO - MainThread - スクリーンショットキャプチャループの終了を待っています...
+2025-05-02 17:19:26,687 - INFO - ScreenshotCaptureThread - スクリーンショットキャプチャループが終了しました。
+2025-05-02 17:19:26,694 - INFO - MainThread - すべてのタスクを停止しました。
+2025-05-02 17:19:26,822 - INFO - MainThread - アプリケーションを終了しました。
