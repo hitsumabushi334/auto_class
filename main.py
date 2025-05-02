@@ -9,6 +9,12 @@ import logging  # logging モジュールをインポート
 import traceback  # スタックトレース取得のため
 
 import win32gui  # ウィンドウ操作のため追加
+from google import genai  # Gemini APIのため追加
+from docx import Document  # Wordファイル生成のため追加
+from docx.shared import Inches  # Wordファイル生成のため追加 (必要に応じて)
+import sounddevice as sd  # 音声録音のため追加
+import queue  # 音声データキューのため追加
+import ffmpeg  # 動画エンコードのため追加
 
 import mss  # 画面キャプチャのため追加
 import cv2
@@ -41,7 +47,9 @@ class SlideCaptureApp:
         self.is_recording = False  # 録画中フラグ
         self.screenshot_thread = None
         self.recording_thread = None
+        self.audio_recording_thread = None  # 音声録音スレッド
         self.recorded_frames = []  # 録画フレームを一時保存するリスト
+        self.audio_queue = queue.Queue()  # 音声データを一時保存するキュー
         self.last_screenshot_image = None
         self.screenshot_saved_count = 0
         self.last_saved_screenshot_filename = ""
@@ -53,6 +61,33 @@ class SlideCaptureApp:
         self.error_occurred_in_recording_thread = False
         self.note_creation_status = tk.StringVar(value="")  # ノート作成ステータス
         self.note_result_message = tk.StringVar(value="")  # ノート作成結果
+        self.gemini_client = None  # Gemini API クライアント
+
+        # --- Gemini API 設定 ---
+        try:
+            api_key = os.environ.get("GEMINI_API_KEY")
+            if not api_key:
+                logger.warning(
+                    "環境変数 GEMINI_API_KEY が設定されていません。ノート作成機能は利用できません。"
+                )
+                messagebox.showwarning(
+                    "APIキー未設定",
+                    "環境変数 GEMINI_API_KEY が設定されていません。\nノート作成機能は利用できません。",
+                )
+            else:
+                genai.configure(api_key=api_key)
+                # 動画を扱えるモデルを指定 (例: gemini-1.5-pro-latest)
+                # 注意: モデル名や利用可否は変更される可能性があるため、ドキュメントを確認すること
+                # self.gemini_model = genai.GenerativeModel('gemini-1.5-pro-latest') # 後で使う
+                logger.info("Gemini API クライアントを設定しました。")
+                self.gemini_client = (
+                    True  # 設定成功フラグ (後でモデルオブジェクトなどに変更)
+                )
+        except Exception as e:
+            logger.exception("Gemini API の設定中にエラーが発生しました。")
+            messagebox.showerror(
+                "API設定エラー", f"Gemini API の設定に失敗しました:\n{e}"
+            )
 
         # --- UI要素の作成 ---
 
@@ -271,8 +306,24 @@ class SlideCaptureApp:
             return
 
         logger.info(f"録画を開始します。対象ウィンドウハンドル: {hwnd}")
-        # ここで選択されたウィンドウハンドル(hwnd)を使い、録画スレッドを開始する（未実装）
-        self.is_recording = True
+        # 録画スレッドを開始
+        self.recorded_frames = []  # フレームリストを初期化
+        self.recording_thread = threading.Thread(
+            target=self.recording_loop,
+            args=(hwnd,),
+            name="RecordingThread",
+            daemon=True,
+        )
+        self.is_recording = True  # is_recording は先に True にする
+        self.recording_thread.start()
+
+        # 音声録音スレッドを開始
+        self.audio_queue = queue.Queue()  # キューを初期化
+        self.audio_recording_thread = threading.Thread(
+            target=self.audio_recording_loop, name="AudioRecordingThread", daemon=True
+        )
+        self.audio_recording_thread.start()
+
         # self.start_recording_button.config(state=tk.DISABLED) # 個別ボタン削除
         # self.stop_recording_button.config(state=tk.NORMAL) # 個別ボタン削除
         # ボタン状態は start_tasks / stop_all_tasks で制御
@@ -284,34 +335,194 @@ class SlideCaptureApp:
         if not self.is_recording:
             return
 
-        logger.info("録画停止処理を開始します。（未実装）")
-        self.is_recording = False
-        # ここで録画スレッドを停止し、動画ファイルを処理する（未実装）
+        logger.info("録画停止処理を開始します。")
+        self.is_recording = False  # ループ停止フラグを立てる
+        video_filepath = None  # 動画ファイルパス（仮）
+
+        # スレッドが終了するのを少し待つ
+        if self.recording_thread and self.recording_thread.is_alive():
+            logger.info("録画ループの終了を待っています...")
+            self.recording_thread.join(timeout=2.0)  # 少し待つ
+            if self.recording_thread.is_alive():
+                logger.warning("警告: 録画スレッドが時間内に終了しませんでした。")
+            else:
+                logger.info("録画ループが正常に終了しました。")
+
+        # 音声録音スレッドも停止させる
+        if self.audio_recording_thread and self.audio_recording_thread.is_alive():
+            logger.info("音声録音ループの終了を待っています...")
+            # is_recording フラグでループが止まるはずなので、joinで待つ
+            self.audio_recording_thread.join(timeout=1.0)
+            if self.audio_recording_thread.is_alive():
+                logger.warning("警告: 音声録音スレッドが時間内に終了しませんでした。")
+            else:
+                logger.info("音声録音ループが正常に終了しました。")
+
+        # フレームと音声データがあれば動画を保存
+        if self.recorded_frames and not self.audio_queue.empty():
+            try:
+                # --- 動画ファイルパス生成 ---
+                timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+                video_filename = f"recording_{timestamp}.mp4"
+                if hasattr(self, "capture_save_path") and self.capture_save_path:
+                    video_filepath = os.path.join(
+                        self.capture_save_path, video_filename
+                    )
+                    self.last_saved_video_filename = video_filename  # ステータス表示用
+                    logger.info(f"動画ファイルパス: {video_filepath}")
+
+                    # --- 動画保存処理 ---
+                    self._save_video_with_audio(video_filepath)
+
+                else:
+                    logger.error(
+                        "保存先フォルダパス(capture_save_path)が設定されていません。"
+                    )
+                    video_filepath = None  # 保存失敗
+
+            except Exception as e:
+                logger.exception("動画の保存中にエラーが発生しました。")
+                messagebox.showerror(
+                    "動画保存エラー", f"動画の保存中にエラーが発生しました:\n{e}"
+                )
+                video_filepath = None  # 保存失敗
+        elif not self.recorded_frames:
+            logger.warning(
+                "録画フレームが存在しないため、動画ファイルは保存されません。"
+            )
+            video_filepath = None
+        elif self.audio_queue.empty():
+            logger.warning("音声データが存在しないため、動画ファイルは保存されません。")
+            video_filepath = None
+
+            # 仮のファイルパスを設定 # この部分は動画保存処理に移動
+            # if self.recorded_frames: # フレームがあれば仮のパスを設定
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        video_filename = f"recording_{timestamp}.mp4"  # 仮のファイル名
+        # capture_save_path が設定されているか確認
+        if hasattr(self, "capture_save_path") and self.capture_save_path:
+            video_filepath = os.path.join(self.capture_save_path, video_filename)
+            self.last_saved_video_filename = video_filename  # ステータス表示用
+            logger.info(f"仮の動画ファイルパス: {video_filepath}")
+            # ここで実際に動画を保存する処理が必要 (ffmpeg-pythonなど)
+        else:
+            logger.error("保存先フォルダパス(capture_save_path)が設定されていません。")
+
         # self.start_recording_button.config(state=tk.NORMAL) # 個別ボタン削除
         # self.stop_recording_button.config(state=tk.DISABLED) # 個別ボタン削除
         # ボタン状態は stop_all_tasks で制御
         self.update_recording_status()  # 最終ステータス表示
-        # 録画停止時にノート作成を開始
-        self.start_note_creation()  # ノート作成は録画停止時にトリガー
 
-    def start_note_creation(self):
-        logger.info("ノート作成処理（未実装）")
+        # 録画停止時にノート作成を開始 (動画ファイルパスがあれば)
+        if video_filepath and self.gemini_client:  # APIクライアント設定済みかも確認
+            self.start_note_creation(video_filepath)  # 動画ファイルパスを渡す
+        elif not self.gemini_client:
+            logger.warning(
+                "Gemini API クライアントが未設定のため、ノート作成をスキップします。"
+            )
+        elif not video_filepath:
+            logger.warning("動画ファイルパスがないため、ノート作成をスキップします。")
+
+    def start_note_creation(self, video_filepath):  # 引数に video_filepath を追加
+        """指定された動画ファイルパスでノート作成処理を開始する"""
+        logger.info(f"ノート作成処理を開始します。対象動画: {video_filepath}")
         self.note_creation_status.set("ノート作成中...")
         self.note_result_message.set("")
-        # ここで Gemini API 連携と Word ファイル生成を行うスレッドを開始する
-        # 仮の完了処理
-        self.root.after(
-            3000, self.finish_note_creation, True, "ノート作成完了: result.docx"
-        )
 
-    def finish_note_creation(self, success, message):
-        logger.info(f"ノート作成完了: success={success}, message={message}")
+        # ここで Gemini API 連携と Word ファイル生成を行うスレッドを開始する (未実装)
+        # --- 仮のデータと完了処理 ---
+        # 実際のAPI呼び出しは別スレッドで行うべき
+        def dummy_api_call_and_word_gen():
+            logger.info("ダミーAPI呼び出しとWord生成を開始します...")
+            time.sleep(3)  # 処理時間をシミュレート
+            # 仮のAPI応答データ
+            dummy_result = {
+                "summary": "これは録画内容のダミー要約です。",
+                "keywords": ["キーワード1", "キーワード2", "ダミー"],
+                "topics": {
+                    "最初のトピック": "これが最初の重要な部分です。",
+                    "次のトピック": "これが次の重要な部分です。\n複数行も可能です。",
+                },
+            }
+            # 完了処理をメインスレッドで実行するために `after` を使用
+            self.root.after(
+                0, self.finish_note_creation, True, dummy_result, video_filepath
+            )
+            # エラーの場合の例:
+            # error_result = {"error": "APIリクエストに失敗しました"}
+            # self.root.after(0, self.finish_note_creation, False, error_result, video_filepath)
+
+        # ダミー処理を別スレッドで実行
+        note_thread = threading.Thread(target=dummy_api_call_and_word_gen, daemon=True)
+        note_thread.start()
+
+    def finish_note_creation(
+        self, success, result_data, video_filepath
+    ):  # 引数に result_data と video_filepath を追加
+        """ノート作成処理の完了時の処理。Wordファイルを生成・保存する"""
         if success:
-            self.note_creation_status.set("ノート作成完了")
-            self.note_result_message.set(f"保存先: {message}")
+            try:
+                # --- Wordファイル生成 ---
+                document = Document()
+                document.add_heading("録画ノート", 0)
+
+                # result_data はAPIからの応答を想定した辞書型とする (仮)
+                summary = result_data.get("summary", "要約の取得に失敗しました。")
+                keywords = result_data.get("keywords", [])
+                topics = result_data.get(
+                    "topics", {}
+                )  # 例: {"トピック1": "重要部分1", "トピック2": "重要部分2"}
+
+                document.add_heading("要約", level=1)
+                document.add_paragraph(summary)
+
+                document.add_heading("キーワード", level=1)
+                if keywords:
+                    # 箇条書きでキーワードを追加
+                    for keyword in keywords:
+                        document.add_paragraph(keyword, style="List Bullet")
+                else:
+                    document.add_paragraph("キーワードが見つかりませんでした。")
+
+                document.add_heading("トピック別重要部分", level=1)
+                if topics:
+                    for topic, content in topics.items():
+                        document.add_heading(topic, level=2)
+                        document.add_paragraph(content)
+                else:
+                    document.add_paragraph("トピックが見つかりませんでした。")
+
+                # --- ファイル保存 ---
+                base_filename = os.path.splitext(os.path.basename(video_filepath))[0]
+                note_filename = f"{base_filename}_note.docx"
+                note_filepath = os.path.join(
+                    os.path.dirname(video_filepath), note_filename
+                )
+
+                document.save(note_filepath)
+                logger.info(f"ノートをWordファイルとして保存しました: {note_filepath}")
+
+                # --- UI更新 ---
+                self.note_creation_status.set("ノート作成完了")
+                self.note_result_message.set(
+                    f"保存先: {note_filename}"
+                )  # ファイル名のみ表示
+
+            except Exception as e:
+                logger.exception(
+                    "Wordファイルの生成または保存中にエラーが発生しました。"
+                )
+                self.note_creation_status.set("ノート作成エラー")
+                self.note_result_message.set(
+                    f"エラー: Wordファイルの処理中にエラーが発生しました。\n詳細はログを確認してください。"
+                )
         else:
+            # APIからのエラーメッセージを表示する場合
             self.note_creation_status.set("ノート作成エラー")
-            self.note_result_message.set(f"エラー: {message}")
+            # result_data がエラーメッセージを含む想定
+            error_message = result_data.get("error", "不明なエラー")
+            self.note_result_message.set(f"エラー: {error_message}")
+            logger.error(f"ノート作成APIエラー: {error_message}")
 
     def stop_all_tasks(self):
         """実行中の全てのタスク（スクリーンショット、録画）を停止する"""
