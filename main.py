@@ -12,9 +12,16 @@ import win32gui  # ウィンドウ操作のため追加
 import google.generativeai as genai  # Gemini APIのため追加
 from docx import Document  # Wordファイル生成のため追加
 from docx.shared import Inches  # Wordファイル生成のため追加 (必要に応じて)
-import sounddevice as sd  # 音声録音のため追加
+
+# import sounddevice as sd # sounddevice を削除
 import queue  # 音声データキューのため追加
-import ffmpeg  # 動画エンコードのため追加
+
+# import pyaudio  # PyAudio を削除
+import soundcard as sc  # SoundCard を追加
+
+# import ffmpeg  # ffmpeg-python は削除
+import moviepy.editor as mpe  # MoviePy を追加
+from moviepy.audio.AudioClip import AudioArrayClip  # AudioArrayClip を直接インポート
 
 import mss  # 画面キャプチャのため追加
 import cv2
@@ -62,6 +69,8 @@ class SlideCaptureApp:
         self.note_creation_status = tk.StringVar(value="")  # ノート作成ステータス
         self.note_result_message = tk.StringVar(value="")  # ノート作成結果
         self.gemini_client = None  # Gemini API クライアント
+        self.audio_sample_rate = None  # SoundCard で取得したサンプルレートを保存
+        self.audio_channels = None  # SoundCard で取得したチャンネル数を保存
 
         # --- Gemini API 設定 ---
         try:
@@ -330,626 +339,892 @@ class SlideCaptureApp:
         self.recording_start_time = time.time()
         self.update_recording_status()  # ステータス更新開始
 
+    def recording_loop(self, hwnd):
+        """指定されたウィンドウのフレームを1FPSで録画するループ処理"""
+        logger.info(f"録画ループを開始します。対象ウィンドウハンドル: {hwnd}")
+
+        try:
+            # mssのスクリーンショット用オブジェクト
+            sct = mss.mss()
+
+            # ウィンドウの位置とサイズを取得
+            try:
+                window_rect = win32gui.GetWindowRect(hwnd)
+                left, top, right, bottom = window_rect
+                width = right - left
+                height = bottom - top
+                logger.info(
+                    f"対象ウィンドウの位置とサイズ: ({left}, {top}, {width}, {height})"
+                )
+
+                # ウィンドウ領域の定義
+                monitor = {"left": left, "top": top, "width": width, "height": height}
+            except Exception as e:
+                logger.exception(f"ウィンドウ情報の取得に失敗しました: {e}")
+                self.error_occurred_in_recording_thread = True
+                return
+
+            # 録画開始時刻を記録
+            start_time = time.time()
+            frame_count = 0
+
+            while self.is_recording:
+                try:
+                    # 現在のフレーム時刻
+                    current_time = time.time()
+                    elapsed_time = current_time - start_time
+
+                    # スクリーンショットを取得
+                    screenshot = sct.grab(monitor)
+
+                    # Pillowイメージに変換
+                    img = Image.frombytes("RGB", screenshot.size, screenshot.rgb)
+
+                    # OpenCV形式に変換
+                    frame = np.array(img)
+                    frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
+
+                    # フレームを保存
+                    if frame is not None and frame.size > 0:
+                        self.recorded_frames.append((frame, elapsed_time))
+                        frame_count += 1
+                        if frame_count % 10 == 0:  # 10フレームごとにログ出力
+                            logger.info(
+                                f"録画フレーム数: {frame_count}, 経過時間: {elapsed_time:.2f}秒"
+                            )
+                    else:
+                        logger.warning("無効なフレームがスキップされました")
+
+                    # 次のフレームタイミングまで待機（1FPS）
+                    next_frame_time = start_time + (frame_count * 1.0)  # 1秒間隔
+                    sleep_time = max(0, next_frame_time - time.time())
+                    if sleep_time > 0:
+                        time.sleep(sleep_time)
+
+                except Exception as e:
+                    logger.exception(f"フレーム取得中にエラーが発生しました: {e}")
+                    self.error_occurred_in_recording_thread = True
+                    time.sleep(1.0)  # エラー時は少し待機してリトライ
+
+        except Exception as e:
+            logger.exception(f"録画ループでエラーが発生しました: {e}")
+            self.error_occurred_in_recording_thread = True
+
+        finally:
+            logger.info(
+                f"録画ループを終了します。合計フレーム数: {len(self.recorded_frames)}"
+            )
+
+    def audio_recording_loop(self):
+        """SoundCardを使用してシステムサウンド (ループバック) を録音するループ"""
+        logger.info("音声録音ループ (SoundCard) を開始します")
+        num_frames = 1024  # 一度に読み取るサンプル数 (SoundCardの推奨値に合わせる)
+
+        try:
+            # デフォルトのループバックデバイスを取得
+            # SoundCard はデフォルトでスピーカーのループバックを選択しようとします
+            microphone_device = sc.get_microphone(
+                id=str(sc.default_speaker().name), include_loopback=True
+            )
+            logger.info(
+                f"取得したマイクデバイス: {microphone_device.name}"
+            )  # マイクデバイス名を確認
+            logger.info(f"マイクデバイスの型: {type(microphone_device)}")
+
+            # サンプルレートとチャンネル数をマイクデバイスから取得
+            try:
+                self.audio_sample_rate = microphone_device.samplerate
+                self.audio_channels = microphone_device.channels
+                logger.info(
+                    f"デバイス情報 - サンプルレート: {self.audio_sample_rate}, チャンネル数: {self.audio_channels}"
+                )
+            except AttributeError as e:
+                logger.error(
+                    f"マイクデバイスからサンプルレートまたはチャンネル数を取得できませんでした: {e}"
+                )
+                # デフォルト値を設定するか、エラー処理を行う
+                self.audio_sample_rate = 48000  # デフォルト値
+                self.audio_channels = 2  # デフォルト値
+                logger.warning(
+                    f"デフォルト値を使用します - サンプルレート: {self.audio_sample_rate}, チャンネル数: {self.audio_channels}"
+                )
+
+            with microphone_device.recorder(
+                samplerate=self.audio_sample_rate,  # デバイスから取得した値を使用
+                channels=self.audio_channels,  # デバイスから取得した値を使用
+                blocksize=num_frames,
+            ) as mic:
+                logger.info(
+                    f"レコーダーオブジェクトの型: {type(mic)}"
+                )  # mic の型を確認
+                logger.info(
+                    f"録音中: {microphone_device.name} (ループバック)"
+                )  # マイクデバイス名を使用
+
+                # 録音ループ
+                while self.is_recording:
+                    try:
+                        # recordメソッドで指定したサンプル数を読み取る
+                        data = mic.record(numframes=num_frames)
+                        if data is not None and data.size > 0:
+                            # SoundCard は float32 の NumPy 配列を返す
+                            self.audio_queue.put(data)
+                        else:
+                            logger.warning(
+                                "SoundCard から None または空のデータが返されました。"
+                            )
+                            time.sleep(0.01)  # 少し待機
+                    except Exception as e:
+                        logger.exception(
+                            f"音声データ読み取り/キュー追加中にエラー: {e}"
+                        )
+                        self.error_occurred_in_recording_thread = True
+                        break  # ループ中断
+
+        except Exception as e:
+            logger.exception(f"音声録音 (SoundCard) 中にエラーが発生しました: {e}")
+            messagebox.showerror(
+                "録音エラー",
+                f"音声録音の初期化または実行中にエラーが発生しました:\n{e}",
+            )
+            self.error_occurred_in_recording_thread = True
+
+        finally:
+            logger.info("音声録音ループ (SoundCard) を終了します")
+
+    def _save_video_with_audio(self, output_filepath):
+        """録画されたフレームと音声データからMoviePyを使って動画ファイルを生成・保存する"""
+        if not self.recorded_frames:
+            logger.error("保存するフレームがありません")
+            return False
+
+        # 音声データが存在するか確認し、連結する
+        audio_data = []
+        if not self.audio_queue.empty():
+            while not self.audio_queue.empty():
+                audio_data.append(self.audio_queue.get())
+
+        audio_array = None
+        if audio_data:
+            try:
+                audio_array = np.concatenate(audio_data)
+                logger.info(
+                    f"音声データを連結しました。サンプル数: {len(audio_array)}, dtype: {audio_array.dtype}"
+                )
+            except ValueError as e:
+                logger.error(f"音声データの連結に失敗しました: {e}")
+                audio_array = None  # エラー時は音声なしとする
+
+        try:
+            # 保存先のディレクトリを確認
+            output_dir = os.path.dirname(output_filepath)
+            if not os.path.exists(output_dir):
+                os.makedirs(output_dir, exist_ok=True)
+
+            # フレームの情報を取得 (BGR -> RGBに変換)
+            frames_rgb = []
+            timestamps = []
+            first_frame_shape = None
+            for frame_bgr, ts in self.recorded_frames:
+                if frame_bgr is not None and frame_bgr.size > 0:
+                    try:
+                        frame_rgb = cv2.cvtColor(frame_bgr, cv2.COLOR_BGR2RGB)
+                        if first_frame_shape is None:
+                            first_frame_shape = frame_rgb.shape
+                        # フレームサイズが異なる場合はリサイズ (最初のフレームに合わせる)
+                        if frame_rgb.shape != first_frame_shape:
+                            logger.warning(
+                                f"フレームサイズが異なります。リサイズします: {frame_rgb.shape} -> {first_frame_shape}"
+                            )
+                            frame_rgb = cv2.resize(
+                                frame_rgb, (first_frame_shape[1], first_frame_shape[0])
+                            )
+                        frames_rgb.append(frame_rgb)
+                        timestamps.append(ts)
+                    except cv2.error as e:
+                        logger.error(
+                            f"フレームのRGB変換中にエラー: {e}. スキップします。"
+                        )
+                else:
+                    logger.warning("None または空のフレームをスキップしました。")
+
+            if not frames_rgb:
+                logger.error("有効なフレームがありませんでした。動画を保存できません。")
+                return False
+
+            logger.info(f"合計 {len(frames_rgb)} フレームを動画クリップに使用します。")
+
+            # フレーム間の時間を計算してFPSを推定 (MoviePyは可変FPSを直接扱えないため)
+            if len(timestamps) > 1:
+                avg_interval = np.mean(np.diff(timestamps))
+                fps = 1.0 / avg_interval if avg_interval > 0 else 1.0
+                logger.info(f"推定FPS: {fps:.2f}")
+            else:
+                fps = 1.0  # フレームが1つしかない場合
+                logger.warning("フレームが1つしかないため、FPSを1.0に設定します。")
+
+            # MoviePyのVideoClipを作成
+            video_clip = mpe.ImageSequenceClip(frames_rgb, fps=fps)
+
+            # 音声データがある場合、AudioClipを作成して結合
+            audio_clip = None
+            final_clip = video_clip  # デフォルトは音声なし
+            if audio_array is not None and self.audio_sample_rate is not None:
+                try:
+                    # MoviePyは通常、[-1, 1]の範囲のfloatを期待する
+                    # SoundCardが返すデータ形式を確認し、必要なら正規化
+                    if audio_array.dtype != np.float32:
+                        logger.warning(
+                            f"音声データのdtypeがfloat32ではありません: {audio_array.dtype}。変換を試みます。"
+                        )
+                        # 必要に応じて型変換や正規化を行う (例: int16 -> float32)
+                        # この例では float32 を想定
+                        pass  # 必要ならここに変換処理を追加
+
+                    # チャンネル数が1の場合、ステレオに変換 (MoviePyがステレオを期待する場合がある)
+                    # if self.audio_channels == 1 and audio_array.ndim == 1:
+                    #      audio_array = np.column_stack((audio_array, audio_array))
+                    #      logger.info("モノラル音声をステレオに変換しました。")
+
+                    # 音声配列の形状を確認・整形
+                    if audio_array.ndim == 1 and self.audio_channels == 2:
+                        # モノラルデータが連結されて1次元になっている場合、2チャンネルに整形
+                        logger.warning("1次元の音声配列を2チャンネルに整形します。")
+                        try:
+                            audio_array = audio_array.reshape(-1, self.audio_channels)
+                        except ValueError as reshape_err:
+                            logger.error(
+                                f"音声配列の整形に失敗しました: {reshape_err}。音声なしで続行します。"
+                            )
+                            audio_array = None
+                    elif audio_array.ndim == 1 and self.audio_channels == 1:
+                        # 1チャンネルの場合はそのままで良いことが多い
+                        pass
+                    elif (
+                        audio_array.ndim == 2
+                        and audio_array.shape[1] == self.audio_channels
+                    ):
+                        # 既に正しい形式
+                        pass
+                    else:
+                        logger.error(
+                            f"音声配列の形状 ({audio_array.shape}) がチャンネル数 ({self.audio_channels}) と一致しません。音声なしで続行します。"
+                        )
+                        audio_array = None  # 不正な場合は音声なしに
+
+                    if audio_array is not None:
+                        try:
+                            # AudioArrayClip を直接使用 (mpe. ではなく)
+                            audio_clip = AudioArrayClip(
+                                audio_array, fps=self.audio_sample_rate
+                            )
+                            # 動画の長さに合わせて音声クリップの長さを調整
+                            if audio_clip.duration > video_clip.duration:
+                                audio_clip = audio_clip.subclip(0, video_clip.duration)
+                            elif audio_clip.duration < video_clip.duration:
+                                # 必要に応じて無音を追加するか、動画を短くする
+                                logger.warning(
+                                    f"音声クリップ ({audio_clip.duration:.2f}s) が動画クリップ ({video_clip.duration:.2f}s) より短いです。"
+                                )
+                                # audio_clip = audio_clip.set_duration(video_clip.duration) # 最後のフレームを繰り返す場合
+                                pass  # そのまま結合する
+
+                            logger.info(
+                                f"AudioArrayClipを作成しました。Duration: {audio_clip.duration:.2f}秒"
+                            )
+                            final_clip = video_clip.set_audio(audio_clip)
+                            logger.info("動画と音声を結合しました。")
+                        except Exception as audio_clip_err:
+                            logger.exception(
+                                f"AudioArrayClipの作成または結合中にエラー: {audio_clip_err}"
+                            )
+                            final_clip = video_clip  # エラー時は音声なし
+                    else:
+                        final_clip = video_clip  # 整形失敗などで音声なしになった場合
+                        logger.info("音声データが不正なため、動画のみ保存します。")
+
+                except Exception as e:
+                    logger.exception(f"音声処理中に予期せぬエラーが発生しました: {e}")
+                    final_clip = video_clip  # エラー時は音声なしで保存
+            else:
+                # final_clip = video_clip # audio_array や sample_rate がない場合 (既に上で設定済み)
+                logger.info(
+                    "音声データまたはサンプルレートがないため、動画のみ保存します。"
+                )
+
+            # 動画ファイルを書き出し
+            logger.info(f"動画ファイルを書き出します: {output_filepath}")
+            try:
+                # codec='libx264' を指定して互換性を高める
+                # audio_codec='aac' を指定 (多くのプレイヤーでサポート)
+                # threads を指定してエンコードを高速化 (CPUコア数など)
+                # preset='medium' などで品質と速度のバランスを取る
+                final_clip.write_videofile(
+                    output_filepath,
+                    codec="libx264",
+                    audio_codec="aac",
+                    temp_audiofile="temp-audio.m4a",  # 一時ファイル名を指定
+                    remove_temp=True,  # 一時ファイルを削除
+                    threads=4,  # CPUコア数に合わせて調整
+                    preset="medium",  # 品質と速度のバランス
+                    logger=None,  # MoviePyのログを無効化 (Pythonのloggingを使用するため)
+                )
+                logger.info(f"動画ファイルを保存しました: {output_filepath}")
+                self.last_saved_video_filename = output_filepath
+                return True
+            except Exception as e:
+                # ffmpeg のエラーメッセージを取得しようとする試み
+                ffmpeg_error = ""
+                if hasattr(e, "stderr"):
+                    try:
+                        ffmpeg_error = e.stderr.decode("utf-8", errors="ignore")
+                        logger.error(f"FFmpegエラー出力:\n{ffmpeg_error}")
+                    except Exception as decode_err:
+                        logger.error(f"FFmpegエラー出力のデコードに失敗: {decode_err}")
+                logger.exception(
+                    f"MoviePyによる動画書き出し中にエラーが発生しました: {e}"
+                )
+                messagebox.showerror(
+                    "動画保存エラー",
+                    f"動画の保存に失敗しました:\n{e}\n\nFFmpegエラー:\n{ffmpeg_error[:500]}...",
+                )  # エラーメッセージを短縮
+                return False
+
+        except Exception as e:
+            logger.exception(f"動画保存処理全体でエラーが発生しました: {e}")
+            messagebox.showerror(
+                "動画保存エラー", f"動画の保存中に予期せぬエラーが発生しました:\n{e}"
+            )
+            return False
+        finally:
+            # クリップオブジェクトを閉じる (メモリ解放)
+            if "video_clip" in locals() and video_clip:
+                video_clip.close()
+            if "audio_clip" in locals() and audio_clip:
+                audio_clip.close()
+            if "final_clip" in locals() and final_clip:
+                final_clip.close()
+            logger.info("動画保存処理を終了します。")
+
     def stop_recording(self):
-        """録画処理を停止する"""
+        """録画と音声録音を停止し、動画ファイルを保存する"""
         if not self.is_recording:
             return
 
         logger.info("録画停止処理を開始します。")
-        self.is_recording = False  # ループ停止フラグを立てる
-        video_filepath = None  # 動画ファイルパス（仮）
+        self.is_recording = False  # まずフラグを False にする
 
-        # スレッドが終了するのを少し待つ
+        # 録画スレッドの終了を待つ
         if self.recording_thread and self.recording_thread.is_alive():
-            logger.info("録画ループの終了を待っています...")
-            self.recording_thread.join(timeout=2.0)  # 少し待つ
+            logger.info("録画スレッドの終了を待機します...")
+            self.recording_thread.join(timeout=5.0)  # タイムアウトを設定
             if self.recording_thread.is_alive():
-                logger.warning("警告: 録画スレッドが時間内に終了しませんでした。")
+                logger.warning("録画スレッドが時間内に終了しませんでした。")
             else:
-                logger.info("録画ループが正常に終了しました。")
+                logger.info("録画スレッドが終了しました。")
+        self.recording_thread = None
 
-        # 音声録音スレッドも停止させる
+        # 音声録音スレッドの終了を待つ
         if self.audio_recording_thread and self.audio_recording_thread.is_alive():
-            logger.info("音声録音ループの終了を待っています...")
-            # is_recording フラグでループが止まるはずなので、joinで待つ
-            self.audio_recording_thread.join(timeout=1.0)
+            logger.info("音声録音スレッドの終了を待機します...")
+            self.audio_recording_thread.join(timeout=5.0)  # タイムアウトを設定
             if self.audio_recording_thread.is_alive():
-                logger.warning("警告: 音声録音スレッドが時間内に終了しませんでした。")
+                logger.warning("音声録音スレッドが時間内に終了しませんでした。")
             else:
-                logger.info("音声録音ループが正常に終了しました。")
+                logger.info("音声録音スレッドが終了しました。")
+        self.audio_recording_thread = None
 
-        # フレームと音声データがあれば動画を保存
-        if self.recorded_frames and not self.audio_queue.empty():
-            try:
-                # --- 動画ファイルパス生成 ---
-                timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-                video_filename = f"recording_{timestamp}.mp4"
-                if hasattr(self, "capture_save_path") and self.capture_save_path:
-                    video_filepath = os.path.join(
-                        self.capture_save_path, video_filename
-                    )
-                    self.last_saved_video_filename = video_filename  # ステータス表示用
-                    logger.info(f"動画ファイルパス: {video_filepath}")
-
-                    # --- 動画保存処理 ---
-                    self._save_video_with_audio(video_filepath)
-
-                else:
-                    logger.error(
-                        "保存先フォルダパス(capture_save_path)が設定されていません。"
-                    )
-                    video_filepath = None  # 保存失敗
-
-            except Exception as e:
-                logger.exception("動画の保存中にエラーが発生しました。")
-                messagebox.showerror(
-                    "動画保存エラー", f"動画の保存中にエラーが発生しました:\n{e}"
-                )
-                video_filepath = None  # 保存失敗
-        elif not self.recorded_frames:
-            logger.warning(
-                "録画フレームが存在しないため、動画ファイルは保存されません。"
-            )
-            video_filepath = None
-        elif self.audio_queue.empty():
-            logger.warning("音声データが存在しないため、動画ファイルは保存されません。")
-            video_filepath = None
-
-            # 仮のファイルパスを設定 # この部分は動画保存処理に移動
-            # if self.recorded_frames: # フレームがあれば仮のパスを設定
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        video_filename = f"recording_{timestamp}.mp4"  # 仮のファイル名
-        # capture_save_path が設定されているか確認
-        if hasattr(self, "capture_save_path") and self.capture_save_path:
-            video_filepath = os.path.join(self.capture_save_path, video_filename)
-            self.last_saved_video_filename = video_filename  # ステータス表示用
-            logger.info(f"仮の動画ファイルパス: {video_filepath}")
-            # ここで実際に動画を保存する処理が必要 (ffmpeg-pythonなど)
-        else:
-            logger.error("保存先フォルダパス(capture_save_path)が設定されていません。")
-
-        # self.start_recording_button.config(state=tk.NORMAL) # 個別ボタン削除
-        # self.stop_recording_button.config(state=tk.DISABLED) # 個別ボタン削除
         # ボタン状態は stop_all_tasks で制御
-        self.update_recording_status()  # 最終ステータス表示
 
-        # 録画停止時にノート作成を開始 (動画ファイルパスがあれば)
-        if video_filepath and self.gemini_client:  # APIクライアント設定済みかも確認
-            self.start_note_creation(video_filepath)  # 動画ファイルパスを渡す
-        elif not self.gemini_client:
-            logger.warning(
-                "Gemini API クライアントが未設定のため、ノート作成をスキップします。"
+        # 動画ファイルを保存
+        if self.recorded_frames:
+            now = datetime.now().strftime("%Y%m%d_%H%M%S")
+            output_filename = f"recording_{now}.mp4"
+            output_filepath = os.path.join(self.save_folder_name.get(), output_filename)
+            logger.info(f"動画ファイルの保存を開始します: {output_filepath}")
+
+            # 保存処理を別スレッドで行う (UIが固まるのを防ぐため)
+            save_thread = threading.Thread(
+                target=self._save_video_with_audio,
+                args=(output_filepath,),
+                name="VideoSaveThread",
+                daemon=True,
             )
-        elif not video_filepath:
-            logger.warning("動画ファイルパスがないため、ノート作成をスキップします。")
+            save_thread.start()
+            # ここでは保存完了を待たない。完了はログで確認。
+            # 必要であれば、保存完了後にUIに通知する仕組みを追加する。
+            logger.info("動画保存スレッドを開始しました。")
+
+        else:
+            logger.warning("録画フレームがないため、動画ファイルは保存されません。")
+
+        self.recording_start_time = None
+        self.update_recording_status()  # ステータスを更新
+
+        # エラーチェック
+        if self.error_occurred_in_recording_thread:
+            messagebox.showerror(
+                "録画エラー",
+                "録画中にエラーが発生しました。詳細はログを確認してください。",
+            )
+            self.error_occurred_in_recording_thread = False  # フラグをリセット
+
+        logger.info("録画停止処理を完了しました。")
 
     def start_note_creation(self, video_filepath):  # 引数に video_filepath を追加
         """指定された動画ファイルパスでノート作成処理を開始する"""
-        logger.info(f"ノート作成処理を開始します。対象動画: {video_filepath}")
-        self.note_creation_status.set("ノート作成中...")
-        self.note_result_message.set("")
-
-        # ここで Gemini API 連携と Word ファイル生成を行うスレッドを開始する (未実装)
-        # --- 仮のデータと完了処理 ---
-        # 実際のAPI呼び出しは別スレッドで行うべき
-        def dummy_api_call_and_word_gen():
-            logger.info("ダミーAPI呼び出しとWord生成を開始します...")
-            time.sleep(3)  # 処理時間をシミュレート
-            # 仮のAPI応答データ
-            dummy_result = {
-                "summary": "これは録画内容のダミー要約です。",
-                "keywords": ["キーワード1", "キーワード2", "ダミー"],
-                "topics": {
-                    "最初のトピック": "これが最初の重要な部分です。",
-                    "次のトピック": "これが次の重要な部分です。\n複数行も可能です。",
-                },
-            }
-            # 完了処理をメインスレッドで実行するために `after` を使用
-            self.root.after(
-                0, self.finish_note_creation, True, dummy_result, video_filepath
+        if not self.gemini_client:
+            self.note_creation_status.set("ノート作成不可: APIクライアント未設定")
+            logger.warning(
+                "Gemini API クライアントが設定されていないため、ノート作成を開始できません。"
             )
-            # エラーの場合の例:
-            # error_result = {"error": "APIリクエストに失敗しました"}
-            # self.root.after(0, self.finish_note_creation, False, error_result, video_filepath)
-
-        # ダミー処理を別スレッドで実行
-        note_thread = threading.Thread(target=dummy_api_call_and_word_gen, daemon=True)
-        note_thread.start()
-
-    def finish_note_creation(
-        self, success, result_data, video_filepath
-    ):  # 引数に result_data と video_filepath を追加
-        """ノート作成処理の完了時の処理。Wordファイルを生成・保存する"""
-        if success:
-            try:
-                # --- Wordファイル生成 ---
-                document = Document()
-                document.add_heading("録画ノート", 0)
-
-                # result_data はAPIからの応答を想定した辞書型とする (仮)
-                summary = result_data.get("summary", "要約の取得に失敗しました。")
-                keywords = result_data.get("keywords", [])
-                topics = result_data.get(
-                    "topics", {}
-                )  # 例: {"トピック1": "重要部分1", "トピック2": "重要部分2"}
-
-                document.add_heading("要約", level=1)
-                document.add_paragraph(summary)
-
-                document.add_heading("キーワード", level=1)
-                if keywords:
-                    # 箇条書きでキーワードを追加
-                    for keyword in keywords:
-                        document.add_paragraph(keyword, style="List Bullet")
-                else:
-                    document.add_paragraph("キーワードが見つかりませんでした。")
-
-                document.add_heading("トピック別重要部分", level=1)
-                if topics:
-                    for topic, content in topics.items():
-                        document.add_heading(topic, level=2)
-                        document.add_paragraph(content)
-                else:
-                    document.add_paragraph("トピックが見つかりませんでした。")
-
-                # --- ファイル保存 ---
-                base_filename = os.path.splitext(os.path.basename(video_filepath))[0]
-                note_filename = f"{base_filename}_note.docx"
-                note_filepath = os.path.join(
-                    os.path.dirname(video_filepath), note_filename
-                )
-
-                document.save(note_filepath)
-                logger.info(f"ノートをWordファイルとして保存しました: {note_filepath}")
-
-                # --- UI更新 ---
-                self.note_creation_status.set("ノート作成完了")
-                self.note_result_message.set(
-                    f"保存先: {note_filename}"
-                )  # ファイル名のみ表示
-
-            except Exception as e:
-                logger.exception(
-                    "Wordファイルの生成または保存中にエラーが発生しました。"
-                )
-                self.note_creation_status.set("ノート作成エラー")
-                self.note_result_message.set(
-                    f"エラー: Wordファイルの処理中にエラーが発生しました。\n詳細はログを確認してください。"
-                )
-        else:
-            # APIからのエラーメッセージを表示する場合
-            self.note_creation_status.set("ノート作成エラー")
-            # result_data がエラーメッセージを含む想定
-            error_message = result_data.get("error", "不明なエラー")
-            self.note_result_message.set(f"エラー: {error_message}")
-            logger.error(f"ノート作成APIエラー: {error_message}")
-
-    def stop_all_tasks(self):
-        """実行中の全てのタスク（スクリーンショット、録画）を停止する"""
-        if not self.is_capturing_screenshot and not self.is_recording:
+            return
+        if not video_filepath or not os.path.exists(video_filepath):
+            self.note_creation_status.set(
+                f"ノート作成不可: 動画ファイルが見つかりません ({video_filepath})"
+            )
+            logger.error(f"指定された動画ファイルが見つかりません: {video_filepath}")
             return
 
-        logger.info("すべてのタスクの停止を試みます...")
-        self.stop_screenshot_capture()
-        self.stop_recording()  # stop_recording はノート作成をトリガーする可能性があるので注意
+        self.note_creation_status.set(
+            f"ノート作成中... ({os.path.basename(video_filepath)})"
+        )
+        self.note_result_message.set("")
+        logger.info(f"ノート作成処理を開始します。対象動画: {video_filepath}")
+
+        # ダミーのAPI呼び出しとWord生成 (非同期処理のシミュレーション)
+        def dummy_api_call_and_word_gen():
+            try:
+                logger.info("Gemini API へのリクエストをシミュレートします...")
+                time.sleep(5)  # API呼び出しの時間をシミュレート
+                # --- ここに実際の Gemini API 呼び出しを実装 ---
+                # 例:
+                # video_file = genai.upload_file(path=video_filepath)
+                # response = self.gemini_model.generate_content(
+                #     ["この動画の内容を要約し、重要なポイントを箇条書きでノートにまとめてください。", video_file]
+                # )
+                # summary_text = response.text
+                # logger.info("Gemini API から応答を取得しました。")
+                summary_text = f"これは {os.path.basename(video_filepath)} のダミー要約です。\n\n- ポイント1\n- ポイント2\n- ポイント3"  # ダミー応答
+
+                # Wordファイル生成
+                word_filename = (
+                    f"note_{os.path.splitext(os.path.basename(video_filepath))[0]}.docx"
+                )
+                word_filepath = os.path.join(
+                    os.path.dirname(video_filepath), word_filename
+                )
+                logger.info(f"Wordファイルを生成します: {word_filepath}")
+                doc = Document()
+                doc.add_heading(f"ノート: {os.path.basename(video_filepath)}", 0)
+                doc.add_paragraph(summary_text)
+                # 必要に応じてスクリーンショット画像も追加
+                # for img_path in glob.glob(os.path.join(os.path.dirname(video_filepath), "screenshot_*.png")):
+                #     try:
+                #         doc.add_picture(img_path, width=Inches(6.0)) # サイズ調整
+                #     except Exception as img_err:
+                #         logger.error(f"画像 {img_path} の追加中にエラー: {img_err}")
+                doc.save(word_filepath)
+                logger.info(f"Wordファイルを保存しました: {word_filepath}")
+
+                # UIスレッドでステータスを更新
+                self.root.after(0, self.finish_note_creation, True, word_filepath)
+
+            except Exception as e:
+                logger.exception("ノート作成処理中にエラーが発生しました。")
+                # UIスレッドでステータスを更新
+                self.root.after(0, self.finish_note_creation, False, str(e))
+
+        # 別スレッドで実行
+        note_thread = threading.Thread(
+            target=dummy_api_call_and_word_gen, name="NoteCreationThread", daemon=True
+        )
+        note_thread.start()
+
+    def finish_note_creation(self, success, result_path_or_error):
+        """ノート作成処理の完了をUIに反映する"""
+        if success:
+            self.note_creation_status.set("ノート作成完了")
+            self.note_result_message.set(f"保存先: {result_path_or_error}")
+            logger.info(f"ノート作成が成功しました: {result_path_or_error}")
+            messagebox.showinfo(
+                "ノート作成完了",
+                f"ノートが正常に作成されました。\n{result_path_or_error}",
+            )
+        else:
+            self.note_creation_status.set("ノート作成失敗")
+            self.note_result_message.set(f"エラー: {result_path_or_error}")
+            logger.error(f"ノート作成が失敗しました: {result_path_or_error}")
+            messagebox.showerror(
+                "ノート作成エラー",
+                f"ノートの作成中にエラーが発生しました:\n{result_path_or_error}",
+            )
+
+    def stop_all_tasks(self):
+        """全てのキャプチャ・録画タスクを停止する"""
+        logger.info("全てのタスクの停止処理を開始します。")
+
+        # 録画停止 (音声も内部で停止される)
+        if self.is_recording:
+            self.stop_recording()  # stop_recording が呼ばれる
+
+        # スクリーンショット停止
+        if self.is_capturing_screenshot:
+            self.stop_screenshot_capture()
 
         # 統合ボタンの状態更新
         self.start_button.config(state=tk.NORMAL)
         self.stop_button.config(state=tk.DISABLED)
         self.folder_entry.config(state=tk.NORMAL)
-        self.refresh_window_list_button.config(state=tk.NORMAL)
+        self.refresh_window_list_button.config(state=tk.NORMAL)  # 再度有効化
         self.window_listbox.config(state=tk.NORMAL)
-        logger.info("すべてのタスクを停止しました。")
 
-    # --- フォルダ準備メソッド (start_captureから分離) ---
+        # 録画が停止し、最後に保存された動画ファイルがあればノート作成を開始
+        if (
+            hasattr(self, "last_saved_video_filename")
+            and self.last_saved_video_filename
+        ):
+            logger.info(
+                f"最後に保存された動画ファイルでノート作成を開始します: {self.last_saved_video_filename}"
+            )
+            self.start_note_creation(self.last_saved_video_filename)
+            self.last_saved_video_filename = ""  # 一度使ったらクリア
+        else:
+            logger.info("ノート作成の対象となる動画ファイルがありません。")
+
+        logger.info("全てのタスクの停止処理を完了しました。")
+
     def prepare_save_folder(self):
         """保存フォルダの準備（作成、権限チェック）を行う"""
-        folder_name_input = self.save_folder_name.get().strip()
-        if not folder_name_input:
-            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-            folder_name = f"capture_{timestamp}"  # デフォルト名を変更
+        folder_name = self.save_folder_name.get()
+        if not folder_name:
+            # フォルダ名が空の場合、現在時刻でデフォルト名を生成
+            folder_name = f"capture_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
             self.save_folder_name.set(folder_name)
-            logger.info(f"フォルダ名が未入力のため、デフォルト名を設定: {folder_name}")
-        else:
-            # ファイル名として不適切な文字を置換 (簡易的な対策)
-            invalid_chars = '<>:"/\\|?*'
-            folder_name = "".join(
-                c if c not in invalid_chars else "_" for c in folder_name_input
+            logger.info(
+                f"保存フォルダ名が指定されなかったため、デフォルト名を生成しました: {folder_name}"
             )
-            if folder_name != folder_name_input:
-                self.save_folder_name.set(folder_name)
-                warning_msg = f"フォルダ名に使用できない文字が含まれていたため、'{folder_name}' に修正しました。"
-                logger.warning(warning_msg)
-                messagebox.showwarning("フォルダ名修正", warning_msg)
+
+        # 絶対パスに変換 (カレントディレクトリ基準)
+        save_path = os.path.abspath(folder_name)
+        self.save_folder_name.set(save_path)  # UIにも反映
+
+        logger.info(f"保存先フォルダ: {save_path}")
 
         try:
-            self.capture_save_path = os.path.abspath(folder_name)
-            logger.info(f"保存先フォルダの絶対パス: {self.capture_save_path}")
+            # フォルダが存在しない場合は作成
+            if not os.path.exists(save_path):
+                os.makedirs(save_path, exist_ok=True)
+                logger.info(f"フォルダを作成しました: {save_path}")
 
-            if not os.path.exists(self.capture_save_path):
-                logger.info(
-                    f"フォルダが存在しないため作成します: {self.capture_save_path}"
-                )
-                os.makedirs(self.capture_save_path, exist_ok=True)
-                logger.info(f"フォルダを作成しました: {self.capture_save_path}")
-            elif not os.path.isdir(self.capture_save_path):
-                error_msg = (
-                    f"指定されたパスはフォルダではありません: {self.capture_save_path}"
-                )
-                logger.error(error_msg)
-                messagebox.showerror("エラー", error_msg)
-                return False
-            # 書き込み権限チェック (Windows用簡易チェック)
-            elif not os.access(self.capture_save_path, os.W_OK):
-                error_msg = f"指定されたフォルダへの書き込み権限がありません:\n{self.capture_save_path}\n別のフォルダを指定するか、権限を確認してください。"
-                logger.error(error_msg)
-                messagebox.showerror("権限エラー", error_msg)
-                return False
-            else:
-                logger.info(
-                    f"保存先フォルダへの書き込み権限を確認しました: {self.capture_save_path}"
-                )
-            return True  # 成功
+            # 書き込み権限をチェック (簡易的な方法)
+            test_file_path = os.path.join(save_path, ".permission_test")
+            with open(test_file_path, "w") as f:
+                f.write("test")
+            os.remove(test_file_path)
+            logger.info(f"フォルダへの書き込み権限を確認しました: {save_path}")
+            return True
 
         except OSError as e:
-            error_detail = (
-                f"フォルダの作成/アクセス中にOSエラーが発生しました。\n"
-                f"エラータイプ: {type(e).__name__}\n"
-                f"エラーコード: {e.errno}\n"
-                f"メッセージ: {e.strerror}\n"
-                f"パス: {getattr(e, 'filename', 'N/A')}"
-            )
-            logger.error(f"{error_detail}\n{traceback.format_exc()}")
+            logger.exception(f"保存フォルダの準備中にエラーが発生しました: {e}")
             messagebox.showerror(
                 "フォルダエラー",
-                f"{error_detail}\n詳細はログファイル ({log_filename}) を確認してください。",
+                f"保存フォルダの作成またはアクセスに失敗しました:\n{save_path}\n\nエラー詳細:\n{e}",
             )
             return False
         except Exception as e:
-            error_detail = (
-                f"フォルダ処理中に予期せぬエラーが発生しました:\n"
-                f"エラータイプ: {type(e).__name__}\n"
-                f"メッセージ: {e}"
-            )
-            logger.exception(error_detail)
+            logger.exception(f"保存フォルダの準備中に予期せぬエラーが発生しました: {e}")
             messagebox.showerror(
-                "予期せぬエラー",
-                f"{error_detail}\n詳細はログファイル ({log_filename}) を確認してください。",
+                "フォルダエラー",
+                f"保存フォルダの準備中に予期せぬエラーが発生しました:\n{save_path}\n\nエラー詳細:\n{e}",
             )
             return False
 
     # --- ステータス更新メソッド ---
     def update_screenshot_status(self):
-        """スクリーンショットのステータスラベルを更新する"""
+        """スクリーンショットのステータス表示を更新する"""
         if self.is_capturing_screenshot:
-            status_text = f"実行中...\n保存枚数: {self.screenshot_saved_count}\n最終保存: {self.last_saved_screenshot_filename}"
-            if self.error_occurred_in_screenshot_thread:
-                status_text += f"\n警告: エラー発生。詳細はログファイル\n({log_filename})を確認してください。"
-                self.screenshot_status_label.config(foreground="red")
-            else:
-                self.screenshot_status_label.config(foreground="black")
-            self.screenshot_status_label.config(text=status_text)
-            if self.is_capturing_screenshot:
-                self.root.after(1000, self.update_screenshot_status)
-        else:
-            final_status = f"停止中。\n合計保存枚数: {self.screenshot_saved_count}"
+            status_text = f"実行中... ({self.screenshot_saved_count}枚保存)"
             if self.last_saved_screenshot_filename:
-                final_status += f"\n最終保存: {self.last_saved_screenshot_filename}"
-            if self.error_occurred_in_screenshot_thread:
-                final_status += f"\n警告: エラー発生。詳細はログファイル\n({log_filename})を確認してください。"
-                self.screenshot_status_label.config(foreground="red")
+                status_text += f"\n最終保存: {os.path.basename(self.last_saved_screenshot_filename)}"
+            self.screenshot_status_label.config(text=status_text)
+            # 1秒後に再度更新
+            self.root.after(1000, self.update_screenshot_status)
+        else:
+            status_text = "停止中"
+            if self.last_saved_screenshot_filename:
+                status_text += f" (最終保存: {os.path.basename(self.last_saved_screenshot_filename)})"
+            elif self.screenshot_saved_count > 0:
+                status_text += f" ({self.screenshot_saved_count}枚保存)"
             else:
-                self.screenshot_status_label.config(foreground="black")
-            self.screenshot_status_label.config(text=final_status)
+                status_text = "待機中..."
+            self.screenshot_status_label.config(text=status_text)
 
     def update_recording_status(self):
-        """録画のステータスラベルを更新する"""
-        if self.is_recording:
-            elapsed_time = time.time() - self.recording_start_time
-            status_text = (
-                f"録画中... ({int(elapsed_time // 60)}:{int(elapsed_time % 60):02d})"
-            )
-            if self.error_occurred_in_recording_thread:
-                status_text += f"\n警告: エラー発生。詳細はログファイル\n({log_filename})を確認してください。"
-                self.recording_status_label.config(foreground="red")
-            else:
-                self.recording_status_label.config(foreground="black")
+        """録画のステータス表示を更新する"""
+        if self.is_recording and self.recording_start_time:
+            elapsed_seconds = int(time.time() - self.recording_start_time)
+            minutes, seconds = divmod(elapsed_seconds, 60)
+            status_text = f"録画中... {minutes:02d}:{seconds:02d}"
+            if self.last_saved_video_filename:  # 保存が完了していれば表示
+                status_text += (
+                    f"\n最終保存: {os.path.basename(self.last_saved_video_filename)}"
+                )
             self.recording_status_label.config(text=status_text)
-            if self.is_recording:
-                self.root.after(1000, self.update_recording_status)
+            # 1秒後に再度更新
+            self.root.after(1000, self.update_recording_status)
         else:
-            final_status = "停止中。"
+            status_text = "停止中"
             if self.last_saved_video_filename:
-                final_status += f"\n最終保存: {self.last_saved_video_filename}"
-            if self.error_occurred_in_recording_thread:
-                final_status += f"\n警告: エラー発生。詳細はログファイル\n({log_filename})を確認してください。"
-                self.recording_status_label.config(foreground="red")
+                status_text += (
+                    f" (最終保存: {os.path.basename(self.last_saved_video_filename)})"
+                )
             else:
-                self.recording_status_label.config(foreground="black")
-            self.recording_status_label.config(text=final_status)
+                status_text = "待機中..."
+            self.recording_status_label.config(text=status_text)
 
+    # --- スクリーンショット関連メソッド ---
     def start_screenshot_capture(self):
-        """スクリーンショットキャプチャ処理を開始する"""
-        # フォルダ準備は start_tasks で行うため削除
+        """スクリーンショットの連続キャプチャを開始する"""
         if self.is_capturing_screenshot:
             return
 
-        # エラーフラグをリセット
-        self.error_occurred_in_screenshot_thread = (
-            False  # error_occurred_in_thread から変更
-        )
-        self.screenshot_status_label.config(
-            foreground="black"
-        )  # ステータス色をリセット
+        logger.info("スクリーンショットキャプチャを開始します。")
+        # フォルダ準備は start_tasks で行う
 
+        self.screenshot_thread = threading.Thread(
+            target=self.screenshot_capture_loop, name="ScreenshotThread", daemon=True
+        )
         self.is_capturing_screenshot = True
+        self.screenshot_saved_count = 0  # カウンタリセット
+        self.last_saved_screenshot_filename = ""  # ファイル名リセット
+        self.screenshot_thread.start()
+
         # self.start_screenshot_button.config(state=tk.DISABLED) # 個別ボタン削除
         # self.stop_screenshot_button.config(state=tk.NORMAL) # 個別ボタン削除
         # ボタン状態は start_tasks / stop_all_tasks で制御
-        # self.folder_entry.config(state=tk.DISABLED) # start_tasks で制御
-        self.screenshot_saved_count = 0
-        self.last_saved_screenshot_filename = ""
-        self.last_screenshot_image = None  # last_image から変更
-
-        # スレッドを開始
-        self.screenshot_thread = threading.Thread(  # capture_thread から変更
-            target=self.screenshot_capture_loop,
-            name="ScreenshotCaptureThread",
-            daemon=True,  # capture_loop から変更
-        )
-        self.screenshot_thread.start()  # capture_thread から変更
-        self.update_screenshot_status()  # 定期的なステータス更新を開始 (update_status から変更)
-        logger.info(
-            f"スクリーンショットキャプチャを開始しました。保存先: {self.capture_save_path}"
-        )
+        self.update_screenshot_status()  # ステータス更新開始
 
     def stop_screenshot_capture(self):
-        """スクリーンショットキャプチャ処理を停止する"""
+        """スクリーンショットの連続キャプチャを停止する"""
         if not self.is_capturing_screenshot:
             return
 
-        logger.info("スクリーンショットキャプチャ停止処理を開始します。")
-        self.is_capturing_screenshot = False  # is_capturing から変更
-        # スレッドが終了するのを少し待つ
-        if (
-            self.screenshot_thread and self.screenshot_thread.is_alive()
-        ):  # capture_thread から変更
-            logger.info("スクリーンショットキャプチャループの終了を待っています...")
-            self.screenshot_thread.join(
-                timeout=1.5
-            )  # 少し長めに待つ # capture_thread から変更
-            if self.screenshot_thread.is_alive():  # capture_thread から変更
+        logger.info("スクリーンショットキャプチャの停止処理を開始します。")
+        self.is_capturing_screenshot = False
+        if self.screenshot_thread and self.screenshot_thread.is_alive():
+            logger.info("スクリーンショットキャプチャスレッドの終了を待機します...")
+            self.screenshot_thread.join(timeout=5.0)  # タイムアウトを設定
+            if self.screenshot_thread.is_alive():
                 logger.warning(
-                    "警告: スクリーンショットキャプチャスレッドが時間内に終了しませんでした。"
+                    "スクリーンショットキャプチャスレッドが時間内に終了しませんでした。"
                 )
+            else:
+                logger.info("スクリーンショットキャプチャスレッドが終了しました。")
+        self.screenshot_thread = None
 
         # self.start_screenshot_button.config(state=tk.NORMAL) # 個別ボタン削除
         # self.stop_screenshot_button.config(state=tk.DISABLED) # 個別ボタン削除
-        # self.folder_entry.config(state=tk.NORMAL) # stop_all_tasks で制御
-        # logger.info("スクリーンショットキャプチャを停止しました。") # stop_all_tasks でログ出力
-        # 停止後にもう一度ステータスを更新して最終結果を表示
-        self.update_screenshot_status()  # 即時更新に変更
+        # ボタン状態は start_tasks / stop_all_tasks で制御
+        self.update_screenshot_status()  # ステータス更新
+
+        # エラーチェック
+        if self.error_occurred_in_screenshot_thread:
+            messagebox.showerror(
+                "スクリーンショットエラー",
+                "スクリーンショット取得中にエラーが発生しました。詳細はログを確認してください。",
+            )
+            self.error_occurred_in_screenshot_thread = False  # フラグをリセット
+
+        logger.info("スクリーンショットキャプチャの停止処理を完了しました。")
 
     def screenshot_capture_loop(self):
-        """定期的にスクリーンショットを取得し、比較・保存するループ"""
+        """画面全体のスクリーンショットを定期的に取得し、変化があれば保存するループ"""
         logger.info("スクリーンショットキャプチャループを開始します。")
-        while self.is_capturing_screenshot:  # is_capturing から変更
+        interval_seconds = 2  # 取得間隔（秒）
+        self.last_screenshot_image = None  # 前回の画像をリセット
+
+        while self.is_capturing_screenshot:
+            start_capture_time = time.time()
             try:
-                # 1. スクリーンショット取得
-                screenshot = ImageGrab.grab()
-                if screenshot is None:
-                    logger.error(
-                        "エラー: ImageGrab.grab() が None を返しました。スクリーンショットを取得できませんでした。"
+                # 画面全体のスクリーンショットを取得 (mssを使用)
+                with mss.mss() as sct:
+                    monitor = sct.monitors[0]  # プライマリモニター全体
+                    screenshot = sct.grab(monitor)
+                    # Pillowイメージに変換
+                    current_image_pil = Image.frombytes(
+                        "RGB", screenshot.size, screenshot.rgb
                     )
-                    self.error_occurred_in_screenshot_thread = (
-                        True  # error_occurred_in_thread から変更
+                    # OpenCV形式に変換 (比較用)
+                    current_image_cv = cv2.cvtColor(
+                        np.array(current_image_pil), cv2.COLOR_RGB2BGR
                     )
-                    time.sleep(2.0)  # 少し待ってリトライ
-                    continue
 
-                # 2. 画像形式変換 (PIL -> OpenCV)
-                current_image_pil = screenshot.convert("RGB")
-                current_image_cv = np.array(current_image_pil)
-                current_image_cv = cv2.cvtColor(current_image_cv, cv2.COLOR_RGB2BGR)
-
-                if current_image_cv is None or current_image_cv.size == 0:
-                    logger.error(
-                        "エラー: 画像データの変換に失敗しました (Noneまたはサイズ0)。"
-                    )
-                    self.error_occurred_in_screenshot_thread = (
-                        True  # error_occurred_in_thread から変更
-                    )
-                    time.sleep(2.0)
-                    continue
-
-                # 3. 前回の画像と比較
-                if self.last_screenshot_image is None:  # last_image から変更
-                    logger.info(
-                        "最初のスクリーンショット画像を取得しました。保存します。"
-                    )
-                    self.save_screenshot_image(current_image_cv)  # save_image から変更
-                    self.last_screenshot_image = current_image_cv  # last_image から変更
-                else:
+                if self.last_screenshot_image is not None:
+                    # 前回と比較して変化があるか確認
                     if not self.is_similar(
                         current_image_cv, self.last_screenshot_image
-                    ):  # last_image から変更
+                    ):
                         logger.info(
-                            "新しいスクリーンショット画像または類似していない画像を検出しました。保存します。"
+                            "画面に変化を検出しました。スクリーンショットを保存します。"
                         )
-                        self.save_screenshot_image(
+                        if self.save_screenshot_image(
                             current_image_cv
-                        )  # save_image から変更
-                        self.last_screenshot_image = (
-                            current_image_cv  # last_image から変更
-                        )
-                    else:
-                        # logger.debug("類似画像のためスキップ")
-                        pass
+                        ):  # 保存処理を呼び出し
+                            self.screenshot_saved_count += 1
+                    # else:
+                    #     logger.debug("画面に変化はありません。") # デバッグ用
+                else:
+                    # 最初のスクリーンショットは必ず保存
+                    logger.info("最初のスクリーンショットを保存します。")
+                    if self.save_screenshot_image(current_image_cv):
+                        self.screenshot_saved_count += 1
 
-            except (OSError, UnidentifiedImageError) as e:
-                logger.exception(
-                    f"エラー (スクショキャプチャ/変換): {type(e).__name__} - {e}"
-                )
-                self.error_occurred_in_screenshot_thread = (
-                    True  # error_occurred_in_thread から変更
-                )
-                time.sleep(5.0)
-            except cv2.error as e:
-                logger.exception(
-                    f"エラー (スクショ - OpenCV): {type(e).__name__} - {e}"
-                )
-                self.error_occurred_in_screenshot_thread = (
-                    True  # error_occurred_in_thread から変更
-                )
-                time.sleep(5.0)
+                # 今回の画像を次回比較用に保持
+                self.last_screenshot_image = current_image_cv
+
+            except UnidentifiedImageError as e:
+                logger.error(f"スクリーンショット画像の形式が認識できませんでした: {e}")
+                self.error_occurred_in_screenshot_thread = True
+                # エラーが発生してもループは継続するかもしれないが、一旦フラグを立てる
             except Exception as e:
                 logger.exception(
-                    f"エラー (スクショループ): 予期せぬエラーが発生しました - {type(e).__name__}: {e}"
+                    f"スクリーンショット取得/比較中にエラーが発生しました: {e}"
                 )
-                self.error_occurred_in_screenshot_thread = (
-                    True  # error_occurred_in_thread から変更
-                )
-                time.sleep(5.0)
+                self.error_occurred_in_screenshot_thread = True
+                # エラーが発生してもループは継続するかもしれないが、一旦フラグを立てる
 
             # 次のキャプチャまでの待機時間
-            wait_start_time = time.time()
-            while (
-                self.is_capturing_screenshot and time.time() - wait_start_time < 2.0
-            ):  # is_capturing から変更
-                time.sleep(0.1)
+            elapsed_time = time.time() - start_capture_time
+            sleep_time = max(0, interval_seconds - elapsed_time)
+            if sleep_time > 0:
+                time.sleep(sleep_time)
 
-        logger.info("スクリーンショットキャプチャループが終了しました。")
+        logger.info("スクリーンショットキャプチャループを終了します。")
 
     def is_similar(self, img1_cv, img2_cv, threshold=0.95):
         """2つの画像の類似度を計算する (差分ベースの簡易比較)"""
         try:
+            # グレースケールに変換
             gray1 = cv2.cvtColor(img1_cv, cv2.COLOR_BGR2GRAY)
             gray2 = cv2.cvtColor(img2_cv, cv2.COLOR_BGR2GRAY)
-            h1, w1 = gray1.shape
-            h2, w2 = gray2.shape
 
-            if h1 != h2 or w1 != w2:
-                # logger.debug(f"画像サイズが異なるためリサイズします: ({w1}x{h1}) vs ({w2}x{h2})")
-                if h1 * w1 < h2 * w2:
-                    gray2 = cv2.resize(gray2, (w1, h1), interpolation=cv2.INTER_AREA)
-                else:
-                    gray1 = cv2.resize(gray1, (w2, h2), interpolation=cv2.INTER_AREA)
+            # サイズが異なる場合はリサイズ (小さい方に合わせるか、固定サイズにする)
+            if gray1.shape != gray2.shape:
+                # 例: img1 のサイズに合わせる
+                h, w = gray1.shape
+                gray2 = cv2.resize(gray2, (w, h))
+                logger.warning("比較画像のサイズが異なるためリサイズしました。")
 
+            # 差分を計算
             diff = cv2.absdiff(gray1, gray2)
-            non_zero_count = np.count_nonzero(diff)
-            total_pixels = gray1.size
-            if total_pixels == 0:
-                logger.warning("警告: 類似度計算中の画像サイズが0です。")
-                return False
 
+            # 差分が閾値以下のピクセルの割合を計算
+            non_zero_count = np.count_nonzero(diff > 10)  # わずかな違いは無視
+            total_pixels = diff.shape[0] * diff.shape[1]
             similarity = 1.0 - (non_zero_count / total_pixels)
-            # logger.debug(f"類似度: {similarity:.4f}")
-            return similarity >= threshold
 
+            # logger.debug(f"画像類似度: {similarity:.4f}") # デバッグ用
+
+            return similarity >= threshold
         except cv2.error as e:
-            logger.exception(f"エラー (類似度計算 - OpenCV): {type(e).__name__} - {e}")
-            self.error_occurred_in_screenshot_thread = (
-                True  # error_occurred_in_thread から変更
-            )
-            return False
+            logger.error(f"画像比較 (is_similar) 中にOpenCVエラーが発生しました: {e}")
+            return False  # エラー時は類似していないと判断
         except Exception as e:
             logger.exception(
-                f"エラー (類似度計算): 予期せぬエラー - {type(e).__name__}: {e}"
+                f"画像比較 (is_similar) 中に予期せぬエラーが発生しました: {e}"
             )
-            self.error_occurred_in_screenshot_thread = (
-                True  # error_occurred_in_thread から変更
-            )
-            return False
+            return False  # エラー時は類似していないと判断
 
     def save_screenshot_image(self, image_cv):  # save_image から変更
         """スクリーンショット画像をファイルに保存する。エラー発生時はログに記録。"""
-        save_path = None
+        save_folder = self.save_folder_name.get()
+        if not save_folder:
+            logger.error(
+                "保存フォルダが設定されていません。スクリーンショットを保存できません。"
+            )
+            return False
+
         try:
-            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S_%f")[:-3]
-            filename = f"screenshot_{timestamp}.png"
-            save_path = os.path.join(self.capture_save_path, filename)
+            now = datetime.now()
+            # ミリ秒を含むファイル名
+            filename = f"screenshot_{now.strftime('%Y%m%d_%H%M%S')}_{now.microsecond // 1000:03d}.png"
+            filepath = os.path.join(save_folder, filename)
 
-            if image_cv is None or image_cv.size == 0:
-                logger.warning(
-                    f"警告: 保存しようとしたスクリーンショット画像データが無効です (Noneまたはサイズ0)。パス: {save_path}"
-                )
-                self.error_occurred_in_screenshot_thread = (
-                    True  # error_occurred_in_thread から変更
-                )
-                return
-
-            success = cv2.imwrite(save_path, image_cv, [cv2.IMWRITE_PNG_COMPRESSION, 3])
+            # OpenCV形式(BGR)の画像をPNGで保存
+            success = cv2.imwrite(filepath, image_cv)
 
             if success:
-                self.screenshot_saved_count += 1  # saved_count から変更
-                self.last_saved_screenshot_filename = os.path.basename(
-                    save_path
-                )  # last_saved_filename から変更
-                logger.info(f"スクリーンショット画像を保存しました: {save_path}")
+                logger.info(f"スクリーンショットを保存しました: {filepath}")
+                self.last_saved_screenshot_filename = (
+                    filepath  # 最後に保存したファイル名を更新
+                )
+                return True
             else:
-                # imwriteがFalseを返した場合
-                error_msg = (
-                    f"エラー (保存): cv2.imwrite が False を返しました。ファイル書き込みに失敗した可能性があります。\n"
-                    f" - 保存試行パス: {save_path}\n"
-                    f" - 画像サイズ: {image_cv.shape if image_cv is not None else 'None'}\n"
-                    f" - 考えられる原因: 書き込み権限不足、ディスク容量不足、パス名の問題、画像データ破損など"
+                logger.error(
+                    f"スクリーンショットの保存に失敗しました (cv2.imwriteがFalseを返しました): {filepath}"
                 )
-                logger.error(error_msg)
-                self.error_occurred_in_screenshot_thread = (
-                    True  # error_occurred_in_thread から変更
-                )
-
+                # cv2.imwrite が False を返す具体的な原因は特定しにくい場合がある
+                # ディスク容量、権限、ファイルパスの問題などが考えられる
+                return False
         except cv2.error as e:
-            logger.exception(
-                f"エラー (スクショ保存 - OpenCV): {type(e).__name__} - {e}\n - 保存試行パス: {save_path}"
+            logger.error(
+                f"スクリーンショット保存中にOpenCVエラーが発生しました: {e}. ファイルパス: {filepath if 'filepath' in locals() else 'N/A'}"
             )
-            self.error_occurred_in_screenshot_thread = (
-                True  # error_occurred_in_thread から変更
-            )
-        except OSError as e:
-            logger.exception(
-                f"エラー (スクショ保存 - OS): {type(e).__name__} - {e}\n - 保存試行パス: {save_path}"
-            )
-            self.error_occurred_in_screenshot_thread = (
-                True  # error_occurred_in_thread から変更
-            )
+            return False
         except Exception as e:
             logger.exception(
-                f"エラー (スクショ保存): 予期せぬエラー - {type(e).__name__}: {e}\n - 保存試行パス: {save_path}"
+                f"スクリーンショット保存中に予期せぬエラーが発生しました: {e}. ファイルパス: {filepath if 'filepath' in locals() else 'N/A'}"
             )
-            self.error_occurred_in_screenshot_thread = (
-                True  # error_occurred_in_thread から変更
-            )
+            return False
 
     def on_closing(self):
-        """ウィンドウが閉じられたときの処理"""
-        if self.is_capturing_screenshot or self.is_recording:  # is_capturing から変更
-            tasks_running = []
-            if self.is_capturing_screenshot:
-                tasks_running.append("スクリーンショットキャプチャ")
-            if self.is_recording:
-                tasks_running.append("録画")
-            running_tasks_str = " と ".join(tasks_running)
-
+        """ウィンドウが閉じられるときの処理"""
+        logger.info("アプリケーション終了処理を開始します。")
+        if self.is_capturing_screenshot or self.is_recording:
             if messagebox.askokcancel(
-                "確認", f"{running_tasks_str}が実行中です。\n本当に終了しますか？"
+                "確認", "キャプチャまたは録画が実行中です。本当に終了しますか？"
             ):
-                logger.info("ユーザー操作により終了します...")
-                self.stop_all_tasks()  # stop_capture から変更
+                self.stop_all_tasks()  # 実行中のタスクを停止
+                # stop_all_tasks内で録画停止→保存→ノート作成が走る可能性があるため、少し待つか、
+                # ノート作成完了まで待つ仕組みが必要かもしれない。
+                # 現状では、ノート作成が完了する前にウィンドウが閉じる可能性がある。
+                logger.info("実行中のタスクを停止しました。")
                 self.root.destroy()
-                logger.info("アプリケーションを終了しました。")
             else:
-                logger.info("終了操作がキャンセルされました。")
-                return
+                logger.info("アプリケーションの終了をキャンセルしました。")
+                return  # 終了をキャンセル
         else:
-            logger.info("アプリケーションを終了しました。")
             self.root.destroy()
+        logger.info("アプリケーションを終了しました。")
 
 
 if __name__ == "__main__":
-    # Tkinterのルートウィンドウを作成
-    root = tk.Tk()
-    # アプリケーションクラスのインスタンスを作成
-    app = SlideCaptureApp(root)
-    # Tkinterのイベントループを開始
-    root.mainloop()
+    try:
+        root = tk.Tk()
+        app = SlideCaptureApp(root)
+        root.mainloop()
+    except Exception as e:
+        # GUI初期化前などのエラーをキャッチ
+        logger.critical(
+            f"アプリケーションの起動中に致命的なエラーが発生しました: {e}",
+            exc_info=True,
+        )
+        # コンソールにもエラーを表示
+        print(f"致命的なエラーが発生しました: {e}")
+        traceback.print_exc()
+        # 簡単なメッセージボックスでユーザーに通知 (Tkinterが使える場合)
+        try:
+            error_root = tk.Tk()
+            error_root.withdraw()  # メインウィンドウは表示しない
+            messagebox.showerror(
+                "起動エラー",
+                f"アプリケーションの起動に失敗しました。\n詳細はログファイルを確認してください。\n\n{e}",
+            )
+            error_root.destroy()
+        except tk.TclError:
+            print(
+                "メッセージボックスを表示できませんでした。"
+            )  # Tkinterが初期化失敗した場合
+        except Exception as msg_e:
+            print(f"エラーメッセージ表示中にさらにエラー: {msg_e}")
