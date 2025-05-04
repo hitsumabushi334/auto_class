@@ -7,5 +7,7 @@ wheels/
 *.egg-info
 *.png
 *.mp4
+*.docx
+.env
 # Virtual environments
 .venv

@@ -8,10 +8,12 @@ import os
 import logging  # logging モジュールをインポート
 import traceback  # スタックトレース取得のため
 
+from certifi import contents
 import win32gui  # ウィンドウ操作のため追加
-import google.generativeai as genai  # Gemini APIのため追加
+from google import genai
 from docx import Document  # Wordファイル生成のため追加
 from docx.shared import Inches  # Wordファイル生成のため追加 (必要に応じて)
+import json
 
 # import sounddevice as sd # sounddevice を削除
 import queue  # 音声データキューのため追加
@@ -27,6 +29,7 @@ import mss  # 画面キャプチャのため追加
 import cv2
 from PIL import Image, ImageGrab, UnidentifiedImageError
 import numpy as np
+from dotenv import load_dotenv
 
 # --- ロギング設定 ---
 log_filename = "slide_capture_app.log"
@@ -74,6 +77,7 @@ class SlideCaptureApp:
 
         # --- Gemini API 設定 ---
         try:
+            load_dotenv()  # .env ファイルを読み込む
             api_key = os.environ.get("GEMINI_API_KEY")
             if not api_key:
                 logger.warning(
@@ -84,14 +88,11 @@ class SlideCaptureApp:
                     "環境変数 GEMINI_API_KEY が設定されていません。\nノート作成機能は利用できません。",
                 )
             else:
-                genai.configure(api_key=api_key)
                 # 動画を扱えるモデルを指定 (例: gemini-1.5-pro-latest)
                 # 注意: モデル名や利用可否は変更される可能性があるため、ドキュメントを確認すること
                 # self.gemini_model = genai.GenerativeModel('gemini-1.5-pro-latest') # 後で使う
                 logger.info("Gemini API クライアントを設定しました。")
-                self.gemini_client = (
-                    True  # 設定成功フラグ (後でモデルオブジェクトなどに変更)
-                )
+                self.gemini_client = genai.Client(api_key=api_key)
         except Exception as e:
             logger.exception("Gemini API の設定中にエラーが発生しました。")
             messagebox.showerror(
@@ -493,7 +494,7 @@ class SlideCaptureApp:
             logger.info("音声録音ループ (SoundCard) を終了します")
 
     def _save_video_with_audio(self, output_filepath):
-        """録画されたフレームと音声データからMoviePyを使って動画ファイルを生成・保存する"""
+        """録画されたフレームと音声データからMoviePyを使って動画ファイルを生成・保存し、成功したらノート作成をトリガーする"""
         if not self.recorded_frames:
             logger.error("保存するフレームがありません")
             return False
@@ -670,8 +671,15 @@ class SlideCaptureApp:
                     logger=None,  # MoviePyのログを無効化 (Pythonのloggingを使用するため)
                 )
                 logger.info(f"動画ファイルを保存しました: {output_filepath}")
-                self.last_saved_video_filename = output_filepath
-                return True
+                # self.last_saved_video_filename = output_filepath # ここでは設定しない
+
+                # ★★★ 保存成功後にノート作成をトリガー ★★★
+                # UIスレッド経由で start_note_creation を呼び出す
+                logger.info(
+                    f"動画保存成功、ノート作成をトリガーします: {output_filepath}"
+                )
+                self.root.after(0, self.start_note_creation, output_filepath)
+                return True  # 保存自体は成功
             except Exception as e:
                 # ffmpeg のエラーメッセージを取得しようとする試み
                 ffmpeg_error = ""
@@ -740,20 +748,30 @@ class SlideCaptureApp:
         if self.recorded_frames:
             now = datetime.now().strftime("%Y%m%d_%H%M%S")
             output_filename = f"recording_{now}.mp4"
-            output_filepath = os.path.join(self.save_folder_name.get(), output_filename)
-            logger.info(f"動画ファイルの保存を開始します: {output_filepath}")
+            # ★★★ 保存パスは self.save_folder_name.get() から取得 ★★★
+            save_folder = self.save_folder_name.get()
+            if not save_folder or not os.path.isdir(save_folder):
+                logger.error(
+                    f"無効な保存フォルダです: {save_folder}。動画を保存できません。"
+                )
+                # 必要であればここでエラーメッセージ表示
+                messagebox.showerror(
+                    "保存エラー",
+                    f"指定された保存フォルダが見つかりません:\n{save_folder}",
+                )
+            else:
+                output_filepath = os.path.join(save_folder, output_filename)
+                logger.info(f"動画ファイルの保存を開始します: {output_filepath}")
 
-            # 保存処理を別スレッドで行う (UIが固まるのを防ぐため)
-            save_thread = threading.Thread(
-                target=self._save_video_with_audio,
-                args=(output_filepath,),
-                name="VideoSaveThread",
-                daemon=True,
-            )
-            save_thread.start()
-            # ここでは保存完了を待たない。完了はログで確認。
-            # 必要であれば、保存完了後にUIに通知する仕組みを追加する。
-            logger.info("動画保存スレッドを開始しました。")
+                # 保存処理を別スレッドで行う (UIが固まるのを防ぐため)
+                save_thread = threading.Thread(
+                    target=self._save_video_with_audio,  # この中でノート作成がトリガーされる
+                    args=(output_filepath,),
+                    name="VideoSaveThread",
+                    daemon=True,
+                )
+                save_thread.start()
+                logger.info("動画保存スレッドを開始しました。")
 
         else:
             logger.warning("録画フレームがないため、動画ファイルは保存されません。")
@@ -793,43 +811,193 @@ class SlideCaptureApp:
         logger.info(f"ノート作成処理を開始します。対象動画: {video_filepath}")
 
         # ダミーのAPI呼び出しとWord生成 (非同期処理のシミュレーション)
-        def dummy_api_call_and_word_gen():
+        def api_call_and_word_gen():
             try:
-                logger.info("Gemini API へのリクエストをシミュレートします...")
-                time.sleep(5)  # API呼び出しの時間をシミュレート
                 # --- ここに実際の Gemini API 呼び出しを実装 ---
-                # 例:
-                # video_file = genai.upload_file(path=video_filepath)
-                # response = self.gemini_model.generate_content(
-                #     ["この動画の内容を要約し、重要なポイントを箇条書きでノートにまとめてください。", video_file]
-                # )
-                # summary_text = response.text
-                # logger.info("Gemini API から応答を取得しました。")
-                summary_text = f"これは {os.path.basename(video_filepath)} のダミー要約です。\n\n- ポイント1\n- ポイント2\n- ポイント3"  # ダミー応答
+                prompt = "添付した動画の各トピックについて指定されたJSONスキーマに応じて内容をわかりやすく抽出してください。また、回答のレベルはクライアントが大学生レベルであることに注意して調節してください。応答は入力の言語の種類にかかわらず必ず日本語で行ってください。"
+                schema = {
+                    "type": "object",
+                    "properties": {
+                        "title": {
+                            "type": "string",
+                            "description": "動画のタイトル",
+                        },
+                        "summary": {
+                            "type": "string",
+                            "description": "動画全体の内容の要約を3000字以内で",
+                        },
+                        "topics": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "topic_title": {
+                                        "type": "string",
+                                        "description": "トピックのタイトル",
+                                    },
+                                    "topic_keyWords": {
+                                        "type": "array",
+                                        "items": {"type": "string"},
+                                        "description": "トピックのキーワードを箇条書きで",
+                                    },
+                                    "topic_summary": {
+                                        "type": "string",
+                                        "description": "トピックの要約を300字以内で",
+                                    },
+                                    "topic_points": {
+                                        "type": "array",
+                                        "items": {"type": "string"},
+                                        "description": "トピックのポイントを箇条書きで",
+                                    },
+                                    "technical_term": {
+                                        "type": "array",
+                                        "items": {
+                                            "point": {
+                                                "type": "string",
+                                                "description": "専門用語",
+                                            },
+                                            "explanation": {
+                                                "type": "string",
+                                                "description": "専門用語の意味",
+                                            },
+                                        },
+                                        "required": ["point", "explanation"],
+                                        "description": "動画中で出てきた専門用語の解説",
+                                    },
+                                },
+                            },
+                        },
+                        "required": ["title", "summary", "topics"],
+                    },
+                }
+                logger.info(f"動画ファイルをアップロード開始: {video_filepath}")
+                video_file = self.gemini_client.files.upload(file=video_filepath)
+                logger.info(
+                    f"動画ファイルをアップロード完了: {video_file.name}, State: {video_file.state}"
+                )
+
+                # ★★★ ファイルがACTIVEになるまで待機 ★★★
+                polling_interval = 5  # ポーリング間隔 (秒)
+                timeout_seconds = 300  # タイムアウト (秒)
+                start_poll_time = time.time()
+                while video_file.state != "ACTIVE":
+                    if time.time() - start_poll_time > timeout_seconds:
+                        raise TimeoutError(
+                            f"ファイル処理がタイムアウトしました ({timeout_seconds}秒): {video_file.name}"
+                        )
+                    logger.info(
+                        f"ファイル処理待機中... State: {video_file.state} (経過: {time.time() - start_poll_time:.1f}秒)"
+                    )
+                    time.sleep(polling_interval)
+                    video_file = self.gemini_client.files.get(
+                        name=video_file.name
+                    )  # 状態を再取得
+
+                logger.info(f"ファイルがACTIVEになりました: {video_file.name}")
+
+                response = self.gemini_client.models.generate_content(
+                    model="gemini-2.5-flash-preview-04-17",
+                    contents=[
+                        video_file,
+                        prompt,
+                    ],
+                    config={
+                        "response_mime_type": "application/json",
+                        "response_schema": schema,
+                    },
+                )
+                summary_text = response.text
+                logger.info("Gemini API から応答を取得しました。")
 
                 # Wordファイル生成
-                word_filename = (
-                    f"note_{os.path.splitext(os.path.basename(video_filepath))[0]}.docx"
-                )
-                word_filepath = os.path.join(
-                    os.path.dirname(video_filepath), word_filename
-                )
-                logger.info(f"Wordファイルを生成します: {word_filepath}")
-                doc = Document()
-                doc.add_heading(f"ノート: {os.path.basename(video_filepath)}", 0)
-                doc.add_paragraph(summary_text)
-                # 必要に応じてスクリーンショット画像も追加
-                # for img_path in glob.glob(os.path.join(os.path.dirname(video_filepath), "screenshot_*.png")):
-                #     try:
-                #         doc.add_picture(img_path, width=Inches(6.0)) # サイズ調整
-                #     except Exception as img_err:
-                #         logger.error(f"画像 {img_path} の追加中にエラー: {img_err}")
-                doc.save(word_filepath)
-                logger.info(f"Wordファイルを保存しました: {word_filepath}")
+                try:
 
-                # UIスレッドでステータスを更新
-                self.root.after(0, self.finish_note_creation, True, word_filepath)
+                    note_data = json.loads(summary_text)  # JSON文字列を辞書に変換
 
+                    word_filename = f"note_{os.path.splitext(os.path.basename(video_filepath))[0]}.docx"
+                    word_filepath = os.path.join(
+                        os.path.dirname(video_filepath), word_filename
+                    )
+                    logger.info(f"Wordファイルを生成します: {word_filepath}")
+
+                    doc = Document()
+                    # タイトルを追加
+                    doc.add_heading(note_data.get("title", "タイトルなし"), 0)
+                    # 全体要約を追加
+                    doc.add_heading("全体要約", level=1)
+                    doc.add_paragraph(note_data.get("summary", "要約なし"))
+
+                    # 各トピックを追加
+                    doc.add_heading("トピック詳細", level=1)
+                    topics = note_data.get("topics", [])
+                    if topics:
+                        for i, topic in enumerate(topics):
+                            doc.add_heading(
+                                topic.get("topic_title", f"トピック {i+1}"), level=2
+                            )
+
+                            # キーワード
+                            keywords = topic.get("topic_keyWords", [])
+                            if keywords:
+                                doc.add_paragraph("キーワード:")
+                                for kw in keywords:
+                                    doc.add_paragraph(f"- {kw}", style="List Bullet")
+
+                            # トピック要約
+                            topic_summary = topic.get("topic_summary")
+                            if topic_summary:
+                                doc.add_paragraph("要約:")
+                                doc.add_paragraph(topic_summary)
+
+                            # ポイント
+                            points = topic.get("topic_points", [])
+                            if points:
+                                doc.add_paragraph("ポイント:")
+                                for pt in points:
+                                    doc.add_paragraph(f"- {pt}", style="List Bullet")
+
+                            # 専門用語
+                            terms = topic.get("technical_term", [])
+                            if terms:
+                                doc.add_paragraph("専門用語:")
+                                for term in terms:
+                                    doc.add_paragraph(
+                                        f"- {term}", style="List Bullet"
+                                    )  # 箇条書きに変更
+                            doc.add_paragraph()  # トピック間にスペース
+
+                    else:
+                        doc.add_paragraph("トピック情報はありません。")
+
+                    doc.save(word_filepath)
+                    logger.info(f"Wordファイルを保存しました: {word_filepath}")
+                    # UIスレッドでステータスを更新
+                    self.root.after(0, self.finish_note_creation, True, word_filepath)
+
+                except json.JSONDecodeError as json_err:
+                    logger.error(
+                        f"Geminiからの応答JSONの解析に失敗しました: {json_err}"
+                    )
+                    logger.error(
+                        f"受信したテキスト: {summary_text[:500]}..."
+                    )  # 最初の500文字を表示
+                    raise ValueError(
+                        f"API応答のJSON解析エラー: {json_err}"
+                    )  # エラーを再発生させてcatchさせる
+                except Exception as word_err:
+                    logger.exception(
+                        f"Wordファイル生成中にエラーが発生しました: {word_err}"
+                    )
+                    raise  # エラーを再発生させてcatchさせる
+
+            except TimeoutError as te:
+                logger.error(f"ノート作成処理中にタイムアウトエラー: {te}")
+                self.root.after(
+                    0,
+                    self.finish_note_creation,
+                    False,
+                    f"ファイル処理タイムアウト: {te}",
+                )
             except Exception as e:
                 logger.exception("ノート作成処理中にエラーが発生しました。")
                 # UIスレッドでステータスを更新
@@ -837,7 +1005,9 @@ class SlideCaptureApp:
 
         # 別スレッドで実行
         note_thread = threading.Thread(
-            target=dummy_api_call_and_word_gen, name="NoteCreationThread", daemon=True
+            target=api_call_and_word_gen,
+            name="NoteCreationThread",
+            daemon=True,
         )
         note_thread.start()
 
@@ -864,9 +1034,11 @@ class SlideCaptureApp:
         """全てのキャプチャ・録画タスクを停止する"""
         logger.info("全てのタスクの停止処理を開始します。")
 
+        was_recording = self.is_recording  # 録画中だったか記録
+
         # 録画停止 (音声も内部で停止される)
         if self.is_recording:
-            self.stop_recording()  # stop_recording が呼ばれる
+            self.stop_recording()  # stop_recording が呼ばれる (内部で保存とノート作成トリガー)
 
         # スクリーンショット停止
         if self.is_capturing_screenshot:
@@ -879,18 +1051,15 @@ class SlideCaptureApp:
         self.refresh_window_list_button.config(state=tk.NORMAL)  # 再度有効化
         self.window_listbox.config(state=tk.NORMAL)
 
-        # 録画が停止し、最後に保存された動画ファイルがあればノート作成を開始
-        if (
-            hasattr(self, "last_saved_video_filename")
-            and self.last_saved_video_filename
-        ):
+        # ★★★ ノート作成開始ロジックを削除 ★★★
+        # ノート作成は _save_video_with_audio からトリガーされるため、ここでのチェックは不要
+
+        if was_recording:
             logger.info(
-                f"最後に保存された動画ファイルでノート作成を開始します: {self.last_saved_video_filename}"
+                "録画を停止しました。動画保存とノート作成がバックグラウンドで実行されます（成功した場合）。"
             )
-            self.start_note_creation(self.last_saved_video_filename)
-            self.last_saved_video_filename = ""  # 一度使ったらクリア
         else:
-            logger.info("ノート作成の対象となる動画ファイルがありません。")
+            logger.info("スクリーンショットキャプチャを停止しました。")
 
         logger.info("全てのタスクの停止処理を完了しました。")
 

@@ -21,86 +21,99 @@ problemList:
         さらに音声録音と動画保存のためのメソッドも実装し、完全な録画機能を追加しました。
       isSolved: true
   - problem2:
-      - name: "保存フォルダ名の命名ができない"
-        description: >
-          録画した動画を保存するフォルダ名を、
-          自由に指定できず、自動的に生成したものになってしまう。
-        solution: >
-          prepare_save_folderメソッドを修正し、ユーザーが入力したフォルダ名を適切に処理するようにしました。
-          フォルダ名が空白の場合のみタイムスタンプを使用し、それ以外の場合はユーザー指定の名前を使用します。
-          さらに、ファイル名として不適切な文字を自動的に除去する処理も追加し、エラーメッセージも
-          わかりやすくユーザーに表示するようにしました。
-        isSolved: true
+      name: "保存フォルダ名の命名ができない"
+      description: >
+        録画した動画を保存するフォルダ名を、
+        自由に指定できず、自動的に生成したものになってしまう。
+      solution: >
+        prepare_save_folderメソッドを修正し、ユーザーが入力したフォルダ名を適切に処理するようにしました。
+        フォルダ名が空白の場合のみタイムスタンプを使用し、それ以外の場合はユーザー指定の名前を使用します。
+        さらに、ファイル名として不適切な文字を自動的に除去する処理も追加し、エラーメッセージも
+        わかりやすくユーザーに表示するようにしました。
+      isSolved: true
   - problem3:
-      - name: "停止ボタンを押すことができない。"
-        description: >
-          windowを選択した状態で開始ボタンを押すと、
-          録画中に停止ボタンを押すことができず、
-          録画を終了することができない。
-        solution: >
-          GUIを強制的に更新して停止ボタンの状態変更を反映させることで解決しました。
-          録画中に停止ボタンが押せるようになり、録画を正常に終了できるようになりました。
-        isSolved: true
+      name: "停止ボタンを押すことができない。"
+      description: >
+        windowを選択した状態で開始ボタンを押すと、
+        録画中に停止ボタンを押すことができず、
+        録画を終了することができない。
+      solution: >
+        GUIを強制的に更新して停止ボタンの状態変更を反映させることで解決しました。
+        録画中に停止ボタンが押せるようになり、録画を正常に終了できるようになりました。
+      isSolved: true
   - problem4:
-      - name: "Gemini APIを利用して動画内容から構造化されたノートを生成できない"
-        description: >
-          録画終了時にGemini APIを利用して動画内容から構造化されたノート
-          （要約、キーワード、重要部分）をWordファイルとして生成する機能がない。
-        solution: >
-        isSolved: false
+      name: "Gemini APIを利用して動画内容から構造化されたノートを生成できない"
+      description: >
+        録画終了時にGemini APIを利用して動画内容から構造化されたノート
+        （要約、キーワード、重要部分）をWordファイルとして生成する機能がない。
+      solution: >
+      isSolved: false
   - problem5:
-      - name: "音声の録音ができない"
-        description: >
-          音声の録音ファイルが無く、停止後の動画との結合ができない。
-        solution: >
-          soundcardライブラリ使用時のAttributeError (name, samplerate, channels) を修正し、
-          マイクデバイスオブジェクトから属性を取得するように変更しました。
-          また、moviepyでの動画保存時に発生したTypeErrorおよびAudioArrayClipのインポートに関するAttributeErrorも修正しました。
-        isSolved: true
-        detail: >
-          Traceback (most recent call last):
-          File "C:\Users\issho\auto_ss\auto_class\main.py", line 517, in _save_video_with_audio
-            ).run(overwrite_output=True, quiet=True)
-              ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-          File "C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\ffmpeg\_run.py", line 313, in run
-            process = run_async(
-                stream_spec,
-            ...<5 lines>...
-                overwrite_output=overwrite_output,
-            )
-          File "C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\ffmpeg\_run.py", line 284, in run_async
-            return subprocess.Popen(
-                  ~~~~~~~~~~~~~~~~^
-                args, stdin=stdin_stream, stdout=stdout_stream, stderr=stderr_stream
-                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-            )
-            ^
-          File "C:\Python313\Lib\subprocess.py", line 1036, in __init__
-            self._execute_child(args, executable, preexec_fn, close_fds,
-            ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-                                pass_fds, cwd, env,
-                                ^^^^^^^^^^^^^^^^^^^
-            ...<5 lines>...
-                                gid, gids, uid, umask,
-                                ^^^^^^^^^^^^^^^^^^^^^^
-                                start_new_session, process_group)
-                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-          File "C:\Python313\Lib\subprocess.py", line 1548, in _execute_child
-            hp, ht, pid, tid = _winapi.CreateProcess(executable, args,
-                              ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
-                                    # no special security
-                                    ^^^^^^^^^^^^^^^^^^^^^
-            ...<4 lines>...
-                                    cwd,
-                                    ^^^^
-                                    startupinfo)
-                                    ^^^^^^^^^^^^
-          FileNotFoundError: [WinError 2] 指定されたファイルが見つかりません。
+      name: "音声の録音ができない"
+      description: >
+        音声の録音ファイルが無く、停止後の動画との結合ができない。
+      solution: >
+        soundcardライブラリ使用時のAttributeError (name, samplerate, channels) を修正し、
+        マイクデバイスオブジェクトから属性を取得するように変更しました。
+        また、moviepyでの動画保存時に発生したTypeErrorおよびAudioArrayClipのインポートに関するAttributeErrorも修正しました。
+      isSolved: true
+      detail: >
+        Traceback (most recent call last):
+        File "C:\Users\issho\auto_ss\auto_class\main.py", line 517, in _save_video_with_audio
+          ).run(overwrite_output=True, quiet=True)
+            ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        File "C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\ffmpeg\_run.py", line 313, in run
+          process = run_async(
+              stream_spec,
+          ...<5 lines>...
+              overwrite_output=overwrite_output,
+          )
+        File "C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\ffmpeg\_run.py", line 284, in run_async
+          return subprocess.Popen(
+                ~~~~~~~~~~~~~~~~^
+              args, stdin=stdin_stream, stdout=stdout_stream, stderr=stderr_stream
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          )
+          ^
+        File "C:\Python313\Lib\subprocess.py", line 1036, in __init__
+          self._execute_child(args, executable, preexec_fn, close_fds,
+          ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                              pass_fds, cwd, env,
+                              ^^^^^^^^^^^^^^^^^^^
+          ...<5 lines>...
+                              gid, gids, uid, umask,
+                              ^^^^^^^^^^^^^^^^^^^^^^
+                              start_new_session, process_group)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        File "C:\Python313\Lib\subprocess.py", line 1548, in _execute_child
+          hp, ht, pid, tid = _winapi.CreateProcess(executable, args,
+                            ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+                                  # no special security
+                                  ^^^^^^^^^^^^^^^^^^^^^
+          ...<4 lines>...
+                                  cwd,
+                                  ^^^^
+                                  startupinfo)
+                                  ^^^^^^^^^^^^
+        FileNotFoundError: [WinError 2] 指定されたファイルが見つかりません。
     problem6:
-      - name: "特定のモニターだけをスクショできない"
-        description: >
-          現在のコードでは、全てのモニターを対象にスクリーンショットを取得している。
-          特定のモニターだけを対象にスクリーンショットを取得する機能が必要。
-          録画を行うウィンドウと同じものだけを対象にする必要がある。
-        solution: >
-        isSolved: false
+      name: "特定のモニターだけをスクショできない"
+      description: >
+        現在のコードでは、全てのモニターを対象にスクリーンショットを取得している。
+        特定のモニターだけを対象にスクリーンショットを取得する機能が必要。
+        録画を行うウィンドウと同じものだけを対象にする必要がある。
+      solution: >
+      isSolved: false
+    problem7:
+      name: "動画終了時に自動的に停止シークエンスが開始しない。"
+      description: >
+        現在のコードでは手動で停止しない限り動画が終了しても録画とスクショが続いてしまう。
+      solution: >
+      isSolved: false
+    problem8:
+      name: "ノート作成中の状態がわからない。"
+      description: >
+        ノート作成中の状態がわからず、ユーザーに進捗を示す必要がある。
+        進捗バーやメッセージを表示する必要がある。
+      solution: >
+      isSolved: false

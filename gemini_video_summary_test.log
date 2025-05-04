@@ -1,0 +1,333 @@
+2025-05-04 21:41:20,472 - INFO - Gemini API クライアントを設定しました。
+2025-05-04 21:41:20,472 - INFO - 動画ファイルをアップロード開始: C:\Users\issho\auto_ss\auto_class\capture_20250504_211637\recording_20250504_212600.mp4
+2025-05-04 21:41:21,578 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files "HTTP/1.1 200 OK"
+2025-05-04 21:41:22,214 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AAO2Vwq1BqgXFYeNslMyk5TEsrqwweJ5-s1Nv_i7eTUtXKQzaUQwOhzImyDmHR-4noq2C-3O_Z8iNHrgmKJ7LzQB6Yn_Fi90eYRa7UOMPphkow&upload_protocol=resumable "HTTP/1.1 200 OK"
+2025-05-04 21:41:22,936 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AAO2Vwq1BqgXFYeNslMyk5TEsrqwweJ5-s1Nv_i7eTUtXKQzaUQwOhzImyDmHR-4noq2C-3O_Z8iNHrgmKJ7LzQB6Yn_Fi90eYRa7UOMPphkow&upload_protocol=resumable "HTTP/1.1 200 OK"
+2025-05-04 21:41:23,544 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AAO2Vwq1BqgXFYeNslMyk5TEsrqwweJ5-s1Nv_i7eTUtXKQzaUQwOhzImyDmHR-4noq2C-3O_Z8iNHrgmKJ7LzQB6Yn_Fi90eYRa7UOMPphkow&upload_protocol=resumable "HTTP/1.1 200 OK"
+2025-05-04 21:41:24,187 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AAO2Vwq1BqgXFYeNslMyk5TEsrqwweJ5-s1Nv_i7eTUtXKQzaUQwOhzImyDmHR-4noq2C-3O_Z8iNHrgmKJ7LzQB6Yn_Fi90eYRa7UOMPphkow&upload_protocol=resumable "HTTP/1.1 200 OK"
+2025-05-04 21:41:25,807 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AAO2Vwq1BqgXFYeNslMyk5TEsrqwweJ5-s1Nv_i7eTUtXKQzaUQwOhzImyDmHR-4noq2C-3O_Z8iNHrgmKJ7LzQB6Yn_Fi90eYRa7UOMPphkow&upload_protocol=resumable "HTTP/1.1 200 OK"
+2025-05-04 21:41:25,808 - INFO - 動画ファイルをアップロード完了: files/zhwnwgo4ah54, State: FileState.PROCESSING
+2025-05-04 21:41:25,808 - INFO - ファイル処理待機中... State: FileState.PROCESSING (経過: 0.0秒)
+2025-05-04 21:41:31,101 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/zhwnwgo4ah54 "HTTP/1.1 200 OK"
+2025-05-04 21:41:31,104 - INFO - ファイル処理待機中... State: FileState.PROCESSING (経過: 5.3秒)
+2025-05-04 21:41:36,370 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/zhwnwgo4ah54 "HTTP/1.1 200 OK"
+2025-05-04 21:41:36,370 - INFO - ファイルがACTIVEになりました: files/zhwnwgo4ah54
+2025-05-04 21:41:36,370 - INFO - Gemini APIに要約リクエストを送信します...
+2025-05-04 21:41:36,371 - INFO - AFC is enabled with max remote calls: 10.
+2025-05-04 21:42:17,233 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-04-17:generateContent "HTTP/1.1 200 OK"
+2025-05-04 21:42:17,241 - INFO - AFC remote call 1 is done.
+2025-05-04 21:42:17,241 - INFO - Gemini API から応答を取得しました。
+2025-05-04 21:42:17,241 - INFO - 応答のJSONパースに成功しました。
+2025-05-04 21:42:17,359 - INFO - Wordファイルを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250504_211637\note_recording_20250504_212600_20250504_214120.docx
+2025-05-04 22:02:46,407 - INFO - Gemini API クライアントを設定しました。
+2025-05-04 22:02:46,407 - INFO - 動画ファイルをアップロード開始: C:\Users\issho\auto_ss\auto_class\capture_20250504_211637\recording_20250504_212600.mp4
+2025-05-04 22:02:47,504 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files "HTTP/1.1 200 OK"
+2025-05-04 22:02:48,208 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AAO2VwqmM83FKbE6_wrwLSoQ7fNwgVA7Te8DcWqeWrXSUiPAYdM7LBc1wvaxlP2RfCNgoeu8vk26xzBJ_F_OqcmOzM5ZDcOVZVkEoTPzhgQR6w&upload_protocol=resumable "HTTP/1.1 200 OK"
+2025-05-04 22:02:48,975 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AAO2VwqmM83FKbE6_wrwLSoQ7fNwgVA7Te8DcWqeWrXSUiPAYdM7LBc1wvaxlP2RfCNgoeu8vk26xzBJ_F_OqcmOzM5ZDcOVZVkEoTPzhgQR6w&upload_protocol=resumable "HTTP/1.1 200 OK"
+2025-05-04 22:02:49,595 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AAO2VwqmM83FKbE6_wrwLSoQ7fNwgVA7Te8DcWqeWrXSUiPAYdM7LBc1wvaxlP2RfCNgoeu8vk26xzBJ_F_OqcmOzM5ZDcOVZVkEoTPzhgQR6w&upload_protocol=resumable "HTTP/1.1 200 OK"
+2025-05-04 22:02:50,234 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AAO2VwqmM83FKbE6_wrwLSoQ7fNwgVA7Te8DcWqeWrXSUiPAYdM7LBc1wvaxlP2RfCNgoeu8vk26xzBJ_F_OqcmOzM5ZDcOVZVkEoTPzhgQR6w&upload_protocol=resumable "HTTP/1.1 200 OK"
+2025-05-04 22:02:51,626 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AAO2VwqmM83FKbE6_wrwLSoQ7fNwgVA7Te8DcWqeWrXSUiPAYdM7LBc1wvaxlP2RfCNgoeu8vk26xzBJ_F_OqcmOzM5ZDcOVZVkEoTPzhgQR6w&upload_protocol=resumable "HTTP/1.1 200 OK"
+2025-05-04 22:02:51,627 - INFO - 動画ファイルをアップロード完了: files/iev5fnpphh15, State: FileState.PROCESSING
+2025-05-04 22:02:51,627 - INFO - ファイル処理待機中... State: FileState.PROCESSING (経過: 0.0秒)
+2025-05-04 22:02:56,900 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/iev5fnpphh15 "HTTP/1.1 200 OK"
+2025-05-04 22:02:56,901 - INFO - ファイル処理待機中... State: FileState.PROCESSING (経過: 5.3秒)
+2025-05-04 22:03:02,161 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/iev5fnpphh15 "HTTP/1.1 200 OK"
+2025-05-04 22:03:02,162 - INFO - ファイル処理待機中... State: FileState.PROCESSING (経過: 10.5秒)
+2025-05-04 22:03:07,409 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/iev5fnpphh15 "HTTP/1.1 200 OK"
+2025-05-04 22:03:07,413 - INFO - ファイル処理待機中... State: FileState.PROCESSING (経過: 15.8秒)
+2025-05-04 22:03:12,717 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/iev5fnpphh15 "HTTP/1.1 200 OK"
+2025-05-04 22:03:12,719 - INFO - ファイル処理待機中... State: FileState.PROCESSING (経過: 21.1秒)
+2025-05-04 22:03:17,974 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/iev5fnpphh15 "HTTP/1.1 200 OK"
+2025-05-04 22:03:17,977 - INFO - ファイル処理待機中... State: FileState.PROCESSING (経過: 26.3秒)
+2025-05-04 22:03:23,230 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/iev5fnpphh15 "HTTP/1.1 200 OK"
+2025-05-04 22:03:23,233 - INFO - ファイル処理待機中... State: FileState.PROCESSING (経過: 31.6秒)
+2025-05-04 22:03:28,484 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/iev5fnpphh15 "HTTP/1.1 200 OK"
+2025-05-04 22:03:28,485 - INFO - ファイル処理待機中... State: FileState.PROCESSING (経過: 36.9秒)
+2025-05-04 22:03:33,774 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/iev5fnpphh15 "HTTP/1.1 200 OK"
+2025-05-04 22:03:33,775 - INFO - ファイル処理待機中... State: FileState.PROCESSING (経過: 42.1秒)
+2025-05-04 22:03:39,023 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/iev5fnpphh15 "HTTP/1.1 200 OK"
+2025-05-04 22:03:39,026 - INFO - ファイル処理待機中... State: FileState.PROCESSING (経過: 47.4秒)
+2025-05-04 22:03:44,275 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/iev5fnpphh15 "HTTP/1.1 200 OK"
+2025-05-04 22:03:44,276 - INFO - ファイル処理待機中... State: FileState.PROCESSING (経過: 52.6秒)
+2025-05-04 22:03:49,534 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/iev5fnpphh15 "HTTP/1.1 200 OK"
+2025-05-04 22:03:49,537 - INFO - ファイル処理待機中... State: FileState.PROCESSING (経過: 57.9秒)
+2025-05-04 22:03:54,796 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/iev5fnpphh15 "HTTP/1.1 200 OK"
+2025-05-04 22:03:54,798 - INFO - ファイル処理待機中... State: FileState.PROCESSING (経過: 63.2秒)
+2025-05-04 22:04:00,049 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/iev5fnpphh15 "HTTP/1.1 200 OK"
+2025-05-04 22:04:00,049 - INFO - ファイル処理待機中... State: FileState.PROCESSING (経過: 68.4秒)
+2025-05-04 22:04:05,313 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/iev5fnpphh15 "HTTP/1.1 200 OK"
+2025-05-04 22:04:05,314 - INFO - ファイル処理待機中... State: FileState.PROCESSING (経過: 73.7秒)
+2025-05-04 22:04:10,564 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/iev5fnpphh15 "HTTP/1.1 200 OK"
+2025-05-04 22:04:10,566 - INFO - ファイル処理待機中... State: FileState.PROCESSING (経過: 78.9秒)
+2025-05-04 22:04:15,825 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/iev5fnpphh15 "HTTP/1.1 200 OK"
+2025-05-04 22:04:15,826 - INFO - ファイル処理待機中... State: FileState.PROCESSING (経過: 84.2秒)
+2025-05-04 22:04:21,085 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/iev5fnpphh15 "HTTP/1.1 200 OK"
+2025-05-04 22:04:21,087 - INFO - ファイル処理待機中... State: FileState.PROCESSING (経過: 89.5秒)
+2025-05-04 22:04:26,339 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/iev5fnpphh15 "HTTP/1.1 200 OK"
+2025-05-04 22:04:26,340 - INFO - ファイル処理待機中... State: FileState.PROCESSING (経過: 94.7秒)
+2025-05-04 22:04:31,593 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/iev5fnpphh15 "HTTP/1.1 200 OK"
+2025-05-04 22:04:31,595 - INFO - ファイル処理待機中... State: FileState.PROCESSING (経過: 100.0秒)
+2025-05-04 22:04:36,839 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/iev5fnpphh15 "HTTP/1.1 200 OK"
+2025-05-04 22:04:36,841 - INFO - ファイル処理待機中... State: FileState.PROCESSING (経過: 105.2秒)
+2025-05-04 22:04:42,094 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/iev5fnpphh15 "HTTP/1.1 200 OK"
+2025-05-04 22:04:42,097 - INFO - ファイル処理待機中... State: FileState.PROCESSING (経過: 110.5秒)
+2025-05-04 22:04:47,349 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/iev5fnpphh15 "HTTP/1.1 200 OK"
+2025-05-04 22:04:47,352 - INFO - ファイル処理待機中... State: FileState.PROCESSING (経過: 115.7秒)
+2025-05-04 22:04:52,589 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/iev5fnpphh15 "HTTP/1.1 200 OK"
+2025-05-04 22:04:52,590 - INFO - ファイル処理待機中... State: FileState.PROCESSING (経過: 121.0秒)
+2025-05-04 22:04:57,838 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/iev5fnpphh15 "HTTP/1.1 200 OK"
+2025-05-04 22:04:57,839 - INFO - ファイル処理待機中... State: FileState.PROCESSING (経過: 126.2秒)
+2025-05-04 22:05:03,080 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/iev5fnpphh15 "HTTP/1.1 200 OK"
+2025-05-04 22:05:03,082 - INFO - ファイル処理待機中... State: FileState.PROCESSING (経過: 131.5秒)
+2025-05-04 22:05:08,325 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/iev5fnpphh15 "HTTP/1.1 200 OK"
+2025-05-04 22:05:08,327 - INFO - ファイル処理待機中... State: FileState.PROCESSING (経過: 136.7秒)
+2025-05-04 22:05:13,614 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/iev5fnpphh15 "HTTP/1.1 200 OK"
+2025-05-04 22:05:13,616 - INFO - ファイルがACTIVEになりました: files/iev5fnpphh15
+2025-05-04 22:05:13,616 - INFO - Gemini APIに要約リクエストを送信します...
+2025-05-04 22:05:13,616 - INFO - AFC is enabled with max remote calls: 10.
+2025-05-04 22:05:13,617 - ERROR - 動画要約処理中にエラーが発生しました: 'NoneType' object has no attribute 'upper'
+Traceback (most recent call last):
+  File "C:\Users\issho\auto_ss\auto_class\gemini_video_summary_test.py", line 150, in generate_video_summary
+    response = gemini_client.models.generate_content(
+        model="gemini-2.5-flash-preview-04-17",  # 使用するモデル名は変更される可能性があります
+    ...<7 lines>...
+        },
+    )
+  File "C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\google\genai\models.py", line 4799, in generate_content
+    response = self._generate_content(
+        model=model, contents=contents, config=config
+    )
+  File "C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\google\genai\models.py", line 3751, in _generate_content
+    request_dict = _GenerateContentParameters_to_mldev(
+        self._api_client, parameter_model
+    )
+  File "C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\google\genai\models.py", line 525, in _GenerateContentParameters_to_mldev
+    _GenerateContentConfig_to_mldev(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        api_client, getv(from_object, ['config']), to_object
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ),
+    ^
+  File "C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\google\genai\models.py", line 404, in _GenerateContentConfig_to_mldev
+    t.t_schema(api_client, getv(from_object, ['response_schema'])),
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\google\genai\_transformers.py", line 793, in t_schema
+    process_schema(origin, client)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\google\genai\_transformers.py", line 742, in process_schema
+    properties[name] = _recurse(sub_schema)
+                       ~~~~~~~~^^^^^^^^^^^^
+  File "C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\google\genai\_transformers.py", line 717, in _recurse
+    process_schema(sub_schema, client, defs, order_properties=order_properties)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\google\genai\_transformers.py", line 756, in process_schema
+    schema['items'] = _recurse(items)
+                      ~~~~~~~~^^^^^^^
+  File "C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\google\genai\_transformers.py", line 717, in _recurse
+    process_schema(sub_schema, client, defs, order_properties=order_properties)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\google\genai\_transformers.py", line 742, in process_schema
+    properties[name] = _recurse(sub_schema)
+                       ~~~~~~~~^^^^^^^^^^^^
+  File "C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\google\genai\_transformers.py", line 717, in _recurse
+    process_schema(sub_schema, client, defs, order_properties=order_properties)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\google\genai\_transformers.py", line 756, in process_schema
+    schema['items'] = _recurse(items)
+                      ~~~~~~~~^^^^^^^
+  File "C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\google\genai\_transformers.py", line 717, in _recurse
+    process_schema(sub_schema, client, defs, order_properties=order_properties)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\google\genai\_transformers.py", line 727, in process_schema
+    schema_type = schema_type.upper()
+                  ^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'upper'
+2025-05-04 22:32:56,832 - INFO - Gemini API クライアントを設定しました。
+2025-05-04 22:32:56,832 - INFO - 動画ファイルをアップロード開始: C:\Users\issho\auto_ss\auto_class\capture_20250504_211637\recording_20250504_212600.mp4
+2025-05-04 22:32:58,031 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files "HTTP/1.1 200 OK"
+2025-05-04 22:32:58,719 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AAO2Vwq5074lxZN0wjRUNCfpMhbRtRLqvquQgM5Rjl-bmp4WJsFWiuibVnHDYFcOxHw0Ijv_c04SVfeYOalZu6FH1u79gCAb9cxZ3zmZUoTI6g&upload_protocol=resumable "HTTP/1.1 200 OK"
+2025-05-04 22:32:59,409 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AAO2Vwq5074lxZN0wjRUNCfpMhbRtRLqvquQgM5Rjl-bmp4WJsFWiuibVnHDYFcOxHw0Ijv_c04SVfeYOalZu6FH1u79gCAb9cxZ3zmZUoTI6g&upload_protocol=resumable "HTTP/1.1 200 OK"
+2025-05-04 22:33:00,158 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AAO2Vwq5074lxZN0wjRUNCfpMhbRtRLqvquQgM5Rjl-bmp4WJsFWiuibVnHDYFcOxHw0Ijv_c04SVfeYOalZu6FH1u79gCAb9cxZ3zmZUoTI6g&upload_protocol=resumable "HTTP/1.1 200 OK"
+2025-05-04 22:33:00,953 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AAO2Vwq5074lxZN0wjRUNCfpMhbRtRLqvquQgM5Rjl-bmp4WJsFWiuibVnHDYFcOxHw0Ijv_c04SVfeYOalZu6FH1u79gCAb9cxZ3zmZUoTI6g&upload_protocol=resumable "HTTP/1.1 200 OK"
+2025-05-04 22:33:02,502 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AAO2Vwq5074lxZN0wjRUNCfpMhbRtRLqvquQgM5Rjl-bmp4WJsFWiuibVnHDYFcOxHw0Ijv_c04SVfeYOalZu6FH1u79gCAb9cxZ3zmZUoTI6g&upload_protocol=resumable "HTTP/1.1 200 OK"
+2025-05-04 22:33:02,502 - INFO - 動画ファイルをアップロード完了: files/q0jlalgthfgc, State: FileState.PROCESSING
+2025-05-04 22:33:02,503 - INFO - ファイル処理待機中... State: FileState.PROCESSING (経過: 0.0秒)
+2025-05-04 22:33:07,769 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/q0jlalgthfgc "HTTP/1.1 200 OK"
+2025-05-04 22:33:07,770 - INFO - ファイル処理待機中... State: FileState.PROCESSING (経過: 5.3秒)
+2025-05-04 22:33:13,020 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/q0jlalgthfgc "HTTP/1.1 200 OK"
+2025-05-04 22:33:13,021 - INFO - ファイル処理待機中... State: FileState.PROCESSING (経過: 10.5秒)
+2025-05-04 22:33:18,280 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/q0jlalgthfgc "HTTP/1.1 200 OK"
+2025-05-04 22:33:18,281 - INFO - ファイル処理待機中... State: FileState.PROCESSING (経過: 15.8秒)
+2025-05-04 22:33:23,582 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/q0jlalgthfgc "HTTP/1.1 200 OK"
+2025-05-04 22:33:23,583 - INFO - ファイル処理待機中... State: FileState.PROCESSING (経過: 21.1秒)
+2025-05-04 22:33:28,848 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/q0jlalgthfgc "HTTP/1.1 200 OK"
+2025-05-04 22:33:28,851 - INFO - ファイルがACTIVEになりました: files/q0jlalgthfgc
+2025-05-04 22:33:28,851 - INFO - Gemini APIに要約リクエストを送信します...
+2025-05-04 22:33:28,851 - INFO - AFC is enabled with max remote calls: 10.
+2025-05-04 22:33:28,852 - ERROR - 動画要約処理中にエラーが発生しました: 'NoneType' object has no attribute 'upper'
+Traceback (most recent call last):
+  File "C:\Users\issho\auto_ss\auto_class\gemini_video_summary_test.py", line 163, in generate_video_summary
+    response = gemini_client.models.generate_content(
+        model="gemini-2.5-flash-preview-04-17",  # 使用するモデル名は変更される可能性があります
+    ...<7 lines>...
+        },
+    )
+  File "C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\google\genai\models.py", line 4799, in generate_content
+    response = self._generate_content(
+        model=model, contents=contents, config=config
+    )
+  File "C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\google\genai\models.py", line 3751, in _generate_content
+    request_dict = _GenerateContentParameters_to_mldev(
+        self._api_client, parameter_model
+    )
+  File "C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\google\genai\models.py", line 525, in _GenerateContentParameters_to_mldev
+    _GenerateContentConfig_to_mldev(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        api_client, getv(from_object, ['config']), to_object
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ),
+    ^
+  File "C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\google\genai\models.py", line 404, in _GenerateContentConfig_to_mldev
+    t.t_schema(api_client, getv(from_object, ['response_schema'])),
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\google\genai\_transformers.py", line 793, in t_schema
+    process_schema(origin, client)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\google\genai\_transformers.py", line 742, in process_schema
+    properties[name] = _recurse(sub_schema)
+                       ~~~~~~~~^^^^^^^^^^^^
+  File "C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\google\genai\_transformers.py", line 717, in _recurse
+    process_schema(sub_schema, client, defs, order_properties=order_properties)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\google\genai\_transformers.py", line 756, in process_schema
+    schema['items'] = _recurse(items)
+                      ~~~~~~~~^^^^^^^
+  File "C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\google\genai\_transformers.py", line 717, in _recurse
+    process_schema(sub_schema, client, defs, order_properties=order_properties)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\google\genai\_transformers.py", line 742, in process_schema
+    properties[name] = _recurse(sub_schema)
+                       ~~~~~~~~^^^^^^^^^^^^
+  File "C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\google\genai\_transformers.py", line 717, in _recurse
+    process_schema(sub_schema, client, defs, order_properties=order_properties)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\google\genai\_transformers.py", line 756, in process_schema
+    schema['items'] = _recurse(items)
+                      ~~~~~~~~^^^^^^^
+  File "C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\google\genai\_transformers.py", line 717, in _recurse
+    process_schema(sub_schema, client, defs, order_properties=order_properties)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\google\genai\_transformers.py", line 727, in process_schema
+    schema_type = schema_type.upper()
+                  ^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'upper'
+2025-05-04 22:35:35,364 - INFO - Gemini API クライアントを設定しました。
+2025-05-04 22:35:35,365 - INFO - 動画ファイルをアップロード開始: C:\Users\issho\auto_ss\auto_class\capture_20250504_211637\recording_20250504_212600.mp4
+2025-05-04 22:35:36,499 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files "HTTP/1.1 200 OK"
+2025-05-04 22:35:37,354 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AAO2VwroCalVcKX3UX79mr7bIdLcn3fQkN8wL3YvubNqdKPFdo2Au9lUvABXTVa9i_pZcCdTm9TSqQ9BfSWZjKoIXUDiqQZN0ha3lYMI1lywoQ&upload_protocol=resumable "HTTP/1.1 200 OK"
+2025-05-04 22:35:38,261 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AAO2VwroCalVcKX3UX79mr7bIdLcn3fQkN8wL3YvubNqdKPFdo2Au9lUvABXTVa9i_pZcCdTm9TSqQ9BfSWZjKoIXUDiqQZN0ha3lYMI1lywoQ&upload_protocol=resumable "HTTP/1.1 200 OK"
+2025-05-04 22:35:39,007 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AAO2VwroCalVcKX3UX79mr7bIdLcn3fQkN8wL3YvubNqdKPFdo2Au9lUvABXTVa9i_pZcCdTm9TSqQ9BfSWZjKoIXUDiqQZN0ha3lYMI1lywoQ&upload_protocol=resumable "HTTP/1.1 200 OK"
+2025-05-04 22:35:39,852 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AAO2VwroCalVcKX3UX79mr7bIdLcn3fQkN8wL3YvubNqdKPFdo2Au9lUvABXTVa9i_pZcCdTm9TSqQ9BfSWZjKoIXUDiqQZN0ha3lYMI1lywoQ&upload_protocol=resumable "HTTP/1.1 200 OK"
+2025-05-04 22:35:41,713 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AAO2VwroCalVcKX3UX79mr7bIdLcn3fQkN8wL3YvubNqdKPFdo2Au9lUvABXTVa9i_pZcCdTm9TSqQ9BfSWZjKoIXUDiqQZN0ha3lYMI1lywoQ&upload_protocol=resumable "HTTP/1.1 200 OK"
+2025-05-04 22:35:41,713 - INFO - 動画ファイルをアップロード完了: files/k3pvcttzpyxq, State: FileState.PROCESSING
+2025-05-04 22:35:41,713 - INFO - ファイル処理待機中... State: FileState.PROCESSING (経過: 0.0秒)
+2025-05-04 22:35:47,051 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/k3pvcttzpyxq "HTTP/1.1 200 OK"
+2025-05-04 22:35:47,053 - INFO - ファイル処理待機中... State: FileState.PROCESSING (経過: 5.3秒)
+2025-05-04 22:35:52,479 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/k3pvcttzpyxq "HTTP/1.1 200 OK"
+2025-05-04 22:35:52,481 - INFO - ファイル処理待機中... State: FileState.PROCESSING (経過: 10.8秒)
+2025-05-04 22:35:57,747 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/k3pvcttzpyxq "HTTP/1.1 200 OK"
+2025-05-04 22:35:57,748 - INFO - ファイル処理待機中... State: FileState.PROCESSING (経過: 16.0秒)
+2025-05-04 22:36:03,005 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/k3pvcttzpyxq "HTTP/1.1 200 OK"
+2025-05-04 22:36:03,006 - INFO - ファイル処理待機中... State: FileState.PROCESSING (経過: 21.3秒)
+2025-05-04 22:36:08,251 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/k3pvcttzpyxq "HTTP/1.1 200 OK"
+2025-05-04 22:36:08,252 - INFO - ファイル処理待機中... State: FileState.PROCESSING (経過: 26.5秒)
+2025-05-04 22:36:13,496 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/k3pvcttzpyxq "HTTP/1.1 200 OK"
+2025-05-04 22:36:13,498 - INFO - ファイル処理待機中... State: FileState.PROCESSING (経過: 31.8秒)
+2025-05-04 22:36:18,752 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/k3pvcttzpyxq "HTTP/1.1 200 OK"
+2025-05-04 22:36:18,753 - INFO - ファイルがACTIVEになりました: files/k3pvcttzpyxq
+2025-05-04 22:36:18,754 - INFO - Gemini APIに要約リクエストを送信します...
+2025-05-04 22:36:18,754 - INFO - AFC is enabled with max remote calls: 10.
+2025-05-04 22:37:07,995 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-04-17:generateContent "HTTP/1.1 200 OK"
+2025-05-04 22:37:08,004 - INFO - AFC remote call 1 is done.
+2025-05-04 22:37:08,005 - INFO - Gemini API から応答を取得しました。
+2025-05-04 22:37:08,005 - INFO - 応答のJSONパースに成功しました。
+2025-05-04 22:37:08,046 - INFO - Wordファイルを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250504_211637\note_recording_20250504_212600_20250504_223535.docx
+2025-05-04 22:39:16,088 - INFO - Gemini API クライアントを設定しました。
+2025-05-04 22:39:16,088 - INFO - 動画ファイルをアップロード開始: C:\Users\issho\auto_ss\auto_class\capture_20250504_211637\recording_20250504_212600.mp4
+2025-05-04 22:39:17,206 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files "HTTP/1.1 200 OK"
+2025-05-04 22:39:18,051 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AAO2VwrDnilaeflYY3KRxTBvuJ7PT1DhP9GzutygfUP2dY_h0rFCrN8sWbJ2M41cdqgIAMbYyl4Faha5RaWhmGz6SqKZUP7mbtZR9gi1sRFDNHg&upload_protocol=resumable "HTTP/1.1 200 OK"
+2025-05-04 22:39:18,696 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AAO2VwrDnilaeflYY3KRxTBvuJ7PT1DhP9GzutygfUP2dY_h0rFCrN8sWbJ2M41cdqgIAMbYyl4Faha5RaWhmGz6SqKZUP7mbtZR9gi1sRFDNHg&upload_protocol=resumable "HTTP/1.1 200 OK"
+2025-05-04 22:39:19,280 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AAO2VwrDnilaeflYY3KRxTBvuJ7PT1DhP9GzutygfUP2dY_h0rFCrN8sWbJ2M41cdqgIAMbYyl4Faha5RaWhmGz6SqKZUP7mbtZR9gi1sRFDNHg&upload_protocol=resumable "HTTP/1.1 200 OK"
+2025-05-04 22:39:20,037 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AAO2VwrDnilaeflYY3KRxTBvuJ7PT1DhP9GzutygfUP2dY_h0rFCrN8sWbJ2M41cdqgIAMbYyl4Faha5RaWhmGz6SqKZUP7mbtZR9gi1sRFDNHg&upload_protocol=resumable "HTTP/1.1 200 OK"
+2025-05-04 22:39:21,509 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AAO2VwrDnilaeflYY3KRxTBvuJ7PT1DhP9GzutygfUP2dY_h0rFCrN8sWbJ2M41cdqgIAMbYyl4Faha5RaWhmGz6SqKZUP7mbtZR9gi1sRFDNHg&upload_protocol=resumable "HTTP/1.1 200 OK"
+2025-05-04 22:39:21,509 - INFO - 動画ファイルをアップロード完了: files/icx02vrx7n1k, State: FileState.PROCESSING
+2025-05-04 22:39:21,509 - INFO - ファイル処理待機中... State: FileState.PROCESSING (経過: 0.0秒)
+2025-05-04 22:39:26,777 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/icx02vrx7n1k "HTTP/1.1 200 OK"
+2025-05-04 22:39:26,781 - INFO - ファイル処理待機中... State: FileState.PROCESSING (経過: 5.3秒)
+2025-05-04 22:39:32,025 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/icx02vrx7n1k "HTTP/1.1 200 OK"
+2025-05-04 22:39:32,026 - INFO - ファイル処理待機中... State: FileState.PROCESSING (経過: 10.5秒)
+2025-05-04 22:39:37,269 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/icx02vrx7n1k "HTTP/1.1 200 OK"
+2025-05-04 22:39:37,271 - INFO - ファイル処理待機中... State: FileState.PROCESSING (経過: 15.8秒)
+2025-05-04 22:39:42,587 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/icx02vrx7n1k "HTTP/1.1 200 OK"
+2025-05-04 22:39:42,591 - INFO - ファイルがACTIVEになりました: files/icx02vrx7n1k
+2025-05-04 22:39:42,591 - INFO - Gemini APIに要約リクエストを送信します...
+2025-05-04 22:39:42,592 - INFO - AFC is enabled with max remote calls: 10.
+2025-05-04 22:40:15,372 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-04-17:generateContent "HTTP/1.1 200 OK"
+2025-05-04 22:40:15,379 - INFO - AFC remote call 1 is done.
+2025-05-04 22:40:15,380 - INFO - Gemini API から応答を取得しました。
+2025-05-04 22:40:15,380 - INFO - 応答のJSONパースに成功しました。
+2025-05-04 22:40:15,466 - INFO - Wordファイルを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250504_211637\note_recording_20250504_212600_20250504_223915.docx
+2025-05-04 22:42:40,137 - INFO - Gemini API クライアントを設定しました。
+2025-05-04 22:42:40,138 - INFO - 動画ファイルをアップロード開始: C:\Users\issho\auto_ss\auto_class\capture_20250504_211637\recording_20250504_212600.mp4
+2025-05-04 22:42:41,409 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files "HTTP/1.1 200 OK"
+2025-05-04 22:42:42,153 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AAO2VwrEMZY43FKg_mC1kCuDFVoZW8gw6LlN7jyO-dramFRQ1DWEsKH_0eWOscOSeeC3-HpOZniSbE-HnDMgPlrMLF_9H8ln2mxd8jV5Y9cFyLw&upload_protocol=resumable "HTTP/1.1 200 OK"
+2025-05-04 22:42:42,769 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AAO2VwrEMZY43FKg_mC1kCuDFVoZW8gw6LlN7jyO-dramFRQ1DWEsKH_0eWOscOSeeC3-HpOZniSbE-HnDMgPlrMLF_9H8ln2mxd8jV5Y9cFyLw&upload_protocol=resumable "HTTP/1.1 200 OK"
+2025-05-04 22:42:43,680 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AAO2VwrEMZY43FKg_mC1kCuDFVoZW8gw6LlN7jyO-dramFRQ1DWEsKH_0eWOscOSeeC3-HpOZniSbE-HnDMgPlrMLF_9H8ln2mxd8jV5Y9cFyLw&upload_protocol=resumable "HTTP/1.1 200 OK"
+2025-05-04 22:42:44,402 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AAO2VwrEMZY43FKg_mC1kCuDFVoZW8gw6LlN7jyO-dramFRQ1DWEsKH_0eWOscOSeeC3-HpOZniSbE-HnDMgPlrMLF_9H8ln2mxd8jV5Y9cFyLw&upload_protocol=resumable "HTTP/1.1 200 OK"
+2025-05-04 22:42:46,013 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AAO2VwrEMZY43FKg_mC1kCuDFVoZW8gw6LlN7jyO-dramFRQ1DWEsKH_0eWOscOSeeC3-HpOZniSbE-HnDMgPlrMLF_9H8ln2mxd8jV5Y9cFyLw&upload_protocol=resumable "HTTP/1.1 200 OK"
+2025-05-04 22:42:46,014 - INFO - 動画ファイルをアップロード完了: files/tc2bk62tr72c, State: FileState.PROCESSING
+2025-05-04 22:42:46,014 - INFO - ファイル処理待機中... State: FileState.PROCESSING (経過: 0.0秒)
+2025-05-04 22:42:51,299 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/tc2bk62tr72c "HTTP/1.1 200 OK"
+2025-05-04 22:42:51,300 - INFO - ファイル処理待機中... State: FileState.PROCESSING (経過: 5.3秒)
+2025-05-04 22:42:56,595 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/tc2bk62tr72c "HTTP/1.1 200 OK"
+2025-05-04 22:42:56,598 - INFO - ファイル処理待機中... State: FileState.PROCESSING (経過: 10.6秒)
+2025-05-04 22:43:01,851 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/tc2bk62tr72c "HTTP/1.1 200 OK"
+2025-05-04 22:43:01,853 - INFO - ファイル処理待機中... State: FileState.PROCESSING (経過: 15.8秒)
+2025-05-04 22:43:07,107 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/tc2bk62tr72c "HTTP/1.1 200 OK"
+2025-05-04 22:43:07,109 - INFO - ファイル処理待機中... State: FileState.PROCESSING (経過: 21.1秒)
+2025-05-04 22:43:12,398 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/tc2bk62tr72c "HTTP/1.1 200 OK"
+2025-05-04 22:43:12,401 - INFO - ファイル処理待機中... State: FileState.PROCESSING (経過: 26.4秒)
+2025-05-04 22:43:17,707 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/tc2bk62tr72c "HTTP/1.1 200 OK"
+2025-05-04 22:43:17,709 - INFO - ファイルがACTIVEになりました: files/tc2bk62tr72c
+2025-05-04 22:43:17,709 - INFO - Gemini APIに要約リクエストを送信します...
+2025-05-04 22:43:17,709 - INFO - AFC is enabled with max remote calls: 10.
+2025-05-04 22:43:55,197 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-04-17:generateContent "HTTP/1.1 200 OK"
+2025-05-04 22:43:55,199 - INFO - AFC remote call 1 is done.
+2025-05-04 22:43:55,199 - INFO - Gemini API から応答を取得しました。
+2025-05-04 22:43:55,200 - INFO - 応答のJSONパースに成功しました。
+2025-05-04 22:43:55,290 - INFO - Wordファイルを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250504_211637\note_recording_20250504_212600_20250504_224239.docx
+2025-05-04 22:47:19,191 - INFO - Gemini API クライアントを設定しました。
+2025-05-04 22:47:19,191 - INFO - 動画ファイルをアップロード開始: C:\Users\issho\auto_ss\auto_class\capture_20250504_211637\recording_20250504_212600.mp4
+2025-05-04 22:47:20,324 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files "HTTP/1.1 200 OK"
+2025-05-04 22:47:21,083 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AAO2Vwq5R7gKloVbEqyHrxuwE8qPJjAakmRFNwiNCFJwujF1XpXhfiZKdBm4NoQlvd5QYbS41EgYKSWzN5qUbylaizYeQHcMGD10Mx_ODK_I7WQ&upload_protocol=resumable "HTTP/1.1 200 OK"
+2025-05-04 22:47:21,633 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AAO2Vwq5R7gKloVbEqyHrxuwE8qPJjAakmRFNwiNCFJwujF1XpXhfiZKdBm4NoQlvd5QYbS41EgYKSWzN5qUbylaizYeQHcMGD10Mx_ODK_I7WQ&upload_protocol=resumable "HTTP/1.1 200 OK"
+2025-05-04 22:47:22,365 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AAO2Vwq5R7gKloVbEqyHrxuwE8qPJjAakmRFNwiNCFJwujF1XpXhfiZKdBm4NoQlvd5QYbS41EgYKSWzN5qUbylaizYeQHcMGD10Mx_ODK_I7WQ&upload_protocol=resumable "HTTP/1.1 200 OK"
+2025-05-04 22:47:23,085 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AAO2Vwq5R7gKloVbEqyHrxuwE8qPJjAakmRFNwiNCFJwujF1XpXhfiZKdBm4NoQlvd5QYbS41EgYKSWzN5qUbylaizYeQHcMGD10Mx_ODK_I7WQ&upload_protocol=resumable "HTTP/1.1 200 OK"
+2025-05-04 22:47:24,567 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AAO2Vwq5R7gKloVbEqyHrxuwE8qPJjAakmRFNwiNCFJwujF1XpXhfiZKdBm4NoQlvd5QYbS41EgYKSWzN5qUbylaizYeQHcMGD10Mx_ODK_I7WQ&upload_protocol=resumable "HTTP/1.1 200 OK"
+2025-05-04 22:47:24,567 - INFO - 動画ファイルをアップロード完了: files/lr87enf2ir6i, State: FileState.PROCESSING
+2025-05-04 22:47:24,568 - INFO - ファイル処理待機中... State: FileState.PROCESSING (経過: 0.0秒)
+2025-05-04 22:47:29,817 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/lr87enf2ir6i "HTTP/1.1 200 OK"
+2025-05-04 22:47:29,819 - INFO - ファイル処理待機中... State: FileState.PROCESSING (経過: 5.3秒)
+2025-05-04 22:47:35,071 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/lr87enf2ir6i "HTTP/1.1 200 OK"
+2025-05-04 22:47:35,073 - INFO - ファイル処理待機中... State: FileState.PROCESSING (経過: 10.5秒)
+2025-05-04 22:47:40,312 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/lr87enf2ir6i "HTTP/1.1 200 OK"
+2025-05-04 22:47:40,313 - INFO - ファイル処理待機中... State: FileState.PROCESSING (経過: 15.7秒)
+2025-05-04 22:47:45,567 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/lr87enf2ir6i "HTTP/1.1 200 OK"
+2025-05-04 22:47:45,569 - INFO - ファイルがACTIVEになりました: files/lr87enf2ir6i
+2025-05-04 22:47:45,569 - INFO - Gemini APIに要約リクエストを送信します...
+2025-05-04 22:47:45,569 - INFO - AFC is enabled with max remote calls: 10.
+2025-05-04 22:48:17,057 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-04-17:generateContent "HTTP/1.1 200 OK"
+2025-05-04 22:48:17,058 - INFO - AFC remote call 1 is done.
+2025-05-04 22:48:17,058 - INFO - Gemini API から応答を取得しました。
+2025-05-04 22:48:17,059 - INFO - 応答のJSONパースに成功しました。
+2025-05-04 22:48:17,152 - INFO - Wordファイルを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250504_211637\note_recording_20250504_212600_20250504_224718.docx
