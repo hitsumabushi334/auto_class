@@ -96,3 +96,11 @@ problemList:
                                     startupinfo)
                                     ^^^^^^^^^^^^
           FileNotFoundError: [WinError 2] 指定されたファイルが見つかりません。
+    problem6:
+      - name: "特定のモニターだけをスクショできない"
+        description: >
+          現在のコードでは、全てのモニターを対象にスクリーンショットを取得している。
+          特定のモニターだけを対象にスクリーンショットを取得する機能が必要。
+          録画を行うウィンドウと同じものだけを対象にする必要がある。
+        solution: >
+        isSolved: false

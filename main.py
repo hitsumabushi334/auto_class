@@ -1102,7 +1102,7 @@ class SlideCaptureApp:
 
         logger.info("スクリーンショットキャプチャループを終了します。")
 
-    def is_similar(self, img1_cv, img2_cv, threshold=0.95):
+    def is_similar(self, img1_cv, img2_cv, threshold=0.85):
         """2つの画像の類似度を計算する (差分ベースの簡易比較)"""
         try:
             # グレースケールに変換

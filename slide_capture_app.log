@@ -1253,3 +1253,82 @@ AttributeError: module 'moviepy.editor' has no attribute 'AudioArrayClip'. Did y
 2025-05-03 14:37:01,944 - INFO - ScreenshotThread - スクリーンショットキャプチャループを終了します。
 2025-05-03 14:37:10,501 - INFO - MainThread - アプリケーション終了処理を開始します。
 2025-05-03 14:37:10,535 - INFO - MainThread - アプリケーションを終了しました。
+2025-05-03 19:52:16,278 - WARNING - MainThread - 環境変数 GEMINI_API_KEY が設定されていません。ノート作成機能は利用できません。
+2025-05-03 19:52:18,211 - INFO - MainThread - アプリケーションを初期化しました。
+2025-05-03 19:52:18,211 - INFO - MainThread - ウィンドウリストを更新します。
+2025-05-03 19:52:18,212 - INFO - MainThread - 10 個のウィンドウが見つかりました。
+2025-05-03 19:52:20,166 - INFO - MainThread - ウィンドウが選択されました: (44) 【 Minecraft 】さて、マグロ釣るか...ご期待ください！！！【角巻わため/ホロライブ４期生】 - YouTube - Google Chrome (HWND: 789570) (HWND: 789570)
+2025-05-03 19:52:34,167 - INFO - MainThread - ウィンドウリストを更新します。
+2025-05-03 19:52:34,169 - INFO - MainThread - 11 個のウィンドウが見つかりました。
+2025-05-03 19:52:35,038 - INFO - MainThread - ウィンドウが選択されました: (44) 瞬間火力が高過ぎて量産型クレーバーと化した武器がこちら【APEX LEGENDS】 - YouTube - Google Chrome (HWND: 789570) (HWND: 789570)
+2025-05-03 19:52:36,223 - INFO - MainThread - 保存フォルダ名が指定されなかったため、デフォルト名を生成しました: capture_20250503_195236
+2025-05-03 19:52:36,223 - INFO - MainThread - 保存先フォルダ: C:\Users\issho\auto_ss\auto_class\capture_20250503_195236
+2025-05-03 19:52:36,224 - INFO - MainThread - フォルダを作成しました: C:\Users\issho\auto_ss\auto_class\capture_20250503_195236
+2025-05-03 19:52:36,224 - INFO - MainThread - フォルダへの書き込み権限を確認しました: C:\Users\issho\auto_ss\auto_class\capture_20250503_195236
+2025-05-03 19:52:36,225 - INFO - MainThread - スクリーンショットキャプチャを開始します。
+2025-05-03 19:52:36,225 - INFO - ScreenshotThread - スクリーンショットキャプチャループを開始します。
+2025-05-03 19:52:36,225 - INFO - MainThread - 録画を開始します。対象ウィンドウハンドル: 789570
+2025-05-03 19:52:36,226 - INFO - RecordingThread - 録画ループを開始します。対象ウィンドウハンドル: 789570
+2025-05-03 19:52:36,226 - INFO - AudioRecordingThread - 音声録音ループ (SoundCard) を開始します
+2025-05-03 19:52:36,245 - INFO - RecordingThread - 対象ウィンドウの位置とサイズ: (1912, -8, 1936, 1048)
+2025-05-03 19:52:36,281 - INFO - AudioRecordingThread - 取得したマイクデバイス: スピーカー (Realtek(R) Audio)
+2025-05-03 19:52:36,282 - INFO - AudioRecordingThread - マイクデバイスの型: <class 'soundcard.mediafoundation._Microphone'>
+2025-05-03 19:52:36,282 - ERROR - AudioRecordingThread - マイクデバイスからサンプルレートまたはチャンネル数を取得できませんでした: '_Microphone' object has no attribute 'samplerate'
+2025-05-03 19:52:36,282 - WARNING - AudioRecordingThread - デフォルト値を使用します - サンプルレート: 48000, チャンネル数: 2
+2025-05-03 19:52:36,325 - INFO - AudioRecordingThread - レコーダーオブジェクトの型: <class 'soundcard.mediafoundation._Recorder'>
+2025-05-03 19:52:36,326 - INFO - AudioRecordingThread - 録音中: スピーカー (Realtek(R) Audio) (ループバック)
+2025-05-03 19:52:36,352 - WARNING - AudioRecordingThread - C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-05-03 19:52:36,355 - INFO - ScreenshotThread - 最初のスクリーンショットを保存します。
+2025-05-03 19:52:36,415 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250503_195236\screenshot_20250503_195236_356.png
+2025-05-03 19:52:38,320 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-03 19:52:38,404 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250503_195236\screenshot_20250503_195238_321.png
+2025-05-03 19:52:40,318 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-03 19:52:40,405 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250503_195236\screenshot_20250503_195240_319.png
+2025-05-03 19:52:42,317 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-03 19:52:42,398 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250503_195236\screenshot_20250503_195242_318.png
+2025-05-03 19:52:44,317 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-03 19:52:44,402 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250503_195236\screenshot_20250503_195244_318.png
+2025-05-03 19:52:45,284 - INFO - RecordingThread - 録画フレーム数: 10, 経過時間: 9.00秒
+2025-05-03 19:52:46,320 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-03 19:52:46,391 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250503_195236\screenshot_20250503_195246_321.png
+2025-05-03 19:52:48,313 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-03 19:52:48,389 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250503_195236\screenshot_20250503_195248_314.png
+2025-05-03 19:52:52,313 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-03 19:52:52,367 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250503_195236\screenshot_20250503_195252_315.png
+2025-05-03 19:52:55,280 - INFO - RecordingThread - 録画フレーム数: 20, 経過時間: 19.00秒
+2025-05-03 19:52:56,319 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-03 19:52:56,390 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250503_195236\screenshot_20250503_195256_319.png
+2025-05-03 19:53:00,326 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-03 19:53:00,400 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250503_195236\screenshot_20250503_195300_327.png
+2025-05-03 19:53:02,120 - INFO - MainThread - 全てのタスクの停止処理を開始します。
+2025-05-03 19:53:02,120 - INFO - MainThread - 録画停止処理を開始します。
+2025-05-03 19:53:02,120 - INFO - MainThread - 録画スレッドの終了を待機します...
+2025-05-03 19:53:02,122 - INFO - AudioRecordingThread - 音声録音ループ (SoundCard) を終了します
+2025-05-03 19:53:02,250 - INFO - RecordingThread - 録画ループを終了します。合計フレーム数: 26
+2025-05-03 19:53:02,253 - INFO - MainThread - 録画スレッドが終了しました。
+2025-05-03 19:53:02,254 - INFO - MainThread - 動画ファイルの保存を開始します: C:\Users\issho\auto_ss\auto_class\capture_20250503_195236\recording_20250503_195302.mp4
+2025-05-03 19:53:02,255 - INFO - MainThread - 動画保存スレッドを開始しました。
+2025-05-03 19:53:02,256 - INFO - MainThread - 録画停止処理を完了しました。
+2025-05-03 19:53:02,256 - INFO - MainThread - スクリーンショットキャプチャの停止処理を開始します。
+2025-05-03 19:53:02,256 - INFO - MainThread - スクリーンショットキャプチャスレッドの終了を待機します...
+2025-05-03 19:53:02,258 - INFO - VideoSaveThread - 音声データを連結しました。サンプル数: 1238016, dtype: float32
+2025-05-03 19:53:02,286 - INFO - VideoSaveThread - 合計 26 フレームを動画クリップに使用します。
+2025-05-03 19:53:02,287 - INFO - VideoSaveThread - 推定FPS: 1.00
+2025-05-03 19:53:02,287 - WARNING - VideoSaveThread - 音声クリップ (25.79s) が動画クリップ (26.00s) より短いです。
+2025-05-03 19:53:02,287 - INFO - VideoSaveThread - AudioArrayClipを作成しました。Duration: 25.79秒
+2025-05-03 19:53:02,288 - INFO - VideoSaveThread - 動画と音声を結合しました。
+2025-05-03 19:53:02,288 - INFO - VideoSaveThread - 動画ファイルを書き出します: C:\Users\issho\auto_ss\auto_class\capture_20250503_195236\recording_20250503_195302.mp4
+2025-05-03 19:53:02,340 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-03 19:53:03,992 - INFO - VideoSaveThread - 動画ファイルを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250503_195236\recording_20250503_195302.mp4
+2025-05-03 19:53:03,992 - INFO - VideoSaveThread - 動画保存処理を終了します。
+2025-05-03 19:53:07,268 - WARNING - MainThread - スクリーンショットキャプチャスレッドが時間内に終了しませんでした。
+2025-05-03 19:53:07,269 - INFO - MainThread - スクリーンショットキャプチャの停止処理を完了しました。
+2025-05-03 19:53:07,270 - INFO - MainThread - 最後に保存された動画ファイルでノート作成を開始します: C:\Users\issho\auto_ss\auto_class\capture_20250503_195236\recording_20250503_195302.mp4
+2025-05-03 19:53:07,270 - WARNING - MainThread - Gemini API クライアントが設定されていないため、ノート作成を開始できません。
+2025-05-03 19:53:07,270 - INFO - MainThread - 全てのタスクの停止処理を完了しました。
+2025-05-03 19:53:07,346 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250503_195236\screenshot_20250503_195307_270.png
+2025-05-03 19:53:07,347 - INFO - ScreenshotThread - スクリーンショットキャプチャループを終了します。
+2025-05-03 20:32:47,555 - INFO - MainThread - アプリケーション終了処理を開始します。
+2025-05-03 20:32:47,590 - INFO - MainThread - アプリケーションを終了しました。
