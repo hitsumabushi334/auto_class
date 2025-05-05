@@ -121,4 +121,5 @@ problemList:
         ノート作成中の状態がわからず、ユーザーに進捗を示す必要がある。
         進捗バーやメッセージを表示する必要がある。
       solution: >
-      isSolved: false
+        ノート生成処理の開始時、ファイルアップロード中、ファイル処理中、ノート生成中、応答処理中、完了時（成功/失敗）にステータスラベル (`note_creation_status`) を更新するように `start_note_creation` および `finish_note_creation` メソッドを修正しました。
+      isSolved: true

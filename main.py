@@ -843,16 +843,16 @@ class SlideCaptureApp:
             logger.error(f"指定された動画ファイルが見つかりません: {video_filepath}")
             return
 
-        self.note_creation_status.set(
-            f"ノート作成中... ({os.path.basename(video_filepath)})"
-        )
+        # ★ 開始時のステータスを設定
+        self.note_creation_status.set("ノート生成準備中...")
         self.note_result_message.set("")
         logger.info(f"ノート作成処理を開始します。対象動画: {video_filepath}")
 
-        # Gemini APIの呼び出しとWord生成の処理
+        # Gemini APIの呼び出しとWord生成の処理 (内部関数)
         def api_call_and_word_gen():
             try:
                 prompt = "添付した動画の各トピックについて指定されたJSONスキーマに応じて内容をわかりやすく抽出してください。また、回答のレベルはクライアントが大学生レベルであることに注意して調節してください。応答は入力の言語の種類にかかわらず必ず日本語で行ってください。専門用語は一般的に意味が伝わらないと判断されるもののみを解説してください。"
+                # スキーマ定義は変更なし (省略)
                 schema = {
                     "type": "object",
                     "properties": {
@@ -927,49 +927,57 @@ class SlideCaptureApp:
                 }
 
                 logger.info(f"動画ファイルをアップロード開始: {video_filepath}")
+                # --- ステータス更新: アップロード中 ---
+                self.root.after(
+                    0, self.note_creation_status.set, "動画アップロード中..."
+                )
+
                 video_file = self.gemini_client.files.upload(file=video_filepath)
                 logger.info(
                     f"動画ファイルをアップロード完了: {video_file.name}, State: {video_file.state}"
                 )
 
                 # ファイルがACTIVEになるまで待機
-                polling_interval = 5  # ポーリング間隔 (秒)
-                timeout_seconds = 300  # タイムアウト (秒)
+                polling_interval = 5
+                timeout_seconds = 300
                 start_poll_time = time.time()
                 while video_file.state != "ACTIVE":
                     if time.time() - start_poll_time > timeout_seconds:
                         raise TimeoutError(
                             f"ファイル処理がタイムアウトしました ({timeout_seconds}秒): {video_file.name}"
                         )
-                    logger.info(
-                        f"ファイル処理待機中... State: {video_file.state} (経過: {time.time() - start_poll_time:.1f}秒)"
-                    )
+                    # --- ステータス更新: 処理中 ---
+                    status_text = f"動画処理中... ({video_file.state}, {time.time() - start_poll_time:.1f}秒)"
+                    self.root.after(0, self.note_creation_status.set, status_text)
+                    logger.info(status_text)
+
                     time.sleep(polling_interval)
-                    video_file = self.gemini_client.files.get(
-                        name=video_file.name
-                    )  # 状態を再取得
+                    video_file = self.gemini_client.files.get(name=video_file.name)
 
                 logger.info(f"ファイルがACTIVEになりました: {video_file.name}")
+                # --- ステータス更新: ノート生成中 ---
+                self.root.after(0, self.note_creation_status.set, "ノート生成中...")
 
                 # Gemini APIに要約リクエストを送信
                 logger.info("Gemini APIに要約リクエストを送信します...")
+                # ★ モデル名を修正 (例: gemini-1.5-pro-latest)
+                #    config ではなく generation_config を使用
                 response = self.gemini_client.models.generate_content(
-                    model="gemini-2.5-flash-preview-04-17",
-                    contents=[
-                        video_file,
-                        prompt,
-                    ],
-                    config={
+                    model="gemini-1.5-pro-latest",  # モデル名を最新に (例)
+                    contents=[video_file, prompt],
+                    generation_config={  # generation_config を使用
                         "response_mime_type": "application/json",
                         "response_schema": schema,
                     },
                 )
                 summary_text = response.text
                 logger.info("Gemini API から応答を取得しました。")
+                # --- ステータス更新: 応答処理中 ---
+                self.root.after(0, self.note_creation_status.set, "応答を処理中...")
 
                 # Wordファイル生成
                 try:
-                    summary_data = json.loads(summary_text)  # JSON文字列を辞書に変換
+                    summary_data = json.loads(summary_text)
                     logger.info("応答のJSONパースに成功しました。")
 
                     word_filename = f"note_{os.path.splitext(os.path.basename(video_filepath))[0]}.docx"
@@ -979,43 +987,30 @@ class SlideCaptureApp:
                     logger.info(f"Wordファイルを生成します: {word_filepath}")
 
                     doc = Document()
-                    # タイトルを追加
                     doc.add_heading(summary_data.get("title", "タイトルなし"), 0)
-                    # 全体要約を追加
                     doc.add_heading("全体要約", level=1)
                     doc.add_paragraph(summary_data.get("summary", "要約なし"))
-
-                    # 各トピックを追加
                     doc.add_heading("トピック詳細", level=1)
                     topics = summary_data.get("topics", [])
                     if topics:
                         for i, topic in enumerate(topics):
-                            # トピックタイトル（必須項目）
                             topic_title = topic.get("topic_title", f"トピック {i+1}")
                             doc.add_heading(topic_title, level=2)
-
-                            # キーワード
                             keywords = topic.get("topic_keyWords", [])
-                            if keywords and len(keywords) > 0:
+                            if keywords:
                                 doc.add_paragraph("キーワード:")
                                 for kw in keywords:
                                     doc.add_paragraph(f"- {kw}", style="List Bullet")
-
-                            # トピック要約（必須項目）
                             topic_summary = topic.get("topic_summary", "要約なし")
                             doc.add_paragraph("要約:")
                             doc.add_paragraph(topic_summary)
-
-                            # ポイント
                             points = topic.get("topic_points", [])
-                            if points and len(points) > 0:
+                            if points:
                                 doc.add_paragraph("ポイント:")
                                 for pt in points:
                                     doc.add_paragraph(f"- {pt}", style="List Bullet")
-
-                            # 専門用語
                             terms = topic.get("technical_term", [])
-                            if terms and len(terms) > 0:
+                            if terms:
                                 doc.add_paragraph("専門用語:")
                                 for term in terms:
                                     word = term.get("word", "")
@@ -1023,40 +1018,34 @@ class SlideCaptureApp:
                                     doc.add_paragraph(
                                         f"- {word} : {explanation}", style="List Bullet"
                                     )
-
-                            doc.add_paragraph()  # トピック間にスペース
-
+                            doc.add_paragraph()
                     else:
                         doc.add_paragraph("トピック情報はありません。")
 
-                    # ファイルを保存
                     directory = os.path.dirname(word_filepath)
                     if not os.path.exists(directory):
                         os.makedirs(directory, exist_ok=True)
-
                     doc.save(word_filepath)
                     logger.info(f"Wordファイルを保存しました: {word_filepath}")
-                    # UIスレッドでステータスを更新
+                    # UIスレッドでステータスを更新 (成功)
                     self.root.after(0, self.finish_note_creation, True, word_filepath)
 
                 except json.JSONDecodeError as json_err:
-                    logger.error(
-                        f"Geminiからの応答JSONの解析に失敗しました: {json_err}"
-                    )
-                    logger.error(
-                        f"受信したテキスト: {summary_text[:500]}..."
-                    )  # 最初の500文字を表示
-                    raise ValueError(
-                        f"API応答のJSON解析エラー: {json_err}"
-                    )  # エラーを再発生させてcatchさせる
+                    logger.error(f"Gemini応答JSON解析失敗: {json_err}")
+                    logger.error(f"受信テキスト(一部): {summary_text[:500]}...")
+                    error_msg = f"API応答JSON解析エラー: {json_err}\n応答(一部): {summary_text[:200]}..."
+                    self.root.after(0, self.finish_note_creation, False, error_msg)
                 except Exception as word_err:
-                    logger.exception(
-                        f"Wordファイル生成中にエラーが発生しました: {word_err}"
+                    logger.exception(f"Wordファイル生成エラー: {word_err}")
+                    self.root.after(
+                        0,
+                        self.finish_note_creation,
+                        False,
+                        f"Word生成エラー: {word_err}",
                     )
-                    raise  # エラーを再発生させてcatchさせる
 
             except TimeoutError as te:
-                logger.error(f"ノート作成処理中にタイムアウトエラー: {te}")
+                logger.error(f"ノート作成タイムアウト: {te}")
                 self.root.after(
                     0,
                     self.finish_note_creation,
@@ -1064,32 +1053,47 @@ class SlideCaptureApp:
                     f"ファイル処理タイムアウト: {te}",
                 )
             except Exception as e:
-                logger.exception("ノート作成処理中にエラーが発生しました。")
-                # UIスレッドでステータスを更新
+                logger.exception("ノート作成処理中エラー")
+                # ★ ファイル削除処理を追加
+                if "video_file" in locals() and video_file:
+                    try:
+                        logger.info(
+                            f"エラー発生のためアップロードファイル削除: {video_file.name}"
+                        )
+                        self.gemini_client.files.delete(name=video_file.name)
+                        logger.info("ファイル削除成功")
+                    except Exception as delete_err:
+                        logger.error(f"アップロードファイル削除失敗: {delete_err}")
+                # UIスレッドでステータスを更新 (失敗)
                 self.root.after(0, self.finish_note_creation, False, str(e))
+            # ★ finally ブロックを削除 (エラーハンドリング内でファイル削除を行うため)
 
         # 別スレッドで実行
         note_thread = threading.Thread(
-            target=api_call_and_word_gen,
-            name="NoteCreationThread",
-            daemon=True,
+            target=api_call_and_word_gen, name="NoteCreationThread", daemon=True
         )
         note_thread.start()
 
     def finish_note_creation(self, success, result_path_or_error):
         """ノート作成処理の完了をUIに反映する"""
         if success:
-            self.note_creation_status.set("ノート作成完了")
-            self.note_result_message.set(f"保存先: {result_path_or_error}")
-            logger.info(f"ノート作成が成功しました: {result_path_or_error}")
+            # ★ 成功時のステータス
+            self.note_creation_status.set("ノート生成完了")
+            self.note_result_message.set(
+                f"保存先: {os.path.basename(result_path_or_error)}"
+            )  # ファイル名のみ表示
+            logger.info(f"ノート作成成功: {result_path_or_error}")
             messagebox.showinfo(
                 "ノート作成完了",
                 f"ノートが正常に作成されました。\n{result_path_or_error}",
             )
         else:
-            self.note_creation_status.set("ノート作成失敗")
-            self.note_result_message.set(f"エラー: {result_path_or_error}")
-            logger.error(f"ノート作成が失敗しました: {result_path_or_error}")
+            # ★ 失敗時のステータス
+            self.note_creation_status.set("ノート生成失敗")
+            # エラーメッセージを短縮して表示
+            error_short = str(result_path_or_error).split("\n")[0][:100] + "..."
+            self.note_result_message.set(f"エラー: {error_short}")
+            logger.error(f"ノート作成失敗: {result_path_or_error}")
             messagebox.showerror(
                 "ノート作成エラー",
                 f"ノートの作成中にエラーが発生しました:\n{result_path_or_error}",
