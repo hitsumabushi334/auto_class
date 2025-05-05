@@ -75,7 +75,7 @@ class SlideCaptureApp:
         self.audio_sample_rate = None  # SoundCard で取得したサンプルレートを保存
         self.audio_channels = None  # SoundCard で取得したチャンネル数を保存
         self.last_sound_time = None  # 最後に音声を検知した時刻
-        self.no_sound_timeout_seconds = 240  # 無音状態のタイムアウト秒数 (4分)
+        self.no_sound_timeout_seconds = 180  # 無音状態のタイムアウト秒数 (3分)
         self.silence_threshold = (
             0.01  # 無音と判定する振幅の閾値 (0.0 から 1.0 の範囲で調整)
         )
@@ -984,6 +984,7 @@ class SlideCaptureApp:
                         "response_schema": schema,
                     },
                 )
+                self.gemini_client.files.delete(name=video_file.name)
                 summary_text = response.text
                 logger.info("Gemini API から応答を取得しました。")
                 # --- ステータス更新: 応答処理中 ---
@@ -1145,6 +1146,7 @@ class SlideCaptureApp:
         self.folder_entry.config(state=tk.NORMAL)
         self.refresh_window_list_button.config(state=tk.NORMAL)  # 再度有効化
         self.window_listbox.config(state=tk.NORMAL)
+        self.root.update()
 
         # ★★★ ノート作成開始ロジックを削除 ★★★
         # ノート作成は _save_video_with_audio からトリガーされるため、ここでのチェックは不要
