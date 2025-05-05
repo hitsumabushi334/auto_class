@@ -10,6 +10,7 @@ import traceback  # スタックトレース取得のため
 
 from certifi import contents
 import win32gui  # ウィンドウ操作のため追加
+import google.genai  # google モジュールを明示的にインポート
 from google import genai
 from docx import Document  # Wordファイル生成のため追加
 from docx.shared import Inches  # Wordファイル生成のため追加 (必要に応じて)
@@ -865,7 +866,7 @@ class SlideCaptureApp:
         # Gemini APIの呼び出しとWord生成の処理 (内部関数)
         def api_call_and_word_gen():
             try:
-                prompt = "添付した動画の各トピックについて指定されたJSONスキーマに応じて内容をわかりやすく抽出してください。また、回答のレベルはクライアントが大学生レベルであることに注意して調節してください。応答は入力の言語の種類にかかわらず必ず日本語で行ってください。専門用語は一般的に意味が伝わらないと判断されるもののみを解説してください。"
+                prompt = "添付した動画の各トピックについて指定されたJSONスキーマに応じて内容をわかりやすく抽出してください。また、回答のレベルはクライアントが大学生レベルであることに注意して調節してください。応答は入力の言語の種類にかかわらず必ず日本語で行ってください。専門用語は一般的に意味が伝わらないと判断されるもののみを解説してください。動画の内容と関係ない部分についてはノイズとして無視してください。"
                 # スキーマ定義は変更なし (省略)
                 schema = {
                     "type": "object",
@@ -953,7 +954,7 @@ class SlideCaptureApp:
 
                 # ファイルがACTIVEになるまで待機
                 polling_interval = 5
-                timeout_seconds = 900
+                timeout_seconds = 1800
                 start_poll_time = time.time()
                 while video_file.state != "ACTIVE":
                     if time.time() - start_poll_time > timeout_seconds:
@@ -976,14 +977,7 @@ class SlideCaptureApp:
                 logger.info("Gemini APIに要約リクエストを送信します...")
                 # ★ モデル名を修正 (例: gemini-1.5-pro-latest)
                 #    config ではなく generation_config を使用
-                response = self.gemini_client.models.generate_content(
-                    model="gemini-2.5-flash-preview-04-17",  # モデル名を最新に (例)
-                    contents=[video_file, prompt],
-                    config={  # generation_config を使用
-                        "response_mime_type": "application/json",
-                        "response_schema": schema,
-                    },
-                )
+                response = self.api_call_with_retry(video_file, prompt, schema)
                 self.gemini_client.files.delete(name=video_file.name)
                 summary_text = response.text
                 logger.info("Gemini API から応答を取得しました。")
@@ -1089,6 +1083,31 @@ class SlideCaptureApp:
         )
         note_thread.start()
 
+    def api_call_with_retry(
+        self, video_file, prompt, schema, max_retries=3, retry_delay=5
+    ):
+        """リトライロジックを持つAPIコール"""
+        for attempt in range(max_retries):
+            try:
+                logger.info(f"Gemini API呼び出し試行 {attempt+1}/{max_retries}")
+                response = self.gemini_client.models.generate_content(
+                    model="gemini-2.0-flash",
+                    contents=[video_file, prompt],
+                    config={
+                        "response_mime_type": "application/json",
+                        "response_schema": schema,
+                    },
+                )
+                return response
+            except google.genai.errors.ServerError as e:
+                logger.warning(f"APIサーバーエラー（試行 {attempt+1}）: {e}")
+                if attempt < max_retries - 1:
+                    logger.info(f"{retry_delay}秒後に再試行します...")
+                    time.sleep(retry_delay)
+                else:
+                    logger.error(f"最大試行回数に達しました。エラー: {e}")
+                    raise
+
     def finish_note_creation(self, success, result_path_or_error):
         """ノート作成処理の完了をUIに反映する"""
         if success:
@@ -1119,6 +1138,12 @@ class SlideCaptureApp:
         # --- GUI操作制限解除 (閉じるボタンのみ) ---
         # ボタン類の状態は stop_all_tasks でリセットされるため、ここでは閉じるボタンの挙動のみ元に戻す
         logger.info("ノート作成完了: 閉じるボタンの挙動を元に戻します。")
+        self.start_button.config(state=tk.NORMAL)
+        self.stop_button.config(state=tk.DISABLED)
+        self.folder_entry.config(state=tk.NORMAL)
+        self.refresh_window_list_button.config(state=tk.NORMAL)  # 再度有効化
+        self.window_listbox.config(state=tk.NORMAL)
+        self.root.update()
         if hasattr(self, "original_on_closing"):  # 念のため存在確認
             self.root.protocol("WM_DELETE_WINDOW", self.original_on_closing)
         else:  # フォールバック: もし original_on_closing がなければデフォルトの閉じる動作
@@ -1139,14 +1164,6 @@ class SlideCaptureApp:
         # スクリーンショット停止
         if self.is_capturing_screenshot:
             self.stop_screenshot_capture()
-
-        # 統合ボタンの状態更新
-        self.start_button.config(state=tk.NORMAL)
-        self.stop_button.config(state=tk.DISABLED)
-        self.folder_entry.config(state=tk.NORMAL)
-        self.refresh_window_list_button.config(state=tk.NORMAL)  # 再度有効化
-        self.window_listbox.config(state=tk.NORMAL)
-        self.root.update()
 
         # ★★★ ノート作成開始ロジックを削除 ★★★
         # ノート作成は _save_video_with_audio からトリガーされるため、ここでのチェックは不要
