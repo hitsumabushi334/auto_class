@@ -761,8 +761,8 @@ class SlideCaptureApp:
                     audio_codec="aac",
                     temp_audiofile="temp-audio.m4a",  # 一時ファイル名を指定
                     remove_temp=True,  # 一時ファイルを削除
-                    threads=4,  # CPUコア数に合わせて調整
-                    preset="medium",  # 品質と速度のバランス
+                    threads=8,  # CPUコア数に合わせて調整
+                    preset="fast",  # 品質と速度のバランス
                     logger=None,  # MoviePyのログを無効化 (Pythonのloggingを使用するため)
                 )
                 logger.info(f"動画ファイルを保存しました: {output_filepath}")
