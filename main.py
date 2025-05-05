@@ -866,7 +866,21 @@ class SlideCaptureApp:
         # Gemini APIの呼び出しとWord生成の処理 (内部関数)
         def api_call_and_word_gen():
             try:
-                prompt = "添付した動画の各トピックについて指定されたJSONスキーマに応じて内容をわかりやすく抽出してください。また、回答のレベルはクライアントが大学生レベルであることに注意して調節してください。応答は入力の言語の種類にかかわらず必ず日本語で行ってください。専門用語は一般的に意味が伝わらないと判断されるもののみを解説してください。動画の内容と関係ない部分についてはノイズとして無視してください。"
+                prompt = """添付された動画の内容を分析し、各トピックごとに指定されたJSONスキーマに沿って情報を抽出してください。情報抽出の際は、次の条件を満たすようにしてください。\n
+                - クライアントの理解レベルは「大学生程度」を想定し、専門的な表現は避け、平易な日本語で記述してください。\n
+                - 専門用語は、一般的に意味が伝わらないと判断されるもののみ簡潔に解説を加えてくださ  い。\n
+                - 応答は常に日本語で行い、入力が他言語であっても翻訳せず日本語で応答してください。\n
+                - 動画内で本筋と無関係な内容（雑談・ノイズ等）は除外してください。\n
+                - 各トピックの抽出・解釈・変換は、推論のプロセス（Thinking）と最終出力（Result）に分けて順序立てて記述してください。\n
+
+                # Output Format\n
+                指定されたJSONスキーマに従って、出力してください。\n
+
+                # Notes\n
+
+                - JSONスキーマの具体的な構造は別途提供される前提で処理を行ってください。\n
+                - thinkingセクションでは、動画内の文脈・発話・論理の流れを明示的に示してください（単なる要約ではなく、どのようにその要約に至ったかを示してください）。\n
+                - topicsセクションでは、思考の結論として整理された最終出力を記述してください。\n"""
                 # スキーマ定義は変更なし (省略)
                 schema = {
                     "type": "object",
@@ -928,17 +942,35 @@ class SlideCaptureApp:
                                             "required": ["word", "explanation"],
                                         },
                                     },
+                                    "topic_thinking": {
+                                        "type": "string",
+                                        "description": "各トピックでの思考過程",
+                                    },
                                 },
                                 "required": [
                                     "topic_title",
                                     "topic_summary",
                                     "topic_keyWords",
                                     "topic_points",
+                                    "topic_thinking",
+                                ],
+                                "propertyOrdering": [
+                                    "topic_thinking",
+                                    "topic_title",
+                                    "topic_summary",
+                                    "topic_keyWords",
+                                    "topic_points",
+                                    "technical_term",
                                 ],
                             },
                         },
+                        "thinking": {
+                            "type": "string",
+                            "description": "全体の思考過程",
+                        },
                     },
-                    "required": ["title", "summary", "topics"],
+                    "required": ["title", "summary", "topics", "thinking"],
+                    "propertyOrdering": ["thinking", "title", "summary", "topics"],
                 }
 
                 logger.info(f"動画ファイルをアップロード開始: {video_filepath}")
@@ -947,29 +979,169 @@ class SlideCaptureApp:
                     0, self.note_creation_status.set, "動画アップロード中..."
                 )
 
-                video_file = self.gemini_client.files.upload(file=video_filepath)
-                logger.info(
-                    f"動画ファイルをアップロード完了: {video_file.name}, State: {video_file.state}"
-                )
+                # --- ファイルアップロードと状態待機 (再試行ロジック付き) ---
+                max_retries = 3
+                retry_delay = 1  # seconds
+                video_file = None
+                upload_and_wait_success = False
 
-                # ファイルがACTIVEになるまで待機
-                polling_interval = 5
-                timeout_seconds = 1800
-                start_poll_time = time.time()
-                while video_file.state != "ACTIVE":
-                    if time.time() - start_poll_time > timeout_seconds:
-                        raise TimeoutError(
-                            f"ファイル処理がタイムアウトしました ({timeout_seconds}秒): {video_file.name}"
+                for attempt in range(max_retries):
+                    try:
+                        logger.info(
+                            f"動画ファイルアップロード試行 {attempt + 1}/{max_retries}: {video_filepath}"
                         )
-                    # --- ステータス更新: 処理中 ---
-                    status_text = f"動画処理中... ({video_file.state}, {time.time() - start_poll_time:.1f}秒)"
-                    self.root.after(0, self.note_creation_status.set, status_text)
-                    logger.info(status_text)
+                        self.root.after(
+                            0,
+                            self.note_creation_status.set,
+                            f"動画ファイルアップロード試行 {attempt + 1}/{max_retries}...",
+                        )
 
-                    time.sleep(polling_interval)
-                    video_file = self.gemini_client.files.get(name=video_file.name)
+                        # 1. ファイルアップロード
+                        video_file = self.gemini_client.files.upload(
+                            file=video_filepath
+                        )
+                        logger.info(
+                            f"アップロード開始: {video_file.name}, State: {video_file.state}"
+                        )
+                        self.root.after(
+                            0,
+                            self.note_creation_status.set,
+                            f"アップロード開始: {video_file.state}",
+                        )
 
-                logger.info(f"ファイルがACTIVEになりました: {video_file.name}")
+                        # 2. ファイルがACTIVEになるまで待機
+                        polling_interval = 5
+                        timeout_seconds = 1800  # 30分
+                        start_poll_time = time.time()
+                        while video_file.state != "ACTIVE":
+                            if time.time() - start_poll_time > timeout_seconds:
+                                raise TimeoutError(
+                                    f"ファイル処理がタイムアウトしました ({timeout_seconds}秒): {video_file.name}"
+                                )
+
+                            # --- ステータス更新: 処理中 ---
+                            elapsed_time = time.time() - start_poll_time
+                            status_text = f"動画処理中... ({video_file.state}, {elapsed_time:.1f}秒)"
+                            self.root.after(
+                                0, self.note_creation_status.set, status_text
+                            )
+                            logger.info(status_text)
+
+                            time.sleep(polling_interval)
+                            video_file = self.gemini_client.files.get(
+                                name=video_file.name
+                            )  # 最新の状態を取得
+
+                        logger.info(f"ファイルがACTIVEになりました: {video_file.name}")
+                        self.root.after(
+                            0,
+                            self.note_creation_status.set,
+                            "ファイル処理完了 (ACTIVE)",
+                        )
+                        upload_and_wait_success = True
+                        break  # 成功したらループを抜ける
+
+                    except TimeoutError as timeout_err:
+                        logger.warning(
+                            f"試行 {attempt + 1}/{max_retries}: ファイル処理タイムアウト - {timeout_err}"
+                        )
+                        # タイムアウトの場合はアップロードされたファイルを削除試行 (失敗しても無視)
+                        if video_file and video_file.name:
+                            try:
+                                logger.info(
+                                    f"タイムアウトしたファイル {video_file.name} を削除します。"
+                                )
+                                self.gemini_client.files.delete(name=video_file.name)
+                            except Exception as delete_err:
+                                logger.warning(
+                                    f"タイムアウトしたファイルの削除中にエラー: {delete_err}"
+                                )
+                        video_file = None  # ファイル参照をリセット
+
+                        if attempt < max_retries - 1:
+                            logger.info(f"{retry_delay}秒後に再試行します...")
+                            self.root.after(
+                                0,
+                                self.note_creation_status.set,
+                                f"タイムアウト、再試行 ({attempt + 1}/{max_retries})... {retry_delay}秒待機",
+                            )
+                            time.sleep(retry_delay)
+                            retry_delay *= 2  # 指数バックオフ
+                        else:
+                            logger.exception(
+                                f"ファイル処理が最終的にタイムアウトしました (試行 {max_retries}回): {timeout_err}"
+                            )
+                            self.root.after(
+                                0,
+                                self.note_creation_status.set,
+                                f"エラー: ファイル処理タイムアウト (試行 {max_retries}回)",
+                            )
+                            self.root.after(
+                                0,
+                                self.finish_note_creation,
+                                False,
+                                f"ファイル処理タイムアウト (試行 {max_retries}回): {timeout_err}",
+                            )
+                            return  # 処理中断
+
+                    except Exception as upload_err:
+                        logger.warning(
+                            f"試行 {attempt + 1}/{max_retries}: アップロードまたは状態確認中にエラー - {upload_err}"
+                        )
+                        # エラー発生時もファイルを削除試行
+                        if video_file and video_file.name:
+                            try:
+                                logger.info(
+                                    f"エラーが発生したファイル {video_file.name} を削除します。"
+                                )
+                                self.gemini_client.files.delete(name=video_file.name)
+                            except Exception as delete_err:
+                                logger.warning(
+                                    f"エラーファイルの削除中にエラー: {delete_err}"
+                                )
+                        video_file = None  # ファイル参照をリセット
+
+                        if attempt < max_retries - 1:
+                            logger.info(f"{retry_delay}秒後に再試行します...")
+                            self.root.after(
+                                0,
+                                self.note_creation_status.set,
+                                f"エラー発生、再試行 ({attempt + 1}/{max_retries})... {retry_delay}秒待機",
+                            )
+                            time.sleep(retry_delay)
+                            retry_delay *= 2  # 指数バックオフ
+                        else:
+                            logger.exception(
+                                f"ファイルアップロード/処理が最終的に失敗しました (試行 {max_retries}回): {upload_err}"
+                            )
+                            self.root.after(
+                                0,
+                                self.note_creation_status.set,
+                                f"エラー: アップロード/処理失敗 (試行 {max_retries}回)",
+                            )
+                            self.root.after(
+                                0,
+                                self.finish_note_creation,
+                                False,
+                                f"アップロード/処理エラー (試行 {max_retries}回): {upload_err}",
+                            )
+                            return  # 処理中断
+
+                # ループを抜けた後、成功フラグを確認
+                if not upload_and_wait_success or video_file is None:
+                    logger.error(
+                        "不明な理由でファイルアップロード/処理に失敗しました。"
+                    )
+                    self.root.after(
+                        0,
+                        self.note_creation_status.set,
+                        "エラー: ファイル処理失敗 (不明)",
+                    )
+                    self.root.after(
+                        0, self.finish_note_creation, False, "ファイル処理エラー (不明)"
+                    )
+                    return
+
                 # --- ステータス更新: ノート生成中 ---
                 self.root.after(0, self.note_creation_status.set, "ノート生成中...")
 
@@ -1091,7 +1263,7 @@ class SlideCaptureApp:
             try:
                 logger.info(f"Gemini API呼び出し試行 {attempt+1}/{max_retries}")
                 response = self.gemini_client.models.generate_content(
-                    model="gemini-2.0-flash",
+                    model="gemini-2.5-flash-preview-04-17",
                     contents=[video_file, prompt],
                     config={
                         "response_mime_type": "application/json",
