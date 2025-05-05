@@ -80,13 +80,15 @@ class SlideCaptureApp:
         self.silence_threshold = (
             0.01  # 無音と判定する振幅の閾値 (0.0 から 1.0 の範囲で調整)
         )
+        # ユーザー指示に基づきモデル名を更新 (ただし、実際のAPI呼び出しでは利用可能なモデルを確認すること)
         self.gemini_model_options = [
             "models/gemini-1.5-flash-latest",  # 短時間用 (デフォルト)
             "models/gemini-1.5-pro-latest",  # 長時間用
         ]
+
         self.selected_gemini_model = tk.StringVar(
-            value=self.gemini_model_options[0]
-        )  # デフォルト選択
+            value=self.gemini_model_options[0]  # デフォルトは短時間用
+        )
 
         # --- Gemini API 設定 ---
         try:
@@ -167,7 +169,14 @@ class SlideCaptureApp:
             state="readonly",  # ユーザー入力不可
             width=40,  # 幅調整
         )
-        self.model_combobox.pack(side=tk.LEFT, expand=True, fill=tk.X)
+        self.model_combobox.pack(side=tk.LEFT, padx=(0, 5))  # 右に少し余白
+        self.model_combobox.bind(
+            "<<ComboboxSelected>>", self._on_gemini_model_selected
+        )  # イベントハンドラをバインド
+
+        # 用途表示ラベルを追加
+        self.gemini_model_description_label = ttk.Label(model_selection_frame, text="")
+        self.gemini_model_description_label.pack(side=tk.LEFT, fill=tk.X, expand=True)
 
         # --- 操作ボタン (統合) ---
         button_frame = ttk.Frame(root, padding="10")
@@ -245,6 +254,7 @@ class SlideCaptureApp:
 
         logger.info("アプリケーションを初期化しました。")
         self.refresh_window_list()  # 初期ウィンドウリスト表示
+        self._on_gemini_model_selected()  # 初期モデルの用途を表示
 
     # --- ウィンドウ選択関連メソッド ---
     def refresh_window_list(self):
@@ -302,6 +312,24 @@ class SlideCaptureApp:
             )
             self.selected_window_handle.set(0)
             # self.start_recording_button.config(state=tk.DISABLED) # 個別ボタン削除
+
+    def _on_gemini_model_selected(self, event=None):
+        """Geminiモデル選択コンボボックスの値が変更されたときに呼び出される"""
+        selected_model = self.selected_gemini_model.get()
+        description = ""
+        if selected_model == "models/gemini-1.5-pro-latest":
+            description = "用途: 長時間動画・高精度向け"
+        elif selected_model == "models/gemini-1.5-flash-latest":
+            description = "用途: 短時間動画・高速処理向け"
+        else:
+            # 予期しないモデルが選択された場合 (念のため)
+            description = "用途: 不明"
+            logger.warning(f"不明なGeminiモデルが選択されました: {selected_model}")
+
+        self.gemini_model_description_label.config(text=description)
+        logger.info(
+            f"Geminiモデル '{selected_model}' が選択されました。用途: {description}"
+        )
 
     # --- 統合開始・停止メソッド ---
     def start_tasks(self):
