@@ -975,7 +975,7 @@ class SlideCaptureApp:
                                         "description": "トピックの重要ポイント一覧",
                                         "items": {
                                             "type": "string",
-                                            "description": "重要ポイント",
+                                            "description": "重要ポイントを詳しく",
                                         },
                                     },
                                     "technical_term": {
