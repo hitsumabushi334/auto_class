@@ -82,8 +82,8 @@ class SlideCaptureApp:
         )
         # ユーザー指示に基づきモデル名を更新 (ただし、実際のAPI呼び出しでは利用可能なモデルを確認すること)
         self.gemini_model_options = [
-            "models/gemini-1.5-flash-latest",  # 短時間用 (デフォルト)
-            "models/gemini-1.5-pro-latest",  # 長時間用
+            "gemini-2.5-flash-preview-04-17",  # 短時間用 (デフォルト)
+            "gemini-2.0-flash",  # 長時間用
         ]
 
         self.selected_gemini_model = tk.StringVar(
@@ -317,10 +317,10 @@ class SlideCaptureApp:
         """Geminiモデル選択コンボボックスの値が変更されたときに呼び出される"""
         selected_model = self.selected_gemini_model.get()
         description = ""
-        if selected_model == "models/gemini-1.5-pro-latest":
-            description = "用途: 長時間動画・高精度向け"
-        elif selected_model == "models/gemini-1.5-flash-latest":
-            description = "用途: 短時間動画・高速処理向け"
+        if selected_model == "gemini-2.0-flash":
+            description = "用途: 長時間動画向け"
+        elif selected_model == "gemini-2.5-flash-preview-04-17":
+            description = "用途: 短時間動画向け"
         else:
             # 予期しないモデルが選択された場合 (念のため)
             description = "用途: 不明"
