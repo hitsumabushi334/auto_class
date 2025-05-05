@@ -51,7 +51,7 @@ class SlideCaptureApp:
         self.root = root
         self.root.title("スライドキャプチャ＆録画")
         # UIの高さを増やして新しい要素を配置
-        self.root.geometry("450x550")  # サイズ調整
+        self.root.geometry("500x550")  # サイズ調整
 
         # --- 状態変数 ---
         self.is_capturing_screenshot = False  # スクリーンショット中フラグ
