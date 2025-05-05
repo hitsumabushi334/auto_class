@@ -953,7 +953,7 @@ class SlideCaptureApp:
 
                 # ファイルがACTIVEになるまで待機
                 polling_interval = 5
-                timeout_seconds = 300
+                timeout_seconds = 900
                 start_poll_time = time.time()
                 while video_file.state != "ACTIVE":
                     if time.time() - start_poll_time > timeout_seconds:
@@ -977,7 +977,7 @@ class SlideCaptureApp:
                 # ★ モデル名を修正 (例: gemini-1.5-pro-latest)
                 #    config ではなく generation_config を使用
                 response = self.gemini_client.models.generate_content(
-                    model="gemini-2.5-pro-exp-03-25",  # モデル名を最新に (例)
+                    model="gemini-2.5-flash-preview-04-17",  # モデル名を最新に (例)
                     contents=[video_file, prompt],
                     config={  # generation_config を使用
                         "response_mime_type": "application/json",
