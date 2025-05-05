@@ -2595,3 +2595,252 @@ Traceback (most recent call last):
     raise AttributeError(item)
 AttributeError: State
 2025-05-04 21:26:46,029 - ERROR - MainThread - ノート作成が失敗しました: State
+2025-05-05 09:46:54,739 - INFO - MainThread - Gemini API クライアントを設定しました。
+2025-05-05 09:46:55,105 - INFO - MainThread - アプリケーションを初期化しました。
+2025-05-05 09:46:55,105 - INFO - MainThread - ウィンドウリストを更新します。
+2025-05-05 09:46:55,127 - INFO - MainThread - 4 個のウィンドウが見つかりました。
+2025-05-05 09:46:59,224 - INFO - MainThread - 全てのタスクの停止処理を開始します。
+2025-05-05 09:46:59,225 - INFO - MainThread - スクリーンショットキャプチャを停止しました。
+2025-05-05 09:46:59,225 - INFO - MainThread - 全てのタスクの停止処理を完了しました。
+2025-05-05 09:48:03,201 - INFO - MainThread - ウィンドウリストを更新します。
+2025-05-05 09:48:03,203 - INFO - MainThread - 5 個のウィンドウが見つかりました。
+2025-05-05 09:48:04,484 - INFO - MainThread - ウィンドウが選択されました: (59) Did Vibe Coding Kill Software Engineering... - YouTube - Google Chrome (HWND: 198528) (HWND: 198528)
+2025-05-05 09:48:05,602 - INFO - MainThread - 保存フォルダ名が指定されなかったため、デフォルト名を生成しました: capture_20250505_094805
+2025-05-05 09:48:05,602 - INFO - MainThread - 保存先フォルダ: C:\Users\issho\auto_ss\auto_class\capture_20250505_094805
+2025-05-05 09:48:05,603 - INFO - MainThread - フォルダを作成しました: C:\Users\issho\auto_ss\auto_class\capture_20250505_094805
+2025-05-05 09:48:05,604 - INFO - MainThread - フォルダへの書き込み権限を確認しました: C:\Users\issho\auto_ss\auto_class\capture_20250505_094805
+2025-05-05 09:48:05,604 - INFO - MainThread - スクリーンショットキャプチャを開始します。
+2025-05-05 09:48:05,604 - INFO - ScreenshotThread - スクリーンショットキャプチャループを開始します。
+2025-05-05 09:48:05,611 - INFO - MainThread - 録画を開始します。対象ウィンドウハンドル: 198528
+2025-05-05 09:48:05,612 - INFO - RecordingThread - 録画ループを開始します。対象ウィンドウハンドル: 198528
+2025-05-05 09:48:05,612 - INFO - AudioRecordingThread - 音声録音ループ (SoundCard) を開始します
+2025-05-05 09:48:05,627 - INFO - RecordingThread - 対象ウィンドウの位置とサイズ: (1912, -8, 1936, 1048)
+2025-05-05 09:48:05,704 - INFO - AudioRecordingThread - 取得したマイクデバイス: スピーカー (Realtek(R) Audio)
+2025-05-05 09:48:05,704 - INFO - AudioRecordingThread - マイクデバイスの型: <class 'soundcard.mediafoundation._Microphone'>
+2025-05-05 09:48:05,704 - ERROR - AudioRecordingThread - マイクデバイスからサンプルレートまたはチャンネル数を取得できませんでした: '_Microphone' object has no attribute 'samplerate'
+2025-05-05 09:48:05,705 - WARNING - AudioRecordingThread - デフォルト値を使用します - サンプルレート: 48000, チャンネル数: 2
+2025-05-05 09:48:05,722 - INFO - ScreenshotThread - 最初のスクリーンショットを保存します。
+2025-05-05 09:48:05,732 - INFO - AudioRecordingThread - レコーダーオブジェクトの型: <class 'soundcard.mediafoundation._Recorder'>
+2025-05-05 09:48:05,733 - INFO - AudioRecordingThread - 録音中: スピーカー (Realtek(R) Audio) (ループバック)
+2025-05-05 09:48:05,803 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250505_094805\screenshot_20250505_094805_722.png
+2025-05-05 09:48:13,689 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-05 09:48:13,762 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250505_094805\screenshot_20250505_094813_689.png
+2025-05-05 09:48:14,658 - INFO - RecordingThread - 録画フレーム数: 10, 経過時間: 9.00秒
+2025-05-05 09:48:15,693 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-05 09:48:15,769 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250505_094805\screenshot_20250505_094815_694.png
+2025-05-05 09:48:17,690 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-05 09:48:17,765 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250505_094805\screenshot_20250505_094817_691.png
+2025-05-05 09:48:24,657 - INFO - RecordingThread - 録画フレーム数: 20, 経過時間: 19.00秒
+2025-05-05 09:48:29,693 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-05 09:48:29,759 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250505_094805\screenshot_20250505_094829_694.png
+2025-05-05 09:48:34,657 - INFO - RecordingThread - 録画フレーム数: 30, 経過時間: 29.00秒
+2025-05-05 09:48:44,657 - INFO - RecordingThread - 録画フレーム数: 40, 経過時間: 39.00秒
+2025-05-05 09:48:54,660 - INFO - RecordingThread - 録画フレーム数: 50, 経過時間: 49.00秒
+2025-05-05 09:48:55,703 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-05 09:48:55,772 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250505_094805\screenshot_20250505_094855_704.png
+2025-05-05 09:49:04,657 - INFO - RecordingThread - 録画フレーム数: 60, 経過時間: 59.00秒
+2025-05-05 09:49:14,657 - INFO - RecordingThread - 録画フレーム数: 70, 経過時間: 69.00秒
+2025-05-05 09:49:19,704 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-05 09:49:19,768 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250505_094805\screenshot_20250505_094919_705.png
+2025-05-05 09:49:24,658 - INFO - RecordingThread - 録画フレーム数: 80, 経過時間: 79.00秒
+2025-05-05 09:49:34,658 - INFO - RecordingThread - 録画フレーム数: 90, 経過時間: 89.00秒
+2025-05-05 09:49:41,691 - WARNING - AudioRecordingThread - C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-05-05 09:49:44,658 - INFO - RecordingThread - 録画フレーム数: 100, 経過時間: 99.00秒
+2025-05-05 09:49:54,657 - INFO - RecordingThread - 録画フレーム数: 110, 経過時間: 109.00秒
+2025-05-05 09:50:04,659 - INFO - RecordingThread - 録画フレーム数: 120, 経過時間: 119.00秒
+2025-05-05 09:50:14,660 - INFO - RecordingThread - 録画フレーム数: 130, 経過時間: 129.00秒
+2025-05-05 09:50:23,709 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-05 09:50:23,784 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250505_094805\screenshot_20250505_095023_710.png
+2025-05-05 09:50:24,660 - INFO - RecordingThread - 録画フレーム数: 140, 経過時間: 139.00秒
+2025-05-05 09:50:34,658 - INFO - RecordingThread - 録画フレーム数: 150, 経過時間: 149.00秒
+2025-05-05 09:50:37,709 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-05 09:50:37,779 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250505_094805\screenshot_20250505_095037_709.png
+2025-05-05 09:50:39,708 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-05 09:50:39,819 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250505_094805\screenshot_20250505_095039_708.png
+2025-05-05 09:50:41,714 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-05 09:50:41,776 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250505_094805\screenshot_20250505_095041_715.png
+2025-05-05 09:50:43,717 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-05 09:50:43,783 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250505_094805\screenshot_20250505_095043_717.png
+2025-05-05 09:50:44,659 - INFO - RecordingThread - 録画フレーム数: 160, 経過時間: 159.00秒
+2025-05-05 09:50:45,723 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-05 09:50:45,793 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250505_094805\screenshot_20250505_095045_724.png
+2025-05-05 09:50:47,719 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-05 09:50:47,782 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250505_094805\screenshot_20250505_095047_719.png
+2025-05-05 09:50:51,713 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-05 09:50:51,772 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250505_094805\screenshot_20250505_095051_714.png
+2025-05-05 09:50:54,657 - INFO - RecordingThread - 録画フレーム数: 170, 経過時間: 169.00秒
+2025-05-05 09:51:04,658 - INFO - RecordingThread - 録画フレーム数: 180, 経過時間: 179.00秒
+2025-05-05 09:51:14,658 - INFO - RecordingThread - 録画フレーム数: 190, 経過時間: 189.00秒
+2025-05-05 09:51:19,727 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-05 09:51:19,800 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250505_094805\screenshot_20250505_095119_728.png
+2025-05-05 09:51:24,659 - INFO - RecordingThread - 録画フレーム数: 200, 経過時間: 199.00秒
+2025-05-05 09:51:34,658 - INFO - RecordingThread - 録画フレーム数: 210, 経過時間: 209.00秒
+2025-05-05 09:51:44,659 - INFO - RecordingThread - 録画フレーム数: 220, 経過時間: 219.00秒
+2025-05-05 09:51:54,659 - INFO - RecordingThread - 録画フレーム数: 230, 経過時間: 229.00秒
+2025-05-05 09:52:04,659 - INFO - RecordingThread - 録画フレーム数: 240, 経過時間: 239.00秒
+2025-05-05 09:52:14,659 - INFO - RecordingThread - 録画フレーム数: 250, 経過時間: 249.00秒
+2025-05-05 09:52:15,715 - WARNING - AudioRecordingThread - C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-05-05 09:52:24,658 - INFO - RecordingThread - 録画フレーム数: 260, 経過時間: 259.00秒
+2025-05-05 09:52:34,658 - INFO - RecordingThread - 録画フレーム数: 270, 経過時間: 269.00秒
+2025-05-05 09:52:44,660 - INFO - RecordingThread - 録画フレーム数: 280, 経過時間: 279.00秒
+2025-05-05 09:52:54,659 - INFO - RecordingThread - 録画フレーム数: 290, 経過時間: 289.00秒
+2025-05-05 09:53:04,659 - INFO - RecordingThread - 録画フレーム数: 300, 経過時間: 299.00秒
+2025-05-05 09:53:14,659 - INFO - RecordingThread - 録画フレーム数: 310, 経過時間: 309.00秒
+2025-05-05 09:53:24,658 - INFO - RecordingThread - 録画フレーム数: 320, 経過時間: 319.00秒
+2025-05-05 09:53:34,659 - INFO - RecordingThread - 録画フレーム数: 330, 経過時間: 329.00秒
+2025-05-05 09:53:44,659 - INFO - RecordingThread - 録画フレーム数: 340, 経過時間: 339.00秒
+2025-05-05 09:53:49,735 - WARNING - AudioRecordingThread - C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-05-05 09:53:54,659 - INFO - RecordingThread - 録画フレーム数: 350, 経過時間: 349.00秒
+2025-05-05 09:54:04,660 - INFO - RecordingThread - 録画フレーム数: 360, 経過時間: 359.00秒
+2025-05-05 09:54:14,664 - INFO - RecordingThread - 録画フレーム数: 370, 経過時間: 369.00秒
+2025-05-05 09:54:24,659 - INFO - RecordingThread - 録画フレーム数: 380, 経過時間: 379.00秒
+2025-05-05 09:54:34,660 - INFO - RecordingThread - 録画フレーム数: 390, 経過時間: 389.00秒
+2025-05-05 09:54:44,661 - INFO - RecordingThread - 録画フレーム数: 400, 経過時間: 399.00秒
+2025-05-05 09:54:51,746 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-05 09:54:51,838 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250505_094805\screenshot_20250505_095451_747.png
+2025-05-05 09:54:54,661 - INFO - RecordingThread - 録画フレーム数: 410, 経過時間: 409.00秒
+2025-05-05 09:54:59,747 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-05 09:54:59,825 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250505_094805\screenshot_20250505_095459_747.png
+2025-05-05 09:55:04,660 - INFO - RecordingThread - 録画フレーム数: 420, 経過時間: 419.00秒
+2025-05-05 09:55:14,661 - INFO - RecordingThread - 録画フレーム数: 430, 経過時間: 429.00秒
+2025-05-05 09:55:24,660 - INFO - RecordingThread - 録画フレーム数: 440, 経過時間: 439.00秒
+2025-05-05 09:55:34,660 - INFO - RecordingThread - 録画フレーム数: 450, 経過時間: 449.00秒
+2025-05-05 09:55:44,661 - INFO - RecordingThread - 録画フレーム数: 460, 経過時間: 459.00秒
+2025-05-05 09:55:54,661 - INFO - RecordingThread - 録画フレーム数: 470, 経過時間: 469.00秒
+2025-05-05 09:55:55,754 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-05 09:55:55,822 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250505_094805\screenshot_20250505_095555_755.png
+2025-05-05 09:56:01,752 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-05 09:56:01,829 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250505_094805\screenshot_20250505_095601_752.png
+2025-05-05 09:56:04,661 - INFO - RecordingThread - 録画フレーム数: 480, 経過時間: 479.00秒
+2025-05-05 09:56:14,661 - INFO - RecordingThread - 録画フレーム数: 490, 経過時間: 489.00秒
+2025-05-05 09:56:24,661 - INFO - RecordingThread - 録画フレーム数: 500, 経過時間: 499.00秒
+2025-05-05 09:56:34,661 - INFO - RecordingThread - 録画フレーム数: 510, 経過時間: 509.00秒
+2025-05-05 09:56:44,661 - INFO - RecordingThread - 録画フレーム数: 520, 経過時間: 519.00秒
+2025-05-05 09:56:49,763 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-05 09:56:49,817 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250505_094805\screenshot_20250505_095649_763.png
+2025-05-05 09:56:51,761 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-05 09:56:51,834 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250505_094805\screenshot_20250505_095651_762.png
+2025-05-05 09:56:54,662 - INFO - RecordingThread - 録画フレーム数: 530, 経過時間: 529.00秒
+2025-05-05 09:57:04,662 - INFO - RecordingThread - 録画フレーム数: 540, 経過時間: 539.00秒
+2025-05-05 09:57:14,662 - INFO - RecordingThread - 録画フレーム数: 550, 経過時間: 549.00秒
+2025-05-05 09:57:24,661 - INFO - RecordingThread - 録画フレーム数: 560, 経過時間: 559.00秒
+2025-05-05 09:57:34,662 - INFO - RecordingThread - 録画フレーム数: 570, 経過時間: 569.00秒
+2025-05-05 09:57:35,752 - WARNING - AudioRecordingThread - C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-05-05 09:57:44,662 - INFO - RecordingThread - 録画フレーム数: 580, 経過時間: 579.00秒
+2025-05-05 09:57:54,656 - INFO - RecordingThread - 録画フレーム数: 590, 経過時間: 589.00秒
+2025-05-05 09:58:04,663 - INFO - RecordingThread - 録画フレーム数: 600, 経過時間: 599.00秒
+2025-05-05 09:58:14,662 - INFO - RecordingThread - 録画フレーム数: 610, 経過時間: 609.00秒
+2025-05-05 09:58:24,657 - INFO - RecordingThread - 録画フレーム数: 620, 経過時間: 619.00秒
+2025-05-05 09:58:34,657 - INFO - RecordingThread - 録画フレーム数: 630, 経過時間: 629.00秒
+2025-05-05 09:58:44,656 - INFO - RecordingThread - 録画フレーム数: 640, 経過時間: 639.00秒
+2025-05-05 09:58:54,656 - INFO - RecordingThread - 録画フレーム数: 650, 経過時間: 649.00秒
+2025-05-05 09:59:04,657 - INFO - RecordingThread - 録画フレーム数: 660, 経過時間: 659.00秒
+2025-05-05 09:59:11,780 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-05 09:59:11,853 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250505_094805\screenshot_20250505_095911_780.png
+2025-05-05 09:59:14,658 - INFO - RecordingThread - 録画フレーム数: 670, 経過時間: 669.00秒
+2025-05-05 09:59:19,786 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-05 09:59:19,855 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250505_094805\screenshot_20250505_095919_786.png
+2025-05-05 09:59:19,998 - INFO - MainThread - 全てのタスクの停止処理を開始します。
+2025-05-05 09:59:19,998 - INFO - MainThread - 録画停止処理を開始します。
+2025-05-05 09:59:19,998 - INFO - MainThread - 録画スレッドの終了を待機します...
+2025-05-05 09:59:20,001 - INFO - AudioRecordingThread - 音声録音ループ (SoundCard) を終了します
+2025-05-05 09:59:20,627 - INFO - RecordingThread - 録画ループを終了します。合計フレーム数: 675
+2025-05-05 09:59:20,630 - INFO - MainThread - 録画スレッドが終了しました。
+2025-05-05 09:59:20,630 - INFO - MainThread - 動画ファイルの保存を開始します: C:\Users\issho\auto_ss\auto_class\capture_20250505_094805\recording_20250505_095920.mp4
+2025-05-05 09:59:20,644 - INFO - MainThread - 動画保存スレッドを開始しました。
+2025-05-05 09:59:20,660 - INFO - MainThread - 録画停止処理を完了しました。
+2025-05-05 09:59:20,660 - INFO - MainThread - スクリーンショットキャプチャの停止処理を開始します。
+2025-05-05 09:59:20,660 - INFO - MainThread - スクリーンショットキャプチャスレッドの終了を待機します...
+2025-05-05 09:59:20,719 - INFO - VideoSaveThread - 音声データを連結しました。サンプル数: 32363520, dtype: float32
+2025-05-05 09:59:21,211 - INFO - VideoSaveThread - 合計 675 フレームを動画クリップに使用します。
+2025-05-05 09:59:21,213 - INFO - VideoSaveThread - 推定FPS: 1.00
+2025-05-05 09:59:21,214 - WARNING - VideoSaveThread - 音声クリップ (674.24s) が動画クリップ (675.00s) より短いです。
+2025-05-05 09:59:21,214 - INFO - VideoSaveThread - AudioArrayClipを作成しました。Duration: 674.24秒
+2025-05-05 09:59:21,215 - INFO - VideoSaveThread - 動画と音声を結合しました。
+2025-05-05 09:59:21,215 - INFO - VideoSaveThread - 動画ファイルを書き出します: C:\Users\issho\auto_ss\auto_class\capture_20250505_094805\recording_20250505_095920.mp4
+2025-05-05 09:59:21,711 - INFO - ScreenshotThread - スクリーンショットキャプチャループを終了します。
+2025-05-05 09:59:21,715 - INFO - MainThread - スクリーンショットキャプチャスレッドが終了しました。
+2025-05-05 09:59:21,715 - INFO - MainThread - スクリーンショットキャプチャの停止処理を完了しました。
+2025-05-05 09:59:21,716 - INFO - MainThread - 録画を停止しました。動画保存とノート作成がバックグラウンドで実行されます（成功した場合）。
+2025-05-05 09:59:21,716 - INFO - MainThread - 全てのタスクの停止処理を完了しました。
+2025-05-05 09:59:59,494 - INFO - VideoSaveThread - 動画ファイルを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250505_094805\recording_20250505_095920.mp4
+2025-05-05 09:59:59,494 - INFO - VideoSaveThread - 動画保存成功、ノート作成をトリガーします: C:\Users\issho\auto_ss\auto_class\capture_20250505_094805\recording_20250505_095920.mp4
+2025-05-05 09:59:59,495 - INFO - VideoSaveThread - 動画保存処理を終了します。
+2025-05-05 09:59:59,524 - INFO - MainThread - ノート作成処理を開始します。対象動画: C:\Users\issho\auto_ss\auto_class\capture_20250505_094805\recording_20250505_095920.mp4
+2025-05-05 09:59:59,525 - INFO - NoteCreationThread - 動画ファイルをアップロード開始: C:\Users\issho\auto_ss\auto_class\capture_20250505_094805\recording_20250505_095920.mp4
+2025-05-05 10:00:00,507 - INFO - NoteCreationThread - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files "HTTP/1.1 200 OK"
+2025-05-05 10:00:01,314 - INFO - NoteCreationThread - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AAO2Vwo69_3KvVKln1q62XuBG6_GUys_x2hDOzkcMoAw7ar-FJjCUf_acdB1J8Utv07nkR5Fl5F98bCLJS86NI3_klZEHWKY23dcJl9K2z9IcA&upload_protocol=resumable "HTTP/1.1 200 OK"
+2025-05-05 10:00:02,163 - INFO - NoteCreationThread - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AAO2Vwo69_3KvVKln1q62XuBG6_GUys_x2hDOzkcMoAw7ar-FJjCUf_acdB1J8Utv07nkR5Fl5F98bCLJS86NI3_klZEHWKY23dcJl9K2z9IcA&upload_protocol=resumable "HTTP/1.1 200 OK"
+2025-05-05 10:00:03,164 - INFO - NoteCreationThread - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AAO2Vwo69_3KvVKln1q62XuBG6_GUys_x2hDOzkcMoAw7ar-FJjCUf_acdB1J8Utv07nkR5Fl5F98bCLJS86NI3_klZEHWKY23dcJl9K2z9IcA&upload_protocol=resumable "HTTP/1.1 200 OK"
+2025-05-05 10:00:04,850 - INFO - NoteCreationThread - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AAO2Vwo69_3KvVKln1q62XuBG6_GUys_x2hDOzkcMoAw7ar-FJjCUf_acdB1J8Utv07nkR5Fl5F98bCLJS86NI3_klZEHWKY23dcJl9K2z9IcA&upload_protocol=resumable "HTTP/1.1 200 OK"
+2025-05-05 10:00:04,852 - INFO - NoteCreationThread - 動画ファイルをアップロード完了: files/s1fg2iufv2ny, State: FileState.PROCESSING
+2025-05-05 10:00:04,852 - INFO - NoteCreationThread - ファイル処理待機中... State: FileState.PROCESSING (経過: 0.0秒)
+2025-05-05 10:00:10,107 - INFO - NoteCreationThread - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/s1fg2iufv2ny "HTTP/1.1 200 OK"
+2025-05-05 10:00:10,109 - INFO - NoteCreationThread - ファイル処理待機中... State: FileState.PROCESSING (経過: 5.3秒)
+2025-05-05 10:00:15,368 - INFO - NoteCreationThread - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/s1fg2iufv2ny "HTTP/1.1 200 OK"
+2025-05-05 10:00:15,369 - INFO - NoteCreationThread - ファイル処理待機中... State: FileState.PROCESSING (経過: 10.5秒)
+2025-05-05 10:00:20,757 - INFO - NoteCreationThread - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/s1fg2iufv2ny "HTTP/1.1 200 OK"
+2025-05-05 10:00:20,759 - INFO - NoteCreationThread - ファイル処理待機中... State: FileState.PROCESSING (経過: 15.9秒)
+2025-05-05 10:00:26,018 - INFO - NoteCreationThread - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/s1fg2iufv2ny "HTTP/1.1 200 OK"
+2025-05-05 10:00:26,018 - INFO - NoteCreationThread - ファイル処理待機中... State: FileState.PROCESSING (経過: 21.2秒)
+2025-05-05 10:00:31,260 - INFO - NoteCreationThread - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/s1fg2iufv2ny "HTTP/1.1 200 OK"
+2025-05-05 10:00:31,260 - INFO - NoteCreationThread - ファイル処理待機中... State: FileState.PROCESSING (経過: 26.4秒)
+2025-05-05 10:00:37,171 - INFO - NoteCreationThread - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/s1fg2iufv2ny "HTTP/1.1 200 OK"
+2025-05-05 10:00:37,172 - INFO - NoteCreationThread - ファイル処理待機中... State: FileState.PROCESSING (経過: 32.3秒)
+2025-05-05 10:00:42,411 - INFO - NoteCreationThread - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/s1fg2iufv2ny "HTTP/1.1 200 OK"
+2025-05-05 10:00:42,412 - INFO - NoteCreationThread - ファイル処理待機中... State: FileState.PROCESSING (経過: 37.6秒)
+2025-05-05 10:00:47,656 - INFO - NoteCreationThread - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/s1fg2iufv2ny "HTTP/1.1 200 OK"
+2025-05-05 10:00:47,658 - INFO - NoteCreationThread - ファイル処理待機中... State: FileState.PROCESSING (経過: 42.8秒)
+2025-05-05 10:00:52,911 - INFO - NoteCreationThread - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/s1fg2iufv2ny "HTTP/1.1 200 OK"
+2025-05-05 10:00:52,911 - INFO - NoteCreationThread - ファイル処理待機中... State: FileState.PROCESSING (経過: 48.1秒)
+2025-05-05 10:00:58,149 - INFO - NoteCreationThread - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/s1fg2iufv2ny "HTTP/1.1 200 OK"
+2025-05-05 10:00:58,149 - INFO - NoteCreationThread - ファイル処理待機中... State: FileState.PROCESSING (経過: 53.3秒)
+2025-05-05 10:01:04,050 - INFO - NoteCreationThread - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/s1fg2iufv2ny "HTTP/1.1 200 OK"
+2025-05-05 10:01:04,051 - INFO - NoteCreationThread - ファイル処理待機中... State: FileState.PROCESSING (経過: 59.2秒)
+2025-05-05 10:01:09,298 - INFO - NoteCreationThread - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/s1fg2iufv2ny "HTTP/1.1 200 OK"
+2025-05-05 10:01:09,299 - INFO - NoteCreationThread - ファイル処理待機中... State: FileState.PROCESSING (経過: 64.4秒)
+2025-05-05 10:01:14,546 - INFO - NoteCreationThread - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/s1fg2iufv2ny "HTTP/1.1 200 OK"
+2025-05-05 10:01:14,546 - INFO - NoteCreationThread - ファイル処理待機中... State: FileState.PROCESSING (経過: 69.7秒)
+2025-05-05 10:01:19,787 - INFO - NoteCreationThread - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/s1fg2iufv2ny "HTTP/1.1 200 OK"
+2025-05-05 10:01:19,788 - INFO - NoteCreationThread - ファイル処理待機中... State: FileState.PROCESSING (経過: 74.9秒)
+2025-05-05 10:01:25,025 - INFO - NoteCreationThread - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/s1fg2iufv2ny "HTTP/1.1 200 OK"
+2025-05-05 10:01:25,025 - INFO - NoteCreationThread - ファイル処理待機中... State: FileState.PROCESSING (経過: 80.2秒)
+2025-05-05 10:01:30,274 - INFO - NoteCreationThread - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/s1fg2iufv2ny "HTTP/1.1 200 OK"
+2025-05-05 10:01:30,274 - INFO - NoteCreationThread - ファイル処理待機中... State: FileState.PROCESSING (経過: 85.4秒)
+2025-05-05 10:01:35,530 - INFO - NoteCreationThread - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/s1fg2iufv2ny "HTTP/1.1 200 OK"
+2025-05-05 10:01:35,531 - INFO - NoteCreationThread - ファイル処理待機中... State: FileState.PROCESSING (経過: 90.7秒)
+2025-05-05 10:01:40,772 - INFO - NoteCreationThread - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/s1fg2iufv2ny "HTTP/1.1 200 OK"
+2025-05-05 10:01:40,773 - INFO - NoteCreationThread - ファイル処理待機中... State: FileState.PROCESSING (経過: 95.9秒)
+2025-05-05 10:01:46,030 - INFO - NoteCreationThread - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/s1fg2iufv2ny "HTTP/1.1 200 OK"
+2025-05-05 10:01:46,031 - INFO - NoteCreationThread - ファイル処理待機中... State: FileState.PROCESSING (経過: 101.2秒)
+2025-05-05 10:01:51,282 - INFO - NoteCreationThread - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/s1fg2iufv2ny "HTTP/1.1 200 OK"
+2025-05-05 10:01:51,284 - INFO - NoteCreationThread - ファイル処理待機中... State: FileState.PROCESSING (経過: 106.4秒)
+2025-05-05 10:01:57,187 - INFO - NoteCreationThread - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/s1fg2iufv2ny "HTTP/1.1 200 OK"
+2025-05-05 10:01:57,188 - INFO - NoteCreationThread - ファイル処理待機中... State: FileState.PROCESSING (経過: 112.3秒)
+2025-05-05 10:02:02,435 - INFO - NoteCreationThread - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/s1fg2iufv2ny "HTTP/1.1 200 OK"
+2025-05-05 10:02:02,437 - INFO - NoteCreationThread - ファイル処理待機中... State: FileState.PROCESSING (経過: 117.6秒)
+2025-05-05 10:02:07,681 - INFO - NoteCreationThread - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/s1fg2iufv2ny "HTTP/1.1 200 OK"
+2025-05-05 10:02:07,682 - INFO - NoteCreationThread - ファイル処理待機中... State: FileState.PROCESSING (経過: 122.8秒)
+2025-05-05 10:02:13,587 - INFO - NoteCreationThread - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/s1fg2iufv2ny "HTTP/1.1 200 OK"
+2025-05-05 10:02:13,588 - INFO - NoteCreationThread - ファイル処理待機中... State: FileState.PROCESSING (経過: 128.7秒)
+2025-05-05 10:02:18,828 - INFO - NoteCreationThread - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/s1fg2iufv2ny "HTTP/1.1 200 OK"
+2025-05-05 10:02:18,829 - INFO - NoteCreationThread - ファイルがACTIVEになりました: files/s1fg2iufv2ny
+2025-05-05 10:02:18,829 - INFO - NoteCreationThread - Gemini APIに要約リクエストを送信します...
+2025-05-05 10:02:18,831 - INFO - NoteCreationThread - AFC is enabled with max remote calls: 10.
+2025-05-05 10:02:45,187 - INFO - NoteCreationThread - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-04-17:generateContent "HTTP/1.1 200 OK"
+2025-05-05 10:02:45,195 - INFO - NoteCreationThread - AFC remote call 1 is done.
+2025-05-05 10:02:45,195 - INFO - NoteCreationThread - Gemini API から応答を取得しました。
+2025-05-05 10:02:45,195 - INFO - NoteCreationThread - 応答のJSONパースに成功しました。
+2025-05-05 10:02:45,196 - INFO - NoteCreationThread - Wordファイルを生成します: C:\Users\issho\auto_ss\auto_class\capture_20250505_094805\note_recording_20250505_095920.docx
+2025-05-05 10:02:45,283 - INFO - NoteCreationThread - Wordファイルを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250505_094805\note_recording_20250505_095920.docx
+2025-05-05 10:02:45,290 - INFO - MainThread - ノート作成が成功しました: C:\Users\issho\auto_ss\auto_class\capture_20250505_094805\note_recording_20250505_095920.docx
+2025-05-05 10:02:54,650 - INFO - MainThread - アプリケーション終了処理を開始します。
+2025-05-05 10:02:54,688 - INFO - MainThread - アプリケーションを終了しました。

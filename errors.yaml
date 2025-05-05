@@ -113,7 +113,8 @@ problemList:
       description: >
         現在のコードでは手動で停止しない限り動画が終了しても録画とスクショが続いてしまう。
       solution: >
-      isSolved: false
+        `audio_recording_loop` 内で音声データの振幅を監視し、5分以上無音状態が続いた場合に `stop_all_tasks` を呼び出して自動的に停止処理を開始するように修正しました。
+      isSolved: true
     problem8:
       name: "ノート作成中の状態がわからない。"
       description: >

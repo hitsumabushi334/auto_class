@@ -74,6 +74,11 @@ class SlideCaptureApp:
         self.gemini_client = None  # Gemini API クライアント
         self.audio_sample_rate = None  # SoundCard で取得したサンプルレートを保存
         self.audio_channels = None  # SoundCard で取得したチャンネル数を保存
+        self.last_sound_time = None  # 最後に音声を検知した時刻
+        self.no_sound_timeout_seconds = 300  # 無音状態のタイムアウト秒数 (5分)
+        self.silence_threshold = (
+            0.01  # 無音と判定する振幅の閾値 (0.0 から 1.0 の範囲で調整)
+        )
 
         # --- Gemini API 設定 ---
         try:
@@ -338,6 +343,7 @@ class SlideCaptureApp:
         # self.stop_recording_button.config(state=tk.NORMAL) # 個別ボタン削除
         # ボタン状態は start_tasks / stop_all_tasks で制御
         self.recording_start_time = time.time()
+        self.last_sound_time = time.time()  # 録画開始時は音があったとみなす
         self.update_recording_status()  # ステータス更新開始
 
     def recording_loop(self, hwnd):
@@ -370,6 +376,16 @@ class SlideCaptureApp:
             frame_count = 0
 
             while self.is_recording:
+                # --- ウィンドウ存在チェック ---
+                if not win32gui.IsWindow(hwnd):
+                    logger.warning(
+                        f"録画対象ウィンドウ (HWND: {hwnd}) が見つかりません。録画を停止します。"
+                    )
+                    # UIスレッドで停止処理を呼び出す
+                    self.root.after(0, self.stop_all_tasks)
+                    break  # ループを抜ける
+                # --- ここまで追加 ---
+
                 try:
                     # 現在のフレーム時刻
                     current_time = time.time()
@@ -468,6 +484,29 @@ class SlideCaptureApp:
                         # recordメソッドで指定したサンプル数を読み取る
                         data = mic.record(numframes=num_frames)
                         if data is not None and data.size > 0:
+                            # --- 無音状態チェック ---
+                            max_amplitude = np.max(np.abs(data))
+                            current_time = time.time()
+                            if max_amplitude < self.silence_threshold:
+                                # 無音状態
+                                if self.last_sound_time is not None:
+                                    no_sound_duration = (
+                                        current_time - self.last_sound_time
+                                    )
+                                    if (
+                                        no_sound_duration
+                                        > self.no_sound_timeout_seconds
+                                    ):
+                                        logger.info(
+                                            f"{self.no_sound_timeout_seconds} 秒以上無音状態が続いたため、録画を停止します。"
+                                        )
+                                        self.root.after(0, self.stop_all_tasks)
+                                        break  # ループを抜ける
+                            else:
+                                # 音声あり
+                                self.last_sound_time = current_time
+                            # --- ここまで追加 ---
+
                             # SoundCard は float32 の NumPy 配列を返す
                             self.audio_queue.put(data)
                         else:
