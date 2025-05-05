@@ -47,7 +47,9 @@ problemList:
         録画終了時にGemini APIを利用して動画内容から構造化されたノート
         （要約、キーワード、重要部分）をWordファイルとして生成する機能がない。
       solution: >
-      isSolved: false
+        録画終了時にGemini APIを利用して動画内容から構造化されたJSONを生成し、
+        それをWordファイルとして構造化する処理を経て保存する処理を追加しました。
+      isSolved: true
   - problem5:
       name: "音声の録音ができない"
       description: >
@@ -103,7 +105,9 @@ problemList:
         特定のモニターだけを対象にスクリーンショットを取得する機能が必要。
         録画を行うウィンドウと同じものだけを対象にする必要がある。
       solution: >
-      isSolved: false
+        `start_screenshot_capture` で選択されたウィンドウハンドルを取得し、`screenshot_capture_loop` に渡すように修正。
+        `screenshot_capture_loop` は渡されたハンドルに基づいてキャプチャ領域を決定し、指定ウィンドウまたはプライマリモニターを対象とするように変更。
+      isSolved: true
     problem7:
       name: "動画終了時に自動的に停止シークエンスが開始しない。"
       description: >

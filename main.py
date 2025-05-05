@@ -810,11 +810,10 @@ class SlideCaptureApp:
         self.note_result_message.set("")
         logger.info(f"ノート作成処理を開始します。対象動画: {video_filepath}")
 
-        # ダミーのAPI呼び出しとWord生成 (非同期処理のシミュレーション)
+        # Gemini APIの呼び出しとWord生成の処理
         def api_call_and_word_gen():
             try:
-                # --- ここに実際の Gemini API 呼び出しを実装 ---
-                prompt = "添付した動画の各トピックについて指定されたJSONスキーマに応じて内容をわかりやすく抽出してください。また、回答のレベルはクライアントが大学生レベルであることに注意して調節してください。応答は入力の言語の種類にかかわらず必ず日本語で行ってください。"
+                prompt = "添付した動画の各トピックについて指定されたJSONスキーマに応じて内容をわかりやすく抽出してください。また、回答のレベルはクライアントが大学生レベルであることに注意して調節してください。応答は入力の言語の種類にかかわらず必ず日本語で行ってください。専門用語は一般的に意味が伝わらないと判断されるもののみを解説してください。"
                 schema = {
                     "type": "object",
                     "properties": {
@@ -828,8 +827,10 @@ class SlideCaptureApp:
                         },
                         "topics": {
                             "type": "array",
+                            "description": "動画内の各トピックの情報",
                             "items": {
                                 "type": "object",
+                                "description": "個別トピックの情報",
                                 "properties": {
                                     "topic_title": {
                                         "type": "string",
@@ -837,8 +838,11 @@ class SlideCaptureApp:
                                     },
                                     "topic_keyWords": {
                                         "type": "array",
-                                        "items": {"type": "string"},
-                                        "description": "トピックのキーワードを箇条書きで",
+                                        "description": "トピックのキーワード一覧",
+                                        "items": {
+                                            "type": "string",
+                                            "description": "キーワード",
+                                        },
                                     },
                                     "topic_summary": {
                                         "type": "string",
@@ -846,37 +850,50 @@ class SlideCaptureApp:
                                     },
                                     "topic_points": {
                                         "type": "array",
-                                        "items": {"type": "string"},
-                                        "description": "トピックのポイントを箇条書きで",
+                                        "description": "トピックの重要ポイント一覧",
+                                        "items": {
+                                            "type": "string",
+                                            "description": "重要ポイント",
+                                        },
                                     },
                                     "technical_term": {
                                         "type": "array",
+                                        "description": "専門用語の解説一覧",
                                         "items": {
-                                            "point": {
-                                                "type": "string",
-                                                "description": "専門用語",
+                                            "type": "object",
+                                            "properties": {
+                                                "word": {
+                                                    "type": "string",
+                                                    "description": "専門用語",
+                                                },
+                                                "explanation": {
+                                                    "type": "string",
+                                                    "description": "専門用語の解説",
+                                                },
                                             },
-                                            "explanation": {
-                                                "type": "string",
-                                                "description": "専門用語の意味",
-                                            },
+                                            "required": ["word", "explanation"],
                                         },
-                                        "required": ["point", "explanation"],
-                                        "description": "動画中で出てきた専門用語の解説",
                                     },
                                 },
+                                "required": [
+                                    "topic_title",
+                                    "topic_summary",
+                                    "topic_keyWords",
+                                    "topic_points",
+                                ],
                             },
                         },
-                        "required": ["title", "summary", "topics"],
                     },
+                    "required": ["title", "summary", "topics"],
                 }
+
                 logger.info(f"動画ファイルをアップロード開始: {video_filepath}")
                 video_file = self.gemini_client.files.upload(file=video_filepath)
                 logger.info(
                     f"動画ファイルをアップロード完了: {video_file.name}, State: {video_file.state}"
                 )
 
-                # ★★★ ファイルがACTIVEになるまで待機 ★★★
+                # ファイルがACTIVEになるまで待機
                 polling_interval = 5  # ポーリング間隔 (秒)
                 timeout_seconds = 300  # タイムアウト (秒)
                 start_poll_time = time.time()
@@ -895,6 +912,8 @@ class SlideCaptureApp:
 
                 logger.info(f"ファイルがACTIVEになりました: {video_file.name}")
 
+                # Gemini APIに要約リクエストを送信
+                logger.info("Gemini APIに要約リクエストを送信します...")
                 response = self.gemini_client.models.generate_content(
                     model="gemini-2.5-flash-preview-04-17",
                     contents=[
@@ -911,8 +930,8 @@ class SlideCaptureApp:
 
                 # Wordファイル生成
                 try:
-
-                    note_data = json.loads(summary_text)  # JSON文字列を辞書に変換
+                    summary_data = json.loads(summary_text)  # JSON文字列を辞書に変換
+                    logger.info("応答のJSONパースに成功しました。")
 
                     word_filename = f"note_{os.path.splitext(os.path.basename(video_filepath))[0]}.docx"
                     word_filepath = os.path.join(
@@ -922,52 +941,59 @@ class SlideCaptureApp:
 
                     doc = Document()
                     # タイトルを追加
-                    doc.add_heading(note_data.get("title", "タイトルなし"), 0)
+                    doc.add_heading(summary_data.get("title", "タイトルなし"), 0)
                     # 全体要約を追加
                     doc.add_heading("全体要約", level=1)
-                    doc.add_paragraph(note_data.get("summary", "要約なし"))
+                    doc.add_paragraph(summary_data.get("summary", "要約なし"))
 
                     # 各トピックを追加
                     doc.add_heading("トピック詳細", level=1)
-                    topics = note_data.get("topics", [])
+                    topics = summary_data.get("topics", [])
                     if topics:
                         for i, topic in enumerate(topics):
-                            doc.add_heading(
-                                topic.get("topic_title", f"トピック {i+1}"), level=2
-                            )
+                            # トピックタイトル（必須項目）
+                            topic_title = topic.get("topic_title", f"トピック {i+1}")
+                            doc.add_heading(topic_title, level=2)
 
                             # キーワード
                             keywords = topic.get("topic_keyWords", [])
-                            if keywords:
+                            if keywords and len(keywords) > 0:
                                 doc.add_paragraph("キーワード:")
                                 for kw in keywords:
                                     doc.add_paragraph(f"- {kw}", style="List Bullet")
 
-                            # トピック要約
-                            topic_summary = topic.get("topic_summary")
-                            if topic_summary:
-                                doc.add_paragraph("要約:")
-                                doc.add_paragraph(topic_summary)
+                            # トピック要約（必須項目）
+                            topic_summary = topic.get("topic_summary", "要約なし")
+                            doc.add_paragraph("要約:")
+                            doc.add_paragraph(topic_summary)
 
                             # ポイント
                             points = topic.get("topic_points", [])
-                            if points:
+                            if points and len(points) > 0:
                                 doc.add_paragraph("ポイント:")
                                 for pt in points:
                                     doc.add_paragraph(f"- {pt}", style="List Bullet")
 
                             # 専門用語
                             terms = topic.get("technical_term", [])
-                            if terms:
+                            if terms and len(terms) > 0:
                                 doc.add_paragraph("専門用語:")
                                 for term in terms:
+                                    word = term.get("word", "")
+                                    explanation = term.get("explanation", "")
                                     doc.add_paragraph(
-                                        f"- {term}", style="List Bullet"
-                                    )  # 箇条書きに変更
+                                        f"- {word} : {explanation}", style="List Bullet"
+                                    )
+
                             doc.add_paragraph()  # トピック間にスペース
 
                     else:
                         doc.add_paragraph("トピック情報はありません。")
+
+                    # ファイルを保存
+                    directory = os.path.dirname(word_filepath)
+                    if not os.path.exists(directory):
+                        os.makedirs(directory, exist_ok=True)
 
                     doc.save(word_filepath)
                     logger.info(f"Wordファイルを保存しました: {word_filepath}")
@@ -1158,11 +1184,19 @@ class SlideCaptureApp:
         if self.is_capturing_screenshot:
             return
 
-        logger.info("スクリーンショットキャプチャを開始します。")
+        hwnd = self.selected_window_handle.get()  # 選択されたウィンドウハンドルを取得
+
+        logger.info(
+            f"スクリーンショットキャプチャを開始します。対象ウィンドウハンドル: {hwnd if hwnd != 0 else 'プライマリモニター'}"
+        )
         # フォルダ準備は start_tasks で行う
 
+        # スクリーンショットキャプチャスレッドを開始 (hwnd を渡す)
         self.screenshot_thread = threading.Thread(
-            target=self.screenshot_capture_loop, name="ScreenshotThread", daemon=True
+            target=self.screenshot_capture_loop,
+            args=(hwnd,),
+            name="ScreenshotThread",
+            daemon=True,
         )
         self.is_capturing_screenshot = True
         self.screenshot_saved_count = 0  # カウンタリセット
@@ -1207,27 +1241,83 @@ class SlideCaptureApp:
 
         logger.info("スクリーンショットキャプチャの停止処理を完了しました。")
 
-    def screenshot_capture_loop(self):
-        """画面全体のスクリーンショットを定期的に取得し、変化があれば保存するループ"""
-        logger.info("スクリーンショットキャプチャループを開始します。")
-        interval_seconds = 2  # 取得間隔（秒）
+    def screenshot_capture_loop(self, hwnd):  # 引数 hwnd を追加
+        """指定されたウィンドウまたは画面全体のスクリーンショットを定期的に取得し、変化があれば保存するループ"""
+        logger.info(
+            f"スクリーンショットキャプチャループを開始します。対象ウィンドウハンドル: {hwnd if hwnd != 0 else 'プライマリモニター'}"
+        )
+        interval_seconds = 1  # 取得間隔（秒）
         self.last_screenshot_image = None  # 前回の画像をリセット
+
+        try:  # sct オブジェクトの初期化を try の外に出す
+            sct = mss.mss()
+        except Exception as e:
+            logger.exception(f"mss の初期化中にエラー: {e}")
+            self.error_occurred_in_screenshot_thread = True
+            return  # 初期化失敗時はループに入らない
 
         while self.is_capturing_screenshot:
             start_capture_time = time.time()
             try:
-                # 画面全体のスクリーンショットを取得 (mssを使用)
-                with mss.mss() as sct:
-                    monitor = sct.monitors[0]  # プライマリモニター全体
-                    screenshot = sct.grab(monitor)
-                    # Pillowイメージに変換
-                    current_image_pil = Image.frombytes(
-                        "RGB", screenshot.size, screenshot.rgb
-                    )
-                    # OpenCV形式に変換 (比較用)
-                    current_image_cv = cv2.cvtColor(
-                        np.array(current_image_pil), cv2.COLOR_RGB2BGR
-                    )
+                # キャプチャ領域を決定
+                monitor = None
+                current_hwnd = hwnd  # ループ内で hwnd を変更する可能性があるのでコピー
+                if current_hwnd != 0:
+                    try:
+                        # ウィンドウが存在するか確認
+                        if not win32gui.IsWindow(current_hwnd):
+                            logger.warning(
+                                f"ウィンドウハンドル {current_hwnd} が無効です。プライマリモニターを対象にします。"
+                            )
+                            current_hwnd = (
+                                0  # 無効ならプライマリモニターにフォールバック
+                            )
+                        else:
+                            window_rect = win32gui.GetWindowRect(current_hwnd)
+                            left, top, right, bottom = window_rect
+                            width = right - left
+                            height = bottom - top
+                            if width > 0 and height > 0:
+                                monitor = {
+                                    "left": left,
+                                    "top": top,
+                                    "width": width,
+                                    "height": height,
+                                }
+                                # logger.debug(f"対象ウィンドウ領域: {monitor}") # デバッグ用
+                            else:
+                                logger.warning(
+                                    f"ウィンドウサイズが無効です ({width}x{height})。プライマリモニターを対象にします。"
+                                )
+                                current_hwnd = 0  # ウィンドウが無効ならプライマリモニターにフォールバック
+                    except Exception as e:
+                        logger.warning(
+                            f"ウィンドウ情報の取得に失敗しました: {e}。プライマリモニターを対象にします。"
+                        )
+                        current_hwnd = 0  # エラー時もプライマリモニターにフォールバック
+
+                if (
+                    monitor is None
+                ):  # current_hwnd が 0 またはウィンドウ情報取得失敗の場合
+                    # プライマリモニターを取得 (monitors[0] は全画面結合の場合があるので注意、通常は monitors[1])
+                    # 以前の実装 sct.monitors[0] に合わせるか、録画処理 sct.monitors[1] に合わせるか
+                    # ここでは monitors[1] を試す (より一般的)
+                    if len(sct.monitors) > 1:
+                        monitor = sct.monitors[1]
+                    else:
+                        monitor = sct.monitors[0]  # モニターが1つしかない場合
+                    # logger.debug(f"対象領域: プライマリモニター {monitor}") # デバッグ用
+
+                # スクリーンショットを取得
+                screenshot = sct.grab(monitor)
+                # Pillowイメージに変換
+                current_image_pil = Image.frombytes(
+                    "RGB", screenshot.size, screenshot.rgb
+                )
+                # OpenCV形式に変換 (比較用)
+                current_image_cv = cv2.cvtColor(
+                    np.array(current_image_pil), cv2.COLOR_RGB2BGR
+                )
 
                 if self.last_screenshot_image is not None:
                     # 前回と比較して変化があるか確認
@@ -1256,6 +1346,11 @@ class SlideCaptureApp:
                 logger.error(f"スクリーンショット画像の形式が認識できませんでした: {e}")
                 self.error_occurred_in_screenshot_thread = True
                 # エラーが発生してもループは継続するかもしれないが、一旦フラグを立てる
+            except mss.ScreenShotError as sct_err:  # mss のエラーもキャッチ
+                logger.error(
+                    f"スクリーンショット取得中にエラーが発生しました: {sct_err}"
+                )
+                self.error_occurred_in_screenshot_thread = True
             except Exception as e:
                 logger.exception(
                     f"スクリーンショット取得/比較中にエラーが発生しました: {e}"
