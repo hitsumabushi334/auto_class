@@ -19,4 +19,5 @@ dependencies = [
     "SoundCard", # バージョン指定を削除して uv sync に解決を任せる
     "python-dotenv>=1.1.0",
     "google-genai>=1.13.0",
+    "pyinstaller>=6.13.0",
 ]

@@ -8,6 +8,8 @@ wheels/
 *.png
 *.mp4
 *.docx
+*.spec
 .env
+autoclass
 # Virtual environments
 .venv
