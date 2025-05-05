@@ -75,7 +75,7 @@ class SlideCaptureApp:
         self.audio_sample_rate = None  # SoundCard で取得したサンプルレートを保存
         self.audio_channels = None  # SoundCard で取得したチャンネル数を保存
         self.last_sound_time = None  # 最後に音声を検知した時刻
-        self.no_sound_timeout_seconds = 300  # 無音状態のタイムアウト秒数 (5分)
+        self.no_sound_timeout_seconds = 240  # 無音状態のタイムアウト秒数 (4分)
         self.silence_threshold = (
             0.01  # 無音と判定する振幅の閾値 (0.0 から 1.0 の範囲で調整)
         )
@@ -215,6 +215,7 @@ class SlideCaptureApp:
         # --- イベントバインド ---
         self.root.bind("<Escape>", lambda e: self.stop_all_tasks())  # Escで全停止
         self.root.protocol("WM_DELETE_WINDOW", self.on_closing)
+        self.original_on_closing = self.on_closing  # 元の閉じる処理を保持
 
         logger.info("アプリケーションを初期化しました。")
         self.refresh_window_list()  # 初期ウィンドウリスト表示
@@ -830,6 +831,19 @@ class SlideCaptureApp:
 
     def start_note_creation(self, video_filepath):  # 引数に video_filepath を追加
         """指定された動画ファイルパスでノート作成処理を開始する"""
+        # --- GUI操作制限 ---
+        logger.info("ノート作成開始: GUI操作を制限します。")
+        # ノート作成は stop_all_tasks 後に呼ばれるため、ボタンは既に無効化されているはずだが念のため
+        self.start_button.config(state=tk.DISABLED)
+        self.stop_button.config(state=tk.DISABLED)  # stop_all_tasks で無効化される
+        self.refresh_window_list_button.config(state=tk.DISABLED)
+        self.window_listbox.config(state=tk.DISABLED)
+        # 閉じるボタンを無効化
+        self.root.protocol(
+            "WM_DELETE_WINDOW",
+            lambda: logger.warning("ノート作成中はウィンドウを閉じられません。"),
+        )
+        # --- ここまで ---
         if not self.gemini_client:
             self.note_creation_status.set("ノート作成不可: APIクライアント未設定")
             logger.warning(
@@ -963,9 +977,9 @@ class SlideCaptureApp:
                 # ★ モデル名を修正 (例: gemini-1.5-pro-latest)
                 #    config ではなく generation_config を使用
                 response = self.gemini_client.models.generate_content(
-                    model="gemini-1.5-pro-latest",  # モデル名を最新に (例)
+                    model="gemini-2.5-pro-exp-03-25",  # モデル名を最新に (例)
                     contents=[video_file, prompt],
-                    generation_config={  # generation_config を使用
+                    config={  # generation_config を使用
                         "response_mime_type": "application/json",
                         "response_schema": schema,
                     },
@@ -1092,12 +1106,24 @@ class SlideCaptureApp:
             self.note_creation_status.set("ノート生成失敗")
             # エラーメッセージを短縮して表示
             error_short = str(result_path_or_error).split("\n")[0][:100] + "..."
-            self.note_result_message.set(f"エラー: {error_short}")
+            self.note_result_message.set(
+                f"エラー: {error_short}"
+            )  # 修正: error_short を使用
             logger.error(f"ノート作成失敗: {result_path_or_error}")
             messagebox.showerror(
                 "ノート作成エラー",
                 f"ノートの作成中にエラーが発生しました:\n{result_path_or_error}",
             )
+
+        # --- GUI操作制限解除 (閉じるボタンのみ) ---
+        # ボタン類の状態は stop_all_tasks でリセットされるため、ここでは閉じるボタンの挙動のみ元に戻す
+        logger.info("ノート作成完了: 閉じるボタンの挙動を元に戻します。")
+        if hasattr(self, "original_on_closing"):  # 念のため存在確認
+            self.root.protocol("WM_DELETE_WINDOW", self.original_on_closing)
+        else:  # フォールバック: もし original_on_closing がなければデフォルトの閉じる動作
+            # フォールバック: もし original_on_closing がなければデフォルトの閉じる動作
+            self.root.protocol("WM_DELETE_WINDOW", self.root.destroy)
+        # --- ここまで ---
 
     def stop_all_tasks(self):
         """全てのキャプチャ・録画タスクを停止する"""
@@ -1409,7 +1435,7 @@ class SlideCaptureApp:
 
         logger.info("スクリーンショットキャプチャループを終了します。")
 
-    def is_similar(self, img1_cv, img2_cv, threshold=0.85):
+    def is_similar(self, img1_cv, img2_cv, threshold=0.83):
         """2つの画像の類似度を計算する (差分ベースの簡易比較)"""
         try:
             # グレースケールに変換
