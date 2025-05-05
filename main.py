@@ -80,6 +80,13 @@ class SlideCaptureApp:
         self.silence_threshold = (
             0.01  # 無音と判定する振幅の閾値 (0.0 から 1.0 の範囲で調整)
         )
+        self.gemini_model_options = [
+            "models/gemini-1.5-flash-latest",  # 短時間用 (デフォルト)
+            "models/gemini-1.5-pro-latest",  # 長時間用
+        ]
+        self.selected_gemini_model = tk.StringVar(
+            value=self.gemini_model_options[0]
+        )  # デフォルト選択
 
         # --- Gemini API 設定 ---
         try:
@@ -143,6 +150,24 @@ class SlideCaptureApp:
             command=self.refresh_window_list,  # あとで実装
         )
         self.refresh_window_list_button.pack(side=tk.LEFT, padx=5)
+
+        # --- Gemini モデル選択 ---
+        model_selection_frame = ttk.LabelFrame(
+            root, text="Gemini モデル選択", padding="10"
+        )
+        model_selection_frame.pack(fill=tk.X, padx=10, pady=5)
+
+        model_label = ttk.Label(model_selection_frame, text="モデル:")
+        model_label.pack(side=tk.LEFT, padx=(0, 5))
+
+        self.model_combobox = ttk.Combobox(
+            model_selection_frame,
+            textvariable=self.selected_gemini_model,
+            values=self.gemini_model_options,
+            state="readonly",  # ユーザー入力不可
+            width=40,  # 幅調整
+        )
+        self.model_combobox.pack(side=tk.LEFT, expand=True, fill=tk.X)
 
         # --- 操作ボタン (統合) ---
         button_frame = ttk.Frame(root, padding="10")
@@ -310,6 +335,7 @@ class SlideCaptureApp:
             state=tk.DISABLED
         )  # タスク実行中は更新不可
         self.window_listbox.config(state=tk.DISABLED)
+        self.model_combobox.config(state=tk.DISABLED)  # モデル選択も無効化
 
     # --- 録画関連メソッド (修正) ---
     def start_recording(self, hwnd):  # 引数 hwnd を追加
@@ -1262,8 +1288,11 @@ class SlideCaptureApp:
         for attempt in range(max_retries):
             try:
                 logger.info(f"Gemini API呼び出し試行 {attempt+1}/{max_retries}")
+                # 選択されたモデル名を取得
+                selected_model_name = self.selected_gemini_model.get()
+                logger.info(f"使用する Gemini モデル: {selected_model_name}")
                 response = self.gemini_client.models.generate_content(
-                    model="gemini-2.5-flash-preview-04-17",
+                    model=selected_model_name,  # 選択されたモデルを使用
                     contents=[video_file, prompt],
                     config={
                         "response_mime_type": "application/json",
@@ -1315,6 +1344,7 @@ class SlideCaptureApp:
         self.folder_entry.config(state=tk.NORMAL)
         self.refresh_window_list_button.config(state=tk.NORMAL)  # 再度有効化
         self.window_listbox.config(state=tk.NORMAL)
+        self.model_combobox.config(state="readonly")  # モデル選択を再度有効化
         self.root.update()
         if hasattr(self, "original_on_closing"):  # 念のため存在確認
             self.root.protocol("WM_DELETE_WINDOW", self.original_on_closing)
