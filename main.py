@@ -968,7 +968,7 @@ class SlideCaptureApp:
                                     },
                                     "topic_summary": {
                                         "type": "string",
-                                        "description": "トピックの要約を300字以内で",
+                                        "description": "トピックの要約を1000字以内で",
                                     },
                                     "topic_points": {
                                         "type": "array",
