@@ -762,7 +762,7 @@ class SlideCaptureApp:
                     temp_audiofile="temp-audio.m4a",  # 一時ファイル名を指定
                     remove_temp=True,  # 一時ファイルを削除
                     threads=8,  # CPUコア数に合わせて調整
-                    preset="fast",  # 品質と速度のバランス
+                    preset="medium",  # 品質と速度のバランス
                     logger=None,  # MoviePyのログを無効化 (Pythonのloggingを使用するため)
                 )
                 logger.info(f"動画ファイルを保存しました: {output_filepath}")
@@ -1409,44 +1409,98 @@ class SlideCaptureApp:
 
     def prepare_save_folder(self):
         """保存フォルダの準備（作成、権限チェック）を行う"""
-        folder_name = self.save_folder_name.get()
+        initial_folder_name_from_ui = self.save_folder_name.get()
+        current_working_directory = os.getcwd()  # ★ 現在の作業ディレクトリをログに出力
+        logger.info(
+            f"prepare_save_folder - UIから取得した初期フォルダ名: '{initial_folder_name_from_ui}'"
+        )
+        logger.info(
+            f"prepare_save_folder - 現在の作業ディレクトリ: {current_working_directory}"
+        )
+
+        folder_name = initial_folder_name_from_ui
         if not folder_name:
             # フォルダ名が空の場合、現在時刻でデフォルト名を生成
             folder_name = f"capture_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
-            self.save_folder_name.set(folder_name)
+            # self.save_folder_name.set(folder_name) # UIへのセットは成功後の方が良いかもしれない
             logger.info(
-                f"保存フォルダ名が指定されなかったため、デフォルト名を生成しました: {folder_name}"
+                f"prepare_save_folder - 保存フォルダ名が指定されなかったため、デフォルト名を生成しました: {folder_name}"
             )
 
-        # 絶対パスに変換 (カレントディレクトリ基準)
-        save_path = os.path.abspath(folder_name)
-        self.save_folder_name.set(save_path)  # UIにも反映
+        # folder_name が絶対パスか相対パスかで処理を分ける
+        if os.path.isabs(folder_name):
+            save_path = folder_name
+            logger.info(
+                f"prepare_save_folder - 入力されたフォルダ名は絶対パスとして扱います: {save_path}"
+            )
+        else:
+            # 相対パスの場合、現在の作業ディレクトリを基準に絶対パスを生成
+            save_path = os.path.join(current_working_directory, folder_name)
+            # os.path.abspath は上記とほぼ同等だが、より明示的に join を使う
+            # save_path = os.path.abspath(folder_name)
+            logger.info(
+                f"prepare_save_folder - 相対パスとして解釈し、絶対パスに変換しました (基準: {current_working_directory}): {save_path}"
+            )
 
-        logger.info(f"保存先フォルダ: {save_path}")
+        logger.info(
+            f"prepare_save_folder - 最終的な保存先フォルダ (os.makedirs対象): {save_path}"
+        )
 
         try:
             # フォルダが存在しない場合は作成
             if not os.path.exists(save_path):
+                logger.info(
+                    f"prepare_save_folder - os.makedirs を呼び出します: Path='{save_path}', exist_ok=True"
+                )
                 os.makedirs(save_path, exist_ok=True)
-                logger.info(f"フォルダを作成しました: {save_path}")
+                # makedirs がエラーを出さなかった場合、通常は作成されているはず
+                logger.info(
+                    f"prepare_save_folder - フォルダを作成しました (または既に存在していました): {save_path}"
+                )
+                if os.path.exists(save_path):
+                    logger.info(
+                        f"prepare_save_folder - フォルダ作成後の存在確認OK: {save_path}"
+                    )
+                else:
+                    # このケースは稀だが、makedirsが成功したように見えても実際には作成されていない場合
+                    logger.error(
+                        f"prepare_save_folder - フォルダ作成後に存在確認NG (os.makedirsはエラーなし): {save_path}"
+                    )
+            else:
+                logger.info(
+                    f"prepare_save_folder - フォルダは既に存在します: {save_path}"
+                )
 
             # 書き込み権限をチェック (簡易的な方法)
             test_file_path = os.path.join(save_path, ".permission_test")
+            logger.info(
+                f"prepare_save_folder - 書き込み権限テストファイルを作成します: {test_file_path}"
+            )
             with open(test_file_path, "w") as f:
                 f.write("test")
             os.remove(test_file_path)
-            logger.info(f"フォルダへの書き込み権限を確認しました: {save_path}")
+            logger.info(
+                f"prepare_save_folder - フォルダへの書き込み権限を確認しました: {save_path}"
+            )
+            self.save_folder_name.set(
+                save_path
+            )  # フォルダ準備成功後にUIに絶対パスを反映
             return True
 
         except OSError as e:
-            logger.exception(f"保存フォルダの準備中にエラーが発生しました: {e}")
+            # ★ OSError の詳細情報をログに出力
+            logger.exception(
+                f"prepare_save_folder - 保存フォルダの準備中にOSErrorが発生しました: Path='{save_path}', ErrorNo={e.errno}, ErrorMsg='{e.strerror}', Details='{e}'"
+            )
             messagebox.showerror(
                 "フォルダエラー",
-                f"保存フォルダの作成またはアクセスに失敗しました:\n{save_path}\n\nエラー詳細:\n{e}",
+                f"保存フォルダの作成またはアクセスに失敗しました:\n{save_path}\n\nエラーコード: {e.errno}\n詳細: {e.strerror}",
             )
             return False
         except Exception as e:
-            logger.exception(f"保存フォルダの準備中に予期せぬエラーが発生しました: {e}")
+            logger.exception(
+                f"prepare_save_folder - 保存フォルダの準備中に予期せぬエラーが発生しました: Path='{save_path}', Error='{e}'"
+            )
             messagebox.showerror(
                 "フォルダエラー",
                 f"保存フォルダの準備中に予期せぬエラーが発生しました:\n{save_path}\n\nエラー詳細:\n{e}",

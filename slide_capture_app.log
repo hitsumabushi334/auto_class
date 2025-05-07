@@ -5943,3 +5943,57 @@ google.genai.errors.ServerError: 503 Service Unavailable. {'message': '', 'statu
 2025-05-05 18:15:10,298 - INFO - MainThread - Geminiモデル 'gemini-2.5-flash-preview-04-17' が選択されました。用途: 用途: 短時間動画向け
 2025-05-05 18:15:11,363 - INFO - MainThread - アプリケーション終了処理を開始します。
 2025-05-05 18:15:11,408 - INFO - MainThread - アプリケーションを終了しました。
+2025-05-07 13:52:08,362 - WARNING - MainThread - 環境変数 GEMINI_API_KEY が設定されていません。ノート作成機能は利用できません。
+2025-05-07 13:52:10,394 - INFO - MainThread - アプリケーションを初期化しました。
+2025-05-07 13:52:10,395 - INFO - MainThread - ウィンドウリストを更新します。
+2025-05-07 13:52:10,402 - INFO - MainThread - 9 個のウィンドウが見つかりました。
+2025-05-07 13:52:10,404 - INFO - MainThread - Geminiモデル 'gemini-2.5-flash-preview-04-17' が選択されました。用途: 用途: 短時間動画向け
+2025-05-07 13:52:29,278 - INFO - MainThread - ウィンドウが選択されました: タスクリスト - Obsidian- - Obsidian v1.8.10 (HWND: 1511898) (HWND: 1511898)
+2025-05-07 13:52:29,914 - INFO - MainThread - ウィンドウが選択されました: pythonのUVがインストールしているのに認識されない原因は？ - Google Chrome (HWND: 263202) (HWND: 263202)
+2025-05-07 13:52:32,292 - INFO - MainThread - 保存フォルダ名が指定されなかったため、デフォルト名を生成しました: capture_20250507_135232
+2025-05-07 13:52:32,293 - INFO - MainThread - 保存先フォルダ: C:\Users\石田翔大\auto_class\capture_20250507_135232
+2025-05-07 13:52:32,294 - INFO - MainThread - フォルダを作成しました: C:\Users\石田翔大\auto_class\capture_20250507_135232
+2025-05-07 13:52:32,302 - INFO - MainThread - フォルダへの書き込み権限を確認しました: C:\Users\石田翔大\auto_class\capture_20250507_135232
+2025-05-07 13:52:32,303 - INFO - MainThread - スクリーンショットキャプチャを開始します。対象ウィンドウハンドル: 263202
+2025-05-07 13:52:32,306 - INFO - ScreenshotThread - スクリーンショットキャプチャループを開始します。対象ウィンドウハンドル: 263202
+2025-05-07 13:52:32,307 - INFO - MainThread - 録画を開始します。対象ウィンドウハンドル: 263202
+2025-05-07 13:52:32,309 - INFO - RecordingThread - 録画ループを開始します。対象ウィンドウハンドル: 263202
+2025-05-07 13:52:32,310 - INFO - AudioRecordingThread - 音声録音ループ (SoundCard) を開始します
+2025-05-07 13:52:32,406 - INFO - RecordingThread - 対象ウィンドウの位置とサイズ: (1912, -8, 1616, 868)
+2025-05-07 13:52:32,434 - INFO - AudioRecordingThread - 取得したマイクデバイス: Headphone (Realtek(R) Audio)
+2025-05-07 13:52:32,435 - INFO - AudioRecordingThread - マイクデバイスの型: <class 'soundcard.mediafoundation._Microphone'>
+2025-05-07 13:52:32,436 - ERROR - AudioRecordingThread - マイクデバイスからサンプルレートまたはチャンネル数を取得できませんでした: '_Microphone' object has no attribute 'samplerate'
+2025-05-07 13:52:32,437 - WARNING - AudioRecordingThread - デフォルト値を使用します - サンプルレート: 48000, チャンネル数: 2
+2025-05-07 13:52:32,535 - INFO - ScreenshotThread - 最初のスクリーンショットを保存します。
+2025-05-07 13:52:32,549 - ERROR - ScreenshotThread - スクリーンショットの保存に失敗しました (cv2.imwriteがFalseを返しました): C:\Users\石田翔大\auto_class\capture_20250507_135232\screenshot_20250507_135232_536.png
+2025-05-07 13:52:33,334 - INFO - AudioRecordingThread - レコーダーオブジェクトの型: <class 'soundcard.mediafoundation._Recorder'>
+2025-05-07 13:52:33,335 - INFO - AudioRecordingThread - 録音中: Headphone (Realtek(R) Audio) (ループバック)
+2025-05-07 13:52:41,520 - INFO - RecordingThread - 録画フレーム数: 10, 経過時間: 9.00秒
+2025-05-07 13:52:49,000 - INFO - MainThread - アプリケーション終了処理を開始します。
+2025-05-07 13:52:50,531 - INFO - MainThread - 全てのタスクの停止処理を開始します。
+2025-05-07 13:52:50,534 - INFO - MainThread - 録画停止処理を開始します。
+2025-05-07 13:52:50,534 - INFO - MainThread - 録画スレッドの終了を待機します...
+2025-05-07 13:52:50,576 - INFO - AudioRecordingThread - 音声録音ループ (SoundCard) を終了します
+2025-05-07 13:52:51,412 - INFO - RecordingThread - 録画ループを終了します。合計フレーム数: 19
+2025-05-07 13:52:51,419 - INFO - MainThread - 録画スレッドが終了しました。
+2025-05-07 13:52:51,419 - INFO - MainThread - 動画ファイルの保存を開始します: C:\Users\石田翔大\auto_class\capture_20250507_135232\recording_20250507_135251.mp4
+2025-05-07 13:52:51,422 - INFO - MainThread - 動画保存スレッドを開始しました。
+2025-05-07 13:52:51,423 - INFO - MainThread - 録画停止処理を完了しました。
+2025-05-07 13:52:51,423 - INFO - MainThread - スクリーンショットキャプチャの停止処理を開始します。
+2025-05-07 13:52:51,424 - INFO - MainThread - スクリーンショットキャプチャスレッドの終了を待機します...
+2025-05-07 13:52:51,426 - INFO - VideoSaveThread - 音声データを連結しました。サンプル数: 824320, dtype: float32
+2025-05-07 13:52:51,475 - INFO - VideoSaveThread - 合計 19 フレームを動画クリップに使用します。
+2025-05-07 13:52:51,481 - INFO - VideoSaveThread - 推定FPS: 1.00
+2025-05-07 13:52:51,509 - WARNING - VideoSaveThread - 音声クリップ (17.17s) が動画クリップ (19.00s) より短いです。
+2025-05-07 13:52:51,510 - INFO - VideoSaveThread - AudioArrayClipを作成しました。Duration: 17.17秒
+2025-05-07 13:52:51,511 - INFO - VideoSaveThread - 動画と音声を結合しました。
+2025-05-07 13:52:51,511 - INFO - VideoSaveThread - 動画ファイルを書き出します: C:\Users\石田翔大\auto_class\capture_20250507_135232\recording_20250507_135251.mp4
+2025-05-07 13:52:52,146 - INFO - VideoSaveThread - 動画ファイルを保存しました: C:\Users\石田翔大\auto_class\capture_20250507_135232\recording_20250507_135251.mp4
+2025-05-07 13:52:52,147 - INFO - VideoSaveThread - 動画保存成功、ノート作成をトリガーします: C:\Users\石田翔大\auto_class\capture_20250507_135232\recording_20250507_135251.mp4
+2025-05-07 13:52:52,417 - INFO - ScreenshotThread - スクリーンショットキャプチャループを終了します。
+2025-05-07 13:52:52,421 - INFO - MainThread - スクリーンショットキャプチャスレッドが終了しました。
+2025-05-07 13:52:52,422 - INFO - MainThread - スクリーンショットキャプチャの停止処理を完了しました。
+2025-05-07 13:52:52,422 - INFO - MainThread - 録画を停止しました。動画保存とノート作成がバックグラウンドで実行されます（成功した場合）。
+2025-05-07 13:52:52,423 - INFO - MainThread - 全てのタスクの停止処理を完了しました。
+2025-05-07 13:52:52,423 - INFO - MainThread - 実行中のタスクを停止しました。
+2025-05-07 13:52:52,547 - INFO - MainThread - アプリケーションを終了しました。
