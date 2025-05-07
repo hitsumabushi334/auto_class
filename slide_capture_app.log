@@ -5997,3 +5997,663 @@ google.genai.errors.ServerError: 503 Service Unavailable. {'message': '', 'statu
 2025-05-07 13:52:52,423 - INFO - MainThread - 全てのタスクの停止処理を完了しました。
 2025-05-07 13:52:52,423 - INFO - MainThread - 実行中のタスクを停止しました。
 2025-05-07 13:52:52,547 - INFO - MainThread - アプリケーションを終了しました。
+2025-05-07 19:06:47,495 - INFO - MainThread - Gemini API クライアントを設定しました。
+2025-05-07 19:06:47,835 - INFO - MainThread - アプリケーションを初期化しました。
+2025-05-07 19:06:47,835 - INFO - MainThread - ウィンドウリストを更新します。
+2025-05-07 19:06:47,844 - INFO - MainThread - 3 個のウィンドウが見つかりました。
+2025-05-07 19:06:47,862 - INFO - MainThread - Geminiモデル 'gemini-2.5-flash-preview-04-17' が選択されました。用途: 用途: 短時間動画向け
+2025-05-07 19:06:51,563 - INFO - MainThread - ウィンドウが選択されました: main.py - auto_class (ワークスペース) - Visual Studio Code (HWND: 131406) (HWND: 131406)
+2025-05-07 19:06:52,666 - INFO - MainThread - prepare_save_folder - UIから取得した初期フォルダ名: ''
+2025-05-07 19:06:52,666 - INFO - MainThread - prepare_save_folder - 現在の作業ディレクトリ: C:\Users\issho\auto_ss\auto_class
+2025-05-07 19:06:52,666 - INFO - MainThread - prepare_save_folder - 保存フォルダ名が指定されなかったため、デフォルト名を生成しました: capture_20250507_190652
+2025-05-07 19:06:52,667 - INFO - MainThread - prepare_save_folder - 相対パスとして解釈し、絶対パスに変換しました (基準: C:\Users\issho\auto_ss\auto_class): C:\Users\issho\auto_ss\auto_class\capture_20250507_190652
+2025-05-07 19:06:52,667 - INFO - MainThread - prepare_save_folder - 最終的な保存先フォルダ (os.makedirs対象): C:\Users\issho\auto_ss\auto_class\capture_20250507_190652
+2025-05-07 19:06:52,667 - INFO - MainThread - prepare_save_folder - os.makedirs を呼び出します: Path='C:\Users\issho\auto_ss\auto_class\capture_20250507_190652', exist_ok=True
+2025-05-07 19:06:52,667 - INFO - MainThread - prepare_save_folder - フォルダを作成しました (または既に存在していました): C:\Users\issho\auto_ss\auto_class\capture_20250507_190652
+2025-05-07 19:06:52,668 - INFO - MainThread - prepare_save_folder - フォルダ作成後の存在確認OK: C:\Users\issho\auto_ss\auto_class\capture_20250507_190652
+2025-05-07 19:06:52,668 - INFO - MainThread - prepare_save_folder - 書き込み権限テストファイルを作成します: C:\Users\issho\auto_ss\auto_class\capture_20250507_190652\.permission_test
+2025-05-07 19:06:52,668 - INFO - MainThread - prepare_save_folder - フォルダへの書き込み権限を確認しました: C:\Users\issho\auto_ss\auto_class\capture_20250507_190652
+2025-05-07 19:06:52,669 - INFO - MainThread - スクリーンショットキャプチャを開始します。対象ウィンドウハンドル: 131406
+2025-05-07 19:06:52,670 - INFO - ScreenshotThread - スクリーンショットキャプチャループを開始します。対象ウィンドウハンドル: 131406
+2025-05-07 19:06:52,674 - INFO - MainThread - 録画を開始します。対象ウィンドウハンドル: 131406
+2025-05-07 19:06:52,675 - INFO - RecordingThread - 録画ループを開始します。対象ウィンドウハンドル: 131406
+2025-05-07 19:06:52,675 - INFO - AudioRecordingThread - 音声録音ループ (SoundCard) を開始します
+2025-05-07 19:06:52,691 - INFO - RecordingThread - 対象ウィンドウの位置とサイズ: (-9, -9, 1938, 1038)
+2025-05-07 19:06:52,755 - INFO - ScreenshotThread - 最初のスクリーンショットを保存します。
+2025-05-07 19:06:52,759 - INFO - AudioRecordingThread - 取得したマイクデバイス: スピーカー (Realtek(R) Audio)
+2025-05-07 19:06:52,759 - INFO - AudioRecordingThread - マイクデバイスの型: <class 'soundcard.mediafoundation._Microphone'>
+2025-05-07 19:06:52,760 - ERROR - AudioRecordingThread - マイクデバイスからサンプルレートまたはチャンネル数を取得できませんでした: '_Microphone' object has no attribute 'samplerate'
+2025-05-07 19:06:52,760 - WARNING - AudioRecordingThread - デフォルト値を使用します - サンプルレート: 48000, チャンネル数: 2
+2025-05-07 19:06:52,790 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250507_190652\screenshot_20250507_190652_755.png
+2025-05-07 19:06:52,844 - INFO - AudioRecordingThread - レコーダーオブジェクトの型: <class 'soundcard.mediafoundation._Recorder'>
+2025-05-07 19:06:52,845 - INFO - AudioRecordingThread - 録音中: スピーカー (Realtek(R) Audio) (ループバック)
+2025-05-07 19:06:54,738 - INFO - MainThread - 全てのタスクの停止処理を開始します。
+2025-05-07 19:06:54,738 - INFO - MainThread - 録画停止処理を開始します。
+2025-05-07 19:06:54,738 - INFO - MainThread - 録画スレッドの終了を待機します...
+2025-05-07 19:06:54,770 - INFO - AudioRecordingThread - 音声録音ループ (SoundCard) を終了します
+2025-05-07 19:06:55,691 - INFO - RecordingThread - 録画ループを終了します。合計フレーム数: 3
+2025-05-07 19:06:55,702 - INFO - MainThread - 録画スレッドが終了しました。
+2025-05-07 19:06:55,702 - INFO - MainThread - 動画ファイルの保存を開始します: C:\Users\issho\auto_ss\auto_class\capture_20250507_190652\recording_20250507_190655.mp4
+2025-05-07 19:06:55,703 - INFO - MainThread - 動画保存スレッドを開始しました。
+2025-05-07 19:06:55,703 - INFO - MainThread - 録画停止処理を完了しました。
+2025-05-07 19:06:55,704 - INFO - VideoSaveThread - 音声データを連結しました。サンプル数: 90112, dtype: float32
+2025-05-07 19:06:55,704 - INFO - MainThread - スクリーンショットキャプチャの停止処理を開始します。
+2025-05-07 19:06:55,704 - INFO - MainThread - スクリーンショットキャプチャスレッドの終了を待機します...
+2025-05-07 19:06:55,710 - INFO - VideoSaveThread - 合計 3 フレームを動画クリップに使用します。
+2025-05-07 19:06:55,711 - INFO - VideoSaveThread - 推定FPS: 1.00
+2025-05-07 19:06:55,711 - WARNING - VideoSaveThread - 音声クリップ (1.88s) が動画クリップ (3.00s) より短いです。
+2025-05-07 19:06:55,711 - INFO - VideoSaveThread - AudioArrayClipを作成しました。Duration: 1.88秒
+2025-05-07 19:06:55,712 - INFO - VideoSaveThread - 動画と音声を結合しました。
+2025-05-07 19:06:55,712 - INFO - VideoSaveThread - 動画ファイルを書き出します: C:\Users\issho\auto_ss\auto_class\capture_20250507_190652\recording_20250507_190655.mp4
+2025-05-07 19:06:56,006 - INFO - VideoSaveThread - 動画ファイルを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250507_190652\recording_20250507_190655.mp4
+2025-05-07 19:06:56,006 - INFO - VideoSaveThread - 動画保存成功、ノート作成をトリガーします: C:\Users\issho\auto_ss\auto_class\capture_20250507_190652\recording_20250507_190655.mp4
+2025-05-07 19:06:56,673 - INFO - ScreenshotThread - スクリーンショットキャプチャループを終了します。
+2025-05-07 19:06:56,674 - INFO - MainThread - スクリーンショットキャプチャスレッドが終了しました。
+2025-05-07 19:06:56,675 - INFO - MainThread - スクリーンショットキャプチャの停止処理を完了しました。
+2025-05-07 19:06:56,675 - INFO - MainThread - 録画を停止しました。動画保存とノート作成がバックグラウンドで実行されます（成功した場合）。
+2025-05-07 19:06:56,675 - INFO - MainThread - 全てのタスクの停止処理を完了しました。
+2025-05-07 19:06:56,675 - INFO - VideoSaveThread - 動画保存処理を終了します。
+2025-05-07 19:06:56,676 - INFO - MainThread - ノート作成開始: GUI操作を制限します。
+2025-05-07 19:06:56,684 - INFO - MainThread - ノート作成処理を開始します。対象動画: C:\Users\issho\auto_ss\auto_class\capture_20250507_190652\recording_20250507_190655.mp4
+2025-05-07 19:06:56,684 - INFO - NoteCreationThread - 動画ファイルをアップロード開始: C:\Users\issho\auto_ss\auto_class\capture_20250507_190652\recording_20250507_190655.mp4
+2025-05-07 19:06:56,685 - INFO - NoteCreationThread - 動画ファイルアップロード試行 1/3: C:\Users\issho\auto_ss\auto_class\capture_20250507_190652\recording_20250507_190655.mp4
+2025-05-07 19:06:57,852 - INFO - NoteCreationThread - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files "HTTP/1.1 200 OK"
+2025-05-07 19:06:59,290 - INFO - NoteCreationThread - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AAO2VworS_gCFuqQvKivJp3XULEBR-k-Gc-tbGoOlIzzOl7piY0WUQ4j4CA7TtmHsqvXbWzVq5XLO29LBYVh88DhLRr-_EjPR0ALag64x5D25w&upload_protocol=resumable "HTTP/1.1 200 OK"
+2025-05-07 19:06:59,291 - INFO - NoteCreationThread - アップロード開始: files/cx2wzfxajp7b, State: FileState.PROCESSING
+2025-05-07 19:06:59,292 - INFO - NoteCreationThread - 動画処理中... (FileState.PROCESSING, 0.0秒)
+2025-05-07 19:07:04,594 - INFO - NoteCreationThread - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/cx2wzfxajp7b "HTTP/1.1 200 OK"
+2025-05-07 19:07:04,595 - INFO - NoteCreationThread - ファイルがACTIVEになりました: files/cx2wzfxajp7b
+2025-05-07 19:07:04,600 - INFO - NoteCreationThread - Gemini APIに要約リクエストを送信します...
+2025-05-07 19:07:04,600 - INFO - NoteCreationThread - Gemini API呼び出し試行 1/3
+2025-05-07 19:07:04,601 - INFO - NoteCreationThread - 使用する Gemini モデル: gemini-2.5-flash-preview-04-17
+2025-05-07 19:07:04,601 - INFO - NoteCreationThread - AFC is enabled with max remote calls: 10.
+2025-05-07 19:07:24,624 - INFO - NoteCreationThread - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-04-17:generateContent "HTTP/1.1 200 OK"
+2025-05-07 19:07:24,626 - INFO - NoteCreationThread - AFC remote call 1 is done.
+2025-05-07 19:07:25,009 - INFO - NoteCreationThread - HTTP Request: DELETE https://generativelanguage.googleapis.com/v1beta/files/cx2wzfxajp7b "HTTP/1.1 200 OK"
+2025-05-07 19:07:25,010 - INFO - NoteCreationThread - Gemini API から応答を取得しました。
+2025-05-07 19:07:25,010 - INFO - NoteCreationThread - 応答のJSONパースに成功しました。
+2025-05-07 19:07:25,010 - INFO - NoteCreationThread - Wordファイルを生成します: C:\Users\issho\auto_ss\auto_class\capture_20250507_190652\note_recording_20250507_190655.docx
+2025-05-07 19:07:25,071 - INFO - NoteCreationThread - Wordファイルを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250507_190652\note_recording_20250507_190655.docx
+2025-05-07 19:07:25,072 - INFO - MainThread - ノート作成成功: C:\Users\issho\auto_ss\auto_class\capture_20250507_190652\note_recording_20250507_190655.docx
+2025-05-07 19:07:49,137 - INFO - MainThread - ノート作成完了: 閉じるボタンの挙動を元に戻します。
+2025-05-07 19:07:53,625 - INFO - MainThread - ウィンドウが選択されました: Program Manager (HWND: 66002) (HWND: 66002)
+2025-05-07 19:07:54,045 - INFO - MainThread - ウィンドウが選択されました: Program Manager (HWND: 66002) (HWND: 66002)
+2025-05-07 19:07:54,695 - INFO - MainThread - ウィンドウが選択されました: Program Manager (HWND: 66002) (HWND: 66002)
+2025-05-07 19:07:55,071 - INFO - MainThread - ウィンドウが選択されました: Program Manager (HWND: 66002) (HWND: 66002)
+2025-05-07 19:07:57,800 - INFO - MainThread - ウィンドウリストを更新します。
+2025-05-07 19:07:57,803 - INFO - MainThread - 4 個のウィンドウが見つかりました。
+2025-05-07 19:09:33,080 - INFO - MainThread - アプリケーション終了処理を開始します。
+2025-05-07 19:09:33,126 - INFO - MainThread - アプリケーションを終了しました。
+2025-05-07 19:09:38,123 - INFO - MainThread - Gemini API クライアントを設定しました。
+2025-05-07 19:09:38,471 - INFO - MainThread - アプリケーションを初期化しました。
+2025-05-07 19:09:38,471 - INFO - MainThread - ウィンドウリストを更新します。
+2025-05-07 19:09:38,481 - INFO - MainThread - 5 個のウィンドウが見つかりました。
+2025-05-07 19:09:38,497 - INFO - MainThread - Geminiモデル 'gemini-2.5-flash-preview-04-17' が選択されました。用途: 用途: 短時間動画向け
+2025-05-07 19:09:40,815 - INFO - MainThread - ウィンドウリストを更新します。
+2025-05-07 19:09:40,817 - INFO - MainThread - 6 個のウィンドウが見つかりました。
+2025-05-07 19:09:46,649 - INFO - MainThread - ウィンドウが選択されました: スライドキャプチャ＆録画 (HWND: 264608) (HWND: 264608)
+2025-05-07 19:09:47,875 - INFO - MainThread - prepare_save_folder - UIから取得した初期フォルダ名: ''
+2025-05-07 19:09:47,876 - INFO - MainThread - prepare_save_folder - 現在の作業ディレクトリ: C:\Users\issho\auto_ss\auto_class
+2025-05-07 19:09:47,876 - INFO - MainThread - prepare_save_folder - 保存フォルダ名が指定されなかったため、デフォルト名を生成しました: capture_20250507_190947
+2025-05-07 19:09:47,876 - INFO - MainThread - prepare_save_folder - 相対パスとして解釈し、絶対パスに変換しました (基準: C:\Users\issho\auto_ss\auto_class): C:\Users\issho\auto_ss\auto_class\capture_20250507_190947
+2025-05-07 19:09:47,876 - INFO - MainThread - prepare_save_folder - 最終的な保存先フォルダ (os.makedirs対象): C:\Users\issho\auto_ss\auto_class\capture_20250507_190947
+2025-05-07 19:09:47,876 - INFO - MainThread - prepare_save_folder - os.makedirs を呼び出します: Path='C:\Users\issho\auto_ss\auto_class\capture_20250507_190947', exist_ok=True
+2025-05-07 19:09:47,877 - INFO - MainThread - prepare_save_folder - フォルダを作成しました (または既に存在していました): C:\Users\issho\auto_ss\auto_class\capture_20250507_190947
+2025-05-07 19:09:47,877 - INFO - MainThread - prepare_save_folder - フォルダ作成後の存在確認OK: C:\Users\issho\auto_ss\auto_class\capture_20250507_190947
+2025-05-07 19:09:47,877 - INFO - MainThread - prepare_save_folder - 書き込み権限テストファイルを作成します: C:\Users\issho\auto_ss\auto_class\capture_20250507_190947\.permission_test
+2025-05-07 19:09:47,878 - INFO - MainThread - prepare_save_folder - フォルダへの書き込み権限を確認しました: C:\Users\issho\auto_ss\auto_class\capture_20250507_190947
+2025-05-07 19:09:47,878 - INFO - MainThread - スクリーンショットキャプチャを開始します。対象ウィンドウハンドル: 264608
+2025-05-07 19:09:47,879 - INFO - ScreenshotThread - スクリーンショットキャプチャループを開始します。対象ウィンドウハンドル: 264608
+2025-05-07 19:09:47,883 - INFO - MainThread - 録画を開始します。対象ウィンドウハンドル: 264608
+2025-05-07 19:09:47,884 - INFO - RecordingThread - 録画ループを開始します。対象ウィンドウハンドル: 264608
+2025-05-07 19:09:47,884 - INFO - AudioRecordingThread - 音声録音ループ (SoundCard) を開始します
+2025-05-07 19:09:47,899 - INFO - RecordingThread - 対象ウィンドウの位置とサイズ: (1851, 113, 516, 589)
+2025-05-07 19:09:47,913 - INFO - ScreenshotThread - 最初のスクリーンショットを保存します。
+2025-05-07 19:09:47,933 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250507_190947\screenshot_20250507_190947_927.png
+2025-05-07 19:09:47,940 - INFO - AudioRecordingThread - 取得したマイクデバイス: スピーカー (Realtek(R) Audio)
+2025-05-07 19:09:47,940 - INFO - AudioRecordingThread - マイクデバイスの型: <class 'soundcard.mediafoundation._Microphone'>
+2025-05-07 19:09:47,940 - ERROR - AudioRecordingThread - マイクデバイスからサンプルレートまたはチャンネル数を取得できませんでした: '_Microphone' object has no attribute 'samplerate'
+2025-05-07 19:09:47,940 - WARNING - AudioRecordingThread - デフォルト値を使用します - サンプルレート: 48000, チャンネル数: 2
+2025-05-07 19:09:48,025 - INFO - AudioRecordingThread - レコーダーオブジェクトの型: <class 'soundcard.mediafoundation._Recorder'>
+2025-05-07 19:09:48,025 - INFO - AudioRecordingThread - 録音中: スピーカー (Realtek(R) Audio) (ループバック)
+2025-05-07 19:09:49,987 - WARNING - ScreenshotThread - 比較画像のサイズが異なるためリサイズしました。
+2025-05-07 19:09:49,987 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-07 19:09:49,991 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250507_190947\screenshot_20250507_190949_988.png
+2025-05-07 19:09:53,274 - INFO - MainThread - アプリケーション終了処理を開始します。
+2025-05-07 19:09:53,893 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-07 19:09:53,903 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250507_190947\screenshot_20250507_190953_893.png
+2025-05-07 19:09:54,274 - INFO - MainThread - 全てのタスクの停止処理を開始します。
+2025-05-07 19:09:54,274 - INFO - MainThread - 録画停止処理を開始します。
+2025-05-07 19:09:54,274 - INFO - MainThread - 録画スレッドの終了を待機します...
+2025-05-07 19:09:54,302 - INFO - AudioRecordingThread - 音声録音ループ (SoundCard) を終了します
+2025-05-07 19:09:54,892 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-07 19:09:54,901 - INFO - RecordingThread - 録画ループを終了します。合計フレーム数: 7
+2025-05-07 19:09:54,902 - INFO - MainThread - 録画スレッドが終了しました。
+2025-05-07 19:09:54,902 - INFO - MainThread - 動画ファイルの保存を開始します: C:\Users\issho\auto_ss\auto_class\capture_20250507_190947\recording_20250507_190954.mp4
+2025-05-07 19:09:54,903 - INFO - MainThread - 動画保存スレッドを開始しました。
+2025-05-07 19:09:54,903 - INFO - MainThread - 録画停止処理を完了しました。
+2025-05-07 19:09:54,903 - INFO - MainThread - スクリーンショットキャプチャの停止処理を開始します。
+2025-05-07 19:09:54,904 - INFO - MainThread - スクリーンショットキャプチャスレッドの終了を待機します...
+2025-05-07 19:09:54,904 - INFO - VideoSaveThread - 音声データを連結しました。サンプル数: 299008, dtype: float32
+2025-05-07 19:09:54,905 - INFO - VideoSaveThread - 合計 7 フレームを動画クリップに使用します。
+2025-05-07 19:09:54,905 - INFO - VideoSaveThread - 推定FPS: 1.00
+2025-05-07 19:09:54,906 - WARNING - VideoSaveThread - 音声クリップ (6.23s) が動画クリップ (7.00s) より短いです。
+2025-05-07 19:09:54,906 - INFO - VideoSaveThread - AudioArrayClipを作成しました。Duration: 6.23秒
+2025-05-07 19:09:54,906 - INFO - VideoSaveThread - 動画と音声を結合しました。
+2025-05-07 19:09:54,906 - INFO - VideoSaveThread - 動画ファイルを書き出します: C:\Users\issho\auto_ss\auto_class\capture_20250507_190947\recording_20250507_190954.mp4
+2025-05-07 19:09:55,108 - INFO - VideoSaveThread - 動画ファイルを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250507_190947\recording_20250507_190954.mp4
+2025-05-07 19:09:55,109 - INFO - VideoSaveThread - 動画保存成功、ノート作成をトリガーします: C:\Users\issho\auto_ss\auto_class\capture_20250507_190947\recording_20250507_190954.mp4
+2025-05-07 19:09:59,914 - WARNING - MainThread - スクリーンショットキャプチャスレッドが時間内に終了しませんでした。
+2025-05-07 19:09:59,914 - INFO - MainThread - スクリーンショットキャプチャの停止処理を完了しました。
+2025-05-07 19:09:59,914 - INFO - MainThread - 録画を停止しました。動画保存とノート作成がバックグラウンドで実行されます（成功した場合）。
+2025-05-07 19:09:59,915 - INFO - MainThread - 全てのタスクの停止処理を完了しました。
+2025-05-07 19:09:59,915 - INFO - MainThread - 実行中のタスクを停止しました。
+2025-05-07 19:09:59,935 - INFO - MainThread - アプリケーションを終了しました。
+2025-05-07 19:10:40,642 - INFO - MainThread - Gemini API クライアントを設定しました。
+2025-05-07 19:10:40,910 - INFO - MainThread - アプリケーションを初期化しました。
+2025-05-07 19:10:40,911 - INFO - MainThread - ウィンドウリストを更新します。
+2025-05-07 19:10:40,912 - INFO - MainThread - 5 個のウィンドウが見つかりました。
+2025-05-07 19:10:40,912 - INFO - MainThread - Geminiモデル 'gemini-2.5-flash-preview-04-17' が選択されました。用途: 用途: 短時間動画向け
+2025-05-07 19:10:50,018 - INFO - MainThread - prepare_save_folder - UIから取得した初期フォルダ名: ''
+2025-05-07 19:10:50,018 - INFO - MainThread - prepare_save_folder - 現在の作業ディレクトリ: C:\Users\issho\auto_ss\auto_class
+2025-05-07 19:10:50,018 - INFO - MainThread - prepare_save_folder - 保存フォルダ名が指定されなかったため、デフォルト名を生成しました: capture_20250507_191050
+2025-05-07 19:10:50,018 - INFO - MainThread - prepare_save_folder - 相対パスとして解釈し、絶対パスに変換しました (基準: C:\Users\issho\auto_ss\auto_class): C:\Users\issho\auto_ss\auto_class\capture_20250507_191050
+2025-05-07 19:10:50,019 - INFO - MainThread - prepare_save_folder - 最終的な保存先フォルダ (os.makedirs対象): C:\Users\issho\auto_ss\auto_class\capture_20250507_191050
+2025-05-07 19:10:50,019 - INFO - MainThread - prepare_save_folder - os.makedirs を呼び出します: Path='C:\Users\issho\auto_ss\auto_class\capture_20250507_191050', exist_ok=True
+2025-05-07 19:10:50,019 - INFO - MainThread - prepare_save_folder - フォルダを作成しました (または既に存在していました): C:\Users\issho\auto_ss\auto_class\capture_20250507_191050
+2025-05-07 19:10:50,019 - INFO - MainThread - prepare_save_folder - フォルダ作成後の存在確認OK: C:\Users\issho\auto_ss\auto_class\capture_20250507_191050
+2025-05-07 19:10:50,019 - INFO - MainThread - prepare_save_folder - 書き込み権限テストファイルを作成します: C:\Users\issho\auto_ss\auto_class\capture_20250507_191050\.permission_test
+2025-05-07 19:10:50,020 - INFO - MainThread - prepare_save_folder - フォルダへの書き込み権限を確認しました: C:\Users\issho\auto_ss\auto_class\capture_20250507_191050
+2025-05-07 19:10:50,020 - INFO - MainThread - スクリーンショットキャプチャを開始します。対象ウィンドウハンドル: プライマリモニター
+2025-05-07 19:10:50,021 - INFO - ScreenshotThread - スクリーンショットキャプチャループを開始します。対象ウィンドウハンドル: プライマリモニター
+2025-05-07 19:10:50,021 - INFO - MainThread - ウィンドウが選択されていないため、スクリーンショットのみ開始します。
+2025-05-07 19:10:50,064 - INFO - ScreenshotThread - 最初のスクリーンショットを保存します。
+2025-05-07 19:10:50,123 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250507_191050\screenshot_20250507_191050_064.png
+2025-05-07 19:10:55,021 - INFO - MainThread - 全てのタスクの停止処理を開始します。
+2025-05-07 19:10:55,022 - INFO - MainThread - スクリーンショットキャプチャの停止処理を開始します。
+2025-05-07 19:10:55,022 - INFO - MainThread - スクリーンショットキャプチャスレッドの終了を待機します...
+2025-05-07 19:10:55,024 - INFO - ScreenshotThread - スクリーンショットキャプチャループを終了します。
+2025-05-07 19:10:55,025 - INFO - MainThread - スクリーンショットキャプチャスレッドが終了しました。
+2025-05-07 19:10:55,025 - INFO - MainThread - スクリーンショットキャプチャの停止処理を完了しました。
+2025-05-07 19:10:55,025 - INFO - MainThread - スクリーンショットキャプチャを停止しました。
+2025-05-07 19:10:55,025 - INFO - MainThread - 全てのタスクの停止処理を完了しました。
+2025-05-07 19:10:58,488 - INFO - MainThread - 全てのタスクの停止処理を開始します。
+2025-05-07 19:10:58,488 - INFO - MainThread - スクリーンショットキャプチャを停止しました。
+2025-05-07 19:10:58,488 - INFO - MainThread - 全てのタスクの停止処理を完了しました。
+2025-05-07 19:11:08,836 - INFO - MainThread - アプリケーション終了処理を開始します。
+2025-05-07 19:11:08,874 - INFO - MainThread - アプリケーションを終了しました。
+2025-05-07 19:11:46,662 - INFO - MainThread - Gemini API クライアントを設定しました。
+2025-05-07 19:11:46,929 - INFO - MainThread - アプリケーションを初期化しました。
+2025-05-07 19:11:46,930 - INFO - MainThread - ウィンドウリストを更新します。
+2025-05-07 19:11:46,931 - INFO - MainThread - 5 個のウィンドウが見つかりました。
+2025-05-07 19:11:46,931 - INFO - MainThread - Geminiモデル 'gemini-2.5-flash-preview-04-17' が選択されました。用途: 用途: 短時間動画向け
+2025-05-07 19:11:49,764 - INFO - MainThread - prepare_save_folder - UIから取得した初期フォルダ名: ''
+2025-05-07 19:11:49,764 - INFO - MainThread - prepare_save_folder - 現在の作業ディレクトリ: C:\Users\issho\auto_ss\auto_class
+2025-05-07 19:11:49,765 - INFO - MainThread - prepare_save_folder - 保存フォルダ名が指定されなかったため、デフォルト名を生成しました: capture_20250507_191149
+2025-05-07 19:11:49,765 - INFO - MainThread - prepare_save_folder - 相対パスとして解釈し、絶対パスに変換しました (基準: C:\Users\issho\auto_ss\auto_class): C:\Users\issho\auto_ss\auto_class\capture_20250507_191149
+2025-05-07 19:11:49,765 - INFO - MainThread - prepare_save_folder - 最終的な保存先フォルダ (os.makedirs対象): C:\Users\issho\auto_ss\auto_class\capture_20250507_191149
+2025-05-07 19:11:49,765 - INFO - MainThread - prepare_save_folder - os.makedirs を呼び出します: Path='C:\Users\issho\auto_ss\auto_class\capture_20250507_191149', exist_ok=True
+2025-05-07 19:11:49,765 - INFO - MainThread - prepare_save_folder - フォルダを作成しました (または既に存在していました): C:\Users\issho\auto_ss\auto_class\capture_20250507_191149
+2025-05-07 19:11:49,765 - INFO - MainThread - prepare_save_folder - フォルダ作成後の存在確認OK: C:\Users\issho\auto_ss\auto_class\capture_20250507_191149
+2025-05-07 19:11:49,765 - INFO - MainThread - prepare_save_folder - 書き込み権限テストファイルを作成します: C:\Users\issho\auto_ss\auto_class\capture_20250507_191149\.permission_test
+2025-05-07 19:11:49,766 - INFO - MainThread - prepare_save_folder - フォルダへの書き込み権限を確認しました: C:\Users\issho\auto_ss\auto_class\capture_20250507_191149
+2025-05-07 19:11:49,766 - INFO - MainThread - スクリーンショットキャプチャを開始します。対象ウィンドウハンドル: プライマリモニター
+2025-05-07 19:11:49,767 - INFO - ScreenshotThread - スクリーンショットキャプチャループを開始します。対象ウィンドウハンドル: プライマリモニター
+2025-05-07 19:11:49,767 - INFO - MainThread - ウィンドウが選択されていないため、スクリーンショットのみ開始します。
+2025-05-07 19:11:49,808 - INFO - ScreenshotThread - 最初のスクリーンショットを保存します。
+2025-05-07 19:11:49,840 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250507_191149\screenshot_20250507_191149_808.png
+2025-05-07 19:12:06,688 - INFO - MainThread - アプリケーション終了処理を開始します。
+2025-05-07 19:12:07,611 - INFO - MainThread - 全てのタスクの停止処理を開始します。
+2025-05-07 19:12:07,611 - INFO - MainThread - スクリーンショットキャプチャの停止処理を開始します。
+2025-05-07 19:12:07,612 - INFO - MainThread - スクリーンショットキャプチャスレッドの終了を待機します...
+2025-05-07 19:12:07,772 - INFO - ScreenshotThread - スクリーンショットキャプチャループを終了します。
+2025-05-07 19:12:07,773 - INFO - MainThread - スクリーンショットキャプチャスレッドが終了しました。
+2025-05-07 19:12:07,774 - INFO - MainThread - スクリーンショットキャプチャの停止処理を完了しました。
+2025-05-07 19:12:07,774 - INFO - MainThread - スクリーンショットキャプチャを停止しました。
+2025-05-07 19:12:07,774 - INFO - MainThread - 全てのタスクの停止処理を完了しました。
+2025-05-07 19:12:07,774 - INFO - MainThread - 実行中のタスクを停止しました。
+2025-05-07 19:12:07,806 - INFO - MainThread - アプリケーションを終了しました。
+2025-05-07 19:12:59,351 - INFO - MainThread - Gemini API クライアントを設定しました。
+2025-05-07 19:12:59,619 - INFO - MainThread - アプリケーションを初期化しました。
+2025-05-07 19:12:59,620 - INFO - MainThread - ウィンドウリストを更新します。
+2025-05-07 19:12:59,621 - INFO - MainThread - 5 個のウィンドウが見つかりました。
+2025-05-07 19:12:59,621 - INFO - MainThread - Geminiモデル 'gemini-2.5-flash-preview-04-17' が選択されました。用途: 用途: 短時間動画向け
+2025-05-07 19:13:01,642 - INFO - MainThread - prepare_save_folder - UIから取得した初期フォルダ名: ''
+2025-05-07 19:13:01,642 - INFO - MainThread - prepare_save_folder - 現在の作業ディレクトリ: C:\Users\issho\auto_ss\auto_class
+2025-05-07 19:13:01,643 - INFO - MainThread - prepare_save_folder - 保存フォルダ名が指定されなかったため、デフォルト名を生成しました: capture_20250507_191301
+2025-05-07 19:13:01,643 - INFO - MainThread - prepare_save_folder - 相対パスとして解釈し、絶対パスに変換しました (基準: C:\Users\issho\auto_ss\auto_class): C:\Users\issho\auto_ss\auto_class\capture_20250507_191301
+2025-05-07 19:13:01,643 - INFO - MainThread - prepare_save_folder - 最終的な保存先フォルダ (os.makedirs対象): C:\Users\issho\auto_ss\auto_class\capture_20250507_191301
+2025-05-07 19:13:01,643 - INFO - MainThread - prepare_save_folder - os.makedirs を呼び出します: Path='C:\Users\issho\auto_ss\auto_class\capture_20250507_191301', exist_ok=True
+2025-05-07 19:13:01,643 - INFO - MainThread - prepare_save_folder - フォルダを作成しました (または既に存在していました): C:\Users\issho\auto_ss\auto_class\capture_20250507_191301
+2025-05-07 19:13:01,644 - INFO - MainThread - prepare_save_folder - フォルダ作成後の存在確認OK: C:\Users\issho\auto_ss\auto_class\capture_20250507_191301
+2025-05-07 19:13:01,644 - INFO - MainThread - prepare_save_folder - 書き込み権限テストファイルを作成します: C:\Users\issho\auto_ss\auto_class\capture_20250507_191301\.permission_test
+2025-05-07 19:13:01,644 - INFO - MainThread - prepare_save_folder - フォルダへの書き込み権限を確認しました: C:\Users\issho\auto_ss\auto_class\capture_20250507_191301
+2025-05-07 19:13:01,645 - INFO - MainThread - スクリーンショットキャプチャを開始します。対象ウィンドウハンドル: プライマリモニター
+2025-05-07 19:13:01,645 - INFO - ScreenshotThread - スクリーンショットキャプチャループを開始します。対象ウィンドウハンドル: プライマリモニター
+2025-05-07 19:13:01,646 - INFO - MainThread - ウィンドウが選択されていないため、スクリーンショットのみ開始します。
+2025-05-07 19:13:01,689 - INFO - ScreenshotThread - 最初のスクリーンショットを保存します。
+2025-05-07 19:13:01,720 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250507_191301\screenshot_20250507_191301_689.png
+2025-05-07 19:13:04,998 - INFO - MainThread - アプリケーション終了処理を開始します。
+2025-05-07 19:13:05,834 - INFO - MainThread - 全てのタスクの停止処理を開始します。
+2025-05-07 19:13:05,834 - INFO - MainThread - スクリーンショットキャプチャの停止処理を開始します。
+2025-05-07 19:13:05,834 - INFO - MainThread - スクリーンショットキャプチャスレッドの終了を待機します...
+2025-05-07 19:13:06,649 - INFO - ScreenshotThread - スクリーンショットキャプチャループを終了します。
+2025-05-07 19:13:06,650 - INFO - MainThread - スクリーンショットキャプチャスレッドが終了しました。
+2025-05-07 19:13:06,651 - INFO - MainThread - スクリーンショットキャプチャの停止処理を完了しました。
+2025-05-07 19:13:06,651 - INFO - MainThread - スクリーンショットキャプチャを停止しました。
+2025-05-07 19:13:06,651 - INFO - MainThread - 全てのタスクの停止処理を完了しました。
+2025-05-07 19:13:06,651 - INFO - MainThread - 実行中のタスクを停止しました。
+2025-05-07 19:13:06,701 - INFO - MainThread - アプリケーションを終了しました。
+2025-05-07 19:13:26,060 - INFO - MainThread - Gemini API クライアントを設定しました。
+2025-05-07 19:13:26,334 - INFO - MainThread - アプリケーションを初期化しました。
+2025-05-07 19:13:26,334 - INFO - MainThread - ウィンドウリストを更新します。
+2025-05-07 19:13:26,335 - INFO - MainThread - 5 個のウィンドウが見つかりました。
+2025-05-07 19:13:26,336 - INFO - MainThread - Geminiモデル 'gemini-2.5-flash-preview-04-17' が選択されました。用途: 用途: 短時間動画向け
+2025-05-07 19:13:30,883 - INFO - MainThread - prepare_save_folder - UIから取得した初期フォルダ名: ''
+2025-05-07 19:13:30,883 - INFO - MainThread - prepare_save_folder - 現在の作業ディレクトリ: C:\Users\issho\auto_ss\auto_class
+2025-05-07 19:13:30,883 - INFO - MainThread - prepare_save_folder - 保存フォルダ名が指定されなかったため、デフォルト名を生成しました: capture_20250507_191330
+2025-05-07 19:13:30,884 - INFO - MainThread - prepare_save_folder - 相対パスとして解釈し、絶対パスに変換しました (基準: C:\Users\issho\auto_ss\auto_class): C:\Users\issho\auto_ss\auto_class\capture_20250507_191330
+2025-05-07 19:13:30,884 - INFO - MainThread - prepare_save_folder - 最終的な保存先フォルダ (os.makedirs対象): C:\Users\issho\auto_ss\auto_class\capture_20250507_191330
+2025-05-07 19:13:30,884 - INFO - MainThread - prepare_save_folder - os.makedirs を呼び出します: Path='C:\Users\issho\auto_ss\auto_class\capture_20250507_191330', exist_ok=True
+2025-05-07 19:13:30,884 - INFO - MainThread - prepare_save_folder - フォルダを作成しました (または既に存在していました): C:\Users\issho\auto_ss\auto_class\capture_20250507_191330
+2025-05-07 19:13:30,884 - INFO - MainThread - prepare_save_folder - フォルダ作成後の存在確認OK: C:\Users\issho\auto_ss\auto_class\capture_20250507_191330
+2025-05-07 19:13:30,884 - INFO - MainThread - prepare_save_folder - 書き込み権限テストファイルを作成します: C:\Users\issho\auto_ss\auto_class\capture_20250507_191330\.permission_test
+2025-05-07 19:13:30,885 - INFO - MainThread - prepare_save_folder - フォルダへの書き込み権限を確認しました: C:\Users\issho\auto_ss\auto_class\capture_20250507_191330
+2025-05-07 19:13:30,885 - INFO - MainThread - スクリーンショットキャプチャを開始します。対象ウィンドウハンドル: プライマリモニター
+2025-05-07 19:13:30,886 - INFO - ScreenshotThread - スクリーンショットキャプチャループを開始します。対象ウィンドウハンドル: プライマリモニター
+2025-05-07 19:13:30,886 - INFO - MainThread - ウィンドウが選択されていないため、スクリーンショットのみ開始します。
+2025-05-07 19:13:30,933 - INFO - ScreenshotThread - 最初のスクリーンショットを保存します。
+2025-05-07 19:13:30,963 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250507_191330\screenshot_20250507_191330_933.png
+2025-05-07 19:13:37,244 - INFO - MainThread - アプリケーション終了処理を開始します。
+2025-05-07 19:13:37,946 - INFO - MainThread - 全てのタスクの停止処理を開始します。
+2025-05-07 19:13:37,946 - INFO - MainThread - スクリーンショットキャプチャの停止処理を開始します。
+2025-05-07 19:13:37,946 - INFO - MainThread - スクリーンショットキャプチャスレッドの終了を待機します...
+2025-05-07 19:13:38,890 - INFO - ScreenshotThread - スクリーンショットキャプチャループを終了します。
+2025-05-07 19:13:38,891 - INFO - MainThread - スクリーンショットキャプチャスレッドが終了しました。
+2025-05-07 19:13:38,892 - INFO - MainThread - スクリーンショットキャプチャの停止処理を完了しました。
+2025-05-07 19:13:38,892 - INFO - MainThread - スクリーンショットキャプチャを停止しました。
+2025-05-07 19:13:38,892 - INFO - MainThread - 全てのタスクの停止処理を完了しました。
+2025-05-07 19:13:38,892 - INFO - MainThread - 実行中のタスクを停止しました。
+2025-05-07 19:13:38,938 - INFO - MainThread - アプリケーションを終了しました。
+2025-05-07 19:15:07,299 - INFO - MainThread - Gemini API クライアントを設定しました。
+2025-05-07 19:15:07,579 - INFO - MainThread - アプリケーションを初期化しました。
+2025-05-07 19:15:07,579 - INFO - MainThread - ウィンドウリストを更新します。
+2025-05-07 19:15:07,580 - INFO - MainThread - 5 個のウィンドウが見つかりました。
+2025-05-07 19:15:07,580 - INFO - MainThread - Geminiモデル 'gemini-2.5-flash-preview-04-17' が選択されました。用途: 用途: 短時間動画向け
+2025-05-07 19:15:09,836 - INFO - MainThread - prepare_save_folder - UIから取得した初期フォルダ名: ''
+2025-05-07 19:15:09,836 - INFO - MainThread - prepare_save_folder - 現在の作業ディレクトリ: C:\Users\issho\auto_ss\auto_class
+2025-05-07 19:15:09,836 - INFO - MainThread - prepare_save_folder - 保存フォルダ名が指定されなかったため、デフォルト名を生成しました: capture_20250507_191509
+2025-05-07 19:15:09,837 - INFO - MainThread - prepare_save_folder - 相対パスとして解釈し、絶対パスに変換しました (基準: C:\Users\issho\auto_ss\auto_class): C:\Users\issho\auto_ss\auto_class\capture_20250507_191509
+2025-05-07 19:15:09,837 - INFO - MainThread - prepare_save_folder - 最終的な保存先フォルダ (os.makedirs対象): C:\Users\issho\auto_ss\auto_class\capture_20250507_191509
+2025-05-07 19:15:09,837 - INFO - MainThread - prepare_save_folder - os.makedirs を呼び出します: Path='C:\Users\issho\auto_ss\auto_class\capture_20250507_191509', exist_ok=True
+2025-05-07 19:15:09,837 - INFO - MainThread - prepare_save_folder - フォルダを作成しました (または既に存在していました): C:\Users\issho\auto_ss\auto_class\capture_20250507_191509
+2025-05-07 19:15:09,837 - INFO - MainThread - prepare_save_folder - フォルダ作成後の存在確認OK: C:\Users\issho\auto_ss\auto_class\capture_20250507_191509
+2025-05-07 19:15:09,838 - INFO - MainThread - prepare_save_folder - 書き込み権限テストファイルを作成します: C:\Users\issho\auto_ss\auto_class\capture_20250507_191509\.permission_test
+2025-05-07 19:15:09,838 - INFO - MainThread - prepare_save_folder - フォルダへの書き込み権限を確認しました: C:\Users\issho\auto_ss\auto_class\capture_20250507_191509
+2025-05-07 19:15:09,839 - INFO - MainThread - スクリーンショットキャプチャを開始します。対象ウィンドウハンドル: プライマリモニター
+2025-05-07 19:15:09,839 - INFO - ScreenshotThread - スクリーンショットキャプチャループを開始します。対象ウィンドウハンドル: プライマリモニター
+2025-05-07 19:15:09,839 - INFO - MainThread - ウィンドウが選択されていないため、スクリーンショットのみ開始します。
+2025-05-07 19:15:09,882 - INFO - ScreenshotThread - 最初のスクリーンショットを保存します。
+2025-05-07 19:15:09,914 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250507_191509\screenshot_20250507_191509_883.png
+2025-05-07 19:15:12,259 - INFO - MainThread - 全てのタスクの停止処理を開始します。
+2025-05-07 19:15:12,260 - INFO - MainThread - スクリーンショットキャプチャの停止処理を開始します。
+2025-05-07 19:15:12,260 - INFO - MainThread - スクリーンショットキャプチャスレッドの終了を待機します...
+2025-05-07 19:15:12,842 - INFO - ScreenshotThread - スクリーンショットキャプチャループを終了します。
+2025-05-07 19:15:12,843 - INFO - MainThread - スクリーンショットキャプチャスレッドが終了しました。
+2025-05-07 19:15:12,843 - INFO - MainThread - スクリーンショットキャプチャの停止処理を完了しました。
+2025-05-07 19:15:12,844 - INFO - MainThread - スクリーンショットキャプチャを停止しました。
+2025-05-07 19:15:12,844 - INFO - MainThread - 全てのタスクの停止処理を完了しました。
+2025-05-07 19:15:13,315 - INFO - MainThread - アプリケーション終了処理を開始します。
+2025-05-07 19:15:13,354 - INFO - MainThread - アプリケーションを終了しました。
+2025-05-07 19:17:06,753 - INFO - MainThread - Gemini API クライアントを設定しました。
+2025-05-07 19:17:07,018 - INFO - MainThread - アプリケーションを初期化しました。
+2025-05-07 19:17:07,018 - INFO - MainThread - ウィンドウリストを更新します。
+2025-05-07 19:17:07,019 - INFO - MainThread - 5 個のウィンドウが見つかりました。
+2025-05-07 19:17:07,019 - INFO - MainThread - Geminiモデル 'gemini-2.5-flash-preview-04-17' が選択されました。用途: 用途: 短時間動画向け
+2025-05-07 19:17:17,306 - INFO - MainThread - prepare_save_folder - UIから取得した初期フォルダ名: ''
+2025-05-07 19:17:17,306 - INFO - MainThread - prepare_save_folder - 現在の作業ディレクトリ: C:\Users\issho\auto_ss\auto_class
+2025-05-07 19:17:17,306 - INFO - MainThread - prepare_save_folder - 保存フォルダ名が指定されなかったため、デフォルト名を生成しました: capture_20250507_191717
+2025-05-07 19:17:17,306 - INFO - MainThread - prepare_save_folder - 相対パスとして解釈し、絶対パスに変換しました (基準: C:\Users\issho\auto_ss\auto_class): C:\Users\issho\auto_ss\auto_class\capture_20250507_191717
+2025-05-07 19:17:17,306 - INFO - MainThread - prepare_save_folder - 最終的な保存先フォルダ (os.makedirs対象): C:\Users\issho\auto_ss\auto_class\capture_20250507_191717
+2025-05-07 19:17:17,307 - INFO - MainThread - prepare_save_folder - os.makedirs を呼び出します: Path='C:\Users\issho\auto_ss\auto_class\capture_20250507_191717', exist_ok=True
+2025-05-07 19:17:17,307 - INFO - MainThread - prepare_save_folder - フォルダを作成しました (または既に存在していました): C:\Users\issho\auto_ss\auto_class\capture_20250507_191717
+2025-05-07 19:17:17,307 - INFO - MainThread - prepare_save_folder - フォルダ作成後の存在確認OK: C:\Users\issho\auto_ss\auto_class\capture_20250507_191717
+2025-05-07 19:17:17,307 - INFO - MainThread - prepare_save_folder - 書き込み権限テストファイルを作成します: C:\Users\issho\auto_ss\auto_class\capture_20250507_191717\.permission_test
+2025-05-07 19:17:17,308 - INFO - MainThread - prepare_save_folder - フォルダへの書き込み権限を確認しました: C:\Users\issho\auto_ss\auto_class\capture_20250507_191717
+2025-05-07 19:17:17,308 - INFO - MainThread - スクリーンショットキャプチャを開始します。対象ウィンドウハンドル: プライマリモニター
+2025-05-07 19:17:17,309 - INFO - ScreenshotThread - スクリーンショットキャプチャループを開始します。対象ウィンドウハンドル: プライマリモニター
+2025-05-07 19:17:17,309 - INFO - MainThread - ウィンドウが選択されていないため、スクリーンショットのみ開始します。
+2025-05-07 19:17:17,352 - INFO - ScreenshotThread - 最初のスクリーンショットを保存します。
+2025-05-07 19:17:17,385 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250507_191717\screenshot_20250507_191717_353.png
+2025-05-07 19:17:24,417 - INFO - MainThread - アプリケーション終了処理を開始します。
+2025-05-07 19:17:25,548 - INFO - MainThread - 全てのタスクの停止処理を開始します。
+2025-05-07 19:17:25,548 - INFO - MainThread - スクリーンショットキャプチャの停止処理を開始します。
+2025-05-07 19:17:25,548 - INFO - MainThread - スクリーンショットキャプチャスレッドの終了を待機します...
+2025-05-07 19:17:26,312 - INFO - ScreenshotThread - スクリーンショットキャプチャループを終了します。
+2025-05-07 19:17:26,314 - INFO - MainThread - スクリーンショットキャプチャスレッドが終了しました。
+2025-05-07 19:17:26,314 - INFO - MainThread - スクリーンショットキャプチャの停止処理を完了しました。
+2025-05-07 19:17:26,314 - INFO - MainThread - スクリーンショットキャプチャを停止しました。
+2025-05-07 19:17:26,314 - INFO - MainThread - 全てのタスクの停止処理を完了しました。
+2025-05-07 19:17:26,315 - INFO - MainThread - 実行中のタスクを停止しました。
+2025-05-07 19:17:26,362 - INFO - MainThread - アプリケーションを終了しました。
+2025-05-07 19:17:30,422 - INFO - MainThread - Gemini API クライアントを設定しました。
+2025-05-07 19:17:30,701 - INFO - MainThread - アプリケーションを初期化しました。
+2025-05-07 19:17:30,701 - INFO - MainThread - ウィンドウリストを更新します。
+2025-05-07 19:17:30,702 - INFO - MainThread - 5 個のウィンドウが見つかりました。
+2025-05-07 19:17:30,702 - INFO - MainThread - Geminiモデル 'gemini-2.5-flash-preview-04-17' が選択されました。用途: 用途: 短時間動画向け
+2025-05-07 19:17:58,123 - INFO - MainThread - アプリケーション終了処理を開始します。
+2025-05-07 19:17:58,156 - INFO - MainThread - アプリケーションを終了しました。
+2025-05-07 19:18:01,241 - INFO - MainThread - Gemini API クライアントを設定しました。
+2025-05-07 19:18:01,507 - INFO - MainThread - アプリケーションを初期化しました。
+2025-05-07 19:18:01,507 - INFO - MainThread - ウィンドウリストを更新します。
+2025-05-07 19:18:01,508 - INFO - MainThread - 5 個のウィンドウが見つかりました。
+2025-05-07 19:18:01,508 - INFO - MainThread - Geminiモデル 'gemini-2.5-flash-preview-04-17' が選択されました。用途: 用途: 短時間動画向け
+2025-05-07 19:18:03,303 - INFO - MainThread - アプリケーション終了処理を開始します。
+2025-05-07 19:18:03,340 - INFO - MainThread - アプリケーションを終了しました。
+2025-05-07 19:18:39,966 - INFO - MainThread - Gemini API クライアントを設定しました。
+2025-05-07 19:18:40,243 - INFO - MainThread - アプリケーションを初期化しました。
+2025-05-07 19:18:40,243 - INFO - MainThread - ウィンドウリストを更新します。
+2025-05-07 19:18:40,245 - INFO - MainThread - 5 個のウィンドウが見つかりました。
+2025-05-07 19:18:40,245 - INFO - MainThread - Geminiモデル 'gemini-2.5-flash-preview-04-17' が選択されました。用途: 用途: 短時間動画向け
+2025-05-07 19:20:40,157 - INFO - MainThread - Gemini API クライアントを設定しました。
+2025-05-07 19:20:40,417 - INFO - MainThread - アプリケーションを初期化しました。
+2025-05-07 19:20:40,417 - INFO - MainThread - ウィンドウリストを更新します。
+2025-05-07 19:20:40,418 - INFO - MainThread - 5 個のウィンドウが見つかりました。
+2025-05-07 19:20:40,419 - INFO - MainThread - Geminiモデル 'gemini-2.5-flash-preview-04-17' が選択されました。用途: 用途: 短時間動画向け
+2025-05-07 19:20:42,505 - INFO - MainThread - アプリケーション終了処理を開始します。
+2025-05-07 19:20:42,540 - INFO - MainThread - アプリケーションを終了しました。
+2025-05-07 19:20:49,102 - INFO - MainThread - Gemini API クライアントを設定しました。
+2025-05-07 19:20:49,359 - INFO - MainThread - アプリケーションを初期化しました。
+2025-05-07 19:20:49,359 - INFO - MainThread - ウィンドウリストを更新します。
+2025-05-07 19:20:49,360 - INFO - MainThread - 5 個のウィンドウが見つかりました。
+2025-05-07 19:20:49,360 - INFO - MainThread - Geminiモデル 'gemini-2.5-flash-preview-04-17' が選択されました。用途: 用途: 短時間動画向け
+2025-05-07 19:20:51,423 - INFO - MainThread - prepare_save_folder - UIから取得した初期フォルダ名: ''
+2025-05-07 19:20:51,423 - INFO - MainThread - prepare_save_folder - 現在の作業ディレクトリ: C:\Users\issho\auto_ss\auto_class
+2025-05-07 19:20:51,423 - INFO - MainThread - prepare_save_folder - 保存フォルダ名が指定されなかったため、デフォルト名を生成しました: capture_20250507_192051
+2025-05-07 19:20:51,423 - INFO - MainThread - prepare_save_folder - 相対パスとして解釈し、絶対パスに変換しました (基準: C:\Users\issho\auto_ss\auto_class): C:\Users\issho\auto_ss\auto_class\capture_20250507_192051
+2025-05-07 19:20:51,423 - INFO - MainThread - prepare_save_folder - 最終的な保存先フォルダ (os.makedirs対象): C:\Users\issho\auto_ss\auto_class\capture_20250507_192051
+2025-05-07 19:20:51,424 - INFO - MainThread - prepare_save_folder - os.makedirs を呼び出します: Path='C:\Users\issho\auto_ss\auto_class\capture_20250507_192051', exist_ok=True
+2025-05-07 19:20:51,424 - INFO - MainThread - prepare_save_folder - フォルダを作成しました (または既に存在していました): C:\Users\issho\auto_ss\auto_class\capture_20250507_192051
+2025-05-07 19:20:51,424 - INFO - MainThread - prepare_save_folder - フォルダ作成後の存在確認OK: C:\Users\issho\auto_ss\auto_class\capture_20250507_192051
+2025-05-07 19:20:51,424 - INFO - MainThread - prepare_save_folder - 書き込み権限テストファイルを作成します: C:\Users\issho\auto_ss\auto_class\capture_20250507_192051\.permission_test
+2025-05-07 19:20:51,425 - INFO - MainThread - prepare_save_folder - フォルダへの書き込み権限を確認しました: C:\Users\issho\auto_ss\auto_class\capture_20250507_192051
+2025-05-07 19:20:51,425 - INFO - MainThread - スクリーンショットキャプチャを開始します。対象ウィンドウハンドル: プライマリモニター
+2025-05-07 19:20:51,425 - INFO - ScreenshotThread - スクリーンショットキャプチャループを開始します。対象ウィンドウハンドル: プライマリモニター
+2025-05-07 19:20:51,470 - INFO - ScreenshotThread - 最初のスクリーンショットを保存します。
+2025-05-07 19:20:51,501 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250507_192051\screenshot_20250507_192051_470.png
+2025-05-07 19:21:06,453 - INFO - MainThread - アプリケーション終了処理を開始します。
+2025-05-07 19:21:07,223 - INFO - MainThread - 全てのタスクの停止処理を開始します。
+2025-05-07 19:21:07,223 - INFO - MainThread - スクリーンショットキャプチャの停止処理を開始します。
+2025-05-07 19:21:07,223 - INFO - MainThread - スクリーンショットキャプチャスレッドの終了を待機します...
+2025-05-07 19:21:07,430 - INFO - ScreenshotThread - スクリーンショットキャプチャループを終了します。
+2025-05-07 19:21:07,432 - INFO - MainThread - スクリーンショットキャプチャスレッドが終了しました。
+2025-05-07 19:21:12,043 - INFO - MainThread - アプリケーション終了処理を開始します。
+2025-05-07 19:21:12,078 - INFO - MainThread - アプリケーションを終了しました。
+2025-05-07 19:21:26,953 - INFO - MainThread - Gemini API クライアントを設定しました。
+2025-05-07 19:21:27,212 - INFO - MainThread - アプリケーションを初期化しました。
+2025-05-07 19:21:27,213 - INFO - MainThread - ウィンドウリストを更新します。
+2025-05-07 19:21:27,214 - INFO - MainThread - 5 個のウィンドウが見つかりました。
+2025-05-07 19:21:27,214 - INFO - MainThread - Geminiモデル 'gemini-2.5-flash-preview-04-17' が選択されました。用途: 用途: 短時間動画向け
+2025-05-07 19:24:02,212 - INFO - MainThread - Gemini API クライアントを設定しました。
+2025-05-07 19:24:02,472 - INFO - MainThread - アプリケーションを初期化しました。
+2025-05-07 19:24:02,472 - INFO - MainThread - ウィンドウリストを更新します。
+2025-05-07 19:24:02,472 - CRITICAL - MainThread - アプリケーションの起動中に致命的なエラーが発生しました: 'SlideCaptureApp' object has no attribute 'window_listbox'
+Traceback (most recent call last):
+  File "C:\Users\issho\auto_ss\auto_class\main.py", line 1852, in <module>
+    app = SlideCaptureApp(root)
+  File "C:\Users\issho\auto_ss\auto_class\main.py", line 257, in __init__
+    self.refresh_window_list()  # 初期ウィンドウリスト表示
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\issho\auto_ss\auto_class\main.py", line 264, in refresh_window_list
+    self.window_listbox.delete(0, tk.END)
+    ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'SlideCaptureApp' object has no attribute 'window_listbox'
+2025-05-07 19:24:43,279 - INFO - MainThread - Gemini API クライアントを設定しました。
+2025-05-07 19:24:43,543 - INFO - MainThread - アプリケーションを初期化しました。
+2025-05-07 19:24:43,543 - INFO - MainThread - ウィンドウリストを更新します。
+2025-05-07 19:24:43,544 - INFO - MainThread - 5 個のウィンドウが見つかりました。
+2025-05-07 19:24:43,544 - INFO - MainThread - Geminiモデル 'gemini-2.5-flash-preview-04-17' が選択されました。用途: 用途: 短時間動画向け
+2025-05-07 19:24:48,038 - INFO - MainThread - ウィンドウが選択されました: ● main.py - auto_class (ワークスペース) - Visual Studio Code (HWND: 131406) (HWND: 131406)
+2025-05-07 19:24:50,566 - INFO - MainThread - ウィンドウリストを更新します。
+2025-05-07 19:24:50,567 - INFO - MainThread - 6 個のウィンドウが見つかりました。
+2025-05-07 19:24:51,612 - INFO - MainThread - prepare_save_folder - UIから取得した初期フォルダ名: ''
+2025-05-07 19:24:51,612 - INFO - MainThread - prepare_save_folder - 現在の作業ディレクトリ: C:\Users\issho\auto_ss\auto_class
+2025-05-07 19:24:51,612 - INFO - MainThread - prepare_save_folder - 保存フォルダ名が指定されなかったため、デフォルト名を生成しました: capture_20250507_192451
+2025-05-07 19:24:51,612 - INFO - MainThread - prepare_save_folder - 相対パスとして解釈し、絶対パスに変換しました (基準: C:\Users\issho\auto_ss\auto_class): C:\Users\issho\auto_ss\auto_class\capture_20250507_192451
+2025-05-07 19:24:51,612 - INFO - MainThread - prepare_save_folder - 最終的な保存先フォルダ (os.makedirs対象): C:\Users\issho\auto_ss\auto_class\capture_20250507_192451
+2025-05-07 19:24:51,612 - INFO - MainThread - prepare_save_folder - os.makedirs を呼び出します: Path='C:\Users\issho\auto_ss\auto_class\capture_20250507_192451', exist_ok=True
+2025-05-07 19:24:51,613 - INFO - MainThread - prepare_save_folder - フォルダを作成しました (または既に存在していました): C:\Users\issho\auto_ss\auto_class\capture_20250507_192451
+2025-05-07 19:24:51,613 - INFO - MainThread - prepare_save_folder - フォルダ作成後の存在確認OK: C:\Users\issho\auto_ss\auto_class\capture_20250507_192451
+2025-05-07 19:24:51,613 - INFO - MainThread - prepare_save_folder - 書き込み権限テストファイルを作成します: C:\Users\issho\auto_ss\auto_class\capture_20250507_192451\.permission_test
+2025-05-07 19:24:51,614 - INFO - MainThread - prepare_save_folder - フォルダへの書き込み権限を確認しました: C:\Users\issho\auto_ss\auto_class\capture_20250507_192451
+2025-05-07 19:24:51,614 - INFO - MainThread - スクリーンショットキャプチャを開始します。対象ウィンドウハンドル: 131406
+2025-05-07 19:24:51,614 - INFO - ScreenshotThread - スクリーンショットキャプチャループを開始します。対象ウィンドウハンドル: 131406
+2025-05-07 19:24:51,615 - INFO - MainThread - 録画を開始します。対象ウィンドウハンドル: 131406
+2025-05-07 19:24:51,615 - INFO - RecordingThread - 録画ループを開始します。対象ウィンドウハンドル: 131406
+2025-05-07 19:24:51,616 - INFO - AudioRecordingThread - 音声録音ループ (SoundCard) を開始します
+2025-05-07 19:24:51,635 - INFO - RecordingThread - 対象ウィンドウの位置とサイズ: (-9, -9, 1938, 1038)
+2025-05-07 19:24:51,680 - INFO - AudioRecordingThread - 取得したマイクデバイス: スピーカー (Realtek(R) Audio)
+2025-05-07 19:24:51,680 - INFO - AudioRecordingThread - マイクデバイスの型: <class 'soundcard.mediafoundation._Microphone'>
+2025-05-07 19:24:51,680 - ERROR - AudioRecordingThread - マイクデバイスからサンプルレートまたはチャンネル数を取得できませんでした: '_Microphone' object has no attribute 'samplerate'
+2025-05-07 19:24:51,680 - WARNING - AudioRecordingThread - デフォルト値を使用します - サンプルレート: 48000, チャンネル数: 2
+2025-05-07 19:24:51,685 - INFO - ScreenshotThread - 最初のスクリーンショットを保存します。
+2025-05-07 19:24:51,714 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250507_192451\screenshot_20250507_192451_688.png
+2025-05-07 19:24:51,770 - INFO - AudioRecordingThread - レコーダーオブジェクトの型: <class 'soundcard.mediafoundation._Recorder'>
+2025-05-07 19:24:51,770 - INFO - AudioRecordingThread - 録音中: スピーカー (Realtek(R) Audio) (ループバック)
+2025-05-07 19:24:53,591 - INFO - MainThread - アプリケーション終了処理を開始します。
+2025-05-07 19:24:54,325 - INFO - MainThread - 全てのタスクの停止処理を開始します。
+2025-05-07 19:24:54,325 - INFO - MainThread - 録画停止処理を開始します。
+2025-05-07 19:24:54,325 - INFO - MainThread - 録画スレッドの終了を待機します...
+2025-05-07 19:24:54,335 - INFO - AudioRecordingThread - 音声録音ループ (SoundCard) を終了します
+2025-05-07 19:24:54,636 - INFO - RecordingThread - 録画ループを終了します。合計フレーム数: 3
+2025-05-07 19:24:54,638 - INFO - MainThread - 録画スレッドが終了しました。
+2025-05-07 19:24:54,638 - INFO - MainThread - 動画ファイルの保存を開始します: C:\Users\issho\auto_ss\auto_class\capture_20250507_192451\recording_20250507_192454.mp4
+2025-05-07 19:24:54,638 - INFO - MainThread - 動画保存スレッドを開始しました。
+2025-05-07 19:24:54,639 - INFO - MainThread - 録画停止処理を完了しました。
+2025-05-07 19:24:54,639 - INFO - VideoSaveThread - 音声データを連結しました。サンプル数: 121856, dtype: float32
+2025-05-07 19:24:54,639 - INFO - MainThread - スクリーンショットキャプチャの停止処理を開始します。
+2025-05-07 19:24:54,639 - INFO - MainThread - スクリーンショットキャプチャスレッドの終了を待機します...
+2025-05-07 19:24:54,642 - INFO - VideoSaveThread - 合計 3 フレームを動画クリップに使用します。
+2025-05-07 19:24:54,642 - INFO - VideoSaveThread - 推定FPS: 1.00
+2025-05-07 19:24:54,642 - WARNING - VideoSaveThread - 音声クリップ (2.54s) が動画クリップ (3.00s) より短いです。
+2025-05-07 19:24:54,642 - INFO - VideoSaveThread - AudioArrayClipを作成しました。Duration: 2.54秒
+2025-05-07 19:24:54,642 - INFO - VideoSaveThread - 動画と音声を結合しました。
+2025-05-07 19:24:54,643 - INFO - VideoSaveThread - 動画ファイルを書き出します: C:\Users\issho\auto_ss\auto_class\capture_20250507_192451\recording_20250507_192454.mp4
+2025-05-07 19:24:54,859 - INFO - VideoSaveThread - 動画ファイルを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250507_192451\recording_20250507_192454.mp4
+2025-05-07 19:24:54,859 - INFO - VideoSaveThread - 動画保存成功、ノート作成をトリガーします: C:\Users\issho\auto_ss\auto_class\capture_20250507_192451\recording_20250507_192454.mp4
+2025-05-07 19:24:55,632 - INFO - ScreenshotThread - スクリーンショットキャプチャループを終了します。
+2025-05-07 19:24:55,634 - INFO - MainThread - スクリーンショットキャプチャスレッドが終了しました。
+2025-05-07 19:24:55,634 - INFO - MainThread - スクリーンショットキャプチャの停止処理を完了しました。
+2025-05-07 19:24:55,634 - INFO - MainThread - 録画を停止しました。動画保存とノート作成がバックグラウンドで実行されます（成功した場合）。
+2025-05-07 19:24:55,634 - INFO - MainThread - 全てのタスクの停止処理を完了しました。
+2025-05-07 19:24:55,634 - INFO - MainThread - 実行中のタスクを停止しました。
+2025-05-07 19:24:55,666 - INFO - MainThread - アプリケーションを終了しました。
+2025-05-07 19:31:13,006 - INFO - MainThread - Gemini API クライアントを設定しました。
+2025-05-07 19:31:13,301 - INFO - MainThread - アプリケーションを初期化しました。
+2025-05-07 19:31:13,301 - INFO - MainThread - ウィンドウリストを更新します。
+2025-05-07 19:31:13,302 - INFO - MainThread - 6 個のウィンドウが見つかりました。
+2025-05-07 19:31:13,303 - INFO - MainThread - Geminiモデル 'gemini-2.5-flash-preview-04-17' が選択されました。用途: 用途: 短時間動画向け
+2025-05-07 19:31:16,822 - INFO - MainThread - prepare_save_folder - UIから取得した初期フォルダ名: ''
+2025-05-07 19:31:16,823 - INFO - MainThread - prepare_save_folder - 現在の作業ディレクトリ: C:\Users\issho\auto_ss\auto_class
+2025-05-07 19:31:16,823 - INFO - MainThread - prepare_save_folder - 保存フォルダ名が指定されなかったため、デフォルト名を生成しました: capture_20250507_193116
+2025-05-07 19:31:16,823 - INFO - MainThread - prepare_save_folder - 相対パスとして解釈し、絶対パスに変換しました (基準: C:\Users\issho\auto_ss\auto_class): C:\Users\issho\auto_ss\auto_class\capture_20250507_193116
+2025-05-07 19:31:16,823 - INFO - MainThread - prepare_save_folder - 最終的な保存先フォルダ (os.makedirs対象): C:\Users\issho\auto_ss\auto_class\capture_20250507_193116
+2025-05-07 19:31:16,823 - INFO - MainThread - prepare_save_folder - os.makedirs を呼び出します: Path='C:\Users\issho\auto_ss\auto_class\capture_20250507_193116', exist_ok=True
+2025-05-07 19:31:16,824 - INFO - MainThread - prepare_save_folder - フォルダを作成しました (または既に存在していました): C:\Users\issho\auto_ss\auto_class\capture_20250507_193116
+2025-05-07 19:31:16,824 - INFO - MainThread - prepare_save_folder - フォルダ作成後の存在確認OK: C:\Users\issho\auto_ss\auto_class\capture_20250507_193116
+2025-05-07 19:31:16,824 - INFO - MainThread - prepare_save_folder - 書き込み権限テストファイルを作成します: C:\Users\issho\auto_ss\auto_class\capture_20250507_193116\.permission_test
+2025-05-07 19:31:16,824 - INFO - MainThread - prepare_save_folder - フォルダへの書き込み権限を確認しました: C:\Users\issho\auto_ss\auto_class\capture_20250507_193116
+2025-05-07 19:31:16,825 - INFO - MainThread - スクリーンショットキャプチャを開始します。対象ウィンドウハンドル: プライマリモニター
+2025-05-07 19:31:16,825 - INFO - ScreenshotThread - スクリーンショットキャプチャループを開始します。対象ウィンドウハンドル: プライマリモニター
+2025-05-07 19:31:16,825 - INFO - MainThread - ウィンドウが選択されていないため、スクリーンショットのみ開始します。
+2025-05-07 19:31:16,871 - INFO - ScreenshotThread - 最初のスクリーンショットを保存します。
+2025-05-07 19:31:16,901 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250507_193116\screenshot_20250507_193116_871.png
+2025-05-07 19:31:18,616 - INFO - MainThread - アプリケーション終了処理を開始します。
+2025-05-07 19:31:20,188 - INFO - MainThread - 全てのタスクの停止処理を開始します。
+2025-05-07 19:31:20,188 - INFO - MainThread - スクリーンショットキャプチャの停止処理を開始します。
+2025-05-07 19:31:20,188 - INFO - MainThread - スクリーンショットキャプチャスレッドの終了を待機します...
+2025-05-07 19:31:20,828 - INFO - ScreenshotThread - スクリーンショットキャプチャループを終了します。
+2025-05-07 19:31:20,829 - INFO - MainThread - スクリーンショットキャプチャスレッドが終了しました。
+2025-05-07 19:31:20,830 - INFO - MainThread - スクリーンショットキャプチャの停止処理を完了しました。
+2025-05-07 19:31:20,830 - INFO - MainThread - スクリーンショットキャプチャを停止しました。
+2025-05-07 19:31:20,830 - INFO - MainThread - 全てのタスクの停止処理を完了しました。
+2025-05-07 19:31:20,830 - INFO - MainThread - 実行中のタスクを停止しました。
+2025-05-07 19:31:20,860 - INFO - MainThread - アプリケーションを終了しました。
+2025-05-07 19:31:54,113 - INFO - MainThread - DPI Awareness を設定しました。
+2025-05-07 19:31:54,186 - INFO - MainThread - Gemini API クライアントを設定しました。
+2025-05-07 19:31:54,529 - INFO - MainThread - アプリケーションを初期化しました。
+2025-05-07 19:31:54,529 - INFO - MainThread - ウィンドウリストを更新します。
+2025-05-07 19:31:54,536 - INFO - MainThread - 6 個のウィンドウが見つかりました。
+2025-05-07 19:31:54,550 - INFO - MainThread - Geminiモデル 'gemini-2.5-flash-preview-04-17' が選択されました。用途: 用途: 短時間動画向け
+2025-05-07 19:31:59,045 - INFO - MainThread - prepare_save_folder - UIから取得した初期フォルダ名: ''
+2025-05-07 19:31:59,046 - INFO - MainThread - prepare_save_folder - 現在の作業ディレクトリ: C:\Users\issho\auto_ss\auto_class
+2025-05-07 19:31:59,046 - INFO - MainThread - prepare_save_folder - 保存フォルダ名が指定されなかったため、デフォルト名を生成しました: capture_20250507_193159
+2025-05-07 19:31:59,046 - INFO - MainThread - prepare_save_folder - 相対パスとして解釈し、絶対パスに変換しました (基準: C:\Users\issho\auto_ss\auto_class): C:\Users\issho\auto_ss\auto_class\capture_20250507_193159
+2025-05-07 19:31:59,046 - INFO - MainThread - prepare_save_folder - 最終的な保存先フォルダ (os.makedirs対象): C:\Users\issho\auto_ss\auto_class\capture_20250507_193159
+2025-05-07 19:31:59,046 - INFO - MainThread - prepare_save_folder - os.makedirs を呼び出します: Path='C:\Users\issho\auto_ss\auto_class\capture_20250507_193159', exist_ok=True
+2025-05-07 19:31:59,046 - INFO - MainThread - prepare_save_folder - フォルダを作成しました (または既に存在していました): C:\Users\issho\auto_ss\auto_class\capture_20250507_193159
+2025-05-07 19:31:59,047 - INFO - MainThread - prepare_save_folder - フォルダ作成後の存在確認OK: C:\Users\issho\auto_ss\auto_class\capture_20250507_193159
+2025-05-07 19:31:59,047 - INFO - MainThread - prepare_save_folder - 書き込み権限テストファイルを作成します: C:\Users\issho\auto_ss\auto_class\capture_20250507_193159\.permission_test
+2025-05-07 19:31:59,047 - INFO - MainThread - prepare_save_folder - フォルダへの書き込み権限を確認しました: C:\Users\issho\auto_ss\auto_class\capture_20250507_193159
+2025-05-07 19:31:59,048 - INFO - MainThread - スクリーンショットキャプチャを開始します。対象ウィンドウハンドル: プライマリモニター
+2025-05-07 19:31:59,048 - INFO - ScreenshotThread - スクリーンショットキャプチャループを開始します。対象ウィンドウハンドル: プライマリモニター
+2025-05-07 19:31:59,052 - INFO - MainThread - ウィンドウが選択されていないため、スクリーンショットのみ開始します。
+2025-05-07 19:31:59,094 - INFO - ScreenshotThread - 最初のスクリーンショットを保存します。
+2025-05-07 19:31:59,124 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250507_193159\screenshot_20250507_193159_094.png
+2025-05-07 19:32:03,279 - INFO - MainThread - アプリケーション終了処理を開始します。
+2025-05-07 19:32:04,385 - INFO - MainThread - 全てのタスクの停止処理を開始します。
+2025-05-07 19:32:04,385 - INFO - MainThread - スクリーンショットキャプチャの停止処理を開始します。
+2025-05-07 19:32:04,385 - INFO - MainThread - スクリーンショットキャプチャスレッドの終了を待機します...
+2025-05-07 19:32:05,052 - INFO - ScreenshotThread - スクリーンショットキャプチャループを終了します。
+2025-05-07 19:32:05,053 - INFO - MainThread - スクリーンショットキャプチャスレッドが終了しました。
+2025-05-07 19:32:05,054 - INFO - MainThread - スクリーンショットキャプチャの停止処理を完了しました。
+2025-05-07 19:32:05,054 - INFO - MainThread - スクリーンショットキャプチャを停止しました。
+2025-05-07 19:32:05,054 - INFO - MainThread - 全てのタスクの停止処理を完了しました。
+2025-05-07 19:32:05,054 - INFO - MainThread - 実行中のタスクを停止しました。
+2025-05-07 19:32:05,082 - INFO - MainThread - アプリケーションを終了しました。
+2025-05-07 19:32:18,382 - INFO - MainThread - DPI Awareness を設定しました。
+2025-05-07 19:32:18,443 - INFO - MainThread - Gemini API クライアントを設定しました。
+2025-05-07 19:32:18,738 - INFO - MainThread - アプリケーションを初期化しました。
+2025-05-07 19:32:18,738 - INFO - MainThread - ウィンドウリストを更新します。
+2025-05-07 19:32:18,739 - INFO - MainThread - 6 個のウィンドウが見つかりました。
+2025-05-07 19:32:18,739 - INFO - MainThread - Geminiモデル 'gemini-2.5-flash-preview-04-17' が選択されました。用途: 用途: 短時間動画向け
+2025-05-07 19:32:19,770 - INFO - MainThread - ウィンドウが選択されました: 設定 (HWND: 395308) (HWND: 395308)
+2025-05-07 19:32:20,579 - INFO - MainThread - prepare_save_folder - UIから取得した初期フォルダ名: ''
+2025-05-07 19:32:20,580 - INFO - MainThread - prepare_save_folder - 現在の作業ディレクトリ: C:\Users\issho\auto_ss\auto_class
+2025-05-07 19:32:20,580 - INFO - MainThread - prepare_save_folder - 保存フォルダ名が指定されなかったため、デフォルト名を生成しました: capture_20250507_193220
+2025-05-07 19:32:20,580 - INFO - MainThread - prepare_save_folder - 相対パスとして解釈し、絶対パスに変換しました (基準: C:\Users\issho\auto_ss\auto_class): C:\Users\issho\auto_ss\auto_class\capture_20250507_193220
+2025-05-07 19:32:20,580 - INFO - MainThread - prepare_save_folder - 最終的な保存先フォルダ (os.makedirs対象): C:\Users\issho\auto_ss\auto_class\capture_20250507_193220
+2025-05-07 19:32:20,580 - INFO - MainThread - prepare_save_folder - os.makedirs を呼び出します: Path='C:\Users\issho\auto_ss\auto_class\capture_20250507_193220', exist_ok=True
+2025-05-07 19:32:20,581 - INFO - MainThread - prepare_save_folder - フォルダを作成しました (または既に存在していました): C:\Users\issho\auto_ss\auto_class\capture_20250507_193220
+2025-05-07 19:32:20,581 - INFO - MainThread - prepare_save_folder - フォルダ作成後の存在確認OK: C:\Users\issho\auto_ss\auto_class\capture_20250507_193220
+2025-05-07 19:32:20,581 - INFO - MainThread - prepare_save_folder - 書き込み権限テストファイルを作成します: C:\Users\issho\auto_ss\auto_class\capture_20250507_193220\.permission_test
+2025-05-07 19:32:20,581 - INFO - MainThread - prepare_save_folder - フォルダへの書き込み権限を確認しました: C:\Users\issho\auto_ss\auto_class\capture_20250507_193220
+2025-05-07 19:32:20,582 - INFO - MainThread - スクリーンショットキャプチャを開始します。対象ウィンドウハンドル: 395308
+2025-05-07 19:32:20,582 - INFO - ScreenshotThread - スクリーンショットキャプチャループを開始します。対象ウィンドウハンドル: 395308
+2025-05-07 19:32:20,582 - INFO - MainThread - 録画を開始します。対象ウィンドウハンドル: 395308
+2025-05-07 19:32:20,583 - INFO - RecordingThread - 録画ループを開始します。対象ウィンドウハンドル: 395308
+2025-05-07 19:32:20,583 - INFO - AudioRecordingThread - 音声録音ループ (SoundCard) を開始します
+2025-05-07 19:32:20,599 - INFO - RecordingThread - 対象ウィンドウの位置とサイズ: (768, 76, 1038, 808)
+2025-05-07 19:32:20,637 - INFO - ScreenshotThread - 最初のスクリーンショットを保存します。
+2025-05-07 19:32:20,644 - INFO - AudioRecordingThread - 取得したマイクデバイス: スピーカー (Realtek(R) Audio)
+2025-05-07 19:32:20,644 - INFO - AudioRecordingThread - マイクデバイスの型: <class 'soundcard.mediafoundation._Microphone'>
+2025-05-07 19:32:20,644 - ERROR - AudioRecordingThread - マイクデバイスからサンプルレートまたはチャンネル数を取得できませんでした: '_Microphone' object has no attribute 'samplerate'
+2025-05-07 19:32:20,644 - WARNING - AudioRecordingThread - デフォルト値を使用します - サンプルレート: 48000, チャンネル数: 2
+2025-05-07 19:32:20,651 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250507_193220\screenshot_20250507_193220_637.png
+2025-05-07 19:32:20,753 - INFO - AudioRecordingThread - レコーダーオブジェクトの型: <class 'soundcard.mediafoundation._Recorder'>
+2025-05-07 19:32:20,754 - INFO - AudioRecordingThread - 録音中: スピーカー (Realtek(R) Audio) (ループバック)
+2025-05-07 19:32:21,645 - INFO - MainThread - 全てのタスクの停止処理を開始します。
+2025-05-07 19:32:21,645 - INFO - MainThread - 録画停止処理を開始します。
+2025-05-07 19:32:21,645 - INFO - MainThread - 録画スレッドの終了を待機します...
+2025-05-07 19:32:21,653 - INFO - AudioRecordingThread - 音声録音ループ (SoundCard) を終了します
+2025-05-07 19:32:22,603 - INFO - RecordingThread - 録画ループを終了します。合計フレーム数: 2
+2025-05-07 19:32:22,604 - INFO - MainThread - 録画スレッドが終了しました。
+2025-05-07 19:32:22,604 - INFO - MainThread - 動画ファイルの保存を開始します: C:\Users\issho\auto_ss\auto_class\capture_20250507_193220\recording_20250507_193222.mp4
+2025-05-07 19:32:22,605 - INFO - MainThread - 動画保存スレッドを開始しました。
+2025-05-07 19:32:22,605 - INFO - VideoSaveThread - 音声データを連結しました。サンプル数: 40960, dtype: float32
+2025-05-07 19:32:22,605 - INFO - MainThread - 録画停止処理を完了しました。
+2025-05-07 19:32:22,606 - INFO - VideoSaveThread - 合計 2 フレームを動画クリップに使用します。
+2025-05-07 19:32:22,606 - INFO - MainThread - スクリーンショットキャプチャの停止処理を開始します。
+2025-05-07 19:32:22,606 - INFO - VideoSaveThread - 推定FPS: 1.00
+2025-05-07 19:32:22,607 - INFO - MainThread - スクリーンショットキャプチャスレッドの終了を待機します...
+2025-05-07 19:32:22,607 - WARNING - VideoSaveThread - 音声クリップ (0.85s) が動画クリップ (2.00s) より短いです。
+2025-05-07 19:32:22,607 - INFO - VideoSaveThread - AudioArrayClipを作成しました。Duration: 0.85秒
+2025-05-07 19:32:22,607 - INFO - VideoSaveThread - 動画と音声を結合しました。
+2025-05-07 19:32:22,607 - INFO - VideoSaveThread - 動画ファイルを書き出します: C:\Users\issho\auto_ss\auto_class\capture_20250507_193220\recording_20250507_193222.mp4
+2025-05-07 19:32:22,733 - INFO - VideoSaveThread - 動画ファイルを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250507_193220\recording_20250507_193222.mp4
+2025-05-07 19:32:22,733 - INFO - VideoSaveThread - 動画保存成功、ノート作成をトリガーします: C:\Users\issho\auto_ss\auto_class\capture_20250507_193220\recording_20250507_193222.mp4
+2025-05-07 19:32:23,600 - INFO - ScreenshotThread - スクリーンショットキャプチャループを終了します。
+2025-05-07 19:32:23,601 - INFO - MainThread - スクリーンショットキャプチャスレッドが終了しました。
+2025-05-07 19:32:23,601 - INFO - MainThread - スクリーンショットキャプチャの停止処理を完了しました。
+2025-05-07 19:32:23,601 - INFO - MainThread - 録画を停止しました。動画保存とノート作成がバックグラウンドで実行されます（成功した場合）。
+2025-05-07 19:32:23,601 - INFO - MainThread - 全てのタスクの停止処理を完了しました。
+2025-05-07 19:32:23,602 - INFO - VideoSaveThread - 動画保存処理を終了します。
+2025-05-07 19:32:23,603 - INFO - MainThread - ノート作成開始: GUI操作を制限します。
+2025-05-07 19:32:23,611 - INFO - MainThread - ノート作成処理を開始します。対象動画: C:\Users\issho\auto_ss\auto_class\capture_20250507_193220\recording_20250507_193222.mp4
+2025-05-07 19:32:23,611 - INFO - NoteCreationThread - 動画ファイルをアップロード開始: C:\Users\issho\auto_ss\auto_class\capture_20250507_193220\recording_20250507_193222.mp4
+2025-05-07 19:32:23,614 - WARNING - MainThread - ノート作成中はウィンドウを閉じられません。
+2025-05-07 19:32:23,614 - INFO - NoteCreationThread - 動画ファイルアップロード試行 1/3: C:\Users\issho\auto_ss\auto_class\capture_20250507_193220\recording_20250507_193222.mp4
+2025-05-07 19:32:23,792 - WARNING - MainThread - ノート作成中はウィンドウを閉じられません。
+2025-05-07 19:32:24,845 - INFO - NoteCreationThread - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files "HTTP/1.1 200 OK"
+2025-05-07 19:32:26,257 - INFO - NoteCreationThread - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AAO2VwrOpGIv4dqWrLGcdMJETX6eNzHMuMuvuGkvZfkj7AgNaBd1_N9F4tzPoe9sxNNPD5gFWx8ytRrLpEEKj2I4HaDSm3u5ubUhgq9OjyBb_A&upload_protocol=resumable "HTTP/1.1 200 OK"
+2025-05-07 19:32:26,258 - INFO - NoteCreationThread - アップロード開始: files/3cio4d0jct5v, State: FileState.PROCESSING
+2025-05-07 19:32:26,259 - INFO - NoteCreationThread - 動画処理中... (FileState.PROCESSING, 0.0秒)
+2025-05-07 19:32:26,585 - WARNING - MainThread - ノート作成中はウィンドウを閉じられません。
+2025-05-07 19:32:32,173 - INFO - NoteCreationThread - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/3cio4d0jct5v "HTTP/1.1 200 OK"
+2025-05-07 19:32:32,174 - INFO - NoteCreationThread - 動画処理中... (FileState.PROCESSING, 5.9秒)
+2025-05-07 19:32:38,139 - INFO - NoteCreationThread - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/3cio4d0jct5v "HTTP/1.1 200 OK"
+2025-05-07 19:32:38,139 - INFO - NoteCreationThread - ファイルがACTIVEになりました: files/3cio4d0jct5v
+2025-05-07 19:32:38,144 - INFO - NoteCreationThread - Gemini APIに要約リクエストを送信します...
+2025-05-07 19:32:38,144 - INFO - NoteCreationThread - Gemini API呼び出し試行 1/3
+2025-05-07 19:32:38,145 - INFO - NoteCreationThread - 使用する Gemini モデル: gemini-2.5-flash-preview-04-17
+2025-05-07 19:32:38,145 - INFO - NoteCreationThread - AFC is enabled with max remote calls: 10.
+2025-05-07 19:32:56,875 - INFO - NoteCreationThread - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-04-17:generateContent "HTTP/1.1 200 OK"
+2025-05-07 19:32:56,877 - INFO - NoteCreationThread - AFC remote call 1 is done.
+2025-05-07 19:32:58,024 - INFO - NoteCreationThread - HTTP Request: DELETE https://generativelanguage.googleapis.com/v1beta/files/3cio4d0jct5v "HTTP/1.1 200 OK"
+2025-05-07 19:32:58,025 - INFO - NoteCreationThread - Gemini API から応答を取得しました。
+2025-05-07 19:32:58,025 - INFO - NoteCreationThread - 応答のJSONパースに成功しました。
+2025-05-07 19:32:58,025 - INFO - NoteCreationThread - Wordファイルを生成します: C:\Users\issho\auto_ss\auto_class\capture_20250507_193220\note_recording_20250507_193222.docx
+2025-05-07 19:32:58,074 - INFO - NoteCreationThread - Wordファイルを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250507_193220\note_recording_20250507_193222.docx
+2025-05-07 19:32:58,075 - INFO - MainThread - ノート作成成功: C:\Users\issho\auto_ss\auto_class\capture_20250507_193220\note_recording_20250507_193222.docx
+2025-05-07 19:33:10,729 - INFO - MainThread - ノート作成完了: 閉じるボタンの挙動を元に戻します。
+2025-05-07 19:33:30,719 - INFO - MainThread - アプリケーション終了処理を開始します。
+2025-05-07 19:33:30,762 - INFO - MainThread - アプリケーションを終了しました。
+2025-05-07 19:33:34,467 - INFO - MainThread - DPI Awareness を設定しました。
+2025-05-07 19:33:34,533 - INFO - MainThread - Gemini API クライアントを設定しました。
+2025-05-07 19:33:34,798 - INFO - MainThread - アプリケーションを初期化しました。
+2025-05-07 19:33:34,798 - INFO - MainThread - ウィンドウリストを更新します。
+2025-05-07 19:33:34,799 - INFO - MainThread - 6 個のウィンドウが見つかりました。
+2025-05-07 19:33:34,799 - INFO - MainThread - Geminiモデル 'gemini-2.5-flash-preview-04-17' が選択されました。用途: 用途: 短時間動画向け
+2025-05-07 19:33:48,642 - INFO - MainThread - アプリケーション終了処理を開始します。
+2025-05-07 19:33:48,680 - INFO - MainThread - アプリケーションを終了しました。
+2025-05-07 19:33:51,917 - INFO - MainThread - DPI Awareness を設定しました。
+2025-05-07 19:33:52,006 - INFO - MainThread - Gemini API クライアントを設定しました。
+2025-05-07 19:33:52,279 - INFO - MainThread - アプリケーションを初期化しました。
+2025-05-07 19:33:52,279 - INFO - MainThread - ウィンドウリストを更新します。
+2025-05-07 19:33:52,280 - INFO - MainThread - 6 個のウィンドウが見つかりました。
+2025-05-07 19:33:52,280 - INFO - MainThread - Geminiモデル 'gemini-2.5-flash-preview-04-17' が選択されました。用途: 用途: 短時間動画向け
+2025-05-07 19:33:53,498 - INFO - MainThread - prepare_save_folder - UIから取得した初期フォルダ名: ''
+2025-05-07 19:33:53,498 - INFO - MainThread - prepare_save_folder - 現在の作業ディレクトリ: C:\Users\issho\auto_ss\auto_class
+2025-05-07 19:33:53,499 - INFO - MainThread - prepare_save_folder - 保存フォルダ名が指定されなかったため、デフォルト名を生成しました: capture_20250507_193353
+2025-05-07 19:33:53,499 - INFO - MainThread - prepare_save_folder - 相対パスとして解釈し、絶対パスに変換しました (基準: C:\Users\issho\auto_ss\auto_class): C:\Users\issho\auto_ss\auto_class\capture_20250507_193353
+2025-05-07 19:33:53,499 - INFO - MainThread - prepare_save_folder - 最終的な保存先フォルダ (os.makedirs対象): C:\Users\issho\auto_ss\auto_class\capture_20250507_193353
+2025-05-07 19:33:53,499 - INFO - MainThread - prepare_save_folder - os.makedirs を呼び出します: Path='C:\Users\issho\auto_ss\auto_class\capture_20250507_193353', exist_ok=True
+2025-05-07 19:33:53,499 - INFO - MainThread - prepare_save_folder - フォルダを作成しました (または既に存在していました): C:\Users\issho\auto_ss\auto_class\capture_20250507_193353
+2025-05-07 19:33:53,500 - INFO - MainThread - prepare_save_folder - フォルダ作成後の存在確認OK: C:\Users\issho\auto_ss\auto_class\capture_20250507_193353
+2025-05-07 19:33:53,500 - INFO - MainThread - prepare_save_folder - 書き込み権限テストファイルを作成します: C:\Users\issho\auto_ss\auto_class\capture_20250507_193353\.permission_test
+2025-05-07 19:33:53,501 - INFO - MainThread - prepare_save_folder - フォルダへの書き込み権限を確認しました: C:\Users\issho\auto_ss\auto_class\capture_20250507_193353
+2025-05-07 19:33:53,501 - INFO - MainThread - スクリーンショットキャプチャを開始します。対象ウィンドウハンドル: プライマリモニター
+2025-05-07 19:33:53,501 - INFO - ScreenshotThread - スクリーンショットキャプチャループを開始します。対象ウィンドウハンドル: プライマリモニター
+2025-05-07 19:33:53,502 - INFO - MainThread - ウィンドウが選択されていないため、スクリーンショットのみ開始します。
+2025-05-07 19:33:53,542 - INFO - ScreenshotThread - 最初のスクリーンショットを保存します。
+2025-05-07 19:33:53,573 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250507_193353\screenshot_20250507_193353_543.png
+2025-05-07 19:33:54,463 - INFO - MainThread - 全てのタスクの停止処理を開始します。
+2025-05-07 19:33:54,463 - INFO - MainThread - スクリーンショットキャプチャの停止処理を開始します。
+2025-05-07 19:33:54,464 - INFO - MainThread - スクリーンショットキャプチャスレッドの終了を待機します...
+2025-05-07 19:33:54,504 - INFO - ScreenshotThread - スクリーンショットキャプチャループを終了します。
+2025-05-07 19:33:54,505 - INFO - MainThread - スクリーンショットキャプチャスレッドが終了しました。
+2025-05-07 19:33:54,506 - INFO - MainThread - スクリーンショットキャプチャの停止処理を完了しました。
+2025-05-07 19:33:54,506 - INFO - MainThread - スクリーンショットキャプチャを停止しました。
+2025-05-07 19:33:54,506 - INFO - MainThread - 全てのタスクの停止処理を完了しました。
+2025-05-07 19:34:03,226 - INFO - MainThread - アプリケーション終了処理を開始します。
+2025-05-07 19:34:03,266 - INFO - MainThread - アプリケーションを終了しました。

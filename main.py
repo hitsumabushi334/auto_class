@@ -51,7 +51,9 @@ class SlideCaptureApp:
         self.root = root
         self.root.title("スライドキャプチャ＆録画")
         # UIの高さを増やして新しい要素を配置
-        self.root.geometry("500x550")  # サイズ調整
+        self.root.geometry("600x550")  # サイズ調整
+        self.root.update_idletasks()
+        self.root.minsize(600, 550)
 
         # --- 状態変数 ---
         self.is_capturing_screenshot = False  # スクリーンショット中フラグ
@@ -1847,6 +1849,22 @@ class SlideCaptureApp:
 
 if __name__ == "__main__":
     try:
+        try:
+            from ctypes import windll
+
+            # Per-Monitor DPI Aware V2 (Windows 10 Creators Update以降)
+            # windll.shcore.SetProcessDpiAwareness(2)
+            # System DPI Aware (より古いWindowsや互換性重視の場合)
+            windll.shcore.SetProcessDpiAwareness(1)
+            logger.info("DPI Awareness を設定しました。")
+        except ImportError:
+            logger.info(
+                "ctypesモジュールが見つからないため、DPI Awareness は設定されませんでした (Windows以外の環境の可能性)。"
+            )
+        except AttributeError:
+            logger.info(
+                "DPI Awareness の設定に失敗しました (古いWindowsバージョンの可能性)。"
+            )
         root = tk.Tk()
         app = SlideCaptureApp(root)
         root.mainloop()
