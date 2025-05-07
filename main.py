@@ -763,7 +763,17 @@ class SlideCaptureApp:
                     remove_temp=True,  # 一時ファイルを削除
                     threads=8,  # CPUコア数に合わせて調整
                     preset="medium",  # 品質と速度のバランス
-                    logger=None,  # MoviePyのログを無効化 (Pythonのloggingを使用するため)
+                    logger=None,
+                    ffmpeg_params=[
+                        "-profile:v",
+                        "baseline",  # H.264 Baseline Profile: 幅広い互換性
+                        "-level",
+                        "3.0",  # レベル3.0: 多くのデバイスでサポート
+                        "-pix_fmt",
+                        "yuv420p",  # ピクセルフォーマット: 最も一般的な形式
+                        "-vf",
+                        "scale=trunc(iw/2)*2:trunc(ih/2)*2",  # 解像度を偶数に調整 (互換性向上)
+                    ],  # MoviePyのログを無効化 (Pythonのloggingを使用するため)
                 )
                 logger.info(f"動画ファイルを保存しました: {output_filepath}")
                 # self.last_saved_video_filename = output_filepath # ここでは設定しない
