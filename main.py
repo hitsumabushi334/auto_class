@@ -12,9 +12,10 @@ from certifi import contents
 import win32gui  # ウィンドウ操作のため追加
 import google.genai  # google モジュールを明示的にインポート
 from google import genai
-from docx import Document  # Wordファイル生成のため追加
-from docx.shared import Inches  # Wordファイル生成のため追加 (必要に応じて)
+from docx import Document  # mdファイル生成のため追加
+from docx.shared import Inches  # mdファイル生成のため追加 (必要に応じて)
 import json
+from markd import Markdown
 
 # import sounddevice as sd # sounddevice を削除
 import queue  # 音声データキューのため追加
@@ -929,8 +930,8 @@ class SlideCaptureApp:
         self.note_result_message.set("")
         logger.info(f"ノート作成処理を開始します。対象動画: {video_filepath}")
 
-        # Gemini APIの呼び出しとWord生成の処理 (内部関数)
-        def api_call_and_word_gen():
+        # Gemini APIの呼び出しとmd生成の処理 (内部関数)
+        def api_call_and_md_gen():
             try:
                 prompt = """添付された動画の内容を分析し、各トピックごとに指定されたJSONスキーマに沿って情報を抽出してください。情報抽出の際は、次の条件を満たすようにしてください。\n
                 - クライアントの理解レベルは「大学生程度」を想定し、専門的な表現は避け、平易な日本語で記述してください。\n
@@ -970,7 +971,7 @@ class SlideCaptureApp:
                                         "type": "string",
                                         "description": "トピックのタイトル",
                                     },
-                                    "topic_keyWords": {
+                                    "topic_keymds": {
                                         "type": "array",
                                         "description": "トピックのキーワード一覧",
                                         "items": {
@@ -996,7 +997,7 @@ class SlideCaptureApp:
                                         "items": {
                                             "type": "object",
                                             "properties": {
-                                                "word": {
+                                                "md": {
                                                     "type": "string",
                                                     "description": "専門用語",
                                                 },
@@ -1005,7 +1006,7 @@ class SlideCaptureApp:
                                                     "description": "専門用語の解説",
                                                 },
                                             },
-                                            "required": ["word", "explanation"],
+                                            "required": ["md", "explanation"],
                                         },
                                     },
                                     "topic_thinking": {
@@ -1016,7 +1017,7 @@ class SlideCaptureApp:
                                 "required": [
                                     "topic_title",
                                     "topic_summary",
-                                    "topic_keyWords",
+                                    "topic_keymds",
                                     "topic_points",
                                     "topic_thinking",
                                 ],
@@ -1024,7 +1025,7 @@ class SlideCaptureApp:
                                     "topic_thinking",
                                     "topic_title",
                                     "topic_summary",
-                                    "topic_keyWords",
+                                    "topic_keymds",
                                     "topic_points",
                                     "technical_term",
                                 ],
@@ -1222,73 +1223,73 @@ class SlideCaptureApp:
                 # --- ステータス更新: 応答処理中 ---
                 self.root.after(0, self.note_creation_status.set, "応答を処理中...")
 
-                # Wordファイル生成
+                # mdファイル生成
                 try:
                     summary_data = json.loads(summary_text)
                     logger.info("応答のJSONパースに成功しました。")
 
-                    word_filename = f"note_{os.path.splitext(os.path.basename(video_filepath))[0]}.docx"
-                    word_filepath = os.path.join(
-                        os.path.dirname(video_filepath), word_filename
+                    md_filename = f"note_{os.path.splitext(os.path.basename(video_filepath))[0]}.md"
+                    md_filepath = os.path.join(
+                        os.path.dirname(video_filepath), md_filename
                     )
-                    logger.info(f"Wordファイルを生成します: {word_filepath}")
+                    logger.info(f"Markdownファイルを生成します: {md_filepath}")
 
-                    doc = Document()
-                    doc.add_heading(summary_data.get("title", "タイトルなし"), 0)
-                    doc.add_heading("全体要約", level=1)
-                    doc.add_paragraph(summary_data.get("summary", "要約なし"))
-                    doc.add_heading("トピック詳細", level=1)
-                    topics = summary_data.get("topics", [])
-                    if topics:
-                        for i, topic in enumerate(topics):
-                            topic_title = topic.get("topic_title", f"トピック {i+1}")
-                            doc.add_heading(topic_title, level=2)
-                            keywords = topic.get("topic_keyWords", [])
-                            if keywords:
-                                doc.add_paragraph("キーワード:")
-                                for kw in keywords:
-                                    doc.add_paragraph(f"- {kw}", style="List Bullet")
-                            topic_summary = topic.get("topic_summary", "要約なし")
-                            doc.add_paragraph("要約:")
-                            doc.add_paragraph(topic_summary)
-                            points = topic.get("topic_points", [])
-                            if points:
-                                doc.add_paragraph("ポイント:")
-                                for pt in points:
-                                    doc.add_paragraph(f"- {pt}", style="List Bullet")
-                            terms = topic.get("technical_term", [])
-                            if terms:
-                                doc.add_paragraph("専門用語:")
-                                for term in terms:
-                                    word = term.get("word", "")
-                                    explanation = term.get("explanation", "")
-                                    doc.add_paragraph(
-                                        f"- {word} : {explanation}", style="List Bullet"
-                                    )
-                            doc.add_paragraph()
-                    else:
-                        doc.add_paragraph("トピック情報はありません。")
+                    # doc = Document()
+                    # doc.add_heading(summary_data.get("title", "タイトルなし"), 0)
+                    # doc.add_heading("全体要約", level=1)
+                    # doc.add_paragraph(summary_data.get("summary", "要約なし"))
+                    # doc.add_heading("トピック詳細", level=1)
+                    # topics = summary_data.get("topics", [])
+                    # if topics:
+                    #     for i, topic in enumerate(topics):
+                    #         topic_title = topic.get("topic_title", f"トピック {i+1}")
+                    #         doc.add_heading(topic_title, level=2)
+                    #         keymds = topic.get("topic_keymds", [])
+                    #         if keymds:
+                    #             doc.add_paragraph("キーワード:")
+                    #             for kw in keymds:
+                    #                 doc.add_paragraph(f"- {kw}", style="List Bullet")
+                    #         topic_summary = topic.get("topic_summary", "要約なし")
+                    #         doc.add_paragraph("要約:")
+                    #         doc.add_paragraph(topic_summary)
+                    #         points = topic.get("topic_points", [])
+                    #         if points:
+                    #             doc.add_paragraph("ポイント:")
+                    #             for pt in points:
+                    #                 doc.add_paragraph(f"- {pt}", style="List Bullet")
+                    #         terms = topic.get("technical_term", [])
+                    #         if terms:
+                    #             doc.add_paragraph("専門用語:")
+                    #             for term in terms:
+                    #                 md = term.get("md", "")
+                    #                 explanation = term.get("explanation", "")
+                    #                 doc.add_paragraph(
+                    #                     f"- {md} : {explanation}", style="List Bullet"
+                    #                 )
+                    #         doc.add_paragraph()
+                    # else:
+                    #     doc.add_paragraph("トピック情報はありません。")
 
-                    directory = os.path.dirname(word_filepath)
+                    directory = os.path.dirname(md_filepath)
                     if not os.path.exists(directory):
                         os.makedirs(directory, exist_ok=True)
-                    doc.save(word_filepath)
-                    logger.info(f"Wordファイルを保存しました: {word_filepath}")
+                    doc.save(md_filepath)
+                    logger.info(f"mdファイルを保存しました: {md_filepath}")
                     # UIスレッドでステータスを更新 (成功)
-                    self.root.after(0, self.finish_note_creation, True, word_filepath)
+                    self.root.after(0, self.finish_note_creation, True, md_filepath)
 
                 except json.JSONDecodeError as json_err:
                     logger.error(f"Gemini応答JSON解析失敗: {json_err}")
                     logger.error(f"受信テキスト(一部): {summary_text[:500]}...")
                     error_msg = f"API応答JSON解析エラー: {json_err}\n応答(一部): {summary_text[:200]}..."
                     self.root.after(0, self.finish_note_creation, False, error_msg)
-                except Exception as word_err:
-                    logger.exception(f"Wordファイル生成エラー: {word_err}")
+                except Exception as md_err:
+                    logger.exception(f"mdファイル生成エラー: {md_err}")
                     self.root.after(
                         0,
                         self.finish_note_creation,
                         False,
-                        f"Word生成エラー: {word_err}",
+                        f"md生成エラー: {md_err}",
                     )
 
             except TimeoutError as te:
@@ -1317,7 +1318,7 @@ class SlideCaptureApp:
 
         # 別スレッドで実行
         note_thread = threading.Thread(
-            target=api_call_and_word_gen, name="NoteCreationThread", daemon=True
+            target=api_call_and_md_gen, name="NoteCreationThread", daemon=True
         )
         note_thread.start()
 
