@@ -1261,12 +1261,14 @@ class SlideCaptureApp:
                                 for pt in points:
                                     markd.add_list_item(f"{pt}")
                             terms = topic.get("technical_term", [])
+                            markd.add_linebreak()
                             if terms:
                                 markd.add_text("専門用語:")
                                 for term in terms:
                                     word = term.get("word", "")
                                     explanation = term.get("explanation", "")
                                     markd.add_list_item(f"{word} : {explanation}")
+                            markd.add_linebreak()
                     else:
                         markd.add_text("トピック情報はありません。")
                     # doc = Document()
