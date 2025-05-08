@@ -971,7 +971,7 @@ class SlideCaptureApp:
                                         "type": "string",
                                         "description": "トピックのタイトル",
                                     },
-                                    "topic_keymds": {
+                                    "topic_keywords": {
                                         "type": "array",
                                         "description": "トピックのキーワード一覧",
                                         "items": {
@@ -997,7 +997,7 @@ class SlideCaptureApp:
                                         "items": {
                                             "type": "object",
                                             "properties": {
-                                                "md": {
+                                                "word": {
                                                     "type": "string",
                                                     "description": "専門用語",
                                                 },
@@ -1006,7 +1006,7 @@ class SlideCaptureApp:
                                                     "description": "専門用語の解説",
                                                 },
                                             },
-                                            "required": ["md", "explanation"],
+                                            "required": ["word", "explanation"],
                                         },
                                     },
                                     "topic_thinking": {
@@ -1017,7 +1017,7 @@ class SlideCaptureApp:
                                 "required": [
                                     "topic_title",
                                     "topic_summary",
-                                    "topic_keymds",
+                                    "topic_keywords",
                                     "topic_points",
                                     "topic_thinking",
                                 ],
@@ -1025,7 +1025,7 @@ class SlideCaptureApp:
                                     "topic_thinking",
                                     "topic_title",
                                     "topic_summary",
-                                    "topic_keymds",
+                                    "topic_keywords",
                                     "topic_points",
                                     "technical_term",
                                 ],
@@ -1234,6 +1234,41 @@ class SlideCaptureApp:
                     )
                     logger.info(f"Markdownファイルを生成します: {md_filepath}")
 
+                    markd = Markdown()
+                    markd.add_header(summary_data.get("title", "タイトルなし"))
+                    markd.add_header("全体要約", 2)
+                    markd.add_text(summary_data.get("summary", "要約なし"))
+                    markd.add_header("トピック詳細", 2)
+                    topics = summary_data.get("topics", [])
+                    if topics:
+                        for i, topic in enumerate(topics):
+                            topic_title = topic.get("topic_title", f"トピック {i+1}")
+                            markd.add_header(topic_title, 3)
+                            markd.add_linebreak()
+                            keywords = topic.get("topic_keywords", [])
+                            if keywords:
+                                markd.add_text("キーワード:")
+                                for kw in keywords:
+                                    markd.add_list_item(f"{kw}")
+                            markd.add_linebreak()
+                            topic_summary = topic.get("topic_summary", "要約なし")
+                            markd.add_text("要約:")
+                            markd.add_text(topic_summary)
+                            markd.add_linebreak()
+                            points = topic.get("topic_points", [])
+                            if points:
+                                markd.add_text("ポイント:")
+                                for pt in points:
+                                    markd.add_list_item(f"{pt}")
+                            terms = topic.get("technical_term", [])
+                            if terms:
+                                markd.add_text("専門用語:")
+                                for term in terms:
+                                    word = term.get("word", "")
+                                    explanation = term.get("explanation", "")
+                                    markd.add_list_item(f"{word} : {explanation}")
+                    else:
+                        markd.add_text("トピック情報はありません。")
                     # doc = Document()
                     # doc.add_heading(summary_data.get("title", "タイトルなし"), 0)
                     # doc.add_heading("全体要約", level=1)
@@ -1244,10 +1279,10 @@ class SlideCaptureApp:
                     #     for i, topic in enumerate(topics):
                     #         topic_title = topic.get("topic_title", f"トピック {i+1}")
                     #         doc.add_heading(topic_title, level=2)
-                    #         keymds = topic.get("topic_keymds", [])
-                    #         if keymds:
+                    #         keywords = topic.get("topic_keywords", [])
+                    #         if keywords:
                     #             doc.add_paragraph("キーワード:")
-                    #             for kw in keymds:
+                    #             for kw in keywords:
                     #                 doc.add_paragraph(f"- {kw}", style="List Bullet")
                     #         topic_summary = topic.get("topic_summary", "要約なし")
                     #         doc.add_paragraph("要約:")
@@ -1273,7 +1308,7 @@ class SlideCaptureApp:
                     directory = os.path.dirname(md_filepath)
                     if not os.path.exists(directory):
                         os.makedirs(directory, exist_ok=True)
-                    doc.save(md_filepath)
+                    markd.save(md_filepath)
                     logger.info(f"mdファイルを保存しました: {md_filepath}")
                     # UIスレッドでステータスを更新 (成功)
                     self.root.after(0, self.finish_note_creation, True, md_filepath)
@@ -1377,26 +1412,28 @@ class SlideCaptureApp:
                 f"ノートの作成中にエラーが発生しました:\n{result_path_or_error}",
             )
 
-        # --- GUI操作制限解除 (閉じるボタンのみ) ---
-        # ボタン類の状態は stop_all_tasks でリセットされるため、ここでは閉じるボタンの挙動のみ元に戻す
-        logger.info("ノート作成完了: 閉じるボタンの挙動を元に戻します。")
+        # --- GUI操作制限解除 ---
+        logger.info("ノート作成完了/失敗: GUI操作制限を解除します。")
         self.start_button.config(state=tk.NORMAL)
-        self.stop_button.config(state=tk.DISABLED)
+        self.stop_button.config(state=tk.DISABLED)  # 停止ボタンは常に無効で良い
         self.folder_entry.config(state=tk.NORMAL)
-        self.refresh_window_list_button.config(state=tk.NORMAL)  # 再度有効化
+        self.refresh_window_list_button.config(state=tk.NORMAL)
         self.window_listbox.config(state=tk.NORMAL)
-        self.model_combobox.config(state="readonly")  # モデル選択を再度有効化
+        self.model_combobox.config(state="readonly")
         self.root.update()
-        if hasattr(self, "original_on_closing"):  # 念のため存在確認
+        if hasattr(self, "original_on_closing"):
             self.root.protocol("WM_DELETE_WINDOW", self.original_on_closing)
-        else:  # フォールバック: もし original_on_closing がなければデフォルトの閉じる動作
-            # フォールバック: もし original_on_closing がなければデフォルトの閉じる動作
+        else:
             self.root.protocol("WM_DELETE_WINDOW", self.root.destroy)
-        # --- ここまで ---
 
     def stop_all_tasks(self):
         """全てのキャプチャ・録画タスクを停止する"""
         logger.info("全てのタスクの停止処理を開始します。")
+
+        # ★★★ 修正点: 停止ボタンをすぐに無効化 ★★★
+        self.stop_button.config(state=tk.DISABLED)
+        # 開始ボタンは、関連処理がすべて完了するまで無効のままにする
+        # (finish_note_creation またはこの関数の最後で有効に戻す)
 
         was_recording = self.is_recording  # 録画中だったか記録
 
@@ -1408,15 +1445,27 @@ class SlideCaptureApp:
         if self.is_capturing_screenshot:
             self.stop_screenshot_capture()
 
-        # ★★★ ノート作成開始ロジックを削除 ★★★
-        # ノート作成は _save_video_with_audio からトリガーされるため、ここでのチェックは不要
-
         if was_recording:
             logger.info(
                 "録画を停止しました。動画保存とノート作成がバックグラウンドで実行されます（成功した場合）。"
             )
+            # この場合、UIの有効化は finish_note_creation に任せる
+            # finish_note_creation が呼ばれないケース(動画保存失敗など)も考慮すると、
+            # ここで start_button などを有効にすべきではない。
         else:
             logger.info("スクリーンショットキャプチャを停止しました。")
+            # スクリーンショットのみ停止した場合、ノート作成は走らないので、
+            # ここでUIを操作可能に戻す。
+            self.start_button.config(state=tk.NORMAL)
+            self.folder_entry.config(state=tk.NORMAL)
+            self.refresh_window_list_button.config(state=tk.NORMAL)
+            self.window_listbox.config(state=tk.NORMAL)
+            self.model_combobox.config(state="readonly")
+            # 閉じるボタンの挙動も元に戻す (ノート作成がない場合)
+            if hasattr(self, "original_on_closing"):
+                self.root.protocol("WM_DELETE_WINDOW", self.original_on_closing)
+            else:
+                self.root.protocol("WM_DELETE_WINDOW", self.root.destroy)
 
         logger.info("全てのタスクの停止処理を完了しました。")
 
@@ -1856,16 +1905,37 @@ if __name__ == "__main__":
             # Per-Monitor DPI Aware V2 (Windows 10 Creators Update以降)
             # windll.shcore.SetProcessDpiAwareness(2)
             # System DPI Aware (より古いWindowsや互換性重視の場合)
-            windll.shcore.SetProcessDpiAwareness(1)
-            logger.info("DPI Awareness を設定しました。")
+            # windll.shcore.SetProcessDpiAwareness(1) # 既存のコードではこちらが使われている可能性
+
+            # ★★★ 変更箇所 スタート ★★★
+            # Per-Monitor DPI Aware V2 に設定してみる
+            # これにより、各モニターのDPI設定が個別に認識されるようになる
+            PROCESS_PER_MONITOR_DPI_AWARE = 2
+            windll.shcore.SetProcessDpiAwareness(PROCESS_PER_MONITOR_DPI_AWARE)
+            logger.info("DPI Awareness を Per-Monitor V2 (2) に設定しました。")
+            # ★★★ 変更箇所 エンド ★★★
+
         except ImportError:
             logger.info(
                 "ctypesモジュールが見つからないため、DPI Awareness は設定されませんでした (Windows以外の環境の可能性)。"
             )
         except AttributeError:
-            logger.info(
-                "DPI Awareness の設定に失敗しました (古いWindowsバージョンの可能性)。"
-            )
+            # Per-Monitor V2 が利用できない古いWindowsの場合、System Aware を試す
+            try:
+                PROCESS_SYSTEM_DPI_AWARE = 1
+                windll.shcore.SetProcessDpiAwareness(PROCESS_SYSTEM_DPI_AWARE)
+                logger.info(
+                    "DPI Awareness を System Aware (1) に設定しました (Per-Monitor V2 不可のため)。"
+                )
+            except AttributeError:
+                logger.warning(
+                    "DPI Awareness の設定に失敗しました (古いWindowsバージョンの可能性)。"
+                )
+            except Exception as e_sys:
+                logger.warning(f"System DPI Awareness 設定中にエラー: {e_sys}")
+        except Exception as e:
+            logger.warning(f"DPI Awareness 設定中に予期せぬエラー: {e}")
+
         root = tk.Tk()
         app = SlideCaptureApp(root)
         root.mainloop()

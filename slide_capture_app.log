@@ -6657,3 +6657,178 @@ AttributeError: 'SlideCaptureApp' object has no attribute 'window_listbox'
 2025-05-07 19:33:54,506 - INFO - MainThread - 全てのタスクの停止処理を完了しました。
 2025-05-07 19:34:03,226 - INFO - MainThread - アプリケーション終了処理を開始します。
 2025-05-07 19:34:03,266 - INFO - MainThread - アプリケーションを終了しました。
+2025-05-08 13:41:47,885 - INFO - MainThread - DPI Awareness を設定しました。
+2025-05-08 13:41:48,660 - INFO - MainThread - Gemini API クライアントを設定しました。
+2025-05-08 13:41:50,500 - INFO - MainThread - アプリケーションを初期化しました。
+2025-05-08 13:41:50,503 - INFO - MainThread - ウィンドウリストを更新します。
+2025-05-08 13:41:50,540 - INFO - MainThread - 6 個のウィンドウが見つかりました。
+2025-05-08 13:41:50,551 - INFO - MainThread - Geminiモデル 'gemini-2.5-flash-preview-04-17' が選択されました。用途: 用途: 短時間動画向け
+2025-05-08 13:42:34,273 - INFO - MainThread - ウィンドウリストを更新します。
+2025-05-08 13:42:35,723 - INFO - MainThread - 6 個のウィンドウが見つかりました。
+2025-05-08 13:42:35,736 - INFO - MainThread - ウィンドウリストを更新します。
+2025-05-08 13:42:35,739 - INFO - MainThread - 6 個のウィンドウが見つかりました。
+2025-05-08 13:42:37,085 - INFO - MainThread - ウィンドウが選択されました: (81) Gemini 2.5 Pro がコーディング向けにアップデートされました！解説とClaude 3.7と比較しながらコーディングの実力を検証🔥 - YouTube - Google Chrome (HWND: 589992) (HWND: 589992)
+2025-05-08 13:42:38,249 - INFO - MainThread - prepare_save_folder - UIから取得した初期フォルダ名: ''
+2025-05-08 13:42:38,250 - INFO - MainThread - prepare_save_folder - 現在の作業ディレクトリ: C:\Users\石田翔大\auto_class
+2025-05-08 13:42:38,250 - INFO - MainThread - prepare_save_folder - 保存フォルダ名が指定されなかったため、デフォルト名を生成しました: capture_20250508_134238
+2025-05-08 13:42:38,251 - INFO - MainThread - prepare_save_folder - 相対パスとして解釈し、絶対パスに変換しました (基準: C:\Users\石田翔大\auto_class): C:\Users\石田翔大\auto_class\capture_20250508_134238
+2025-05-08 13:42:38,251 - INFO - MainThread - prepare_save_folder - 最終的な保存先フォルダ (os.makedirs対象): C:\Users\石田翔大\auto_class\capture_20250508_134238
+2025-05-08 13:42:38,251 - INFO - MainThread - prepare_save_folder - os.makedirs を呼び出します: Path='C:\Users\石田翔大\auto_class\capture_20250508_134238', exist_ok=True
+2025-05-08 13:42:38,252 - INFO - MainThread - prepare_save_folder - フォルダを作成しました (または既に存在していました): C:\Users\石田翔大\auto_class\capture_20250508_134238
+2025-05-08 13:42:38,253 - INFO - MainThread - prepare_save_folder - フォルダ作成後の存在確認OK: C:\Users\石田翔大\auto_class\capture_20250508_134238
+2025-05-08 13:42:38,253 - INFO - MainThread - prepare_save_folder - 書き込み権限テストファイルを作成します: C:\Users\石田翔大\auto_class\capture_20250508_134238\.permission_test
+2025-05-08 13:42:38,256 - INFO - MainThread - prepare_save_folder - フォルダへの書き込み権限を確認しました: C:\Users\石田翔大\auto_class\capture_20250508_134238
+2025-05-08 13:42:38,271 - INFO - MainThread - スクリーンショットキャプチャを開始します。対象ウィンドウハンドル: 589992
+2025-05-08 13:42:38,273 - INFO - ScreenshotThread - スクリーンショットキャプチャループを開始します。対象ウィンドウハンドル: 589992
+2025-05-08 13:42:38,286 - INFO - MainThread - 録画を開始します。対象ウィンドウハンドル: 589992
+2025-05-08 13:42:38,287 - INFO - RecordingThread - 録画ループを開始します。対象ウィンドウハンドル: 589992
+2025-05-08 13:42:38,288 - INFO - AudioRecordingThread - 音声録音ループ (SoundCard) を開始します
+2025-05-08 13:42:38,290 - INFO - RecordingThread - 対象ウィンドウの位置とサイズ: (2400, 0, 2000, 1125)
+2025-05-08 13:42:38,446 - INFO - AudioRecordingThread - 取得したマイクデバイス: Headphone (Realtek(R) Audio)
+2025-05-08 13:42:38,470 - INFO - AudioRecordingThread - マイクデバイスの型: <class 'soundcard.mediafoundation._Microphone'>
+2025-05-08 13:42:38,471 - ERROR - AudioRecordingThread - マイクデバイスからサンプルレートまたはチャンネル数を取得できませんでした: '_Microphone' object has no attribute 'samplerate'
+2025-05-08 13:42:38,471 - WARNING - AudioRecordingThread - デフォルト値を使用します - サンプルレート: 48000, チャンネル数: 2
+2025-05-08 13:42:38,513 - INFO - ScreenshotThread - 最初のスクリーンショットを保存します。
+2025-05-08 13:42:38,527 - ERROR - ScreenshotThread - スクリーンショットの保存に失敗しました (cv2.imwriteがFalseを返しました): C:\Users\石田翔大\auto_class\capture_20250508_134238\screenshot_20250508_134238_514.png
+2025-05-08 13:42:38,558 - INFO - AudioRecordingThread - レコーダーオブジェクトの型: <class 'soundcard.mediafoundation._Recorder'>
+2025-05-08 13:42:38,559 - INFO - AudioRecordingThread - 録音中: Headphone (Realtek(R) Audio) (ループバック)
+2025-05-08 13:42:39,864 - WARNING - AudioRecordingThread - C:\Users\石田翔大\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-05-08 13:42:39,883 - WARNING - AudioRecordingThread - C:\Users\石田翔大\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-05-08 13:42:39,916 - WARNING - AudioRecordingThread - C:\Users\石田翔大\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-05-08 13:42:39,950 - WARNING - AudioRecordingThread - C:\Users\石田翔大\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-05-08 13:42:39,955 - WARNING - AudioRecordingThread - C:\Users\石田翔大\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-05-08 13:42:39,967 - WARNING - AudioRecordingThread - C:\Users\石田翔大\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-05-08 13:42:40,367 - WARNING - AudioRecordingThread - C:\Users\石田翔大\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-05-08 13:42:40,373 - WARNING - AudioRecordingThread - C:\Users\石田翔大\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-05-08 13:42:40,466 - WARNING - AudioRecordingThread - C:\Users\石田翔大\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-05-08 13:42:40,474 - WARNING - AudioRecordingThread - C:\Users\石田翔大\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-05-08 13:42:41,348 - WARNING - AudioRecordingThread - C:\Users\石田翔大\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-05-08 13:42:41,428 - WARNING - AudioRecordingThread - C:\Users\石田翔大\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-05-08 13:42:41,435 - WARNING - AudioRecordingThread - C:\Users\石田翔大\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-05-08 13:42:42,404 - WARNING - AudioRecordingThread - C:\Users\石田翔大\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-05-08 13:42:42,438 - WARNING - AudioRecordingThread - C:\Users\石田翔大\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-05-08 13:42:42,601 - WARNING - AudioRecordingThread - C:\Users\石田翔大\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-05-08 13:42:42,615 - WARNING - AudioRecordingThread - C:\Users\石田翔大\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-05-08 13:42:42,652 - WARNING - AudioRecordingThread - C:\Users\石田翔大\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-05-08 13:42:42,654 - WARNING - AudioRecordingThread - C:\Users\石田翔大\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-05-08 13:42:42,666 - WARNING - AudioRecordingThread - C:\Users\石田翔大\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-05-08 13:42:43,350 - WARNING - AudioRecordingThread - C:\Users\石田翔大\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-05-08 13:42:43,439 - WARNING - AudioRecordingThread - C:\Users\石田翔大\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-05-08 13:42:43,447 - WARNING - AudioRecordingThread - C:\Users\石田翔大\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-05-08 13:42:44,349 - WARNING - AudioRecordingThread - C:\Users\石田翔大\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-05-08 13:42:44,417 - WARNING - AudioRecordingThread - C:\Users\石田翔大\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-05-08 13:42:44,464 - WARNING - AudioRecordingThread - C:\Users\石田翔大\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-05-08 13:42:45,345 - WARNING - AudioRecordingThread - C:\Users\石田翔大\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-05-08 13:42:45,433 - WARNING - AudioRecordingThread - C:\Users\石田翔大\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-05-08 13:42:45,446 - WARNING - AudioRecordingThread - C:\Users\石田翔大\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-05-08 13:42:46,052 - INFO - MainThread - アプリケーション終了処理を開始します。
+2025-05-08 13:42:46,367 - WARNING - AudioRecordingThread - C:\Users\石田翔大\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-05-08 13:42:46,373 - WARNING - AudioRecordingThread - C:\Users\石田翔大\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-05-08 13:42:46,442 - WARNING - AudioRecordingThread - C:\Users\石田翔大\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-05-08 13:42:46,464 - WARNING - AudioRecordingThread - C:\Users\石田翔大\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-05-08 13:42:46,492 - WARNING - AudioRecordingThread - C:\Users\石田翔大\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-05-08 13:42:46,496 - WARNING - AudioRecordingThread - C:\Users\石田翔大\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-05-08 13:42:47,340 - WARNING - AudioRecordingThread - C:\Users\石田翔大\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-05-08 13:42:47,420 - WARNING - AudioRecordingThread - C:\Users\石田翔大\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-05-08 13:42:47,450 - INFO - RecordingThread - 録画フレーム数: 10, 経過時間: 9.02秒
+2025-05-08 13:42:47,493 - INFO - MainThread - 全てのタスクの停止処理を開始します。
+2025-05-08 13:42:47,494 - INFO - MainThread - 録画停止処理を開始します。
+2025-05-08 13:42:47,495 - INFO - MainThread - 録画スレッドの終了を待機します...
+2025-05-08 13:42:47,517 - INFO - AudioRecordingThread - 音声録音ループ (SoundCard) を終了します
+2025-05-08 13:42:48,333 - INFO - RecordingThread - 録画ループを終了します。合計フレーム数: 10
+2025-05-08 13:42:48,342 - INFO - MainThread - 録画スレッドが終了しました。
+2025-05-08 13:42:48,343 - INFO - MainThread - 動画ファイルの保存を開始します: C:\Users\石田翔大\auto_class\capture_20250508_134238\recording_20250508_134248.mp4
+2025-05-08 13:42:48,351 - INFO - MainThread - 動画保存スレッドを開始しました。
+2025-05-08 13:42:48,353 - INFO - MainThread - 録画停止処理を完了しました。
+2025-05-08 13:42:48,355 - INFO - MainThread - スクリーンショットキャプチャの停止処理を開始します。
+2025-05-08 13:42:48,358 - INFO - MainThread - スクリーンショットキャプチャスレッドの終了を待機します...
+2025-05-08 13:42:48,360 - INFO - VideoSaveThread - 音声データを連結しました。サンプル数: 412672, dtype: float32
+2025-05-08 13:42:48,410 - INFO - VideoSaveThread - 合計 10 フレームを動画クリップに使用します。
+2025-05-08 13:42:48,414 - INFO - VideoSaveThread - 推定FPS: 1.00
+2025-05-08 13:42:48,416 - WARNING - VideoSaveThread - 音声クリップ (8.60s) が動画クリップ (10.02s) より短いです。
+2025-05-08 13:42:48,416 - INFO - VideoSaveThread - AudioArrayClipを作成しました。Duration: 8.60秒
+2025-05-08 13:42:48,418 - INFO - VideoSaveThread - 動画と音声を結合しました。
+2025-05-08 13:42:48,418 - INFO - VideoSaveThread - 動画ファイルを書き出します: C:\Users\石田翔大\auto_class\capture_20250508_134238\recording_20250508_134248.mp4
+2025-05-08 13:42:49,286 - INFO - ScreenshotThread - スクリーンショットキャプチャループを終了します。
+2025-05-08 13:42:49,297 - INFO - MainThread - スクリーンショットキャプチャスレッドが終了しました。
+2025-05-08 13:42:49,298 - INFO - MainThread - スクリーンショットキャプチャの停止処理を完了しました。
+2025-05-08 13:42:49,298 - INFO - MainThread - 録画を停止しました。動画保存とノート作成がバックグラウンドで実行されます（成功した場合）。
+2025-05-08 13:42:49,299 - INFO - MainThread - 全てのタスクの停止処理を完了しました。
+2025-05-08 13:42:49,300 - INFO - MainThread - 実行中のタスクを停止しました。
+2025-05-08 13:42:49,409 - INFO - VideoSaveThread - 動画ファイルを保存しました: C:\Users\石田翔大\auto_class\capture_20250508_134238\recording_20250508_134248.mp4
+2025-05-08 13:42:49,410 - INFO - VideoSaveThread - 動画保存成功、ノート作成をトリガーします: C:\Users\石田翔大\auto_class\capture_20250508_134238\recording_20250508_134248.mp4
+2025-05-08 13:42:49,420 - INFO - MainThread - アプリケーションを終了しました。
