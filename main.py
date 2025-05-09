@@ -1310,7 +1310,9 @@ class SlideCaptureApp:
                     directory = os.path.dirname(md_filepath)
                     if not os.path.exists(directory):
                         os.makedirs(directory, exist_ok=True)
-                    markd.save(md_filepath)
+                    markdown_str = markd.content
+                    with open(md_filepath, "w", encoding="utf-8") as f:
+                        f.write(markdown_str)
                     logger.info(f"mdファイルを保存しました: {md_filepath}")
                     # UIスレッドでステータスを更新 (成功)
                     self.root.after(0, self.finish_note_creation, True, md_filepath)

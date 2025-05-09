@@ -6832,3 +6832,272 @@ AttributeError: 'SlideCaptureApp' object has no attribute 'window_listbox'
 2025-05-08 13:42:49,409 - INFO - VideoSaveThread - 動画ファイルを保存しました: C:\Users\石田翔大\auto_class\capture_20250508_134238\recording_20250508_134248.mp4
 2025-05-08 13:42:49,410 - INFO - VideoSaveThread - 動画保存成功、ノート作成をトリガーします: C:\Users\石田翔大\auto_class\capture_20250508_134238\recording_20250508_134248.mp4
 2025-05-08 13:42:49,420 - INFO - MainThread - アプリケーションを終了しました。
+2025-05-09 08:45:46,678 - INFO - MainThread - DPI Awareness を Per-Monitor V2 (2) に設定しました。
+2025-05-09 08:45:46,795 - INFO - MainThread - Gemini API クライアントを設定しました。
+2025-05-09 08:45:47,141 - INFO - MainThread - アプリケーションを初期化しました。
+2025-05-09 08:45:47,141 - INFO - MainThread - ウィンドウリストを更新します。
+2025-05-09 08:45:47,152 - INFO - MainThread - 7 個のウィンドウが見つかりました。
+2025-05-09 08:45:47,160 - INFO - MainThread - Geminiモデル 'gemini-2.5-flash-preview-04-17' が選択されました。用途: 用途: 短時間動画向け
+2025-05-09 08:45:57,503 - INFO - MainThread - ウィンドウリストを更新します。
+2025-05-09 08:45:57,504 - INFO - MainThread - 7 個のウィンドウが見つかりました。
+2025-05-09 08:46:02,960 - INFO - MainThread - ウィンドウリストを更新します。
+2025-05-09 08:46:02,966 - INFO - MainThread - 7 個のウィンドウが見つかりました。
+2025-05-09 08:46:03,489 - INFO - MainThread - ウィンドウが選択されました: (87) 海外エンジニアが最近使い始めたAI プロンプトツール【Repo Prompt】を解説します！ - YouTube - Google Chrome (HWND: 395930) (HWND: 395930)
+2025-05-09 08:46:05,155 - INFO - MainThread - prepare_save_folder - UIから取得した初期フォルダ名: ''
+2025-05-09 08:46:05,156 - INFO - MainThread - prepare_save_folder - 現在の作業ディレクトリ: C:\Users\issho\auto_ss\auto_class
+2025-05-09 08:46:05,156 - INFO - MainThread - prepare_save_folder - 保存フォルダ名が指定されなかったため、デフォルト名を生成しました: capture_20250509_084605
+2025-05-09 08:46:05,156 - INFO - MainThread - prepare_save_folder - 相対パスとして解釈し、絶対パスに変換しました (基準: C:\Users\issho\auto_ss\auto_class): C:\Users\issho\auto_ss\auto_class\capture_20250509_084605
+2025-05-09 08:46:05,156 - INFO - MainThread - prepare_save_folder - 最終的な保存先フォルダ (os.makedirs対象): C:\Users\issho\auto_ss\auto_class\capture_20250509_084605
+2025-05-09 08:46:05,156 - INFO - MainThread - prepare_save_folder - os.makedirs を呼び出します: Path='C:\Users\issho\auto_ss\auto_class\capture_20250509_084605', exist_ok=True
+2025-05-09 08:46:05,156 - INFO - MainThread - prepare_save_folder - フォルダを作成しました (または既に存在していました): C:\Users\issho\auto_ss\auto_class\capture_20250509_084605
+2025-05-09 08:46:05,157 - INFO - MainThread - prepare_save_folder - フォルダ作成後の存在確認OK: C:\Users\issho\auto_ss\auto_class\capture_20250509_084605
+2025-05-09 08:46:05,157 - INFO - MainThread - prepare_save_folder - 書き込み権限テストファイルを作成します: C:\Users\issho\auto_ss\auto_class\capture_20250509_084605\.permission_test
+2025-05-09 08:46:05,157 - INFO - MainThread - prepare_save_folder - フォルダへの書き込み権限を確認しました: C:\Users\issho\auto_ss\auto_class\capture_20250509_084605
+2025-05-09 08:46:05,158 - INFO - MainThread - スクリーンショットキャプチャを開始します。対象ウィンドウハンドル: 395930
+2025-05-09 08:46:05,158 - INFO - ScreenshotThread - スクリーンショットキャプチャループを開始します。対象ウィンドウハンドル: 395930
+2025-05-09 08:46:05,162 - INFO - MainThread - 録画を開始します。対象ウィンドウハンドル: 395930
+2025-05-09 08:46:05,162 - INFO - RecordingThread - 録画ループを開始します。対象ウィンドウハンドル: 395930
+2025-05-09 08:46:05,163 - INFO - AudioRecordingThread - 音声録音ループ (SoundCard) を開始します
+2025-05-09 08:46:05,180 - INFO - RecordingThread - 対象ウィンドウの位置とサイズ: (1911, -9, 1938, 1038)
+2025-05-09 08:46:05,243 - INFO - ScreenshotThread - 最初のスクリーンショットを保存します。
+2025-05-09 08:46:05,250 - INFO - AudioRecordingThread - 取得したマイクデバイス: スピーカー (Realtek(R) Audio)
+2025-05-09 08:46:05,251 - INFO - AudioRecordingThread - マイクデバイスの型: <class 'soundcard.mediafoundation._Microphone'>
+2025-05-09 08:46:05,251 - ERROR - AudioRecordingThread - マイクデバイスからサンプルレートまたはチャンネル数を取得できませんでした: '_Microphone' object has no attribute 'samplerate'
+2025-05-09 08:46:05,251 - WARNING - AudioRecordingThread - デフォルト値を使用します - サンプルレート: 48000, チャンネル数: 2
+2025-05-09 08:46:05,272 - INFO - AudioRecordingThread - レコーダーオブジェクトの型: <class 'soundcard.mediafoundation._Recorder'>
+2025-05-09 08:46:05,273 - INFO - AudioRecordingThread - 録音中: スピーカー (Realtek(R) Audio) (ループバック)
+2025-05-09 08:46:05,286 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250509_084605\screenshot_20250509_084605_244.png
+2025-05-09 08:46:10,212 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-09 08:46:10,245 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250509_084605\screenshot_20250509_084610_212.png
+2025-05-09 08:46:11,213 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-09 08:46:11,251 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250509_084605\screenshot_20250509_084611_217.png
+2025-05-09 08:46:14,234 - INFO - RecordingThread - 録画フレーム数: 10, 経過時間: 9.00秒
+2025-05-09 08:46:24,226 - INFO - RecordingThread - 録画フレーム数: 20, 経過時間: 19.00秒
+2025-05-09 08:46:27,205 - WARNING - ScreenshotThread - 比較画像のサイズが異なるためリサイズしました。
+2025-05-09 08:46:27,208 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-09 08:46:27,236 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250509_084605\screenshot_20250509_084627_209.png
+2025-05-09 08:46:34,231 - INFO - RecordingThread - 録画フレーム数: 30, 経過時間: 29.00秒
+2025-05-09 08:46:44,229 - INFO - RecordingThread - 録画フレーム数: 40, 経過時間: 39.00秒
+2025-05-09 08:46:54,213 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-09 08:46:54,235 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250509_084605\screenshot_20250509_084654_213.png
+2025-05-09 08:46:54,238 - INFO - RecordingThread - 録画フレーム数: 50, 経過時間: 49.00秒
+2025-05-09 08:47:04,237 - INFO - RecordingThread - 録画フレーム数: 60, 経過時間: 59.00秒
+2025-05-09 08:47:14,241 - INFO - RecordingThread - 録画フレーム数: 70, 経過時間: 69.00秒
+2025-05-09 08:47:24,220 - INFO - RecordingThread - 録画フレーム数: 80, 経過時間: 79.00秒
+2025-05-09 08:47:33,243 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-09 08:47:33,266 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250509_084605\screenshot_20250509_084733_243.png
+2025-05-09 08:47:34,218 - INFO - RecordingThread - 録画フレーム数: 90, 経過時間: 89.00秒
+2025-05-09 08:47:44,215 - INFO - RecordingThread - 録画フレーム数: 100, 経過時間: 99.00秒
+2025-05-09 08:47:44,242 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-09 08:47:44,264 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250509_084605\screenshot_20250509_084744_243.png
+2025-05-09 08:47:51,247 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-09 08:47:51,271 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250509_084605\screenshot_20250509_084751_248.png
+2025-05-09 08:47:54,215 - INFO - RecordingThread - 録画フレーム数: 110, 経過時間: 109.00秒
+2025-05-09 08:48:00,242 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-09 08:48:00,264 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250509_084605\screenshot_20250509_084800_243.png
+2025-05-09 08:48:04,217 - INFO - RecordingThread - 録画フレーム数: 120, 経過時間: 119.00秒
+2025-05-09 08:48:14,216 - INFO - RecordingThread - 録画フレーム数: 130, 経過時間: 129.00秒
+2025-05-09 08:48:24,216 - INFO - RecordingThread - 録画フレーム数: 140, 経過時間: 139.00秒
+2025-05-09 08:48:34,217 - INFO - RecordingThread - 録画フレーム数: 150, 経過時間: 149.00秒
+2025-05-09 08:48:44,210 - INFO - RecordingThread - 録画フレーム数: 160, 経過時間: 159.00秒
+2025-05-09 08:48:45,252 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-09 08:48:45,273 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250509_084605\screenshot_20250509_084845_252.png
+2025-05-09 08:48:54,210 - INFO - RecordingThread - 録画フレーム数: 170, 経過時間: 169.00秒
+2025-05-09 08:49:04,216 - INFO - RecordingThread - 録画フレーム数: 180, 経過時間: 179.00秒
+2025-05-09 08:49:04,259 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-09 08:49:04,275 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250509_084605\screenshot_20250509_084904_259.png
+2025-05-09 08:49:13,257 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-09 08:49:13,277 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250509_084605\screenshot_20250509_084913_257.png
+2025-05-09 08:49:14,210 - INFO - RecordingThread - 録画フレーム数: 190, 経過時間: 189.00秒
+2025-05-09 08:49:24,210 - INFO - RecordingThread - 録画フレーム数: 200, 経過時間: 199.00秒
+2025-05-09 08:49:34,211 - INFO - RecordingThread - 録画フレーム数: 210, 経過時間: 209.00秒
+2025-05-09 08:49:44,211 - INFO - RecordingThread - 録画フレーム数: 220, 経過時間: 219.00秒
+2025-05-09 08:49:54,211 - INFO - RecordingThread - 録画フレーム数: 230, 経過時間: 229.00秒
+2025-05-09 08:50:04,212 - INFO - RecordingThread - 録画フレーム数: 240, 経過時間: 239.00秒
+2025-05-09 08:50:14,213 - INFO - RecordingThread - 録画フレーム数: 250, 経過時間: 249.00秒
+2025-05-09 08:50:24,211 - INFO - RecordingThread - 録画フレーム数: 260, 経過時間: 259.00秒
+2025-05-09 08:50:34,211 - INFO - RecordingThread - 録画フレーム数: 270, 経過時間: 269.00秒
+2025-05-09 08:50:44,212 - INFO - RecordingThread - 録画フレーム数: 280, 経過時間: 279.00秒
+2025-05-09 08:50:54,211 - INFO - RecordingThread - 録画フレーム数: 290, 経過時間: 289.00秒
+2025-05-09 08:51:04,212 - INFO - RecordingThread - 録画フレーム数: 300, 経過時間: 299.00秒
+2025-05-09 08:51:04,289 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-09 08:51:04,306 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250509_084605\screenshot_20250509_085104_289.png
+2025-05-09 08:51:06,295 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-09 08:51:06,315 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250509_084605\screenshot_20250509_085106_295.png
+2025-05-09 08:51:14,212 - INFO - RecordingThread - 録画フレーム数: 310, 経過時間: 309.00秒
+2025-05-09 08:51:18,295 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-09 08:51:18,319 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250509_084605\screenshot_20250509_085118_295.png
+2025-05-09 08:51:24,212 - INFO - RecordingThread - 録画フレーム数: 320, 経過時間: 319.00秒
+2025-05-09 08:51:34,212 - INFO - RecordingThread - 録画フレーム数: 330, 経過時間: 329.00秒
+2025-05-09 08:51:44,213 - INFO - RecordingThread - 録画フレーム数: 340, 経過時間: 339.00秒
+2025-05-09 08:51:52,302 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-09 08:51:52,321 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250509_084605\screenshot_20250509_085152_302.png
+2025-05-09 08:51:54,214 - INFO - RecordingThread - 録画フレーム数: 350, 経過時間: 349.00秒
+2025-05-09 08:52:04,214 - INFO - RecordingThread - 録画フレーム数: 360, 経過時間: 359.00秒
+2025-05-09 08:52:14,213 - INFO - RecordingThread - 録画フレーム数: 370, 経過時間: 369.00秒
+2025-05-09 08:52:24,211 - INFO - RecordingThread - 録画フレーム数: 380, 経過時間: 379.00秒
+2025-05-09 08:52:34,218 - INFO - RecordingThread - 録画フレーム数: 390, 経過時間: 389.00秒
+2025-05-09 08:52:44,213 - INFO - RecordingThread - 録画フレーム数: 400, 経過時間: 399.00秒
+2025-05-09 08:52:54,214 - INFO - RecordingThread - 録画フレーム数: 410, 経過時間: 409.00秒
+2025-05-09 08:53:04,212 - INFO - RecordingThread - 録画フレーム数: 420, 経過時間: 419.00秒
+2025-05-09 08:53:06,329 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-09 08:53:06,357 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250509_084605\screenshot_20250509_085306_329.png
+2025-05-09 08:53:14,213 - INFO - RecordingThread - 録画フレーム数: 430, 経過時間: 429.00秒
+2025-05-09 08:53:21,336 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-09 08:53:21,364 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250509_084605\screenshot_20250509_085321_337.png
+2025-05-09 08:53:24,212 - INFO - RecordingThread - 録画フレーム数: 440, 経過時間: 439.00秒
+2025-05-09 08:53:34,213 - INFO - RecordingThread - 録画フレーム数: 450, 経過時間: 449.00秒
+2025-05-09 08:53:38,342 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-09 08:53:38,373 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250509_084605\screenshot_20250509_085338_342.png
+2025-05-09 08:53:44,215 - INFO - RecordingThread - 録画フレーム数: 460, 経過時間: 459.00秒
+2025-05-09 08:53:47,341 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-09 08:53:47,366 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250509_084605\screenshot_20250509_085347_341.png
+2025-05-09 08:53:54,212 - INFO - RecordingThread - 録画フレーム数: 470, 経過時間: 469.00秒
+2025-05-09 08:54:04,213 - INFO - RecordingThread - 録画フレーム数: 480, 経過時間: 479.00秒
+2025-05-09 08:54:14,213 - INFO - RecordingThread - 録画フレーム数: 490, 経過時間: 489.00秒
+2025-05-09 08:54:24,213 - INFO - RecordingThread - 録画フレーム数: 500, 経過時間: 499.00秒
+2025-05-09 08:54:34,216 - INFO - RecordingThread - 録画フレーム数: 510, 経過時間: 509.00秒
+2025-05-09 08:54:44,215 - INFO - RecordingThread - 録画フレーム数: 520, 経過時間: 519.00秒
+2025-05-09 08:54:45,362 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-09 08:54:45,391 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250509_084605\screenshot_20250509_085445_363.png
+2025-05-09 08:54:54,212 - INFO - RecordingThread - 録画フレーム数: 530, 経過時間: 529.00秒
+2025-05-09 08:55:00,363 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-09 08:55:00,384 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250509_084605\screenshot_20250509_085500_364.png
+2025-05-09 08:55:01,365 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-09 08:55:01,390 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250509_084605\screenshot_20250509_085501_365.png
+2025-05-09 08:55:03,365 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-09 08:55:03,387 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250509_084605\screenshot_20250509_085503_366.png
+2025-05-09 08:55:04,211 - INFO - RecordingThread - 録画フレーム数: 540, 経過時間: 539.00秒
+2025-05-09 08:55:10,364 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-09 08:55:10,387 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250509_084605\screenshot_20250509_085510_364.png
+2025-05-09 08:55:14,212 - INFO - RecordingThread - 録画フレーム数: 550, 経過時間: 549.00秒
+2025-05-09 08:55:15,370 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-09 08:55:15,392 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250509_084605\screenshot_20250509_085515_370.png
+2025-05-09 08:55:23,371 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-09 08:55:23,393 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250509_084605\screenshot_20250509_085523_371.png
+2025-05-09 08:55:24,212 - INFO - RecordingThread - 録画フレーム数: 560, 経過時間: 559.00秒
+2025-05-09 08:55:24,370 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-09 08:55:24,393 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250509_084605\screenshot_20250509_085524_371.png
+2025-05-09 08:55:34,211 - INFO - RecordingThread - 録画フレーム数: 570, 経過時間: 569.00秒
+2025-05-09 08:55:44,212 - INFO - RecordingThread - 録画フレーム数: 580, 経過時間: 579.00秒
+2025-05-09 08:55:51,383 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-09 08:55:51,403 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250509_084605\screenshot_20250509_085551_383.png
+2025-05-09 08:55:54,211 - INFO - RecordingThread - 録画フレーム数: 590, 経過時間: 589.00秒
+2025-05-09 08:56:04,212 - INFO - RecordingThread - 録画フレーム数: 600, 経過時間: 599.00秒
+2025-05-09 08:56:14,212 - INFO - RecordingThread - 録画フレーム数: 610, 経過時間: 609.00秒
+2025-05-09 08:56:24,212 - INFO - RecordingThread - 録画フレーム数: 620, 経過時間: 619.00秒
+2025-05-09 08:56:32,395 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-09 08:56:32,418 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250509_084605\screenshot_20250509_085632_395.png
+2025-05-09 08:56:33,396 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-09 08:56:33,417 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250509_084605\screenshot_20250509_085633_396.png
+2025-05-09 08:56:34,215 - INFO - RecordingThread - 録画フレーム数: 630, 経過時間: 629.00秒
+2025-05-09 08:56:44,213 - INFO - RecordingThread - 録画フレーム数: 640, 経過時間: 639.00秒
+2025-05-09 08:56:48,395 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-09 08:56:48,419 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250509_084605\screenshot_20250509_085648_396.png
+2025-05-09 08:56:54,218 - INFO - RecordingThread - 録画フレーム数: 650, 経過時間: 649.00秒
+2025-05-09 08:57:03,401 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-09 08:57:03,425 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250509_084605\screenshot_20250509_085703_402.png
+2025-05-09 08:57:04,216 - INFO - RecordingThread - 録画フレーム数: 660, 経過時間: 659.00秒
+2025-05-09 08:57:06,401 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-09 08:57:06,427 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250509_084605\screenshot_20250509_085706_402.png
+2025-05-09 08:57:14,217 - INFO - RecordingThread - 録画フレーム数: 670, 経過時間: 669.00秒
+2025-05-09 08:57:24,218 - INFO - RecordingThread - 録画フレーム数: 680, 経過時間: 679.00秒
+2025-05-09 08:57:33,409 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-09 08:57:33,432 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250509_084605\screenshot_20250509_085733_409.png
+2025-05-09 08:57:34,215 - INFO - RecordingThread - 録画フレーム数: 690, 経過時間: 689.00秒
+2025-05-09 08:57:34,409 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-09 08:57:34,433 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250509_084605\screenshot_20250509_085734_409.png
+2025-05-09 08:57:35,410 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-09 08:57:35,433 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250509_084605\screenshot_20250509_085735_410.png
+2025-05-09 08:57:44,215 - INFO - RecordingThread - 録画フレーム数: 700, 経過時間: 699.00秒
+2025-05-09 08:57:54,213 - INFO - RecordingThread - 録画フレーム数: 710, 経過時間: 709.00秒
+2025-05-09 08:57:54,415 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-09 08:57:54,439 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250509_084605\screenshot_20250509_085754_416.png
+2025-05-09 08:57:57,414 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-09 08:57:57,443 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250509_084605\screenshot_20250509_085757_414.png
+2025-05-09 08:58:04,214 - INFO - RecordingThread - 録画フレーム数: 720, 経過時間: 719.00秒
+2025-05-09 08:58:08,424 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-09 08:58:08,438 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250509_084605\screenshot_20250509_085808_424.png
+2025-05-09 08:58:09,422 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-05-09 08:58:09,473 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250509_084605\screenshot_20250509_085809_422.png
+2025-05-09 08:58:14,212 - INFO - RecordingThread - 録画フレーム数: 730, 経過時間: 729.00秒
+2025-05-09 08:58:24,214 - INFO - RecordingThread - 録画フレーム数: 740, 経過時間: 739.00秒
+2025-05-09 08:58:34,213 - INFO - RecordingThread - 録画フレーム数: 750, 経過時間: 749.00秒
+2025-05-09 08:58:44,214 - INFO - RecordingThread - 録画フレーム数: 760, 経過時間: 759.00秒
+2025-05-09 08:58:54,213 - INFO - RecordingThread - 録画フレーム数: 770, 経過時間: 769.00秒
+2025-05-09 08:59:04,208 - INFO - RecordingThread - 録画フレーム数: 780, 経過時間: 779.00秒
+2025-05-09 08:59:14,213 - INFO - RecordingThread - 録画フレーム数: 790, 経過時間: 789.00秒
+2025-05-09 08:59:24,214 - INFO - RecordingThread - 録画フレーム数: 800, 経過時間: 799.00秒
+2025-05-09 08:59:34,206 - INFO - RecordingThread - 録画フレーム数: 810, 経過時間: 809.00秒
+2025-05-09 08:59:44,210 - INFO - RecordingThread - 録画フレーム数: 820, 経過時間: 819.00秒
+2025-05-09 08:59:54,209 - INFO - RecordingThread - 録画フレーム数: 830, 経過時間: 829.00秒
+2025-05-09 09:00:04,209 - INFO - RecordingThread - 録画フレーム数: 840, 経過時間: 839.00秒
+2025-05-09 09:00:14,209 - INFO - RecordingThread - 録画フレーム数: 850, 経過時間: 849.00秒
+2025-05-09 09:00:24,209 - INFO - RecordingThread - 録画フレーム数: 860, 経過時間: 859.00秒
+2025-05-09 09:00:34,209 - INFO - RecordingThread - 録画フレーム数: 870, 経過時間: 869.00秒
+2025-05-09 09:00:44,209 - INFO - RecordingThread - 録画フレーム数: 880, 経過時間: 879.00秒
+2025-05-09 09:00:54,209 - INFO - RecordingThread - 録画フレーム数: 890, 経過時間: 889.00秒
+2025-05-09 09:01:04,209 - INFO - RecordingThread - 録画フレーム数: 900, 経過時間: 899.00秒
+2025-05-09 09:01:08,141 - INFO - AudioRecordingThread - 180 秒以上無音状態が続いたため、録画を停止します。
+2025-05-09 09:01:08,141 - INFO - MainThread - 全てのタスクの停止処理を開始します。
+2025-05-09 09:01:08,141 - INFO - MainThread - 録画停止処理を開始します。
+2025-05-09 09:01:08,141 - INFO - MainThread - 録画スレッドの終了を待機します...
+2025-05-09 09:01:08,144 - INFO - AudioRecordingThread - 音声録音ループ (SoundCard) を終了します
+2025-05-09 09:01:08,181 - INFO - RecordingThread - 録画ループを終了します。合計フレーム数: 903
+2025-05-09 09:01:08,183 - INFO - MainThread - 録画スレッドが終了しました。
+2025-05-09 09:01:08,184 - INFO - MainThread - 動画ファイルの保存を開始します: C:\Users\issho\auto_ss\auto_class\capture_20250509_084605\recording_20250509_090108.mp4
+2025-05-09 09:01:08,198 - INFO - MainThread - 動画保存スレッドを開始しました。
+2025-05-09 09:01:08,228 - INFO - MainThread - 録画停止処理を完了しました。
+2025-05-09 09:01:08,228 - INFO - MainThread - スクリーンショットキャプチャの停止処理を開始します。
+2025-05-09 09:01:08,228 - INFO - MainThread - スクリーンショットキャプチャスレッドの終了を待機します...
+2025-05-09 09:01:08,310 - INFO - VideoSaveThread - 音声データを連結しました。サンプル数: 43333632, dtype: float32
+2025-05-09 09:01:08,440 - INFO - ScreenshotThread - スクリーンショットキャプチャループを終了します。
+2025-05-09 09:01:08,444 - INFO - MainThread - スクリーンショットキャプチャスレッドが終了しました。
+2025-05-09 09:01:08,445 - INFO - MainThread - スクリーンショットキャプチャの停止処理を完了しました。
+2025-05-09 09:01:08,445 - INFO - MainThread - 録画を停止しました。動画保存とノート作成がバックグラウンドで実行されます（成功した場合）。
+2025-05-09 09:01:08,446 - INFO - MainThread - 全てのタスクの停止処理を完了しました。
+2025-05-09 09:01:09,215 - INFO - VideoSaveThread - 合計 903 フレームを動画クリップに使用します。
+2025-05-09 09:01:09,223 - INFO - VideoSaveThread - 推定FPS: 1.00
+2025-05-09 09:01:09,225 - WARNING - VideoSaveThread - 音声クリップ (902.78s) が動画クリップ (903.00s) より短いです。
+2025-05-09 09:01:09,225 - INFO - VideoSaveThread - AudioArrayClipを作成しました。Duration: 902.78秒
+2025-05-09 09:01:09,225 - INFO - VideoSaveThread - 動画と音声を結合しました。
+2025-05-09 09:01:09,226 - INFO - VideoSaveThread - 動画ファイルを書き出します: C:\Users\issho\auto_ss\auto_class\capture_20250509_084605\recording_20250509_090108.mp4
+2025-05-09 09:01:36,722 - INFO - VideoSaveThread - 動画ファイルを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250509_084605\recording_20250509_090108.mp4
+2025-05-09 09:01:36,723 - INFO - VideoSaveThread - 動画保存成功、ノート作成をトリガーします: C:\Users\issho\auto_ss\auto_class\capture_20250509_084605\recording_20250509_090108.mp4
+2025-05-09 09:01:36,723 - INFO - VideoSaveThread - 動画保存処理を終了します。
+2025-05-09 09:01:36,723 - INFO - MainThread - ノート作成開始: GUI操作を制限します。
+2025-05-09 09:01:36,780 - INFO - MainThread - ノート作成処理を開始します。対象動画: C:\Users\issho\auto_ss\auto_class\capture_20250509_084605\recording_20250509_090108.mp4
+2025-05-09 09:01:36,781 - INFO - NoteCreationThread - 動画ファイルをアップロード開始: C:\Users\issho\auto_ss\auto_class\capture_20250509_084605\recording_20250509_090108.mp4
+2025-05-09 09:01:36,788 - INFO - NoteCreationThread - 動画ファイルアップロード試行 1/3: C:\Users\issho\auto_ss\auto_class\capture_20250509_084605\recording_20250509_090108.mp4
+2025-05-09 09:01:38,067 - INFO - NoteCreationThread - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files "HTTP/1.1 200 OK"
+2025-05-09 09:01:38,925 - INFO - NoteCreationThread - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AAO2VwqXUeWbIvXWRenKkqhPuQnPVXnUUrFRY0VT37FSt1511c9bZOn1Y6MxU0AdveIhu-UyJIMRuLu_j6tiCbuAvFHpEKi6Wbjp_8RJFbP0Ik0&upload_protocol=resumable "HTTP/1.1 200 OK"
+2025-05-09 09:01:39,831 - INFO - NoteCreationThread - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AAO2VwqXUeWbIvXWRenKkqhPuQnPVXnUUrFRY0VT37FSt1511c9bZOn1Y6MxU0AdveIhu-UyJIMRuLu_j6tiCbuAvFHpEKi6Wbjp_8RJFbP0Ik0&upload_protocol=resumable "HTTP/1.1 200 OK"
+2025-05-09 09:01:40,988 - INFO - NoteCreationThread - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AAO2VwqXUeWbIvXWRenKkqhPuQnPVXnUUrFRY0VT37FSt1511c9bZOn1Y6MxU0AdveIhu-UyJIMRuLu_j6tiCbuAvFHpEKi6Wbjp_8RJFbP0Ik0&upload_protocol=resumable "HTTP/1.1 200 OK"
+2025-05-09 09:01:42,824 - INFO - NoteCreationThread - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AAO2VwqXUeWbIvXWRenKkqhPuQnPVXnUUrFRY0VT37FSt1511c9bZOn1Y6MxU0AdveIhu-UyJIMRuLu_j6tiCbuAvFHpEKi6Wbjp_8RJFbP0Ik0&upload_protocol=resumable "HTTP/1.1 200 OK"
+2025-05-09 09:01:42,825 - INFO - NoteCreationThread - アップロード開始: files/wkai2m9iert0, State: FileState.PROCESSING
+2025-05-09 09:01:42,826 - INFO - NoteCreationThread - 動画処理中... (FileState.PROCESSING, 0.0秒)
+2025-05-09 09:01:48,095 - INFO - NoteCreationThread - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/wkai2m9iert0 "HTTP/1.1 200 OK"
+2025-05-09 09:01:48,097 - INFO - NoteCreationThread - 動画処理中... (FileState.PROCESSING, 5.3秒)
+2025-05-09 09:01:53,375 - INFO - NoteCreationThread - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/wkai2m9iert0 "HTTP/1.1 200 OK"
+2025-05-09 09:01:53,376 - INFO - NoteCreationThread - 動画処理中... (FileState.PROCESSING, 10.5秒)
+2025-05-09 09:01:59,296 - INFO - NoteCreationThread - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/wkai2m9iert0 "HTTP/1.1 200 OK"
+2025-05-09 09:01:59,297 - INFO - NoteCreationThread - 動画処理中... (FileState.PROCESSING, 16.5秒)
+2025-05-09 09:02:05,212 - INFO - NoteCreationThread - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/wkai2m9iert0 "HTTP/1.1 200 OK"
+2025-05-09 09:02:05,213 - INFO - NoteCreationThread - 動画処理中... (FileState.PROCESSING, 22.4秒)
+2025-05-09 09:02:11,118 - INFO - NoteCreationThread - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/wkai2m9iert0 "HTTP/1.1 200 OK"
+2025-05-09 09:02:11,119 - INFO - NoteCreationThread - 動画処理中... (FileState.PROCESSING, 28.3秒)
+2025-05-09 09:02:16,374 - INFO - NoteCreationThread - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/wkai2m9iert0 "HTTP/1.1 200 OK"
+2025-05-09 09:02:16,375 - INFO - NoteCreationThread - ファイルがACTIVEになりました: files/wkai2m9iert0
+2025-05-09 09:02:16,379 - INFO - NoteCreationThread - Gemini APIに要約リクエストを送信します...
+2025-05-09 09:02:16,379 - INFO - NoteCreationThread - Gemini API呼び出し試行 1/3
+2025-05-09 09:02:16,380 - INFO - NoteCreationThread - 使用する Gemini モデル: gemini-2.5-flash-preview-04-17
+2025-05-09 09:02:16,381 - INFO - NoteCreationThread - AFC is enabled with max remote calls: 10.
+2025-05-09 09:02:53,599 - INFO - NoteCreationThread - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-04-17:generateContent "HTTP/1.1 200 OK"
+2025-05-09 09:02:53,605 - INFO - NoteCreationThread - AFC remote call 1 is done.
+2025-05-09 09:02:54,117 - INFO - NoteCreationThread - HTTP Request: DELETE https://generativelanguage.googleapis.com/v1beta/files/wkai2m9iert0 "HTTP/1.1 200 OK"
+2025-05-09 09:02:54,117 - INFO - NoteCreationThread - Gemini API から応答を取得しました。
+2025-05-09 09:02:54,118 - INFO - NoteCreationThread - 応答のJSONパースに成功しました。
+2025-05-09 09:02:54,118 - INFO - NoteCreationThread - Markdownファイルを生成します: C:\Users\issho\auto_ss\auto_class\capture_20250509_084605\note_recording_20250509_090108.md
+2025-05-09 09:02:54,118 - INFO - NoteCreationThread - mdファイルを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20250509_084605\note_recording_20250509_090108.md
+2025-05-09 09:02:54,122 - INFO - MainThread - ノート作成成功: C:\Users\issho\auto_ss\auto_class\capture_20250509_084605\note_recording_20250509_090108.md
+2025-05-09 09:02:55,960 - INFO - MainThread - ノート作成完了/失敗: GUI操作制限を解除します。
