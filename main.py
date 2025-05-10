@@ -1244,31 +1244,26 @@ class SlideCaptureApp:
                         for i, topic in enumerate(topics):
                             topic_title = topic.get("topic_title", f"トピック {i+1}")
                             markd.add_header(topic_title, 3)
-                            markd.add_linebreak()
                             keywords = topic.get("topic_keywords", [])
                             if keywords:
                                 markd.add_text("キーワード:")
                                 for kw in keywords:
                                     markd.add_list_item(f"{kw}")
-                            markd.add_linebreak()
                             topic_summary = topic.get("topic_summary", "要約なし")
                             markd.add_text("要約:")
                             markd.add_text(topic_summary)
-                            markd.add_linebreak()
                             points = topic.get("topic_points", [])
                             if points:
                                 markd.add_text("ポイント:")
                                 for pt in points:
                                     markd.add_list_item(f"{pt}")
                             terms = topic.get("technical_term", [])
-                            markd.add_linebreak()
                             if terms:
                                 markd.add_text("専門用語:")
                                 for term in terms:
                                     word = term.get("word", "")
                                     explanation = term.get("explanation", "")
                                     markd.add_list_item(f"{word} : {explanation}")
-                            markd.add_linebreak()
                     else:
                         markd.add_text("トピック情報はありません。")
                     # doc = Document()
@@ -1310,9 +1305,7 @@ class SlideCaptureApp:
                     directory = os.path.dirname(md_filepath)
                     if not os.path.exists(directory):
                         os.makedirs(directory, exist_ok=True)
-                    markdown_str = markd.content
-                    with open(md_filepath, "w", encoding="utf-8") as f:
-                        f.write(markdown_str)
+                    markd.save(md_filepath)
                     logger.info(f"mdファイルを保存しました: {md_filepath}")
                     # UIスレッドでステータスを更新 (成功)
                     self.root.after(0, self.finish_note_creation, True, md_filepath)
