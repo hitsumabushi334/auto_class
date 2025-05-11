@@ -1249,6 +1249,7 @@ class SlideCaptureApp:
                                 markd.add_text("キーワード:")
                                 for kw in keywords:
                                     markd.add_list_item(f"{kw}")
+                            markd.add_linebreak()
                             topic_summary = topic.get("topic_summary", "要約なし")
                             markd.add_text("要約:")
                             markd.add_text(topic_summary)
