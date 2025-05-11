@@ -1264,6 +1264,7 @@ class SlideCaptureApp:
                                     word = term.get("word", "")
                                     explanation = term.get("explanation", "")
                                     markd.add_list_item(f"{word} : {explanation}")
+                            markd.add_linebreak()
                     else:
                         markd.add_text("トピック情報はありません。")
                     # doc = Document()
@@ -1301,11 +1302,13 @@ class SlideCaptureApp:
                     #         doc.add_paragraph()
                     # else:
                     #     doc.add_paragraph("トピック情報はありません。")
-
+                    markdown = markd.content
                     directory = os.path.dirname(md_filepath)
                     if not os.path.exists(directory):
                         os.makedirs(directory, exist_ok=True)
-                    markd.save(md_filepath)
+                    with open(md_filepath, "w", encoding="utf-8") as f:
+                        f.write(markdown)
+                        # doc.save(f)
                     logger.info(f"mdファイルを保存しました: {md_filepath}")
                     # UIスレッドでステータスを更新 (成功)
                     self.root.after(0, self.finish_note_creation, True, md_filepath)
