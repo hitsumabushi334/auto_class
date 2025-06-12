@@ -7,10 +7,12 @@ from datetime import datetime
 import os
 import logging  # logging モジュールをインポート
 import traceback  # スタックトレース取得のため
+from ctypes import windll
 
+
+import subprocess
 from certifi import contents
 import win32gui  # ウィンドウ操作のため追加
-import google.genai  # google モジュールを明示的にインポート
 from google import genai
 from docx import Document  # mdファイル生成のため追加
 from docx.shared import Inches  # mdファイル生成のため追加 (必要に応じて)
@@ -509,8 +511,8 @@ class SlideCaptureApp:
 
             # サンプルレートとチャンネル数をマイクデバイスから取得
             try:
-                self.audio_sample_rate = microphone_device.samplerate
-                self.audio_channels = microphone_device.channels
+                self.audio_sample_rate = 48000  # デフォルト値
+                self.audio_channels = 2  # デフォルト値
                 logger.info(
                     f"デバイス情報 - サンプルレート: {self.audio_sample_rate}, チャンネル数: {self.audio_channels}"
                 )
@@ -519,8 +521,7 @@ class SlideCaptureApp:
                     f"マイクデバイスからサンプルレートまたはチャンネル数を取得できませんでした: {e}"
                 )
                 # デフォルト値を設定するか、エラー処理を行う
-                self.audio_sample_rate = 48000  # デフォルト値
-                self.audio_channels = 2  # デフォルト値
+
                 logger.warning(
                     f"デフォルト値を使用します - サンプルレート: {self.audio_sample_rate}, チャンネル数: {self.audio_channels}"
                 )
@@ -613,7 +614,9 @@ class SlideCaptureApp:
             except ValueError as e:
                 logger.error(f"音声データの連結に失敗しました: {e}")
                 audio_array = None  # エラー時は音声なしとする
-
+        video_clip = None  # 初期化
+        audio_clip = None  # 初期化
+        final_clip = None  # 初期化
         try:
             # 保存先のディレクトリを確認
             output_dir = os.path.dirname(output_filepath)
@@ -788,10 +791,11 @@ class SlideCaptureApp:
                 )
                 self.root.after(0, self.start_note_creation, output_filepath)
                 return True  # 保存自体は成功
-            except Exception as e:
+            except subprocess.CalledProcessError as e:
                 # ffmpeg のエラーメッセージを取得しようとする試み
                 ffmpeg_error = ""
                 if hasattr(e, "stderr"):
+
                     try:
                         ffmpeg_error = e.stderr.decode("utf-8", errors="ignore")
                         logger.error(f"FFmpegエラー出力:\n{ffmpeg_error}")
@@ -932,6 +936,7 @@ class SlideCaptureApp:
 
         # Gemini APIの呼び出しとmd生成の処理 (内部関数)
         def api_call_and_md_gen():
+            video_file = None
             try:
                 prompt = """添付された動画の内容を分析し、各トピックごとに指定されたJSONスキーマに沿って情報を抽出してください。情報抽出の際は、次の条件を満たすようにしてください。\n
                 - クライアントの理解レベルは「大学生程度」を想定し、専門的な表現は避け、平易な日本語で記述してください。\n
@@ -1064,6 +1069,10 @@ class SlideCaptureApp:
                         )
 
                         # 1. ファイルアップロード
+                        if self.gemini_client is None:
+                            raise Exception(
+                                "Gemini API クライアントが設定されていません。"
+                            )
                         video_file = self.gemini_client.files.upload(
                             file=video_filepath
                         )
@@ -1095,6 +1104,10 @@ class SlideCaptureApp:
                             logger.info(status_text)
 
                             time.sleep(polling_interval)
+                            if video_file.name is None:
+                                raise ValueError(
+                                    "アップロードされたファイルの名前が取得できません。"
+                                )
                             video_file = self.gemini_client.files.get(
                                 name=video_file.name
                             )  # 最新の状態を取得
@@ -1118,6 +1131,10 @@ class SlideCaptureApp:
                                 logger.info(
                                     f"タイムアウトしたファイル {video_file.name} を削除します。"
                                 )
+                                if self.gemini_client is None:
+                                    raise Exception(
+                                        "Gemini API クライアントが設定されていません。"
+                                    )
                                 self.gemini_client.files.delete(name=video_file.name)
                             except Exception as delete_err:
                                 logger.warning(
@@ -1161,6 +1178,10 @@ class SlideCaptureApp:
                                 logger.info(
                                     f"エラーが発生したファイル {video_file.name} を削除します。"
                                 )
+                                if self.gemini_client is None:
+                                    raise Exception(
+                                        "Gemini API クライアントが設定されていません。"
+                                    )
                                 self.gemini_client.files.delete(name=video_file.name)
                             except Exception as delete_err:
                                 logger.warning(
@@ -1217,7 +1238,17 @@ class SlideCaptureApp:
                 # ★ モデル名を修正 (例: gemini-1.5-pro-latest)
                 #    config ではなく generation_config を使用
                 response = self.api_call_with_retry(video_file, prompt, schema)
+                if self.gemini_client is None:
+                    raise Exception("Gemini API クライアントが設定されていません。")
+                if video_file.name is None:
+                    raise ValueError(
+                        "アップロードされたファイルの名前が取得できません。"
+                    )
                 self.gemini_client.files.delete(name=video_file.name)
+                if response is None or response.text is None:
+                    raise ValueError(
+                        "Gemini APIの応答が空です。APIの設定やリクエスト内容を確認してください。"
+                    )
                 summary_text = response.text
                 logger.info("Gemini API から応答を取得しました。")
                 # --- ステータス更新: 応答処理中 ---
@@ -1344,6 +1375,14 @@ class SlideCaptureApp:
                         logger.info(
                             f"エラー発生のためアップロードファイル削除: {video_file.name}"
                         )
+                        if self.gemini_client is None:
+                            raise Exception(
+                                "Gemini API クライアントが設定されていません。"
+                            )
+                        if video_file.name is None:
+                            raise ValueError(
+                                "アップロードされたファイルの名前が取得できません。"
+                            )
                         self.gemini_client.files.delete(name=video_file.name)
                         logger.info("ファイル削除成功")
                     except Exception as delete_err:
@@ -1368,6 +1407,8 @@ class SlideCaptureApp:
                 # 選択されたモデル名を取得
                 selected_model_name = self.selected_gemini_model.get()
                 logger.info(f"使用する Gemini モデル: {selected_model_name}")
+                if self.gemini_client is None:
+                    raise Exception("Gemini API クライアントが設定されていません。")
                 response = self.gemini_client.models.generate_content(
                     model=selected_model_name,  # 選択されたモデルを使用
                     contents=[video_file, prompt],
@@ -1377,7 +1418,7 @@ class SlideCaptureApp:
                     },
                 )
                 return response
-            except google.genai.errors.ServerError as e:
+            except Exception as e:
                 logger.warning(f"APIサーバーエラー（試行 {attempt+1}）: {e}")
                 if attempt < max_retries - 1:
                     logger.info(f"{retry_delay}秒後に再試行します...")
@@ -1844,6 +1885,7 @@ class SlideCaptureApp:
             )
             return False
 
+        filepath = None
         try:
             now = datetime.now()
             # ミリ秒を含むファイル名
@@ -1901,7 +1943,6 @@ class SlideCaptureApp:
 if __name__ == "__main__":
     try:
         try:
-            from ctypes import windll
 
             # Per-Monitor DPI Aware V2 (Windows 10 Creators Update以降)
             # windll.shcore.SetProcessDpiAwareness(2)
