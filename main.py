@@ -34,12 +34,16 @@ import cv2
 from PIL import Image, ImageGrab, UnidentifiedImageError
 import numpy as np
 from dotenv import load_dotenv
+from config_manager import get_config_manager
 
 # --- ロギング設定 ---
-log_filename = "slide_capture_app.log"
-log_format = "%(asctime)s - %(levelname)s - %(threadName)s - %(message)s"
+config_manager = get_config_manager()
+logging_settings = config_manager.get_logging_settings()
+
+log_filename = logging_settings['filename']
+log_format = logging_settings['format']
 logging.basicConfig(
-    level=logging.INFO,
+    level=getattr(logging, logging_settings['level'].upper()),
     format=log_format,
     handlers=[
         logging.FileHandler(log_filename, encoding="utf-8"),  # ファイル出力
@@ -53,10 +57,15 @@ class SlideCaptureApp:
     def __init__(self, root):
         self.root = root
         self.root.title("スライドキャプチャ＆録画")
+        
+        # Load configuration
+        self.config = get_config_manager()
+        ui_settings = self.config.get_ui_settings()
+        
         # UIの高さを増やして新しい要素を配置
-        self.root.geometry("600x550")  # サイズ調整
+        self.root.geometry(f"{ui_settings['window_width']}x{ui_settings['window_height']}")  # サイズ調整
         self.root.update_idletasks()
-        self.root.minsize(600, 550)
+        self.root.minsize(ui_settings['min_width'], ui_settings['min_height'])
 
         # --- 状態変数 ---
         self.is_capturing_screenshot = False  # スクリーンショット中フラグ
@@ -81,31 +90,30 @@ class SlideCaptureApp:
         self.audio_sample_rate = None  # SoundCard で取得したサンプルレートを保存
         self.audio_channels = None  # SoundCard で取得したチャンネル数を保存
         self.last_sound_time = None  # 最後に音声を検知した時刻
-        self.no_sound_timeout_seconds = 180  # 無音状態のタイムアウト秒数 (3分)
-        self.silence_threshold = (
-            0.01  # 無音と判定する振幅の閾値 (0.0 から 1.0 の範囲で調整)
-        )
-        # ユーザー指示に基づきモデル名を更新 (ただし、実際のAPI呼び出しでは利用可能なモデルを確認すること)
-        self.gemini_model_options = [
-            "gemini-2.5-flash-preview-04-17",  # 短時間用 (デフォルト)
-            "gemini-2.0-flash",  # 長時間用
-        ]
+        
+        # Load audio settings from configuration
+        audio_settings = self.config.get_audio_settings()
+        self.no_sound_timeout_seconds = audio_settings['no_sound_timeout_seconds']  # 無音状態のタイムアウト秒数
+        self.silence_threshold = audio_settings['silence_threshold']  # 無音と判定する振幅の閾値
+        
+        # Load model options from configuration
+        self.gemini_model_options = self.config.get_model_options()
 
         self.selected_gemini_model = tk.StringVar(
-            value=self.gemini_model_options[0]  # デフォルトは短時間用
+            value=self.config.get_default_model()  # デフォルトモデルを設定から取得
         )
 
         # --- Gemini API 設定 ---
         try:
             load_dotenv()  # .env ファイルを読み込む
-            api_key = os.environ.get("GEMINI_API_KEY")
-            if not api_key:
+            api_key = self.config.get_api_key()  # 設定から API キーを取得
+            if not api_key or api_key == "MOCK_API_KEY_FOR_DEVELOPMENT":
                 logger.warning(
-                    "環境変数 GEMINI_API_KEY が設定されていません。ノート作成機能は利用できません。"
+                    "APIキーが設定されていないか、モックキーが使用されています。ノート作成機能は利用できません。"
                 )
                 messagebox.showwarning(
                     "APIキー未設定",
-                    "環境変数 GEMINI_API_KEY が設定されていません。\nノート作成機能は利用できません。",
+                    "APIキーが設定されていないか、モックキーが使用されています。\nノート作成機能は利用できません。",
                 )
             else:
                 # 動画を扱えるモデルを指定 (例: gemini-1.5-pro-latest)
@@ -321,14 +329,8 @@ class SlideCaptureApp:
     def _on_gemini_model_selected(self, event=None):
         """Geminiモデル選択コンボボックスの値が変更されたときに呼び出される"""
         selected_model = self.selected_gemini_model.get()
-        description = ""
-        if selected_model == "gemini-2.0-flash":
-            description = "用途: 長時間動画向け"
-        elif selected_model == "gemini-2.5-flash-preview-04-17":
-            description = "用途: 短時間動画向け"
-        else:
-            # 予期しないモデルが選択された場合 (念のため)
-            description = "用途: 不明"
+        description = self.config.get_model_description(selected_model)
+        if description == "用途: 不明":
             logger.warning(f"不明なGeminiモデルが選択されました: {selected_model}")
 
         self.gemini_model_description_label.config(text=description)
