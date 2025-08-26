@@ -14,6 +14,7 @@ from datetime import datetime
 from docx import Document
 from google import genai
 from dotenv import load_dotenv
+from config_manager import get_config_manager
 
 # --- ロギング設定 ---
 log_filename = "gemini_video_summary_test.log"
@@ -33,10 +34,12 @@ def initialize_gemini_client():
     """Gemini APIクライアントを初期化する"""
     try:
         load_dotenv()  # .env ファイルを読み込む
-        api_key = os.environ.get("GEMINI_API_KEY")
-        if not api_key:
-            logger.error("環境変数 GEMINI_API_KEY が設定されていません。")
-            print("環境変数 GEMINI_API_KEY が設定されていません。")
+        config_manager = get_config_manager()
+        api_key = config_manager.get_api_key()  # 設定から API キーを取得
+        
+        if not api_key or api_key == "MOCK_API_KEY_FOR_DEVELOPMENT":
+            logger.error("APIキーが設定されていないか、モックキーが使用されています。")
+            print("APIキーが設定されていないか、モックキーが使用されています。")
             return None
 
         gemini_client = genai.Client(api_key=api_key)
