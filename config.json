@@ -1,29 +1,26 @@
 {
-    "api": {
-        "gemini_api_key": "MOCK_API_KEY_FOR_DEVELOPMENT",
-        "models": [
-            "gemini-2.5-flash-preview-04-17",
-            "gemini-2.0-flash"
-        ],
-        "default_model_index": 0,
-        "model_descriptions": {
-            "gemini-2.5-flash-preview-04-17": "用途: 短時間動画向け",
-            "gemini-2.0-flash": "用途: 長時間動画向け"
-        }
-    },
-    "audio": {
-        "no_sound_timeout_seconds": 180,
-        "silence_threshold": 0.01
-    },
-    "ui": {
-        "window_width": 600,
-        "window_height": 550,
-        "min_width": 600,
-        "min_height": 550
-    },
-    "logging": {
-        "level": "INFO",
-        "filename": "slide_capture_app.log",
-        "format": "%(asctime)s - %(levelname)s - %(threadName)s - %(message)s"
+  "api": {
+    "gemini_api_key": "",
+    "models": ["gemini-2.5-flash-001", "gemini-2.0-flash"],
+    "default_model_index": 0,
+    "model_descriptions": {
+      "gemini-2.5-flash": "用途: 短時間動画向け",
+      "gemini-2.0-flash": "用途: 長時間動画向け"
     }
+  },
+  "audio": {
+    "no_sound_timeout_seconds": 180,
+    "silence_threshold": 0.01
+  },
+  "ui": {
+    "window_width": 600,
+    "window_height": 550,
+    "min_width": 600,
+    "min_height": 550
+  },
+  "logging": {
+    "level": "INFO",
+    "filename": "slide_capture_app.log",
+    "format": "%(asctime)s - %(levelname)s - %(threadName)s - %(message)s"
+  }
 }
