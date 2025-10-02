@@ -166,6 +166,13 @@ class ConfigManager:
             "silence_threshold": self.get("audio.silence_threshold", 0.01),
         }
 
+    def get_screenshot_settings(self) -> Dict[str, Any]:
+        """Get screenshot configuration settings."""
+        return {
+            "similarity_threshold": self.get("screenshot.similarity_threshold", 0.83),
+            "diff_pixel_threshold": self.get("screenshot.diff_pixel_threshold", 10),
+        }
+
     def get_ui_settings(self) -> Dict[str, Any]:
         """Get UI configuration settings."""
         return {

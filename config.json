@@ -12,6 +12,10 @@
     "no_sound_timeout_seconds": 180,
     "silence_threshold": 0.01
   },
+  "screenshot": {
+    "similarity_threshold": 0.83,
+    "diff_pixel_threshold": 10
+  },
   "ui": {
     "window_width": 600,
     "window_height": 550,

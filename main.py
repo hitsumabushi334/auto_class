@@ -40,10 +40,10 @@ from config_manager import get_config_manager
 config_manager = get_config_manager()
 logging_settings = config_manager.get_logging_settings()
 
-log_filename = logging_settings['filename']
-log_format = logging_settings['format']
+log_filename = logging_settings["filename"]
+log_format = logging_settings["format"]
 logging.basicConfig(
-    level=getattr(logging, logging_settings['level'].upper()),
+    level=getattr(logging, logging_settings["level"].upper()),
     format=log_format,
     handlers=[
         logging.FileHandler(log_filename, encoding="utf-8"),  # ファイル出力
@@ -57,15 +57,17 @@ class SlideCaptureApp:
     def __init__(self, root):
         self.root = root
         self.root.title("スライドキャプチャ＆録画")
-        
+
         # Load configuration
         self.config = get_config_manager()
         ui_settings = self.config.get_ui_settings()
-        
+
         # UIの高さを増やして新しい要素を配置
-        self.root.geometry(f"{ui_settings['window_width']}x{ui_settings['window_height']}")  # サイズ調整
+        self.root.geometry(
+            f"{ui_settings['window_width']}x{ui_settings['window_height']}"
+        )  # サイズ調整
         self.root.update_idletasks()
-        self.root.minsize(ui_settings['min_width'], ui_settings['min_height'])
+        self.root.minsize(ui_settings["min_width"], ui_settings["min_height"])
 
         # --- 状態変数 ---
         self.is_capturing_screenshot = False  # スクリーンショット中フラグ
@@ -90,12 +92,25 @@ class SlideCaptureApp:
         self.audio_sample_rate = None  # SoundCard で取得したサンプルレートを保存
         self.audio_channels = None  # SoundCard で取得したチャンネル数を保存
         self.last_sound_time = None  # 最後に音声を検知した時刻
-        
+
         # Load audio settings from configuration
         audio_settings = self.config.get_audio_settings()
-        self.no_sound_timeout_seconds = audio_settings['no_sound_timeout_seconds']  # 無音状態のタイムアウト秒数
-        self.silence_threshold = audio_settings['silence_threshold']  # 無音と判定する振幅の閾値
-        
+        self.no_sound_timeout_seconds = audio_settings[
+            "no_sound_timeout_seconds"
+        ]  # 無音状態のタイムアウト秒数
+        self.silence_threshold = audio_settings[
+            "silence_threshold"
+        ]  # 無音と判定する振幅の閾値
+
+        # Load screenshot settings from configuration
+        screenshot_settings = self.config.get_screenshot_settings()
+        self.similarity_threshold = screenshot_settings[
+            "similarity_threshold"
+        ]  # 画像の類似度判定の閾値
+        self.diff_pixel_threshold = screenshot_settings[
+            "diff_pixel_threshold"
+        ]  # 差分ピクセルの閾値
+
         # Load model options from configuration
         self.gemini_model_options = self.config.get_model_options()
 
@@ -1844,9 +1859,13 @@ class SlideCaptureApp:
 
         logger.info("スクリーンショットキャプチャループを終了します。")
 
-    def is_similar(self, img1_cv, img2_cv, threshold=0.83):
+    def is_similar(self, img1_cv, img2_cv, threshold=None):
         """2つの画像の類似度を計算する (差分ベースの簡易比較)"""
         try:
+            # 設定から閾値を取得（引数で指定されていない場合）
+            if threshold is None:
+                threshold = self.similarity_threshold
+
             # グレースケールに変換
             gray1 = cv2.cvtColor(img1_cv, cv2.COLOR_BGR2GRAY)
             gray2 = cv2.cvtColor(img2_cv, cv2.COLOR_BGR2GRAY)
@@ -1861,8 +1880,8 @@ class SlideCaptureApp:
             # 差分を計算
             diff = cv2.absdiff(gray1, gray2)
 
-            # 差分が閾値以下のピクセルの割合を計算
-            non_zero_count = np.count_nonzero(diff > 10)  # わずかな違いは無視
+            # 差分が閾値以下のピクセルの割合を計算（設定から取得した閾値を使用）
+            non_zero_count = np.count_nonzero(diff > self.diff_pixel_threshold)
             total_pixels = diff.shape[0] * diff.shape[1]
             similarity = 1.0 - (non_zero_count / total_pixels)
 
