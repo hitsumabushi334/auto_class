@@ -918,6 +918,22 @@ class SlideCaptureApp:
 
         logger.info("録画停止処理を完了しました。")
 
+    def _restore_gui_after_note_creation(self):
+        """ノート作成後または中断時にGUI操作制限を解除する共通処理"""
+        logger.info("GUI操作制限を解除します。")
+        self.start_button.config(state=tk.NORMAL)
+        self.stop_button.config(state=tk.DISABLED)  # 停止ボタンは常に無効で良い
+        self.folder_entry.config(state=tk.NORMAL)
+        self.refresh_window_list_button.config(state=tk.NORMAL)
+        self.window_listbox.config(state=tk.NORMAL)
+        self.model_combobox.config(state="readonly")
+        self.root.update()
+        # 閉じるボタンを元に戻す
+        if hasattr(self, "original_on_closing"):
+            self.root.protocol("WM_DELETE_WINDOW", self.original_on_closing)
+        else:
+            self.root.protocol("WM_DELETE_WINDOW", self.root.destroy)
+
     def start_note_creation(self, video_filepath):  # 引数に video_filepath を追加
         """指定された動画ファイルパスでノート作成処理を開始する"""
         # --- GUI操作制限 ---
@@ -933,17 +949,25 @@ class SlideCaptureApp:
             lambda: logger.warning("ノート作成中はウィンドウを閉じられません。"),
         )
         # --- ここまで ---
+
+        # バリデーションチェック: APIクライアントの確認
         if not self.gemini_client:
             self.note_creation_status.set("ノート作成不可: APIクライアント未設定")
             logger.warning(
                 "Gemini API クライアントが設定されていないため、ノート作成を開始できません。"
             )
+            # GUI操作制限を解除してから return
+            self._restore_gui_after_note_creation()
             return
+
+        # バリデーションチェック: 動画ファイルの存在確認
         if not video_filepath or not os.path.exists(video_filepath):
             self.note_creation_status.set(
                 f"ノート作成不可: 動画ファイルが見つかりません ({video_filepath})"
             )
             logger.error(f"指定された動画ファイルが見つかりません: {video_filepath}")
+            # GUI操作制限を解除してから return
+            self._restore_gui_after_note_creation()
             return
 
         # ★ 開始時のステータスを設定
@@ -1472,18 +1496,7 @@ class SlideCaptureApp:
             )
 
         # --- GUI操作制限解除 ---
-        logger.info("ノート作成完了/失敗: GUI操作制限を解除します。")
-        self.start_button.config(state=tk.NORMAL)
-        self.stop_button.config(state=tk.DISABLED)  # 停止ボタンは常に無効で良い
-        self.folder_entry.config(state=tk.NORMAL)
-        self.refresh_window_list_button.config(state=tk.NORMAL)
-        self.window_listbox.config(state=tk.NORMAL)
-        self.model_combobox.config(state="readonly")
-        self.root.update()
-        if hasattr(self, "original_on_closing"):
-            self.root.protocol("WM_DELETE_WINDOW", self.original_on_closing)
-        else:
-            self.root.protocol("WM_DELETE_WINDOW", self.root.destroy)
+        self._restore_gui_after_note_creation()
 
     def stop_all_tasks(self):
         """全てのキャプチャ・録画タスクを停止する"""
