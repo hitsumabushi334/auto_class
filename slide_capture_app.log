@@ -8568,3 +8568,66 @@ google.genai.errors.ClientError: 404 NOT_FOUND. {'error': {'code': 404, 'message
 2025-08-26 22:24:00,641 - INFO - MainThread - Geminiモデル 'gemini-2.5-flash-001' が選択されました。用途: 用途: 不明
 2025-08-26 22:24:03,621 - INFO - MainThread - アプリケーション終了処理を開始します。
 2025-08-26 22:24:03,662 - INFO - MainThread - アプリケーションを終了しました。
+2025-10-02 17:03:28,266 - INFO - MainThread - DPI Awareness を Per-Monitor V2 (2) に設定しました。
+2025-10-02 17:03:29,409 - WARNING - MainThread - APIキーが設定されていないか、モックキーが使用されています。ノート作成機能は利用できません。
+2025-10-02 17:03:34,221 - INFO - MainThread - アプリケーションを初期化しました。
+2025-10-02 17:03:34,221 - INFO - MainThread - ウィンドウリストを更新します。
+2025-10-02 17:03:34,246 - INFO - MainThread - 9 個のウィンドウが見つかりました。
+2025-10-02 17:03:34,246 - WARNING - MainThread - 不明なGeminiモデルが選択されました: gemini-2.5-flash-001
+2025-10-02 17:03:34,269 - INFO - MainThread - Geminiモデル 'gemini-2.5-flash-001' が選択されました。用途: 用途: 不明
+2025-10-02 17:03:39,958 - INFO - MainThread - ウィンドウが選択されました: 2025雑誌会後期 - PowerPoint (HWND: 460146) (HWND: 460146)
+2025-10-02 17:03:48,200 - INFO - MainThread - prepare_save_folder - UIから取得した初期フォルダ名: 'いしだ'
+2025-10-02 17:03:48,200 - INFO - MainThread - prepare_save_folder - 現在の作業ディレクトリ: C:\auto_class
+2025-10-02 17:03:48,201 - INFO - MainThread - prepare_save_folder - 相対パスとして解釈し、絶対パスに変換しました (基準: C:\auto_class): C:\auto_class\いしだ
+2025-10-02 17:03:48,201 - INFO - MainThread - prepare_save_folder - 最終的な保存先フォルダ (os.makedirs対象): C:\auto_class\いしだ
+2025-10-02 17:03:48,201 - INFO - MainThread - prepare_save_folder - os.makedirs を呼び出します: Path='C:\auto_class\いしだ', exist_ok=True
+2025-10-02 17:03:48,202 - INFO - MainThread - prepare_save_folder - フォルダを作成しました (または既に存在していました): C:\auto_class\いしだ
+2025-10-02 17:03:48,203 - INFO - MainThread - prepare_save_folder - フォルダ作成後の存在確認OK: C:\auto_class\いしだ
+2025-10-02 17:03:48,203 - INFO - MainThread - prepare_save_folder - 書き込み権限テストファイルを作成します: C:\auto_class\いしだ\.permission_test
+2025-10-02 17:03:48,205 - INFO - MainThread - prepare_save_folder - フォルダへの書き込み権限を確認しました: C:\auto_class\いしだ
+2025-10-02 17:03:48,205 - INFO - MainThread - スクリーンショットキャプチャを開始します。対象ウィンドウハンドル: 460146
+2025-10-02 17:03:48,207 - INFO - ScreenshotThread - スクリーンショットキャプチャループを開始します。対象ウィンドウハンドル: 460146
+2025-10-02 17:03:48,207 - INFO - MainThread - 録画を開始します。対象ウィンドウハンドル: 460146
+2025-10-02 17:03:48,209 - INFO - RecordingThread - 録画ループを開始します。対象ウィンドウハンドル: 460146
+2025-10-02 17:03:48,210 - INFO - AudioRecordingThread - 音声録音ループ (SoundCard) を開始します
+2025-10-02 17:03:48,265 - INFO - RecordingThread - 対象ウィンドウの位置とサイズ: (1912, -8, 1616, 868)
+2025-10-02 17:03:48,339 - INFO - AudioRecordingThread - 取得したマイクデバイス: Speaker (Realtek(R) Audio)
+2025-10-02 17:03:48,340 - INFO - AudioRecordingThread - マイクデバイスの型: <class 'soundcard.mediafoundation._Microphone'>
+2025-10-02 17:03:48,340 - INFO - AudioRecordingThread - デバイス情報 - サンプルレート: 48000, チャンネル数: 2
+2025-10-02 17:03:48,450 - INFO - ScreenshotThread - 最初のスクリーンショットを保存します。
+2025-10-02 17:03:48,491 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\auto_class\いしだ\screenshot_20251002_170348_451.png
+2025-10-02 17:03:49,251 - INFO - AudioRecordingThread - レコーダーオブジェクトの型: <class 'soundcard.mediafoundation._Recorder'>
+2025-10-02 17:03:49,254 - INFO - AudioRecordingThread - 録音中: Speaker (Realtek(R) Audio) (ループバック)
+2025-10-02 17:03:56,711 - INFO - MainThread - 全てのタスクの停止処理を開始します。
+2025-10-02 17:03:56,712 - INFO - MainThread - 録画停止処理を開始します。
+2025-10-02 17:03:56,712 - INFO - MainThread - 録画スレッドの終了を待機します...
+2025-10-02 17:03:56,758 - INFO - AudioRecordingThread - 音声録音ループ (SoundCard) を終了します
+2025-10-02 17:03:57,281 - INFO - RecordingThread - 録画ループを終了します。合計フレーム数: 9
+2025-10-02 17:03:57,286 - INFO - MainThread - 録画スレッドが終了しました。
+2025-10-02 17:03:57,287 - INFO - MainThread - 動画ファイルの保存を開始します: C:\auto_class\いしだ\recording_20251002_170357.mp4
+2025-10-02 17:03:57,290 - INFO - MainThread - 動画保存スレッドを開始しました。
+2025-10-02 17:03:57,291 - INFO - MainThread - 録画停止処理を完了しました。
+2025-10-02 17:03:57,292 - INFO - MainThread - スクリーンショットキャプチャの停止処理を開始します。
+2025-10-02 17:03:57,293 - INFO - MainThread - スクリーンショットキャプチャスレッドの終了を待機します...
+2025-10-02 17:03:57,297 - INFO - VideoSaveThread - 音声データを連結しました。サンプル数: 357376, dtype: float32
+2025-10-02 17:03:57,319 - INFO - VideoSaveThread - 合計 9 フレームを動画クリップに使用します。
+2025-10-02 17:03:57,343 - INFO - VideoSaveThread - 推定FPS: 1.00
+2025-10-02 17:03:57,346 - WARNING - VideoSaveThread - 音声クリップ (7.45s) が動画クリップ (9.00s) より短いです。
+2025-10-02 17:03:57,347 - INFO - VideoSaveThread - AudioArrayClipを作成しました。Duration: 7.45秒
+2025-10-02 17:03:57,348 - INFO - VideoSaveThread - 動画と音声を結合しました。
+2025-10-02 17:03:57,349 - INFO - VideoSaveThread - 動画ファイルを書き出します: C:\auto_class\いしだ\recording_20251002_170357.mp4
+2025-10-02 17:03:58,079 - INFO - VideoSaveThread - 動画ファイルを保存しました: C:\auto_class\いしだ\recording_20251002_170357.mp4
+2025-10-02 17:03:58,079 - INFO - VideoSaveThread - 動画保存成功、ノート作成をトリガーします: C:\auto_class\いしだ\recording_20251002_170357.mp4
+2025-10-02 17:03:58,269 - INFO - ScreenshotThread - スクリーンショットキャプチャループを終了します。
+2025-10-02 17:03:58,274 - INFO - MainThread - スクリーンショットキャプチャスレッドが終了しました。
+2025-10-02 17:03:58,275 - INFO - MainThread - スクリーンショットキャプチャの停止処理を完了しました。
+2025-10-02 17:03:58,276 - INFO - MainThread - 録画を停止しました。動画保存とノート作成がバックグラウンドで実行されます（成功した場合）。
+2025-10-02 17:03:58,277 - INFO - MainThread - 全てのタスクの停止処理を完了しました。
+2025-10-02 17:03:58,278 - INFO - VideoSaveThread - 動画保存処理を終了します。
+2025-10-02 17:03:58,281 - INFO - MainThread - ノート作成開始: GUI操作を制限します。
+2025-10-02 17:03:58,287 - WARNING - MainThread - Gemini API クライアントが設定されていないため、ノート作成を開始できません。
+2025-10-02 17:04:28,938 - WARNING - MainThread - ノート作成中はウィンドウを閉じられません。
+2025-10-02 17:04:40,694 - WARNING - MainThread - ノート作成中はウィンドウを閉じられません。
+2025-10-02 17:04:41,406 - WARNING - MainThread - ノート作成中はウィンドウを閉じられません。
+2025-10-02 17:04:46,260 - WARNING - MainThread - ノート作成中はウィンドウを閉じられません。
+2025-10-02 17:04:49,751 - WARNING - MainThread - ノート作成中はウィンドウを閉じられません。

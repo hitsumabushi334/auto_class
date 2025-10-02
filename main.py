@@ -1898,7 +1898,11 @@ class SlideCaptureApp:
             return False  # エラー時は類似していないと判断
 
     def save_screenshot_image(self, image_cv):  # save_image から変更
-        """スクリーンショット画像をファイルに保存する。エラー発生時はログに記録。"""
+        """スクリーンショット画像をファイルに保存する。エラー発生時はログに記録。
+
+        日本語パス対応: cv2.imwrite の代わりに cv2.imencode を使用して
+        Pythonのファイル操作で保存することで、日本語を含むパスに対応しています。
+        """
         save_folder = self.save_folder_name.get()
         if not save_folder:
             logger.error(
@@ -1913,10 +1917,15 @@ class SlideCaptureApp:
             filename = f"screenshot_{now.strftime('%Y%m%d_%H%M%S')}_{now.microsecond // 1000:03d}.png"
             filepath = os.path.join(save_folder, filename)
 
-            # OpenCV形式(BGR)の画像をPNGで保存
-            success = cv2.imwrite(filepath, image_cv)
+            # 日本語パス対応: cv2.imencode でメモリ上にエンコードし、
+            # Pythonのファイル操作で保存（日本語パスに対応）
+            success, buffer = cv2.imencode(".png", image_cv)
 
             if success:
+                # バイナリモードでファイルに書き込み
+                with open(filepath, "wb") as f:
+                    f.write(buffer)
+
                 logger.info(f"スクリーンショットを保存しました: {filepath}")
                 self.last_saved_screenshot_filename = (
                     filepath  # 最後に保存したファイル名を更新
@@ -1924,14 +1933,17 @@ class SlideCaptureApp:
                 return True
             else:
                 logger.error(
-                    f"スクリーンショットの保存に失敗しました (cv2.imwriteがFalseを返しました): {filepath}"
+                    f"スクリーンショットのエンコードに失敗しました (cv2.imencodeがFalseを返しました): {filepath}"
                 )
-                # cv2.imwrite が False を返す具体的な原因は特定しにくい場合がある
-                # ディスク容量、権限、ファイルパスの問題などが考えられる
                 return False
         except cv2.error as e:
             logger.error(
                 f"スクリーンショット保存中にOpenCVエラーが発生しました: {e}. ファイルパス: {filepath if 'filepath' in locals() else 'N/A'}"
+            )
+            return False
+        except IOError as e:
+            logger.error(
+                f"スクリーンショット保存中にファイルI/Oエラーが発生しました: {e}. ファイルパス: {filepath if 'filepath' in locals() else 'N/A'}"
             )
             return False
         except Exception as e:
