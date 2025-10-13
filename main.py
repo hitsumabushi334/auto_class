@@ -11,7 +11,6 @@ from ctypes import windll
 
 
 import subprocess
-from certifi import contents
 import win32gui  # ウィンドウ操作のため追加
 from google import genai
 from docx import Document  # mdファイル生成のため追加
@@ -31,7 +30,7 @@ from moviepy.audio.AudioClip import AudioArrayClip  # AudioArrayClip を直接�
 
 import mss  # 画面キャプチャのため追加
 import cv2
-from PIL import Image, ImageGrab, UnidentifiedImageError
+from PIL import Image, UnidentifiedImageError
 import numpy as np
 from dotenv import load_dotenv
 from config_manager import get_config_manager
@@ -70,6 +69,8 @@ class SlideCaptureApp:
         self.root.minsize(ui_settings["min_width"], ui_settings["min_height"])
 
         # --- 状態変数 ---
+        self.recording_enabled = True  # 録画アクティブフラグ
+        self.capturing_enabled = True  # キャプチャアクティブフラグ
         self.is_capturing_screenshot = False  # スクリーンショット中フラグ
         self.is_recording = False  # 録画中フラグ
         self.screenshot_thread = None
@@ -227,6 +228,26 @@ class SlideCaptureApp:
         )
         self.stop_button.pack(side=tk.LEFT, padx=5)
 
+        # 録画有効/無効チェックボックス
+        self.recording_enabled_var = tk.BooleanVar(value=self.recording_enabled)
+        self.recording_checkbox = ttk.Checkbutton(
+            button_frame,
+            text="画面録画",
+            variable=self.recording_enabled_var,
+            command=self.on_toggle_recording,
+        )
+        self.recording_checkbox.pack(side=tk.LEFT, padx=5)
+
+        # スクショット有効/無効チェックボックス (将来の拡張用)
+        self.capturing_enabled_var = tk.BooleanVar(value=self.capturing_enabled)
+        self.capturing_checkbox = ttk.Checkbutton(
+            button_frame,
+            text="スクリーンショット",
+            variable=self.capturing_enabled_var,
+            command=self.on_toggle_capturing,
+        )
+        self.capturing_checkbox.pack(side=tk.LEFT, padx=5)
+
         # --- ステータス表示 ---
         status_frame = ttk.Frame(root, padding="10")
         status_frame.pack(fill=tk.BOTH, expand=True)
@@ -355,6 +376,20 @@ class SlideCaptureApp:
         logger.info(
             f"Geminiモデル '{selected_model}' が選択されました。用途: {description}"
         )
+
+    def on_toggle_recording(self):
+        """録画有効/無効チェックボックスの状態が変更されたときに呼び出される"""
+        self.recording_enabled = self.recording_enabled_var.get()
+        logger.info(f"録画有効状態が変更されました: {self.recording_enabled}")
+        return "未実装"
+
+    def on_toggle_capturing(self):
+        """スクリーンショット有効/無効チェックボックスの状態が変更されたときに呼び出される"""
+        self.capturing_enabled = self.capturing_enabled_var.get()
+        logger.info(
+            f"スクリーンショット有効状態が変更されました: {self.capturing_enabled}"
+        )
+        return "未実装"
 
     # --- 統合開始・停止メソッド ---
     def start_tasks(self):

@@ -8662,3 +8662,52 @@ google.genai.errors.ClientError: 404 NOT_FOUND. {'error': {'code': 404, 'message
 2025-10-02 17:19:15,496 - INFO - MainThread - 全てのタスクの停止処理を完了しました。
 2025-10-02 17:19:21,115 - INFO - MainThread - アプリケーション終了処理を開始します。
 2025-10-02 17:19:21,270 - INFO - MainThread - アプリケーションを終了しました。
+2025-10-13 11:27:39,307 - INFO - MainThread - DPI Awareness を Per-Monitor V2 (2) に設定しました。
+2025-10-13 11:27:39,621 - INFO - MainThread - Gemini API クライアントを設定しました。
+2025-10-13 11:27:40,054 - INFO - MainThread - アプリケーションを初期化しました。
+2025-10-13 11:27:40,055 - INFO - MainThread - ウィンドウリストを更新します。
+2025-10-13 11:27:40,057 - INFO - MainThread - 15 個のウィンドウが見つかりました。
+2025-10-13 11:27:40,057 - WARNING - MainThread - 不明なGeminiモデルが選択されました: gemini-2.5-flash-001
+2025-10-13 11:27:40,057 - INFO - MainThread - Geminiモデル 'gemini-2.5-flash-001' が選択されました。用途: 用途: 不明
+2025-10-13 11:32:35,905 - INFO - MainThread - アプリケーション終了処理を開始します。
+2025-10-13 11:32:35,971 - INFO - MainThread - アプリケーションを終了しました。
+2025-10-13 11:32:39,285 - INFO - MainThread - DPI Awareness を Per-Monitor V2 (2) に設定しました。
+2025-10-13 11:32:39,364 - INFO - MainThread - Gemini API クライアントを設定しました。
+2025-10-13 11:32:39,688 - INFO - MainThread - アプリケーションを初期化しました。
+2025-10-13 11:32:39,688 - INFO - MainThread - ウィンドウリストを更新します。
+2025-10-13 11:32:39,690 - INFO - MainThread - 15 個のウィンドウが見つかりました。
+2025-10-13 11:32:39,690 - WARNING - MainThread - 不明なGeminiモデルが選択されました: gemini-2.5-flash-001
+2025-10-13 11:32:39,690 - INFO - MainThread - Geminiモデル 'gemini-2.5-flash-001' が選択されました。用途: 用途: 不明
+2025-10-13 11:32:51,373 - INFO - MainThread - アプリケーション終了処理を開始します。
+2025-10-13 11:32:51,428 - INFO - MainThread - アプリケーションを終了しました。
+2025-10-13 11:32:57,992 - INFO - MainThread - DPI Awareness を Per-Monitor V2 (2) に設定しました。
+2025-10-13 11:32:58,070 - INFO - MainThread - Gemini API クライアントを設定しました。
+2025-10-13 11:32:58,395 - INFO - MainThread - アプリケーションを初期化しました。
+2025-10-13 11:32:58,395 - INFO - MainThread - ウィンドウリストを更新します。
+2025-10-13 11:32:58,397 - INFO - MainThread - 15 個のウィンドウが見つかりました。
+2025-10-13 11:32:58,397 - WARNING - MainThread - 不明なGeminiモデルが選択されました: gemini-2.5-flash-001
+2025-10-13 11:32:58,397 - INFO - MainThread - Geminiモデル 'gemini-2.5-flash-001' が選択されました。用途: 用途: 不明
+2025-10-13 11:37:18,004 - INFO - MainThread - アプリケーション終了処理を開始します。
+2025-10-13 11:37:18,070 - INFO - MainThread - アプリケーションを終了しました。
+2025-10-13 11:37:23,634 - INFO - MainThread - DPI Awareness を Per-Monitor V2 (2) に設定しました。
+2025-10-13 11:37:23,714 - INFO - MainThread - Gemini API クライアントを設定しました。
+2025-10-13 11:37:24,053 - INFO - MainThread - アプリケーションを初期化しました。
+2025-10-13 11:37:24,054 - INFO - MainThread - ウィンドウリストを更新します。
+2025-10-13 11:37:24,055 - INFO - MainThread - 15 個のウィンドウが見つかりました。
+2025-10-13 11:37:24,055 - WARNING - MainThread - 不明なGeminiモデルが選択されました: gemini-2.5-flash-001
+2025-10-13 11:37:24,056 - INFO - MainThread - Geminiモデル 'gemini-2.5-flash-001' が選択されました。用途: 用途: 不明
+2025-10-13 11:37:25,586 - INFO - MainThread - 録画有効状態が変更されました: False
+2025-10-13 11:37:26,122 - INFO - MainThread - 録画有効状態が変更されました: True
+2025-10-13 11:37:38,705 - INFO - MainThread - アプリケーション終了処理を開始します。
+2025-10-13 11:37:38,754 - INFO - MainThread - アプリケーションを終了しました。
+2025-10-13 11:39:21,627 - INFO - MainThread - DPI Awareness を Per-Monitor V2 (2) に設定しました。
+2025-10-13 11:39:21,716 - INFO - MainThread - Gemini API クライアントを設定しました。
+2025-10-13 11:39:22,073 - INFO - MainThread - アプリケーションを初期化しました。
+2025-10-13 11:39:22,074 - INFO - MainThread - ウィンドウリストを更新します。
+2025-10-13 11:39:22,078 - INFO - MainThread - 15 個のウィンドウが見つかりました。
+2025-10-13 11:39:22,078 - WARNING - MainThread - 不明なGeminiモデルが選択されました: gemini-2.5-flash-001
+2025-10-13 11:39:22,078 - INFO - MainThread - Geminiモデル 'gemini-2.5-flash-001' が選択されました。用途: 用途: 不明
+2025-10-13 11:39:23,389 - INFO - MainThread - スクリーンショット有効状態が変更されました: False
+2025-10-13 11:39:23,789 - INFO - MainThread - スクリーンショット有効状態が変更されました: True
+2025-10-13 11:39:25,301 - INFO - MainThread - アプリケーション終了処理を開始します。
+2025-10-13 11:39:25,351 - INFO - MainThread - アプリケーションを終了しました。
