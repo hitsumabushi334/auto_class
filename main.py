@@ -1880,21 +1880,20 @@ class SlideCaptureApp:
                 threshold = self.similarity_threshold
 
             # グレースケールに変換
-            gray1 = cv2.cvtColor(img1_cv, cv2.COLOR_BGR2GRAY)
-            gray2 = cv2.cvtColor(img2_cv, cv2.COLOR_BGR2GRAY)
 
             # サイズが異なる場合はリサイズ (小さい方に合わせるか、固定サイズにする)
-            if gray1.shape != gray2.shape:
+            if img1_cv.shape != img2_cv.shape:
                 # 例: img1 のサイズに合わせる
-                h, w = gray1.shape
-                gray2 = cv2.resize(gray2, (w, h))
+                h, w = img1_cv.shape[:2]
+                img2_cv = cv2.resize(img2_cv, (w, h))
                 logger.warning("比較画像のサイズが異なるためリサイズしました。")
 
             # 差分を計算
-            diff = cv2.absdiff(gray1, gray2)
+            diff = cv2.absdiff(img1_cv, img2_cv)
+            diff_mean = np.mean(diff, axis=2)  # 各ピクセルのRGB差分の平均を計算
 
             # 差分が閾値以下のピクセルの割合を計算（設定から取得した閾値を使用）
-            non_zero_count = np.count_nonzero(diff > self.diff_pixel_threshold)
+            non_zero_count = np.count_nonzero(diff_mean > self.diff_pixel_threshold)
             total_pixels = diff.shape[0] * diff.shape[1]
             similarity = 1.0 - (non_zero_count / total_pixels)
 
