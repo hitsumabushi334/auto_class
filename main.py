@@ -77,7 +77,10 @@ class SlideCaptureApp:
         self.audio_recording_thread = None  # 音声録音スレッド
         self.recorded_frames = []  # 録画フレームを一時保存するリスト
         self.audio_queue = queue.Queue()  # 音声データを一時保存するキュー
-        self.last_screenshot_image = None
+        self.last_screenshot_image = (
+            None  # キャプチャした最新の画像（保存されたかどうかに関わらず）
+        )
+        self.last_saved_screenshot_image = None  # 最後に保存した画像（比較用）
         self.screenshot_saved_count = 0
         self.last_saved_screenshot_filename = ""
         self.recording_start_time = None
@@ -1754,6 +1757,7 @@ class SlideCaptureApp:
         )
         interval_seconds = 1  # 取得間隔（秒）
         self.last_screenshot_image = None  # 前回の画像をリセット
+        self.last_saved_screenshot_image = None  # 最後に保存した画像をリセット
 
         try:  # sct オブジェクトの初期化を try の外に出す
             sct = mss.mss()
@@ -1825,10 +1829,10 @@ class SlideCaptureApp:
                     np.array(current_image_pil), cv2.COLOR_RGB2BGR
                 )
 
-                if self.last_screenshot_image is not None:
-                    # 前回と比較して変化があるか確認
+                if self.last_saved_screenshot_image is not None:
+                    # 最後に保存した画像と比較して変化があるか確認
                     if not self.is_similar(
-                        current_image_cv, self.last_screenshot_image
+                        current_image_cv, self.last_saved_screenshot_image
                     ):
                         logger.info(
                             "画面に変化を検出しました。スクリーンショットを保存します。"
@@ -1845,7 +1849,7 @@ class SlideCaptureApp:
                     if self.save_screenshot_image(current_image_cv):
                         self.screenshot_saved_count += 1
 
-                # 今回の画像を次回比較用に保持
+                # 今回の画像を保持（デバッグ用など、必要に応じて）
                 self.last_screenshot_image = current_image_cv
 
             except UnidentifiedImageError as e:
@@ -1942,6 +1946,8 @@ class SlideCaptureApp:
                 self.last_saved_screenshot_filename = (
                     filepath  # 最後に保存したファイル名を更新
                 )
+                # 最後に保存した画像を比較用に保持（コピーして保存）
+                self.last_saved_screenshot_image = image_cv.copy()
                 return True
             else:
                 logger.error(
