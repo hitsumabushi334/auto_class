@@ -411,6 +411,11 @@ class SlideCaptureApp:
         else:
             self.start_button.config(state=tk.NORMAL)
 
+    def _set_checkbox_state(self, state):
+        """録画・スクショのチェックボックスの状態をまとめて変更する"""
+        self.recording_checkbox.config(state=state)
+        self.capturing_checkbox.config(state=state)
+
     # --- 統合開始・停止メソッド ---
     def start_tasks(self):
         """スクリーンショットと録画を開始する（ウィンドウ選択状態による）"""
@@ -487,6 +492,7 @@ class SlideCaptureApp:
         )  # タスク実行中は更新不可
         self.window_listbox.config(state=tk.DISABLED)
         self.model_combobox.config(state=tk.DISABLED)  # モデル選択も無効化
+        self._set_checkbox_state(tk.DISABLED)
 
     # --- 録画関連メソッド (修正) ---
     def start_recording(self, hwnd):  # 引数 hwnd を追加
@@ -995,7 +1001,7 @@ class SlideCaptureApp:
 
                 # 保存処理を別スレッドで行う (UIが固まるのを防ぐため)
                 save_thread = threading.Thread(
-                    target=self._save_video_with_audio,  # この中でノート作成がトリガーされる
+                    target=self._save_video_with_audio_background,
                     args=(output_filepath,),
                     name="VideoSaveThread",
                     daemon=True,
@@ -1028,12 +1034,25 @@ class SlideCaptureApp:
         self.refresh_window_list_button.config(state=tk.NORMAL)
         self.window_listbox.config(state=tk.NORMAL)
         self.model_combobox.config(state="readonly")
+        self._set_checkbox_state(tk.NORMAL)
         self.root.update()
         # 閉じるボタンを元に戻す
         if hasattr(self, "original_on_closing"):
             self.root.protocol("WM_DELETE_WINDOW", self.original_on_closing)
         else:
             self.root.protocol("WM_DELETE_WINDOW", self.root.destroy)
+
+    def _save_video_with_audio_background(self, output_filepath):
+        """動画保存の成否に応じてUI復元処理を行うラッパー"""
+        success = self._save_video_with_audio(output_filepath)
+        if not success:
+            self.root.after(0, self._handle_video_save_failure)
+
+    def _handle_video_save_failure(self):
+        """動画保存に失敗した際のUI復元処理"""
+        logger.error("動画保存失敗のためUIを復元します。")
+        self.recording_status_label.config(text="動画の保存に失敗しました。")
+        self._restore_gui_after_note_creation()
 
     def start_note_creation(self, video_filepath):  # 引数に video_filepath を追加
         """指定された動画ファイルパスでノート作成処理を開始する"""
@@ -1635,6 +1654,7 @@ class SlideCaptureApp:
             self.refresh_window_list_button.config(state=tk.NORMAL)
             self.window_listbox.config(state=tk.NORMAL)
             self.model_combobox.config(state="readonly")
+            self._set_checkbox_state(tk.NORMAL)
             # 閉じるボタンの挙動も元に戻す (ノート作成がない場合)
             if hasattr(self, "original_on_closing"):
                 self.root.protocol("WM_DELETE_WINDOW", self.original_on_closing)
