@@ -381,7 +381,12 @@ class SlideCaptureApp:
         """録画有効/無効チェックボックスの状態が変更されたときに呼び出される"""
         self.recording_enabled = self.recording_enabled_var.get()
         logger.info(f"録画有効状態が変更されました: {self.recording_enabled}")
-        return "未実装"
+        if not self.recording_enabled and not self.is_recording:
+            self.recording_status_label.config(text="動作を開始できません")
+        elif not self.is_recording:
+            self.recording_status_label.config(text="待機中...")
+
+        self._update_start_button_state()
 
     def on_toggle_capturing(self):
         """スクリーンショット有効/無効チェックボックスの状態が変更されたときに呼び出される"""
@@ -389,7 +394,27 @@ class SlideCaptureApp:
         logger.info(
             f"スクリーンショット有効状態が変更されました: {self.capturing_enabled}"
         )
-        return "未実装"
+        if not self.capturing_enabled and not self.is_capturing_screenshot:
+            self.screenshot_status_label.config(text="動作を開始できません")
+        elif not self.is_capturing_screenshot:
+            self.screenshot_status_label.config(text="待機中...")
+
+        self._update_start_button_state()
+
+    def _update_start_button_state(self):
+        """チェックボックスの状態に応じて開始ボタンの有効・無効を切り替える"""
+        if self.is_capturing_screenshot or self.is_recording:
+            return  # 実行中は start_tasks / stop_all_tasks に任せる
+
+        if not self.recording_enabled and not self.capturing_enabled:
+            self.start_button.config(state=tk.DISABLED)
+        else:
+            self.start_button.config(state=tk.NORMAL)
+
+    def _set_checkbox_state(self, state):
+        """録画・スクショのチェックボックスの状態をまとめて変更する"""
+        self.recording_checkbox.config(state=state)
+        self.capturing_checkbox.config(state=state)
 
     # --- 統合開始・停止メソッド ---
     def start_tasks(self):
@@ -400,20 +425,63 @@ class SlideCaptureApp:
 
         hwnd = self.selected_window_handle.get()
 
+        if not self.recording_enabled and not self.capturing_enabled:
+            warning_message = (
+                "画面録画とスクリーンショットが両方オフになっています。\n"
+                "少なくとも一方を有効にしてください。"
+            )
+            logger.warning(
+                "タスク開始をブロックしました: 録画・スクリーンショットが共に無効です。"
+            )
+            messagebox.showwarning("処理を開始できません", warning_message)
+            self._update_start_button_state()
+            return
+
         # フォルダ設定は共通で最初に行う
         if not self.prepare_save_folder():
             return
 
-        # スクリーンショットは常に開始
-        self.start_screenshot_capture()
+        tasks_started = False
 
-        # ウィンドウが選択されていれば録画も開始
-        if hwnd != 0:
-            self.start_recording(hwnd)  # 引数でハンドルを渡す
+        if self.capturing_enabled:
+            self.start_screenshot_capture()
+            tasks_started = True
         else:
-            logger.info(
-                "ウィンドウが選択されていないため、スクリーンショットのみ開始します。"
+            logger.info("スクリーンショットはユーザー設定によりスキップされます。")
+            self.screenshot_status_label.config(
+                text="待機中... (スクリーンショットは無効化されています)"
             )
+
+        if self.recording_enabled:
+            if hwnd != 0:
+                self.start_recording(hwnd)  # 引数でハンドルを渡す
+                tasks_started = True
+            else:
+                if self.capturing_enabled:
+                    logger.info(
+                        "録画対象ウィンドウが選択されていないため、スクリーンショットのみ開始します。"
+                    )
+                else:
+                    logger.warning(
+                        "録画が有効ですが録画対象ウィンドウが選択されていないため、録画を開始できません。"
+                    )
+                    messagebox.showwarning(
+                        "録画対象未選択", "録画を開始するにはウィンドウを選択してください。"
+                    )
+                if not self.is_recording:
+                    self.recording_status_label.config(
+                        text="待機中... (録画対象ウィンドウが未選択です)"
+                    )
+        else:
+            logger.info("録画はユーザー設定によりスキップされます。")
+            if not self.is_recording:
+                self.recording_status_label.config(
+                    text="待機中... (録画は無効化されています)"
+                )
+
+        if not tasks_started:
+            self._update_start_button_state()
+            return
 
         # 統合ボタンの状態更新
         self.start_button.config(state=tk.DISABLED)
@@ -424,6 +492,7 @@ class SlideCaptureApp:
         )  # タスク実行中は更新不可
         self.window_listbox.config(state=tk.DISABLED)
         self.model_combobox.config(state=tk.DISABLED)  # モデル選択も無効化
+        self._set_checkbox_state(tk.DISABLED)
 
     # --- 録画関連メソッド (修正) ---
     def start_recording(self, hwnd):  # 引数 hwnd を追加
@@ -932,7 +1001,7 @@ class SlideCaptureApp:
 
                 # 保存処理を別スレッドで行う (UIが固まるのを防ぐため)
                 save_thread = threading.Thread(
-                    target=self._save_video_with_audio,  # この中でノート作成がトリガーされる
+                    target=self._save_video_with_audio_background,
                     args=(output_filepath,),
                     name="VideoSaveThread",
                     daemon=True,
@@ -959,18 +1028,31 @@ class SlideCaptureApp:
     def _restore_gui_after_note_creation(self):
         """ノート作成後または中断時にGUI操作制限を解除する共通処理"""
         logger.info("GUI操作制限を解除します。")
-        self.start_button.config(state=tk.NORMAL)
+        self._update_start_button_state()
         self.stop_button.config(state=tk.DISABLED)  # 停止ボタンは常に無効で良い
         self.folder_entry.config(state=tk.NORMAL)
         self.refresh_window_list_button.config(state=tk.NORMAL)
         self.window_listbox.config(state=tk.NORMAL)
         self.model_combobox.config(state="readonly")
+        self._set_checkbox_state(tk.NORMAL)
         self.root.update()
         # 閉じるボタンを元に戻す
         if hasattr(self, "original_on_closing"):
             self.root.protocol("WM_DELETE_WINDOW", self.original_on_closing)
         else:
             self.root.protocol("WM_DELETE_WINDOW", self.root.destroy)
+
+    def _save_video_with_audio_background(self, output_filepath):
+        """動画保存の成否に応じてUI復元処理を行うラッパー"""
+        success = self._save_video_with_audio(output_filepath)
+        if not success:
+            self.root.after(0, self._handle_video_save_failure)
+
+    def _handle_video_save_failure(self):
+        """動画保存に失敗した際のUI復元処理"""
+        logger.error("動画保存失敗のためUIを復元します。")
+        self.recording_status_label.config(text="動画の保存に失敗しました。")
+        self._restore_gui_after_note_creation()
 
     def start_note_creation(self, video_filepath):  # 引数に video_filepath を追加
         """指定された動画ファイルパスでノート作成処理を開始する"""
@@ -1567,11 +1649,12 @@ class SlideCaptureApp:
             logger.info("スクリーンショットキャプチャを停止しました。")
             # スクリーンショットのみ停止した場合、ノート作成は走らないので、
             # ここでUIを操作可能に戻す。
-            self.start_button.config(state=tk.NORMAL)
+            self._update_start_button_state()
             self.folder_entry.config(state=tk.NORMAL)
             self.refresh_window_list_button.config(state=tk.NORMAL)
             self.window_listbox.config(state=tk.NORMAL)
             self.model_combobox.config(state="readonly")
+            self._set_checkbox_state(tk.NORMAL)
             # 閉じるボタンの挙動も元に戻す (ノート作成がない場合)
             if hasattr(self, "original_on_closing"):
                 self.root.protocol("WM_DELETE_WINDOW", self.original_on_closing)
