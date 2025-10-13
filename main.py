@@ -1901,7 +1901,7 @@ class SlideCaptureApp:
             total_pixels = diff.shape[0] * diff.shape[1]
             similarity = 1.0 - (non_zero_count / total_pixels)
 
-            # logger.debug(f"画像類似度: {similarity:.4f}") # デバッグ用
+            logger.debug(f"画像類似度: {similarity:.4f}")  # デバッグ用
 
             return similarity >= threshold
         except cv2.error as e:
