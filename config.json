@@ -1,7 +1,7 @@
 {
   "api": {
     "gemini_api_key": "",
-    "models": ["gemini-2.5-flash-001", "gemini-2.0-flash"],
+    "models": ["gemini-2.5-flash", "gemini-2.0-flash"],
     "default_model_index": 0,
     "model_descriptions": {
       "gemini-2.5-flash": "用途: 短時間動画向け",

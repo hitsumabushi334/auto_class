@@ -382,7 +382,9 @@ class SlideCaptureApp:
         self.recording_enabled = self.recording_enabled_var.get()
         logger.info(f"録画有効状態が変更されました: {self.recording_enabled}")
         if not self.recording_enabled and not self.is_recording:
-            self.recording_status_label.config(text="動作を開始できません")
+            self.recording_status_label.config(
+                text="待機中... (録画は無効化されています)"
+            )
         elif not self.is_recording:
             self.recording_status_label.config(text="待機中...")
 
@@ -395,7 +397,9 @@ class SlideCaptureApp:
             f"スクリーンショット有効状態が変更されました: {self.capturing_enabled}"
         )
         if not self.capturing_enabled and not self.is_capturing_screenshot:
-            self.screenshot_status_label.config(text="動作を開始できません")
+            self.screenshot_status_label.config(
+                text="待機中... (スクリーンショットは無効化されています)"
+            )
         elif not self.is_capturing_screenshot:
             self.screenshot_status_label.config(text="待機中...")
 
@@ -466,7 +470,8 @@ class SlideCaptureApp:
                         "録画が有効ですが録画対象ウィンドウが選択されていないため、録画を開始できません。"
                     )
                     messagebox.showwarning(
-                        "録画対象未選択", "録画を開始するにはウィンドウを選択してください。"
+                        "録画対象未選択",
+                        "録画を開始するにはウィンドウを選択してください。",
                     )
                 if not self.is_recording:
                     self.recording_status_label.config(

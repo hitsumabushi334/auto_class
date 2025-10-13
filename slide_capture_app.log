@@ -8711,3 +8711,340 @@ google.genai.errors.ClientError: 404 NOT_FOUND. {'error': {'code': 404, 'message
 2025-10-13 11:39:23,789 - INFO - MainThread - スクリーンショット有効状態が変更されました: True
 2025-10-13 11:39:25,301 - INFO - MainThread - アプリケーション終了処理を開始します。
 2025-10-13 11:39:25,351 - INFO - MainThread - アプリケーションを終了しました。
+2025-10-13 14:16:03,191 - INFO - MainThread - DPI Awareness を Per-Monitor V2 (2) に設定しました。
+2025-10-13 14:16:03,267 - INFO - MainThread - Gemini API クライアントを設定しました。
+2025-10-13 14:16:03,579 - INFO - MainThread - アプリケーションを初期化しました。
+2025-10-13 14:16:03,579 - INFO - MainThread - ウィンドウリストを更新します。
+2025-10-13 14:16:03,580 - INFO - MainThread - 14 個のウィンドウが見つかりました。
+2025-10-13 14:16:03,581 - WARNING - MainThread - 不明なGeminiモデルが選択されました: gemini-2.5-flash-001
+2025-10-13 14:16:03,581 - INFO - MainThread - Geminiモデル 'gemini-2.5-flash-001' が選択されました。用途: 用途: 不明
+2025-10-13 14:16:07,353 - INFO - MainThread - 録画有効状態が変更されました: False
+2025-10-13 14:16:11,755 - INFO - MainThread - スクリーンショット有効状態が変更されました: False
+2025-10-13 14:16:17,408 - INFO - MainThread - スクリーンショット有効状態が変更されました: True
+2025-10-13 14:16:18,080 - INFO - MainThread - 録画有効状態が変更されました: True
+2025-10-13 14:16:20,844 - INFO - MainThread - 録画有効状態が変更されました: False
+2025-10-13 14:16:21,214 - INFO - MainThread - スクリーンショット有効状態が変更されました: False
+2025-10-13 14:16:22,663 - INFO - MainThread - スクリーンショット有効状態が変更されました: True
+2025-10-13 14:16:23,049 - INFO - MainThread - 録画有効状態が変更されました: True
+2025-10-13 14:16:27,997 - INFO - MainThread - ウィンドウが選択されました: AGENTS.md - auto_class - Visual Studio Code (HWND: 328198) (HWND: 328198)
+2025-10-13 14:16:28,716 - INFO - MainThread - ウィンドウが選択されました: 開始ボタン制御条件の論理修正 by hitsumabushi334 · Pull Request #3 · hitsumabushi334/auto_class - Google Chrome (HWND: 66776) (HWND: 66776)
+2025-10-13 14:16:29,879 - INFO - MainThread - ウィンドウが選択されました: AGENTS.md - auto_class - Visual Studio Code (HWND: 328198) (HWND: 328198)
+2025-10-13 14:16:30,851 - INFO - MainThread - ウィンドウリストを更新します。
+2025-10-13 14:16:30,853 - INFO - MainThread - 14 個のウィンドウが見つかりました。
+2025-10-13 14:16:31,665 - INFO - MainThread - ウィンドウが選択されました: (435) How I Sold These 4 AI Agents for $23,000 (as a beginner) - YouTube - Google Chrome (HWND: 66776) (HWND: 66776)
+2025-10-13 14:16:34,757 - INFO - MainThread - prepare_save_folder - UIから取得した初期フォルダ名: ''
+2025-10-13 14:16:34,758 - INFO - MainThread - prepare_save_folder - 現在の作業ディレクトリ: C:\Users\issho\auto_class
+2025-10-13 14:16:34,758 - INFO - MainThread - prepare_save_folder - 保存フォルダ名が指定されなかったため、デフォルト名を生成しました: capture_20251013_141634
+2025-10-13 14:16:34,758 - INFO - MainThread - prepare_save_folder - 相対パスとして解釈し、絶対パスに変換しました (基準: C:\Users\issho\auto_class): C:\Users\issho\auto_class\capture_20251013_141634
+2025-10-13 14:16:34,758 - INFO - MainThread - prepare_save_folder - 最終的な保存先フォルダ (os.makedirs対象): C:\Users\issho\auto_class\capture_20251013_141634
+2025-10-13 14:16:34,758 - INFO - MainThread - prepare_save_folder - os.makedirs を呼び出します: Path='C:\Users\issho\auto_class\capture_20251013_141634', exist_ok=True
+2025-10-13 14:16:34,759 - INFO - MainThread - prepare_save_folder - フォルダを作成しました (または既に存在していました): C:\Users\issho\auto_class\capture_20251013_141634
+2025-10-13 14:16:34,759 - INFO - MainThread - prepare_save_folder - フォルダ作成後の存在確認OK: C:\Users\issho\auto_class\capture_20251013_141634
+2025-10-13 14:16:34,759 - INFO - MainThread - prepare_save_folder - 書き込み権限テストファイルを作成します: C:\Users\issho\auto_class\capture_20251013_141634\.permission_test
+2025-10-13 14:16:34,760 - INFO - MainThread - prepare_save_folder - フォルダへの書き込み権限を確認しました: C:\Users\issho\auto_class\capture_20251013_141634
+2025-10-13 14:16:34,760 - INFO - MainThread - スクリーンショットキャプチャを開始します。対象ウィンドウハンドル: 66776
+2025-10-13 14:16:34,760 - INFO - ScreenshotThread - スクリーンショットキャプチャループを開始します。対象ウィンドウハンドル: 66776
+2025-10-13 14:16:34,761 - INFO - MainThread - 録画を開始します。対象ウィンドウハンドル: 66776
+2025-10-13 14:16:34,761 - INFO - RecordingThread - 録画ループを開始します。対象ウィンドウハンドル: 66776
+2025-10-13 14:16:34,761 - INFO - AudioRecordingThread - 音声録音ループ (SoundCard) を開始します
+2025-10-13 14:16:34,789 - INFO - RecordingThread - 対象ウィンドウの位置とサイズ: (1911, -9, 1938, 1038)
+2025-10-13 14:16:34,825 - INFO - AudioRecordingThread - 取得したマイクデバイス: スピーカー (Realtek(R) Audio)
+2025-10-13 14:16:34,826 - INFO - AudioRecordingThread - マイクデバイスの型: <class 'soundcard.mediafoundation._Microphone'>
+2025-10-13 14:16:34,826 - INFO - AudioRecordingThread - デバイス情報 - サンプルレート: 48000, チャンネル数: 2
+2025-10-13 14:16:34,850 - INFO - ScreenshotThread - 最初のスクリーンショットを保存します。
+2025-10-13 14:16:34,859 - INFO - AudioRecordingThread - レコーダーオブジェクトの型: <class 'soundcard.mediafoundation._Recorder'>
+2025-10-13 14:16:34,861 - INFO - AudioRecordingThread - 録音中: スピーカー (Realtek(R) Audio) (ループバック)
+2025-10-13 14:16:34,886 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_class\capture_20251013_141634\screenshot_20251013_141634_850.png
+2025-10-13 14:16:36,855 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-10-13 14:16:36,882 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_class\capture_20251013_141634\screenshot_20251013_141636_855.png
+2025-10-13 14:16:37,863 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-10-13 14:16:37,894 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_class\capture_20251013_141634\screenshot_20251013_141637_864.png
+2025-10-13 14:16:38,862 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-10-13 14:16:38,889 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_class\capture_20251013_141634\screenshot_20251013_141638_862.png
+2025-10-13 14:16:39,862 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-10-13 14:16:39,890 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_class\capture_20251013_141634\screenshot_20251013_141639_863.png
+2025-10-13 14:16:40,324 - INFO - MainThread - 全てのタスクの停止処理を開始します。
+2025-10-13 14:16:40,325 - INFO - MainThread - 録画停止処理を開始します。
+2025-10-13 14:16:40,325 - INFO - MainThread - 録画スレッドの終了を待機します...
+2025-10-13 14:16:40,329 - INFO - AudioRecordingThread - 音声録音ループ (SoundCard) を終了します
+2025-10-13 14:16:40,792 - INFO - RecordingThread - 録画ループを終了します。合計フレーム数: 6
+2025-10-13 14:16:40,795 - INFO - MainThread - 録画スレッドが終了しました。
+2025-10-13 14:16:40,795 - INFO - MainThread - 動画ファイルの保存を開始します: C:\Users\issho\auto_class\capture_20251013_141634\recording_20251013_141640.mp4
+2025-10-13 14:16:40,796 - INFO - MainThread - 動画保存スレッドを開始しました。
+2025-10-13 14:16:40,796 - INFO - MainThread - 録画停止処理を完了しました。
+2025-10-13 14:16:40,796 - INFO - MainThread - スクリーンショットキャプチャの停止処理を開始します。
+2025-10-13 14:16:40,796 - INFO - MainThread - スクリーンショットキャプチャスレッドの終了を待機します...
+2025-10-13 14:16:40,796 - INFO - VideoSaveThread - 音声データを連結しました。サンプル数: 262144, dtype: float32
+2025-10-13 14:16:40,801 - INFO - VideoSaveThread - 合計 6 フレームを動画クリップに使用します。
+2025-10-13 14:16:40,802 - INFO - VideoSaveThread - 推定FPS: 1.00
+2025-10-13 14:16:40,802 - WARNING - VideoSaveThread - 音声クリップ (5.46s) が動画クリップ (6.00s) より短いです。
+2025-10-13 14:16:40,803 - INFO - VideoSaveThread - AudioArrayClipを作成しました。Duration: 5.46秒
+2025-10-13 14:16:40,803 - INFO - VideoSaveThread - 動画と音声を結合しました。
+2025-10-13 14:16:40,803 - INFO - VideoSaveThread - 動画ファイルを書き出します: C:\Users\issho\auto_class\capture_20251013_141634\recording_20251013_141640.mp4
+2025-10-13 14:16:40,864 - INFO - ScreenshotThread - 画面に変化を検出しました。スクリーンショットを保存します。
+2025-10-13 14:16:41,390 - INFO - VideoSaveThread - 動画ファイルを保存しました: C:\Users\issho\auto_class\capture_20251013_141634\recording_20251013_141640.mp4
+2025-10-13 14:16:41,390 - INFO - VideoSaveThread - 動画保存成功、ノート作成をトリガーします: C:\Users\issho\auto_class\capture_20251013_141634\recording_20251013_141640.mp4
+2025-10-13 14:16:45,806 - WARNING - MainThread - スクリーンショットキャプチャスレッドが時間内に終了しませんでした。
+2025-10-13 14:16:45,806 - INFO - MainThread - スクリーンショットキャプチャの停止処理を完了しました。
+2025-10-13 14:16:45,806 - INFO - MainThread - 録画を停止しました。動画保存とノート作成がバックグラウンドで実行されます（成功した場合）。
+2025-10-13 14:16:45,806 - INFO - MainThread - 全てのタスクの停止処理を完了しました。
+2025-10-13 14:16:45,807 - INFO - VideoSaveThread - 動画保存処理を終了します。
+2025-10-13 14:16:45,807 - INFO - MainThread - ノート作成開始: GUI操作を制限します。
+2025-10-13 14:16:45,809 - INFO - MainThread - ノート作成処理を開始します。対象動画: C:\Users\issho\auto_class\capture_20251013_141634\recording_20251013_141640.mp4
+2025-10-13 14:16:45,809 - INFO - NoteCreationThread - 動画ファイルをアップロード開始: C:\Users\issho\auto_class\capture_20251013_141634\recording_20251013_141640.mp4
+2025-10-13 14:16:45,810 - INFO - NoteCreationThread - 動画ファイルアップロード試行 1/3: C:\Users\issho\auto_class\capture_20251013_141634\recording_20251013_141640.mp4
+2025-10-13 14:16:45,837 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_class\capture_20251013_141634\screenshot_20251013_141645_806.png
+2025-10-13 14:16:45,839 - INFO - ScreenshotThread - スクリーンショットキャプチャループを終了します。
+2025-10-13 14:16:46,790 - INFO - NoteCreationThread - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files "HTTP/1.1 200 OK"
+2025-10-13 14:16:48,661 - INFO - NoteCreationThread - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AAwnv3LW_vxv56WbBzWCmgashq7A1_OS2bC5UvTF8c4xSlUTeJKYBA69f-j6Pi35IR3HoWsdCLYi3kKexfhQGsQt1EgCPHq5Uu4qcMHd8kdO58s&upload_protocol=resumable "HTTP/1.1 200 OK"
+2025-10-13 14:16:48,662 - INFO - NoteCreationThread - アップロード開始: files/oi30vn0lmv1t, State: FileState.PROCESSING
+2025-10-13 14:16:48,663 - INFO - NoteCreationThread - 動画処理中... (FileState.PROCESSING, 0.0秒)
+2025-10-13 14:16:54,014 - INFO - NoteCreationThread - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/oi30vn0lmv1t "HTTP/1.1 200 OK"
+2025-10-13 14:16:54,016 - INFO - NoteCreationThread - ファイルがACTIVEになりました: files/oi30vn0lmv1t
+2025-10-13 14:16:54,016 - INFO - NoteCreationThread - Gemini APIに要約リクエストを送信します...
+2025-10-13 14:16:54,016 - INFO - NoteCreationThread - Gemini API呼び出し試行 1/3
+2025-10-13 14:16:54,016 - INFO - NoteCreationThread - 使用する Gemini モデル: gemini-2.5-flash-001
+2025-10-13 14:16:54,017 - INFO - NoteCreationThread - AFC is enabled with max remote calls: 10.
+2025-10-13 14:16:54,105 - INFO - NoteCreationThread - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-001:generateContent "HTTP/1.1 404 Not Found"
+2025-10-13 14:16:54,106 - WARNING - NoteCreationThread - APIサーバーエラー（試行 1）: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/gemini-2.5-flash-001 is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+2025-10-13 14:16:54,106 - INFO - NoteCreationThread - 5秒後に再試行します...
+2025-10-13 14:16:59,106 - INFO - NoteCreationThread - Gemini API呼び出し試行 2/3
+2025-10-13 14:16:59,107 - INFO - NoteCreationThread - 使用する Gemini モデル: gemini-2.5-flash-001
+2025-10-13 14:16:59,107 - INFO - NoteCreationThread - AFC is enabled with max remote calls: 10.
+2025-10-13 14:16:59,256 - INFO - NoteCreationThread - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-001:generateContent "HTTP/1.1 404 Not Found"
+2025-10-13 14:16:59,257 - WARNING - NoteCreationThread - APIサーバーエラー（試行 2）: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/gemini-2.5-flash-001 is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+2025-10-13 14:16:59,257 - INFO - NoteCreationThread - 5秒後に再試行します...
+2025-10-13 14:17:04,257 - INFO - NoteCreationThread - Gemini API呼び出し試行 3/3
+2025-10-13 14:17:04,257 - INFO - NoteCreationThread - 使用する Gemini モデル: gemini-2.5-flash-001
+2025-10-13 14:17:04,258 - INFO - NoteCreationThread - AFC is enabled with max remote calls: 10.
+2025-10-13 14:17:04,393 - INFO - NoteCreationThread - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-001:generateContent "HTTP/1.1 404 Not Found"
+2025-10-13 14:17:04,394 - WARNING - NoteCreationThread - APIサーバーエラー（試行 3）: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/gemini-2.5-flash-001 is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+2025-10-13 14:17:04,394 - ERROR - NoteCreationThread - 最大試行回数に達しました。エラー: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/gemini-2.5-flash-001 is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+2025-10-13 14:17:04,394 - ERROR - NoteCreationThread - ノート作成処理中エラー
+Traceback (most recent call last):
+  File "C:\Users\issho\auto_class\main.py", line 1402, in api_call_and_md_gen
+    response = self.api_call_with_retry(video_file, prompt, schema)
+  File "C:\Users\issho\auto_class\main.py", line 1574, in api_call_with_retry
+    response = self.gemini_client.models.generate_content(
+        model=selected_model_name,  # 選択されたモデルを使用
+    ...<4 lines>...
+        },
+    )
+  File "C:\Users\issho\auto_class\.venv\Lib\site-packages\google\genai\models.py", line 4799, in generate_content
+    response = self._generate_content(
+        model=model, contents=contents, config=config
+    )
+  File "C:\Users\issho\auto_class\.venv\Lib\site-packages\google\genai\models.py", line 3775, in _generate_content
+    response_dict = self._api_client.request(
+        'post', path, request_dict, http_options
+    )
+  File "C:\Users\issho\auto_class\.venv\Lib\site-packages\google\genai\_api_client.py", line 726, in request
+    response = self._request(http_request, stream=False)
+  File "C:\Users\issho\auto_class\.venv\Lib\site-packages\google\genai\_api_client.py", line 655, in _request
+    errors.APIError.raise_for_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\issho\auto_class\.venv\Lib\site-packages\google\genai\errors.py", line 101, in raise_for_response
+    raise ClientError(status_code, response_json, response)
+google.genai.errors.ClientError: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/gemini-2.5-flash-001 is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+2025-10-13 14:17:04,425 - INFO - NoteCreationThread - エラー発生のためアップロードファイル削除: files/oi30vn0lmv1t
+2025-10-13 14:17:06,413 - INFO - NoteCreationThread - HTTP Request: DELETE https://generativelanguage.googleapis.com/v1beta/files/oi30vn0lmv1t "HTTP/1.1 200 OK"
+2025-10-13 14:17:06,413 - INFO - NoteCreationThread - ファイル削除成功
+2025-10-13 14:17:06,415 - ERROR - MainThread - ノート作成失敗: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/gemini-2.5-flash-001 is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+2025-10-13 14:17:07,552 - INFO - MainThread - GUI操作制限を解除します。
+2025-10-13 14:17:09,633 - INFO - MainThread - スクリーンショット有効状態が変更されました: False
+2025-10-13 14:17:10,623 - INFO - MainThread - 録画有効状態が変更されました: False
+2025-10-13 14:17:12,096 - INFO - MainThread - 録画有効状態が変更されました: True
+2025-10-13 14:17:12,600 - INFO - MainThread - スクリーンショット有効状態が変更されました: True
+2025-10-13 14:17:13,371 - INFO - MainThread - ウィンドウが選択されました: AGENTS.md - auto_class - Visual Studio Code (HWND: 328198) (HWND: 328198)
+2025-10-13 14:17:13,740 - INFO - MainThread - ウィンドウが選択されました: スライドキャプチャ＆録画 (HWND: 526772) (HWND: 526772)
+2025-10-13 14:17:14,357 - INFO - MainThread - ウィンドウが選択されました: (435) How I Sold These 4 AI Agents for $23,000 (as a beginner) - YouTube - Google Chrome (HWND: 66776) (HWND: 66776)
+2025-10-13 14:17:18,050 - INFO - MainThread - スクリーンショット有効状態が変更されました: False
+2025-10-13 14:17:20,336 - INFO - MainThread - prepare_save_folder - UIから取得した初期フォルダ名: 'C:\Users\issho\auto_class\capture_20251013_141634'
+2025-10-13 14:17:20,337 - INFO - MainThread - prepare_save_folder - 現在の作業ディレクトリ: C:\Users\issho\auto_class
+2025-10-13 14:17:20,337 - INFO - MainThread - prepare_save_folder - 入力されたフォルダ名は絶対パスとして扱います: C:\Users\issho\auto_class\capture_20251013_141634
+2025-10-13 14:17:20,337 - INFO - MainThread - prepare_save_folder - 最終的な保存先フォルダ (os.makedirs対象): C:\Users\issho\auto_class\capture_20251013_141634
+2025-10-13 14:17:20,337 - INFO - MainThread - prepare_save_folder - フォルダは既に存在します: C:\Users\issho\auto_class\capture_20251013_141634
+2025-10-13 14:17:20,337 - INFO - MainThread - prepare_save_folder - 書き込み権限テストファイルを作成します: C:\Users\issho\auto_class\capture_20251013_141634\.permission_test
+2025-10-13 14:17:20,338 - INFO - MainThread - prepare_save_folder - フォルダへの書き込み権限を確認しました: C:\Users\issho\auto_class\capture_20251013_141634
+2025-10-13 14:17:20,338 - INFO - MainThread - スクリーンショットはユーザー設定によりスキップされます。
+2025-10-13 14:17:20,338 - INFO - MainThread - 録画を開始します。対象ウィンドウハンドル: 66776
+2025-10-13 14:17:20,341 - INFO - RecordingThread - 録画ループを開始します。対象ウィンドウハンドル: 66776
+2025-10-13 14:17:20,341 - INFO - AudioRecordingThread - 音声録音ループ (SoundCard) を開始します
+2025-10-13 14:17:20,341 - INFO - RecordingThread - 対象ウィンドウの位置とサイズ: (1911, -9, 1938, 1038)
+2025-10-13 14:17:20,349 - INFO - AudioRecordingThread - 取得したマイクデバイス: スピーカー (Realtek(R) Audio)
+2025-10-13 14:17:20,349 - INFO - AudioRecordingThread - マイクデバイスの型: <class 'soundcard.mediafoundation._Microphone'>
+2025-10-13 14:17:20,349 - INFO - AudioRecordingThread - デバイス情報 - サンプルレート: 48000, チャンネル数: 2
+2025-10-13 14:17:20,355 - INFO - AudioRecordingThread - レコーダーオブジェクトの型: <class 'soundcard.mediafoundation._Recorder'>
+2025-10-13 14:17:20,356 - INFO - AudioRecordingThread - 録音中: スピーカー (Realtek(R) Audio) (ループバック)
+2025-10-13 14:17:26,388 - INFO - MainThread - 全てのタスクの停止処理を開始します。
+2025-10-13 14:17:26,389 - INFO - MainThread - 録画停止処理を開始します。
+2025-10-13 14:17:26,389 - INFO - MainThread - 録画スレッドの終了を待機します...
+2025-10-13 14:17:26,408 - INFO - AudioRecordingThread - 音声録音ループ (SoundCard) を終了します
+2025-10-13 14:17:27,342 - INFO - RecordingThread - 録画ループを終了します。合計フレーム数: 7
+2025-10-13 14:17:27,344 - INFO - MainThread - 録画スレッドが終了しました。
+2025-10-13 14:17:27,344 - INFO - MainThread - 動画ファイルの保存を開始します: C:\Users\issho\auto_class\capture_20251013_141634\recording_20251013_141727.mp4
+2025-10-13 14:17:27,346 - INFO - MainThread - 動画保存スレッドを開始しました。
+2025-10-13 14:17:27,346 - INFO - VideoSaveThread - 音声データを連結しました。サンプル数: 290816, dtype: float32
+2025-10-13 14:17:27,347 - INFO - MainThread - 録画停止処理を完了しました。
+2025-10-13 14:17:27,347 - INFO - MainThread - 録画を停止しました。動画保存とノート作成がバックグラウンドで実行されます（成功した場合）。
+2025-10-13 14:17:27,347 - INFO - MainThread - 全てのタスクの停止処理を完了しました。
+2025-10-13 14:17:27,355 - INFO - VideoSaveThread - 合計 7 フレームを動画クリップに使用します。
+2025-10-13 14:17:27,356 - INFO - VideoSaveThread - 推定FPS: 1.00
+2025-10-13 14:17:27,356 - WARNING - VideoSaveThread - 音声クリップ (6.06s) が動画クリップ (7.00s) より短いです。
+2025-10-13 14:17:27,356 - INFO - VideoSaveThread - AudioArrayClipを作成しました。Duration: 6.06秒
+2025-10-13 14:17:27,357 - INFO - VideoSaveThread - 動画と音声を結合しました。
+2025-10-13 14:17:27,357 - INFO - VideoSaveThread - 動画ファイルを書き出します: C:\Users\issho\auto_class\capture_20251013_141634\recording_20251013_141727.mp4
+2025-10-13 14:17:27,992 - INFO - VideoSaveThread - 動画ファイルを保存しました: C:\Users\issho\auto_class\capture_20251013_141634\recording_20251013_141727.mp4
+2025-10-13 14:17:27,992 - INFO - VideoSaveThread - 動画保存成功、ノート作成をトリガーします: C:\Users\issho\auto_class\capture_20251013_141634\recording_20251013_141727.mp4
+2025-10-13 14:17:27,993 - INFO - VideoSaveThread - 動画保存処理を終了します。
+2025-10-13 14:17:27,993 - INFO - MainThread - ノート作成開始: GUI操作を制限します。
+2025-10-13 14:17:27,995 - INFO - MainThread - ノート作成処理を開始します。対象動画: C:\Users\issho\auto_class\capture_20251013_141634\recording_20251013_141727.mp4
+2025-10-13 14:17:27,996 - INFO - NoteCreationThread - 動画ファイルをアップロード開始: C:\Users\issho\auto_class\capture_20251013_141634\recording_20251013_141727.mp4
+2025-10-13 14:17:27,999 - INFO - NoteCreationThread - 動画ファイルアップロード試行 1/3: C:\Users\issho\auto_class\capture_20251013_141634\recording_20251013_141727.mp4
+2025-10-13 14:17:28,446 - INFO - NoteCreationThread - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files "HTTP/1.1 200 OK"
+2025-10-13 14:17:30,019 - INFO - NoteCreationThread - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AAwnv3IsnLV_W8aWHja2kFMt9SYLeYWSWwoyLJfLOVPmkgQ7T21Xm1pJrDO6rgNhbZ3wMxL77uxP0bqCwDb62w4FDHcqVzXf-3hmpN-T0Zpa4w&upload_protocol=resumable "HTTP/1.1 200 OK"
+2025-10-13 14:17:30,019 - INFO - NoteCreationThread - アップロード開始: files/1o1kteg0ehvn, State: FileState.PROCESSING
+2025-10-13 14:17:30,020 - INFO - NoteCreationThread - 動画処理中... (FileState.PROCESSING, 0.0秒)
+2025-10-13 14:17:35,320 - INFO - NoteCreationThread - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/1o1kteg0ehvn "HTTP/1.1 200 OK"
+2025-10-13 14:17:35,321 - INFO - NoteCreationThread - ファイルがACTIVEになりました: files/1o1kteg0ehvn
+2025-10-13 14:17:35,322 - INFO - NoteCreationThread - Gemini APIに要約リクエストを送信します...
+2025-10-13 14:17:35,322 - INFO - NoteCreationThread - Gemini API呼び出し試行 1/3
+2025-10-13 14:17:35,322 - INFO - NoteCreationThread - 使用する Gemini モデル: gemini-2.5-flash-001
+2025-10-13 14:17:35,323 - INFO - NoteCreationThread - AFC is enabled with max remote calls: 10.
+2025-10-13 14:17:35,422 - INFO - NoteCreationThread - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-001:generateContent "HTTP/1.1 404 Not Found"
+2025-10-13 14:17:35,422 - WARNING - NoteCreationThread - APIサーバーエラー（試行 1）: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/gemini-2.5-flash-001 is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+2025-10-13 14:17:35,422 - INFO - NoteCreationThread - 5秒後に再試行します...
+2025-10-13 14:17:40,423 - INFO - NoteCreationThread - Gemini API呼び出し試行 2/3
+2025-10-13 14:17:40,423 - INFO - NoteCreationThread - 使用する Gemini モデル: gemini-2.5-flash-001
+2025-10-13 14:17:40,424 - INFO - NoteCreationThread - AFC is enabled with max remote calls: 10.
+2025-10-13 14:17:40,569 - INFO - NoteCreationThread - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-001:generateContent "HTTP/1.1 404 Not Found"
+2025-10-13 14:17:40,570 - WARNING - NoteCreationThread - APIサーバーエラー（試行 2）: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/gemini-2.5-flash-001 is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+2025-10-13 14:17:40,570 - INFO - NoteCreationThread - 5秒後に再試行します...
+2025-10-13 14:17:45,570 - INFO - NoteCreationThread - Gemini API呼び出し試行 3/3
+2025-10-13 14:17:45,571 - INFO - NoteCreationThread - 使用する Gemini モデル: gemini-2.5-flash-001
+2025-10-13 14:17:45,571 - INFO - NoteCreationThread - AFC is enabled with max remote calls: 10.
+2025-10-13 14:17:45,728 - INFO - NoteCreationThread - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-001:generateContent "HTTP/1.1 404 Not Found"
+2025-10-13 14:17:45,728 - WARNING - NoteCreationThread - APIサーバーエラー（試行 3）: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/gemini-2.5-flash-001 is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+2025-10-13 14:17:45,728 - ERROR - NoteCreationThread - 最大試行回数に達しました。エラー: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/gemini-2.5-flash-001 is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+2025-10-13 14:17:45,729 - ERROR - NoteCreationThread - ノート作成処理中エラー
+Traceback (most recent call last):
+  File "C:\Users\issho\auto_class\main.py", line 1402, in api_call_and_md_gen
+    response = self.api_call_with_retry(video_file, prompt, schema)
+  File "C:\Users\issho\auto_class\main.py", line 1574, in api_call_with_retry
+    response = self.gemini_client.models.generate_content(
+        model=selected_model_name,  # 選択されたモデルを使用
+    ...<4 lines>...
+        },
+    )
+  File "C:\Users\issho\auto_class\.venv\Lib\site-packages\google\genai\models.py", line 4799, in generate_content
+    response = self._generate_content(
+        model=model, contents=contents, config=config
+    )
+  File "C:\Users\issho\auto_class\.venv\Lib\site-packages\google\genai\models.py", line 3775, in _generate_content
+    response_dict = self._api_client.request(
+        'post', path, request_dict, http_options
+    )
+  File "C:\Users\issho\auto_class\.venv\Lib\site-packages\google\genai\_api_client.py", line 726, in request
+    response = self._request(http_request, stream=False)
+  File "C:\Users\issho\auto_class\.venv\Lib\site-packages\google\genai\_api_client.py", line 655, in _request
+    errors.APIError.raise_for_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\issho\auto_class\.venv\Lib\site-packages\google\genai\errors.py", line 101, in raise_for_response
+    raise ClientError(status_code, response_json, response)
+google.genai.errors.ClientError: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/gemini-2.5-flash-001 is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+2025-10-13 14:17:45,730 - INFO - NoteCreationThread - エラー発生のためアップロードファイル削除: files/1o1kteg0ehvn
+2025-10-13 14:17:47,799 - INFO - NoteCreationThread - HTTP Request: DELETE https://generativelanguage.googleapis.com/v1beta/files/1o1kteg0ehvn "HTTP/1.1 200 OK"
+2025-10-13 14:17:47,800 - INFO - NoteCreationThread - ファイル削除成功
+2025-10-13 14:17:47,801 - ERROR - MainThread - ノート作成失敗: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/gemini-2.5-flash-001 is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+2025-10-13 14:17:49,552 - INFO - MainThread - GUI操作制限を解除します。
+2025-10-13 14:17:50,344 - INFO - MainThread - アプリケーション終了処理を開始します。
+2025-10-13 14:17:50,397 - INFO - MainThread - アプリケーションを終了しました。
+2025-10-13 14:18:00,614 - INFO - MainThread - DPI Awareness を Per-Monitor V2 (2) に設定しました。
+2025-10-13 14:18:00,694 - INFO - MainThread - Gemini API クライアントを設定しました。
+2025-10-13 14:18:01,029 - INFO - MainThread - アプリケーションを初期化しました。
+2025-10-13 14:18:01,029 - INFO - MainThread - ウィンドウリストを更新します。
+2025-10-13 14:18:01,031 - INFO - MainThread - 15 個のウィンドウが見つかりました。
+2025-10-13 14:18:01,032 - INFO - MainThread - Geminiモデル 'gemini-2.5-flash' が選択されました。用途: 用途: 短時間動画向け
+2025-10-13 14:18:02,833 - INFO - MainThread - 録画有効状態が変更されました: False
+2025-10-13 14:18:12,106 - INFO - MainThread - prepare_save_folder - UIから取得した初期フォルダ名: ''
+2025-10-13 14:18:12,106 - INFO - MainThread - prepare_save_folder - 現在の作業ディレクトリ: C:\Users\issho\auto_class
+2025-10-13 14:18:12,106 - INFO - MainThread - prepare_save_folder - 保存フォルダ名が指定されなかったため、デフォルト名を生成しました: capture_20251013_141812
+2025-10-13 14:18:12,107 - INFO - MainThread - prepare_save_folder - 相対パスとして解釈し、絶対パスに変換しました (基準: C:\Users\issho\auto_class): C:\Users\issho\auto_class\capture_20251013_141812
+2025-10-13 14:18:12,107 - INFO - MainThread - prepare_save_folder - 最終的な保存先フォルダ (os.makedirs対象): C:\Users\issho\auto_class\capture_20251013_141812
+2025-10-13 14:18:12,107 - INFO - MainThread - prepare_save_folder - os.makedirs を呼び出します: Path='C:\Users\issho\auto_class\capture_20251013_141812', exist_ok=True
+2025-10-13 14:18:12,107 - INFO - MainThread - prepare_save_folder - フォルダを作成しました (または既に存在していました): C:\Users\issho\auto_class\capture_20251013_141812
+2025-10-13 14:18:12,107 - INFO - MainThread - prepare_save_folder - フォルダ作成後の存在確認OK: C:\Users\issho\auto_class\capture_20251013_141812
+2025-10-13 14:18:12,108 - INFO - MainThread - prepare_save_folder - 書き込み権限テストファイルを作成します: C:\Users\issho\auto_class\capture_20251013_141812\.permission_test
+2025-10-13 14:18:12,108 - INFO - MainThread - prepare_save_folder - フォルダへの書き込み権限を確認しました: C:\Users\issho\auto_class\capture_20251013_141812
+2025-10-13 14:18:12,109 - INFO - MainThread - スクリーンショットキャプチャを開始します。対象ウィンドウハンドル: プライマリモニター
+2025-10-13 14:18:12,109 - INFO - ScreenshotThread - スクリーンショットキャプチャループを開始します。対象ウィンドウハンドル: プライマリモニター
+2025-10-13 14:18:12,109 - INFO - MainThread - 録画はユーザー設定によりスキップされます。
+2025-10-13 14:18:12,151 - INFO - ScreenshotThread - 最初のスクリーンショットを保存します。
+2025-10-13 14:18:12,176 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_class\capture_20251013_141812\screenshot_20251013_141812_151.png
+2025-10-13 14:18:16,528 - INFO - MainThread - 全てのタスクの停止処理を開始します。
+2025-10-13 14:18:16,528 - INFO - MainThread - スクリーンショットキャプチャの停止処理を開始します。
+2025-10-13 14:18:16,528 - INFO - MainThread - スクリーンショットキャプチャスレッドの終了を待機します...
+2025-10-13 14:18:17,112 - INFO - ScreenshotThread - スクリーンショットキャプチャループを終了します。
+2025-10-13 14:18:17,115 - INFO - MainThread - スクリーンショットキャプチャスレッドが終了しました。
+2025-10-13 14:18:17,115 - INFO - MainThread - スクリーンショットキャプチャの停止処理を完了しました。
+2025-10-13 14:18:17,115 - INFO - MainThread - スクリーンショットキャプチャを停止しました。
+2025-10-13 14:18:17,117 - INFO - MainThread - 全てのタスクの停止処理を完了しました。
+2025-10-13 14:18:19,707 - INFO - MainThread - ウィンドウが選択されました: (435) How I Sold These 4 AI Agents for $23,000 (as a beginner) - YouTube - Google Chrome (HWND: 66776) (HWND: 66776)
+2025-10-13 14:18:20,680 - INFO - MainThread - prepare_save_folder - UIから取得した初期フォルダ名: 'C:\Users\issho\auto_class\capture_20251013_141812'
+2025-10-13 14:18:20,680 - INFO - MainThread - prepare_save_folder - 現在の作業ディレクトリ: C:\Users\issho\auto_class
+2025-10-13 14:18:20,680 - INFO - MainThread - prepare_save_folder - 入力されたフォルダ名は絶対パスとして扱います: C:\Users\issho\auto_class\capture_20251013_141812
+2025-10-13 14:18:20,680 - INFO - MainThread - prepare_save_folder - 最終的な保存先フォルダ (os.makedirs対象): C:\Users\issho\auto_class\capture_20251013_141812
+2025-10-13 14:18:20,680 - INFO - MainThread - prepare_save_folder - フォルダは既に存在します: C:\Users\issho\auto_class\capture_20251013_141812
+2025-10-13 14:18:20,680 - INFO - MainThread - prepare_save_folder - 書き込み権限テストファイルを作成します: C:\Users\issho\auto_class\capture_20251013_141812\.permission_test
+2025-10-13 14:18:20,681 - INFO - MainThread - prepare_save_folder - フォルダへの書き込み権限を確認しました: C:\Users\issho\auto_class\capture_20251013_141812
+2025-10-13 14:18:20,682 - INFO - MainThread - スクリーンショットキャプチャを開始します。対象ウィンドウハンドル: 66776
+2025-10-13 14:18:20,682 - INFO - ScreenshotThread - スクリーンショットキャプチャループを開始します。対象ウィンドウハンドル: 66776
+2025-10-13 14:18:20,683 - INFO - MainThread - 録画はユーザー設定によりスキップされます。
+2025-10-13 14:18:20,723 - INFO - ScreenshotThread - 最初のスクリーンショットを保存します。
+2025-10-13 14:18:20,752 - INFO - ScreenshotThread - スクリーンショットを保存しました: C:\Users\issho\auto_class\capture_20251013_141812\screenshot_20251013_141820_723.png
+2025-10-13 14:18:27,183 - INFO - MainThread - 全てのタスクの停止処理を開始します。
+2025-10-13 14:18:27,183 - INFO - MainThread - スクリーンショットキャプチャの停止処理を開始します。
+2025-10-13 14:18:27,183 - INFO - MainThread - スクリーンショットキャプチャスレッドの終了を待機します...
+2025-10-13 14:18:27,686 - INFO - ScreenshotThread - スクリーンショットキャプチャループを終了します。
+2025-10-13 14:18:27,688 - INFO - MainThread - スクリーンショットキャプチャスレッドが終了しました。
+2025-10-13 14:18:27,688 - INFO - MainThread - スクリーンショットキャプチャの停止処理を完了しました。
+2025-10-13 14:18:27,688 - INFO - MainThread - スクリーンショットキャプチャを停止しました。
+2025-10-13 14:18:27,689 - INFO - MainThread - 全てのタスクの停止処理を完了しました。
+2025-10-13 14:18:28,813 - INFO - MainThread - アプリケーション終了処理を開始します。
+2025-10-13 14:18:28,866 - INFO - MainThread - アプリケーションを終了しました。
+2025-10-13 14:19:33,307 - INFO - MainThread - DPI Awareness を Per-Monitor V2 (2) に設定しました。
+2025-10-13 14:19:33,393 - INFO - MainThread - Gemini API クライアントを設定しました。
+2025-10-13 14:19:33,836 - INFO - MainThread - アプリケーションを初期化しました。
+2025-10-13 14:19:33,836 - INFO - MainThread - ウィンドウリストを更新します。
+2025-10-13 14:19:33,839 - INFO - MainThread - 15 個のウィンドウが見つかりました。
+2025-10-13 14:19:33,840 - INFO - MainThread - Geminiモデル 'gemini-2.5-flash' が選択されました。用途: 用途: 短時間動画向け
+2025-10-13 14:19:35,570 - INFO - MainThread - 録画有効状態が変更されました: False
+2025-10-13 14:19:36,672 - INFO - MainThread - 録画有効状態が変更されました: True
+2025-10-13 14:19:37,949 - INFO - MainThread - アプリケーション終了処理を開始します。
+2025-10-13 14:19:38,002 - INFO - MainThread - アプリケーションを終了しました。
+2025-10-13 14:19:42,508 - INFO - MainThread - DPI Awareness を Per-Monitor V2 (2) に設定しました。
+2025-10-13 14:19:42,593 - INFO - MainThread - Gemini API クライアントを設定しました。
+2025-10-13 14:19:42,922 - INFO - MainThread - アプリケーションを初期化しました。
+2025-10-13 14:19:42,922 - INFO - MainThread - ウィンドウリストを更新します。
+2025-10-13 14:19:42,924 - INFO - MainThread - 15 個のウィンドウが見つかりました。
+2025-10-13 14:19:42,924 - INFO - MainThread - Geminiモデル 'gemini-2.5-flash' が選択されました。用途: 用途: 短時間動画向け
+2025-10-13 14:19:43,872 - INFO - MainThread - 録画有効状態が変更されました: False
+2025-10-13 14:19:45,178 - INFO - MainThread - スクリーンショット有効状態が変更されました: False
+2025-10-13 14:19:48,589 - INFO - MainThread - スクリーンショット有効状態が変更されました: True
+2025-10-13 14:19:49,261 - INFO - MainThread - 録画有効状態が変更されました: True
+2025-10-13 14:19:50,628 - INFO - MainThread - アプリケーション終了処理を開始します。
+2025-10-13 14:19:50,679 - INFO - MainThread - アプリケーションを終了しました。
+2025-10-13 14:21:13,364 - INFO - MainThread - DPI Awareness を Per-Monitor V2 (2) に設定しました。
+2025-10-13 14:21:13,445 - INFO - MainThread - Gemini API クライアントを設定しました。
+2025-10-13 14:21:13,790 - INFO - MainThread - アプリケーションを初期化しました。
+2025-10-13 14:21:13,791 - INFO - MainThread - ウィンドウリストを更新します。
+2025-10-13 14:21:13,792 - INFO - MainThread - 15 個のウィンドウが見つかりました。
+2025-10-13 14:21:13,793 - INFO - MainThread - Geminiモデル 'gemini-2.5-flash' が選択されました。用途: 用途: 短時間動画向け
+2025-10-13 14:21:14,972 - INFO - MainThread - 録画有効状態が変更されました: False
+2025-10-13 14:21:15,732 - INFO - MainThread - スクリーンショット有効状態が変更されました: False
+2025-10-13 14:21:17,930 - INFO - MainThread - スクリーンショット有効状態が変更されました: True
+2025-10-13 14:21:20,107 - INFO - MainThread - 録画有効状態が変更されました: True
+2025-10-13 14:21:21,729 - INFO - MainThread - 録画有効状態が変更されました: False
+2025-10-13 14:21:22,671 - INFO - MainThread - スクリーンショット有効状態が変更されました: False
+2025-10-13 14:21:24,394 - INFO - MainThread - アプリケーション終了処理を開始します。
+2025-10-13 14:21:24,443 - INFO - MainThread - アプリケーションを終了しました。
