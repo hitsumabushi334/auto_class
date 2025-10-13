@@ -381,7 +381,12 @@ class SlideCaptureApp:
         """録画有効/無効チェックボックスの状態が変更されたときに呼び出される"""
         self.recording_enabled = self.recording_enabled_var.get()
         logger.info(f"録画有効状態が変更されました: {self.recording_enabled}")
-        return "未実装"
+        if not self.recording_enabled and not self.is_recording:
+            self.recording_status_label.config(text="動作を開始できません")
+        elif not self.is_recording:
+            self.recording_status_label.config(text="待機中...")
+
+        self._update_start_button_state()
 
     def on_toggle_capturing(self):
         """スクリーンショット有効/無効チェックボックスの状態が変更されたときに呼び出される"""
@@ -389,7 +394,22 @@ class SlideCaptureApp:
         logger.info(
             f"スクリーンショット有効状態が変更されました: {self.capturing_enabled}"
         )
-        return "未実装"
+        if not self.capturing_enabled and not self.is_capturing_screenshot:
+            self.screenshot_status_label.config(text="動作を開始できません")
+        elif not self.is_capturing_screenshot:
+            self.screenshot_status_label.config(text="待機中...")
+
+        self._update_start_button_state()
+
+    def _update_start_button_state(self):
+        """チェックボックスの状態に応じて開始ボタンの有効・無効を切り替える"""
+        if self.is_capturing_screenshot or self.is_recording:
+            return  # 実行中は start_tasks / stop_all_tasks に任せる
+
+        if not self.recording_enabled and not self.capturing_enabled:
+            self.start_button.config(state=tk.DISABLED)
+        else:
+            self.start_button.config(state=tk.NORMAL)
 
     # --- 統合開始・停止メソッド ---
     def start_tasks(self):
@@ -400,20 +420,63 @@ class SlideCaptureApp:
 
         hwnd = self.selected_window_handle.get()
 
+        if not self.recording_enabled and not self.capturing_enabled:
+            warning_message = (
+                "画面録画とスクリーンショットが両方オフになっています。\n"
+                "少なくとも一方を有効にしてください。"
+            )
+            logger.warning(
+                "タスク開始をブロックしました: 録画・スクリーンショットが共に無効です。"
+            )
+            messagebox.showwarning("処理を開始できません", warning_message)
+            self._update_start_button_state()
+            return
+
         # フォルダ設定は共通で最初に行う
         if not self.prepare_save_folder():
             return
 
-        # スクリーンショットは常に開始
-        self.start_screenshot_capture()
+        tasks_started = False
 
-        # ウィンドウが選択されていれば録画も開始
-        if hwnd != 0:
-            self.start_recording(hwnd)  # 引数でハンドルを渡す
+        if self.capturing_enabled:
+            self.start_screenshot_capture()
+            tasks_started = True
         else:
-            logger.info(
-                "ウィンドウが選択されていないため、スクリーンショットのみ開始します。"
+            logger.info("スクリーンショットはユーザー設定によりスキップされます。")
+            self.screenshot_status_label.config(
+                text="待機中... (スクリーンショットは無効化されています)"
             )
+
+        if self.recording_enabled:
+            if hwnd != 0:
+                self.start_recording(hwnd)  # 引数でハンドルを渡す
+                tasks_started = True
+            else:
+                if self.capturing_enabled:
+                    logger.info(
+                        "録画対象ウィンドウが選択されていないため、スクリーンショットのみ開始します。"
+                    )
+                else:
+                    logger.warning(
+                        "録画が有効ですが録画対象ウィンドウが選択されていないため、録画を開始できません。"
+                    )
+                    messagebox.showwarning(
+                        "録画対象未選択", "録画を開始するにはウィンドウを選択してください。"
+                    )
+                if not self.is_recording:
+                    self.recording_status_label.config(
+                        text="待機中... (録画対象ウィンドウが未選択です)"
+                    )
+        else:
+            logger.info("録画はユーザー設定によりスキップされます。")
+            if not self.is_recording:
+                self.recording_status_label.config(
+                    text="待機中... (録画は無効化されています)"
+                )
+
+        if not tasks_started:
+            self._update_start_button_state()
+            return
 
         # 統合ボタンの状態更新
         self.start_button.config(state=tk.DISABLED)
@@ -959,7 +1022,7 @@ class SlideCaptureApp:
     def _restore_gui_after_note_creation(self):
         """ノート作成後または中断時にGUI操作制限を解除する共通処理"""
         logger.info("GUI操作制限を解除します。")
-        self.start_button.config(state=tk.NORMAL)
+        self._update_start_button_state()
         self.stop_button.config(state=tk.DISABLED)  # 停止ボタンは常に無効で良い
         self.folder_entry.config(state=tk.NORMAL)
         self.refresh_window_list_button.config(state=tk.NORMAL)
@@ -1567,7 +1630,7 @@ class SlideCaptureApp:
             logger.info("スクリーンショットキャプチャを停止しました。")
             # スクリーンショットのみ停止した場合、ノート作成は走らないので、
             # ここでUIを操作可能に戻す。
-            self.start_button.config(state=tk.NORMAL)
+            self._update_start_button_state()
             self.folder_entry.config(state=tk.NORMAL)
             self.refresh_window_list_button.config(state=tk.NORMAL)
             self.window_listbox.config(state=tk.NORMAL)
