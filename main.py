@@ -488,6 +488,12 @@ class SlideCaptureApp:
             self._update_start_button_state()
             return
 
+        # 画面が暗くならないようスリープ防止を有効化
+        try:
+            self._prevent_sleep()
+        except Exception:
+            pass
+
         # 統合ボタンの状態更新
         self.start_button.config(state=tk.DISABLED)
         self.stop_button.config(state=tk.NORMAL)
@@ -1693,6 +1699,11 @@ class SlideCaptureApp:
             self.window_listbox.config(state=tk.NORMAL)
             self.model_combobox.config(state="readonly")
             self._set_checkbox_state(tk.NORMAL)
+            # スリープ設定を元に戻す
+            try:
+                self._restore_sleep()
+            except Exception:
+                pass
             # 閉じるボタンの挙動も元に戻す (ノート作成がない場合)
             if hasattr(self, "original_on_closing"):
                 self.root.protocol("WM_DELETE_WINDOW", self.original_on_closing)
