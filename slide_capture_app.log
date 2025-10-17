@@ -9048,3 +9048,19 @@ google.genai.errors.ClientError: 404 NOT_FOUND. {'error': {'code': 404, 'message
 2025-10-13 14:21:22,671 - INFO - MainThread - スクリーンショット有効状態が変更されました: False
 2025-10-13 14:21:24,394 - INFO - MainThread - アプリケーション終了処理を開始します。
 2025-10-13 14:21:24,443 - INFO - MainThread - アプリケーションを終了しました。
+2025-10-14 11:02:51,966 - INFO - MainThread - DPI Awareness を Per-Monitor V2 (2) に設定しました。
+2025-10-14 11:02:52,784 - WARNING - MainThread - APIキーが設定されていないか、モックキーが使用されています。ノート作成機能は利用できません。
+2025-10-14 11:02:57,822 - INFO - MainThread - アプリケーションを初期化しました。
+2025-10-14 11:02:57,823 - INFO - MainThread - ウィンドウリストを更新します。
+2025-10-14 11:02:57,837 - INFO - MainThread - 11 個のウィンドウが見つかりました。
+2025-10-14 11:02:57,838 - INFO - MainThread - Geminiモデル 'gemini-2.5-flash' が選択されました。用途: 用途: 短時間動画向け
+2025-10-14 11:02:59,889 - INFO - MainThread - アプリケーション終了処理を開始します。
+2025-10-14 11:03:00,006 - INFO - MainThread - アプリケーションを終了しました。
+2025-10-17 12:35:24,409 - INFO - MainThread - DPI Awareness を Per-Monitor V2 (2) に設定しました。
+2025-10-17 12:35:25,116 - WARNING - MainThread - APIキーが設定されていないか、モックキーが使用されています。ノート作成機能は利用できません。
+2025-10-17 12:35:27,063 - INFO - MainThread - アプリケーションを初期化しました。
+2025-10-17 12:35:27,064 - INFO - MainThread - ウィンドウリストを更新します。
+2025-10-17 12:35:27,069 - INFO - MainThread - 8 個のウィンドウが見つかりました。
+2025-10-17 12:35:27,071 - INFO - MainThread - Geminiモデル 'gemini-2.5-flash' が選択されました。用途: 用途: 短時間動画向け
+2025-10-17 12:35:28,488 - INFO - MainThread - アプリケーション終了処理を開始します。
+2025-10-17 12:35:28,585 - INFO - MainThread - アプリケーションを終了しました。

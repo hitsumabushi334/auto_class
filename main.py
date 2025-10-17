@@ -1046,6 +1046,34 @@ class SlideCaptureApp:
             self.root.protocol("WM_DELETE_WINDOW", self.original_on_closing)
         else:
             self.root.protocol("WM_DELETE_WINDOW", self.root.destroy)
+        # スリープ設定を元に戻す
+        try:
+            self._restore_sleep()
+        except Exception:
+            pass
+
+    def _prevent_sleep(self):
+        """Windowsのスリープ/ディスプレイオフを一時的に防止する。"""
+        try:
+            # ES_CONTINUOUS | ES_DISPLAY_REQUIRED | ES_SYSTEM_REQUIRED
+            ES_CONTINUOUS = 0x80000000
+            ES_SYSTEM_REQUIRED = 0x00000001
+            ES_DISPLAY_REQUIRED = 0x00000002
+            windll.kernel32.SetThreadExecutionState(
+                ES_CONTINUOUS | ES_SYSTEM_REQUIRED | ES_DISPLAY_REQUIRED
+            )
+            logger.info("画面スリープ防止を有効化しました。")
+        except Exception as e:
+            logger.exception(f"画面スリープ防止の設定に失敗しました: {e}")
+
+    def _restore_sleep(self):
+        """スリープ制御を元に戻す。"""
+        try:
+            ES_CONTINUOUS = 0x80000000
+            windll.kernel32.SetThreadExecutionState(ES_CONTINUOUS)
+            logger.info("画面スリープ防止を無効化しました。")
+        except Exception as e:
+            logger.exception(f"画面スリープ制御の解除に失敗しました: {e}")
 
     def _save_video_with_audio_background(self, output_filepath):
         """動画保存の成否に応じてUI復元処理を行うラッパー"""
@@ -1073,6 +1101,11 @@ class SlideCaptureApp:
             "WM_DELETE_WINDOW",
             lambda: logger.warning("ノート作成中はウィンドウを閉じられません。"),
         )
+        # 画面が暗くならないようスリープ防止を有効化
+        try:
+            self._prevent_sleep()
+        except Exception:
+            pass
         # --- ここまで ---
 
         # バリデーションチェック: APIクライアントの確認
