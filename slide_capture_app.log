@@ -9064,3 +9064,180 @@ google.genai.errors.ClientError: 404 NOT_FOUND. {'error': {'code': 404, 'message
 2025-10-17 12:35:27,071 - INFO - MainThread - Geminiモデル 'gemini-2.5-flash' が選択されました。用途: 用途: 短時間動画向け
 2025-10-17 12:35:28,488 - INFO - MainThread - アプリケーション終了処理を開始します。
 2025-10-17 12:35:28,585 - INFO - MainThread - アプリケーションを終了しました。
+2025-10-17 16:42:17,724 - INFO - MainThread - DPI Awareness を Per-Monitor V2 (2) に設定しました。
+2025-10-17 16:42:18,027 - WARNING - MainThread - APIキーが設定されていないか、モックキーが使用されています。ノート作成機能は利用できません。
+2025-10-17 16:42:22,271 - INFO - MainThread - アプリケーションを初期化しました。
+2025-10-17 16:42:22,271 - INFO - MainThread - ウィンドウリストを更新します。
+2025-10-17 16:42:22,276 - INFO - MainThread - 9 個のウィンドウが見つかりました。
+2025-10-17 16:42:22,278 - INFO - MainThread - Geminiモデル 'gemini-2.5-flash' が選択されました。用途: 用途: 短時間動画向け
+2025-10-17 16:42:43,723 - INFO - MainThread - スクリーンショット有効状態が変更されました: False
+2025-10-17 16:42:52,530 - INFO - MainThread - ウィンドウリストを更新します。
+2025-10-17 16:42:52,535 - INFO - MainThread - 9 個のウィンドウが見つかりました。
+2025-10-17 16:42:53,175 - INFO - MainThread - ウィンドウが選択されました: 25-4-0223: 第２回　科学技術に対する評価 - Google Chrome (HWND: 132256) (HWND: 132256)
+2025-10-17 16:42:54,521 - INFO - MainThread - prepare_save_folder - UIから取得した初期フォルダ名: ''
+2025-10-17 16:42:54,521 - INFO - MainThread - prepare_save_folder - 現在の作業ディレクトリ: C:\auto_class
+2025-10-17 16:42:54,522 - INFO - MainThread - prepare_save_folder - 保存フォルダ名が指定されなかったため、デフォルト名を生成しました: capture_20251017_164254
+2025-10-17 16:42:54,522 - INFO - MainThread - prepare_save_folder - 相対パスとして解釈し、絶対パスに変換しました (基準: C:\auto_class): C:\auto_class\capture_20251017_164254
+2025-10-17 16:42:54,523 - INFO - MainThread - prepare_save_folder - 最終的な保存先フォルダ (os.makedirs対象): C:\auto_class\capture_20251017_164254
+2025-10-17 16:42:54,523 - INFO - MainThread - prepare_save_folder - os.makedirs を呼び出します: Path='C:\auto_class\capture_20251017_164254', exist_ok=True
+2025-10-17 16:42:54,524 - INFO - MainThread - prepare_save_folder - フォルダを作成しました (または既に存在していました): C:\auto_class\capture_20251017_164254
+2025-10-17 16:42:54,524 - INFO - MainThread - prepare_save_folder - フォルダ作成後の存在確認OK: C:\auto_class\capture_20251017_164254
+2025-10-17 16:42:54,524 - INFO - MainThread - prepare_save_folder - 書き込み権限テストファイルを作成します: C:\auto_class\capture_20251017_164254\.permission_test
+2025-10-17 16:42:54,527 - INFO - MainThread - prepare_save_folder - フォルダへの書き込み権限を確認しました: C:\auto_class\capture_20251017_164254
+2025-10-17 16:42:54,527 - INFO - MainThread - スクリーンショットはユーザー設定によりスキップされます。
+2025-10-17 16:42:54,528 - INFO - MainThread - 録画を開始します。対象ウィンドウハンドル: 132256
+2025-10-17 16:42:54,529 - INFO - MainThread - 一時ファイル保存先: C:\auto_class\capture_20251017_164254\_temp_frames
+2025-10-17 16:42:54,531 - INFO - RecordingThread - 録画ループを開始します。対象ウィンドウハンドル: 132256
+2025-10-17 16:42:54,536 - INFO - AudioRecordingThread - 音声録音ループ (SoundCard) を開始します
+2025-10-17 16:42:54,537 - INFO - MainThread - 画面スリープ防止を有効化しました。
+2025-10-17 16:42:54,609 - INFO - RecordingThread - 対象ウィンドウの位置とサイズ: (1920, 0, 1600, 900)
+2025-10-17 16:42:54,786 - INFO - AudioRecordingThread - 取得したマイクデバイス: Speaker (Realtek(R) Audio)
+2025-10-17 16:42:54,787 - INFO - AudioRecordingThread - マイクデバイスの型: <class 'soundcard.mediafoundation._Microphone'>
+2025-10-17 16:42:54,788 - INFO - AudioRecordingThread - デバイス情報 - サンプルレート: 48000, チャンネル数: 2
+2025-10-17 16:42:54,795 - INFO - AudioRecordingThread - 音声データ一時ファイル: C:\auto_class\capture_20251017_164254\_temp_audio.raw
+2025-10-17 16:42:54,904 - INFO - AudioRecordingThread - レコーダーオブジェクトの型: <class 'soundcard.mediafoundation._Recorder'>
+2025-10-17 16:42:54,906 - INFO - AudioRecordingThread - 録音中: Speaker (Realtek(R) Audio) (ループバック)
+2025-10-17 16:42:54,996 - WARNING - AudioRecordingThread - C:\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-10-17 16:42:55,003 - WARNING - AudioRecordingThread - C:\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-10-17 16:42:55,004 - WARNING - AudioRecordingThread - C:\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-10-17 16:42:55,706 - WARNING - AudioRecordingThread - C:\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-10-17 16:42:55,716 - WARNING - AudioRecordingThread - C:\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-10-17 16:42:56,713 - WARNING - AudioRecordingThread - C:\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-10-17 16:42:57,711 - WARNING - AudioRecordingThread - C:\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-10-17 16:42:58,711 - WARNING - AudioRecordingThread - C:\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-10-17 16:42:59,707 - WARNING - AudioRecordingThread - C:\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-10-17 16:42:59,722 - WARNING - AudioRecordingThread - C:\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-10-17 16:43:00,713 - WARNING - AudioRecordingThread - C:\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-10-17 16:43:01,725 - WARNING - AudioRecordingThread - C:\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-10-17 16:43:01,742 - WARNING - AudioRecordingThread - C:\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-10-17 16:43:02,722 - WARNING - AudioRecordingThread - C:\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-10-17 16:43:02,738 - WARNING - AudioRecordingThread - C:\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-10-17 16:43:03,707 - WARNING - AudioRecordingThread - C:\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-10-17 16:43:03,776 - INFO - RecordingThread - 録画フレーム数: 10, 経過時間: 9.00秒
+2025-10-17 16:43:04,696 - WARNING - AudioRecordingThread - C:\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-10-17 16:43:05,708 - WARNING - AudioRecordingThread - C:\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-10-17 16:43:06,696 - WARNING - AudioRecordingThread - C:\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-10-17 16:43:07,703 - WARNING - AudioRecordingThread - C:\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-10-17 16:43:07,716 - WARNING - AudioRecordingThread - C:\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-10-17 16:43:09,687 - WARNING - AudioRecordingThread - C:\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-10-17 16:43:13,722 - INFO - RecordingThread - 録画フレーム数: 20, 経過時間: 19.00秒
+2025-10-17 16:43:16,685 - WARNING - AudioRecordingThread - C:\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-10-17 16:43:17,708 - WARNING - AudioRecordingThread - C:\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-10-17 16:43:17,712 - WARNING - AudioRecordingThread - C:\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-10-17 16:43:18,700 - WARNING - AudioRecordingThread - C:\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-10-17 16:43:19,685 - WARNING - AudioRecordingThread - C:\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-10-17 16:43:20,692 - WARNING - AudioRecordingThread - C:\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-10-17 16:43:21,704 - WARNING - AudioRecordingThread - C:\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-10-17 16:43:22,707 - WARNING - AudioRecordingThread - C:\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-10-17 16:43:22,789 - WARNING - AudioRecordingThread - C:\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-10-17 16:43:22,809 - WARNING - AudioRecordingThread - C:\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-10-17 16:43:22,842 - WARNING - AudioRecordingThread - C:\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-10-17 16:43:22,861 - WARNING - AudioRecordingThread - C:\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-10-17 16:43:23,704 - WARNING - AudioRecordingThread - C:\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-10-17 16:43:23,780 - INFO - RecordingThread - 録画フレーム数: 30, 経過時間: 29.00秒
+2025-10-17 16:43:24,695 - WARNING - AudioRecordingThread - C:\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2025-10-17 16:43:25,074 - INFO - MainThread - 全てのタスクの停止処理を開始します。
+2025-10-17 16:43:25,074 - INFO - MainThread - 録画停止処理を開始します。
+2025-10-17 16:43:25,074 - INFO - MainThread - 録画スレッドの終了を待機します...
+2025-10-17 16:43:25,098 - INFO - AudioRecordingThread - 音声一時ファイルを閉じました
+2025-10-17 16:43:25,099 - INFO - AudioRecordingThread - 音声録音ループ (SoundCard) を終了します
+2025-10-17 16:43:25,623 - INFO - RecordingThread - 録画ループを終了します。合計フレーム数: 31
+2025-10-17 16:43:25,630 - INFO - MainThread - 録画スレッドが終了しました。
+2025-10-17 16:43:25,632 - INFO - MainThread - 動画ファイルの保存を開始します: C:\auto_class\capture_20251017_164254\recording_20251017_164325.mp4
+2025-10-17 16:43:25,635 - INFO - MainThread - 動画保存スレッドを開始しました。
+2025-10-17 16:43:25,636 - INFO - MainThread - 録画停止処理を完了しました。
+2025-10-17 16:43:25,636 - INFO - MainThread - 録画を停止しました。動画保存とノート作成がバックグラウンドで実行されます（成功した場合）。
+2025-10-17 16:43:25,637 - INFO - MainThread - 全てのタスクの停止処理を完了しました。
+2025-10-17 16:43:25,638 - INFO - VideoSaveThread - 合計 31 フレームを動画クリップに使用します。
+2025-10-17 16:43:25,641 - INFO - VideoSaveThread - 推定FPS: 1.00
+2025-10-17 16:43:27,996 - INFO - VideoSaveThread - 音声ファイルを読み込みます: C:\auto_class\capture_20251017_164254\_temp_audio.raw
+2025-10-17 16:43:28,030 - INFO - VideoSaveThread - 音声データを読み込みました。サンプル数: 2875392, dtype: float32
+2025-10-17 16:43:28,030 - INFO - VideoSaveThread - 1次元の音声配列を2チャンネルに整形します。
+2025-10-17 16:43:28,031 - WARNING - VideoSaveThread - 音声クリップ (29.95s) が動画クリップ (31.00s) より短いです。
+2025-10-17 16:43:28,032 - INFO - VideoSaveThread - AudioArrayClipを作成しました。Duration: 29.95秒
+2025-10-17 16:43:28,033 - INFO - VideoSaveThread - 動画と音声を結合しました。
+2025-10-17 16:43:28,034 - INFO - VideoSaveThread - 動画ファイルを書き出します: C:\auto_class\capture_20251017_164254\recording_20251017_164325.mp4
+2025-10-17 16:43:34,935 - INFO - VideoSaveThread - 動画ファイルを保存しました: C:\auto_class\capture_20251017_164254\recording_20251017_164325.mp4
+2025-10-17 16:43:34,937 - INFO - VideoSaveThread - 動画保存成功、ノート作成をトリガーします: C:\auto_class\capture_20251017_164254\recording_20251017_164325.mp4
+2025-10-17 16:43:34,949 - INFO - MainThread - ノート作成開始: GUI操作を制限します。
+2025-10-17 16:43:34,960 - INFO - MainThread - 画面スリープ防止を有効化しました。
+2025-10-17 16:43:34,971 - WARNING - MainThread - Gemini API クライアントが設定されていないため、ノート作成を開始できません。
+2025-10-17 16:43:34,974 - INFO - MainThread - GUI操作制限を解除します。
+2025-10-17 16:43:34,997 - INFO - VideoSaveThread - 一時フレームディレクトリを削除しました: C:\auto_class\capture_20251017_164254\_temp_frames
+2025-10-17 16:43:35,020 - INFO - VideoSaveThread - 一時音声ファイルを削除しました: C:\auto_class\capture_20251017_164254\_temp_audio.raw
+2025-10-17 16:43:35,030 - INFO - VideoSaveThread - 動画保存処理を終了します。
+2025-10-17 16:43:35,063 - INFO - MainThread - 画面スリープ防止を無効化しました。
+2025-10-17 16:44:48,578 - INFO - MainThread - アプリケーション終了処理を開始します。
+2025-10-17 16:44:48,710 - INFO - MainThread - アプリケーションを終了しました。

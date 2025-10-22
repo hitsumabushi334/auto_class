@@ -517,8 +517,17 @@ class SlideCaptureApp:
             return
 
         logger.info(f"録画を開始します。対象ウィンドウハンドル: {hwnd}")
+
+        # 一時ファイル用ディレクトリを準備
+        save_folder = self.save_folder_name.get()
+        self.temp_frames_dir = os.path.join(save_folder, "_temp_frames")
+        os.makedirs(self.temp_frames_dir, exist_ok=True)
+        self.temp_audio_file = os.path.join(save_folder, "_temp_audio.raw")
+        logger.info(f"一時ファイル保存先: {self.temp_frames_dir}")
+
         # 録画スレッドを開始
-        self.recorded_frames = []  # フレームリストを初期化
+        self.frame_count = 0  # フレームカウンタ
+        self.frame_timestamps = []  # タイムスタンプのみメモリに保持
         self.recording_thread = threading.Thread(
             target=self.recording_loop,
             args=(hwnd,),
@@ -529,7 +538,7 @@ class SlideCaptureApp:
         self.recording_thread.start()
 
         # 音声録音スレッドを開始
-        self.audio_queue = queue.Queue()  # キューを初期化
+        self.audio_file_handle = None  # 音声ファイルハンドル
         self.audio_recording_thread = threading.Thread(
             target=self.audio_recording_loop, name="AudioRecordingThread", daemon=True
         )
@@ -543,7 +552,7 @@ class SlideCaptureApp:
         self.update_recording_status()  # ステータス更新開始
 
     def recording_loop(self, hwnd):
-        """指定されたウィンドウのフレームを1FPSで録画するループ処理"""
+        """指定されたウィンドウのフレームを1FPSで録画するループ処理（メモリ効率改善版）"""
         logger.info(f"録画ループを開始します。対象ウィンドウハンドル: {hwnd}")
 
         try:
@@ -569,7 +578,7 @@ class SlideCaptureApp:
 
             # 録画開始時刻を記録
             start_time = time.time()
-            frame_count = 0
+            local_frame_count = 0
 
             while self.is_recording:
                 # --- ウィンドウ存在チェック ---
@@ -597,19 +606,31 @@ class SlideCaptureApp:
                     frame = np.array(img)
                     frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
 
-                    # フレームを保存
+                    # フレームをディスクに保存（メモリに保持しない）
                     if frame is not None and frame.size > 0:
-                        self.recorded_frames.append((frame, elapsed_time))
-                        frame_count += 1
-                        if frame_count % 10 == 0:  # 10フレームごとにログ出力
-                            logger.info(
-                                f"録画フレーム数: {frame_count}, 経過時間: {elapsed_time:.2f}秒"
-                            )
+                        frame_filename = os.path.join(
+                            self.temp_frames_dir, f"frame_{local_frame_count:06d}.png"
+                        )
+                        # PNG形式でエンコードして保存（日本語パス対応）
+                        success, buffer = cv2.imencode(".png", frame)
+                        if success:
+                            with open(frame_filename, "wb") as f:
+                                f.write(buffer)
+                            self.frame_timestamps.append(elapsed_time)
+                            local_frame_count += 1
+                            self.frame_count = local_frame_count
+
+                            if local_frame_count % 10 == 0:  # 10フレームごとにログ出力
+                                logger.info(
+                                    f"録画フレーム数: {local_frame_count}, 経過時間: {elapsed_time:.2f}秒"
+                                )
+                        else:
+                            logger.warning("フレームのエンコードに失敗しました")
                     else:
                         logger.warning("無効なフレームがスキップされました")
 
                     # 次のフレームタイミングまで待機（1FPS）
-                    next_frame_time = start_time + (frame_count * 1.0)  # 1秒間隔
+                    next_frame_time = start_time + (local_frame_count * 1.0)  # 1秒間隔
                     sleep_time = max(0, next_frame_time - time.time())
                     if sleep_time > 0:
                         time.sleep(sleep_time)
@@ -624,12 +645,10 @@ class SlideCaptureApp:
             self.error_occurred_in_recording_thread = True
 
         finally:
-            logger.info(
-                f"録画ループを終了します。合計フレーム数: {len(self.recorded_frames)}"
-            )
+            logger.info(f"録画ループを終了します。合計フレーム数: {self.frame_count}")
 
     def audio_recording_loop(self):
-        """SoundCardを使用してシステムサウンド (ループバック) を録音するループ"""
+        """SoundCardを使用してシステムサウンド (ループバック) を録音するループ（メモリ効率改善版）"""
         logger.info("音声録音ループ (SoundCard) を開始します")
         num_frames = 1024  # 一度に読み取るサンプル数 (SoundCardの推奨値に合わせる)
 
@@ -660,6 +679,10 @@ class SlideCaptureApp:
                 logger.warning(
                     f"デフォルト値を使用します - サンプルレート: {self.audio_sample_rate}, チャンネル数: {self.audio_channels}"
                 )
+
+            # 音声データを一時ファイルに書き出す
+            self.audio_file_handle = open(self.temp_audio_file, "wb")
+            logger.info(f"音声データ一時ファイル: {self.temp_audio_file}")
 
             with microphone_device.recorder(
                 samplerate=self.audio_sample_rate,  # デバイスから取得した値を使用
@@ -703,7 +726,9 @@ class SlideCaptureApp:
                             # --- ここまで追加 ---
 
                             # SoundCard は float32 の NumPy 配列を返す
-                            self.audio_queue.put(data)
+                            # メモリに保持せず、直接ファイルに書き出す
+                            if self.audio_file_handle:
+                                data.tofile(self.audio_file_handle)
                         else:
                             logger.warning(
                                 "SoundCard から None または空のデータが返されました。"
@@ -711,7 +736,7 @@ class SlideCaptureApp:
                             time.sleep(0.01)  # 少し待機
                     except Exception as e:
                         logger.exception(
-                            f"音声データ読み取り/キュー追加中にエラー: {e}"
+                            f"音声データ読み取り/ファイル書き出し中にエラー: {e}"
                         )
                         self.error_occurred_in_recording_thread = True
                         break  # ループ中断
@@ -725,169 +750,151 @@ class SlideCaptureApp:
             self.error_occurred_in_recording_thread = True
 
         finally:
+            # 音声ファイルを閉じる
+            if self.audio_file_handle:
+                try:
+                    self.audio_file_handle.close()
+                    logger.info("音声一時ファイルを閉じました")
+                except Exception as e:
+                    logger.error(f"音声ファイルのクローズに失敗: {e}")
             logger.info("音声録音ループ (SoundCard) を終了します")
 
     def _save_video_with_audio(self, output_filepath):
-        """録画されたフレームと音声データからMoviePyを使って動画ファイルを生成・保存し、成功したらノート作成をトリガーする"""
-        if not self.recorded_frames:
+        """録画されたフレームと音声データからMoviePyを使って動画ファイルを生成・保存し、成功したらノート作成をトリガーする（メモリ効率改善版）"""
+        if self.frame_count == 0:
             logger.error("保存するフレームがありません")
             return False
 
-        # 音声データが存在するか確認し、連結する
-        audio_data = []
-        if not self.audio_queue.empty():
-            while not self.audio_queue.empty():
-                audio_data.append(self.audio_queue.get())
-
-        audio_array = None
-        if audio_data:
-            try:
-                audio_array = np.concatenate(audio_data)
-                logger.info(
-                    f"音声データを連結しました。サンプル数: {len(audio_array)}, dtype: {audio_array.dtype}"
-                )
-            except ValueError as e:
-                logger.error(f"音声データの連結に失敗しました: {e}")
-                audio_array = None  # エラー時は音声なしとする
         video_clip = None  # 初期化
         audio_clip = None  # 初期化
         final_clip = None  # 初期化
+
         try:
             # 保存先のディレクトリを確認
             output_dir = os.path.dirname(output_filepath)
             if not os.path.exists(output_dir):
                 os.makedirs(output_dir, exist_ok=True)
 
-            # フレームの情報を取得 (BGR -> RGBに変換)
-            frames_rgb = []
-            timestamps = []
-            first_frame_shape = None
-            for frame_bgr, ts in self.recorded_frames:
-                if frame_bgr is not None and frame_bgr.size > 0:
-                    try:
-                        frame_rgb = cv2.cvtColor(frame_bgr, cv2.COLOR_BGR2RGB)
-                        if first_frame_shape is None:
-                            first_frame_shape = frame_rgb.shape
-                        # フレームサイズが異なる場合はリサイズ (最初のフレームに合わせる)
-                        if frame_rgb.shape != first_frame_shape:
-                            logger.warning(
-                                f"フレームサイズが異なります。リサイズします: {frame_rgb.shape} -> {first_frame_shape}"
-                            )
-                            frame_rgb = cv2.resize(
-                                frame_rgb, (first_frame_shape[1], first_frame_shape[0])
-                            )
-                        frames_rgb.append(frame_rgb)
-                        timestamps.append(ts)
-                    except cv2.error as e:
-                        logger.error(
-                            f"フレームのRGB変換中にエラー: {e}. スキップします。"
-                        )
+            # フレーム画像のパスリストを作成
+            frame_files = []
+            for i in range(self.frame_count):
+                frame_filename = os.path.join(
+                    self.temp_frames_dir, f"frame_{i:06d}.png"
+                )
+                if os.path.exists(frame_filename):
+                    frame_files.append(frame_filename)
                 else:
-                    logger.warning("None または空のフレームをスキップしました。")
+                    logger.warning(
+                        f"フレームファイルが見つかりません: {frame_filename}"
+                    )
 
-            if not frames_rgb:
-                logger.error("有効なフレームがありませんでした。動画を保存できません。")
+            if not frame_files:
+                logger.error(
+                    "有効なフレームファイルがありませんでした。動画を保存できません。"
+                )
                 return False
 
-            logger.info(f"合計 {len(frames_rgb)} フレームを動画クリップに使用します。")
+            logger.info(f"合計 {len(frame_files)} フレームを動画クリップに使用します。")
 
-            # フレーム間の時間を計算してFPSを推定 (MoviePyは可変FPSを直接扱えないため)
-            if len(timestamps) > 1:
-                avg_interval = np.mean(np.diff(timestamps))
+            # フレーム間の時間を計算してFPSを推定
+            if len(self.frame_timestamps) > 1:
+                avg_interval = np.mean(np.diff(self.frame_timestamps))
                 fps = 1.0 / avg_interval if avg_interval > 0 else 1.0
                 logger.info(f"推定FPS: {fps:.2f}")
             else:
                 fps = 1.0  # フレームが1つしかない場合
                 logger.warning("フレームが1つしかないため、FPSを1.0に設定します。")
 
-            # MoviePyのVideoClipを作成
-            video_clip = mpe.ImageSequenceClip(frames_rgb, fps=fps)
+            # MoviePyのVideoClipを作成（ファイルから直接読み込み）
+            video_clip = mpe.ImageSequenceClip(frame_files, fps=fps)
 
             # 音声データがある場合、AudioClipを作成して結合
             audio_clip = None
             final_clip = video_clip  # デフォルトは音声なし
-            if audio_array is not None and self.audio_sample_rate is not None:
+
+            # 音声ファイルが存在するか確認
+            if (
+                os.path.exists(self.temp_audio_file)
+                and os.path.getsize(self.temp_audio_file) > 0
+            ):
                 try:
-                    # MoviePyは通常、[-1, 1]の範囲のfloatを期待する
-                    # SoundCardが返すデータ形式を確認し、必要なら正規化
-                    if audio_array.dtype != np.float32:
-                        logger.warning(
-                            f"音声データのdtypeがfloat32ではありません: {audio_array.dtype}。変換を試みます。"
+                    logger.info(f"音声ファイルを読み込みます: {self.temp_audio_file}")
+                    # 音声データをファイルから読み込む
+                    audio_array = np.fromfile(self.temp_audio_file, dtype=np.float32)
+
+                    if audio_array.size > 0 and self.audio_sample_rate is not None:
+                        logger.info(
+                            f"音声データを読み込みました。サンプル数: {len(audio_array)}, dtype: {audio_array.dtype}"
                         )
-                        # 必要に応じて型変換や正規化を行う (例: int16 -> float32)
-                        # この例では float32 を想定
-                        pass  # 必要ならここに変換処理を追加
 
-                    # チャンネル数が1の場合、ステレオに変換 (MoviePyがステレオを期待する場合がある)
-                    # if self.audio_channels == 1 and audio_array.ndim == 1:
-                    #      audio_array = np.column_stack((audio_array, audio_array))
-                    #      logger.info("モノラル音声をステレオに変換しました。")
-
-                    # 音声配列の形状を確認・整形
-                    if audio_array.ndim == 1 and self.audio_channels == 2:
-                        # モノラルデータが連結されて1次元になっている場合、2チャンネルに整形
-                        logger.warning("1次元の音声配列を2チャンネルに整形します。")
-                        try:
-                            audio_array = audio_array.reshape(-1, self.audio_channels)
-                        except ValueError as reshape_err:
-                            logger.error(
-                                f"音声配列の整形に失敗しました: {reshape_err}。音声なしで続行します。"
-                            )
-                            audio_array = None
-                    elif audio_array.ndim == 1 and self.audio_channels == 1:
-                        # 1チャンネルの場合はそのままで良いことが多い
-                        pass
-                    elif (
-                        audio_array.ndim == 2
-                        and audio_array.shape[1] == self.audio_channels
-                    ):
-                        # 既に正しい形式
-                        pass
-                    else:
-                        logger.error(
-                            f"音声配列の形状 ({audio_array.shape}) がチャンネル数 ({self.audio_channels}) と一致しません。音声なしで続行します。"
-                        )
-                        audio_array = None  # 不正な場合は音声なしに
-
-                    if audio_array is not None:
-                        try:
-                            # AudioArrayClip を直接使用 (mpe. ではなく)
-                            audio_clip = AudioArrayClip(
-                                audio_array, fps=self.audio_sample_rate
-                            )
-                            # 動画の長さに合わせて音声クリップの長さを調整
-                            if audio_clip.duration > video_clip.duration:
-                                audio_clip = audio_clip.subclip(0, video_clip.duration)
-                            elif audio_clip.duration < video_clip.duration:
-                                # 必要に応じて無音を追加するか、動画を短くする
-                                logger.warning(
-                                    f"音声クリップ ({audio_clip.duration:.2f}s) が動画クリップ ({video_clip.duration:.2f}s) より短いです。"
+                        # 音声配列の形状を確認・整形
+                        if audio_array.ndim == 1 and self.audio_channels == 2:
+                            # モノラルデータが連結されて1次元になっている場合、2チャンネルに整形
+                            logger.info("1次元の音声配列を2チャンネルに整形します。")
+                            try:
+                                audio_array = audio_array.reshape(
+                                    -1, self.audio_channels
                                 )
-                                # audio_clip = audio_clip.set_duration(video_clip.duration) # 最後のフレームを繰り返す場合
-                                pass  # そのまま結合する
+                            except ValueError as reshape_err:
+                                logger.error(
+                                    f"音声配列の整形に失敗しました: {reshape_err}。音声なしで続行します。"
+                                )
+                                audio_array = None
+                        elif audio_array.ndim == 1 and self.audio_channels == 1:
+                            # 1チャンネルの場合はそのままで良いことが多い
+                            pass
+                        elif (
+                            audio_array.ndim == 2
+                            and audio_array.shape[1] == self.audio_channels
+                        ):
+                            # 既に正しい形式
+                            pass
+                        else:
+                            logger.error(
+                                f"音声配列の形状 ({audio_array.shape}) がチャンネル数 ({self.audio_channels}) と一致しません。音声なしで続行します。"
+                            )
+                            audio_array = None  # 不正な場合は音声なしに
 
-                            logger.info(
-                                f"AudioArrayClipを作成しました。Duration: {audio_clip.duration:.2f}秒"
+                        if audio_array is not None:
+                            try:
+                                # AudioArrayClip を直接使用
+                                audio_clip = AudioArrayClip(
+                                    audio_array, fps=self.audio_sample_rate
+                                )
+                                # 動画の長さに合わせて音声クリップの長さを調整
+                                if audio_clip.duration > video_clip.duration:
+                                    audio_clip = audio_clip.subclip(
+                                        0, video_clip.duration
+                                    )
+                                elif audio_clip.duration < video_clip.duration:
+                                    # 必要に応じて無音を追加するか、動画を短くする
+                                    logger.warning(
+                                        f"音声クリップ ({audio_clip.duration:.2f}s) が動画クリップ ({video_clip.duration:.2f}s) より短いです。"
+                                    )
+
+                                logger.info(
+                                    f"AudioArrayClipを作成しました。Duration: {audio_clip.duration:.2f}秒"
+                                )
+                                final_clip = video_clip.set_audio(audio_clip)
+                                logger.info("動画と音声を結合しました。")
+                            except Exception as audio_clip_err:
+                                logger.exception(
+                                    f"AudioArrayClipの作成または結合中にエラー: {audio_clip_err}"
+                                )
+                                final_clip = video_clip  # エラー時は音声なし
+                        else:
+                            final_clip = (
+                                video_clip  # 整形失敗などで音声なしになった場合
                             )
-                            final_clip = video_clip.set_audio(audio_clip)
-                            logger.info("動画と音声を結合しました。")
-                        except Exception as audio_clip_err:
-                            logger.exception(
-                                f"AudioArrayClipの作成または結合中にエラー: {audio_clip_err}"
-                            )
-                            final_clip = video_clip  # エラー時は音声なし
+                            logger.info("音声データが不正なため、動画のみ保存します。")
                     else:
-                        final_clip = video_clip  # 整形失敗などで音声なしになった場合
-                        logger.info("音声データが不正なため、動画のみ保存します。")
+                        logger.info("音声データが空のため、動画のみ保存します。")
 
                 except Exception as e:
                     logger.exception(f"音声処理中に予期せぬエラーが発生しました: {e}")
                     final_clip = video_clip  # エラー時は音声なしで保存
             else:
-                # final_clip = video_clip # audio_array や sample_rate がない場合 (既に上で設定済み)
-                logger.info(
-                    "音声データまたはサンプルレートがないため、動画のみ保存します。"
-                )
+                logger.info("音声データファイルが存在しないため、動画のみ保存します。")
 
             # 動画ファイルを書き出し
             logger.info(f"動画ファイルを書き出します: {output_filepath}")
@@ -959,6 +966,32 @@ class SlideCaptureApp:
                 audio_clip.close()
             if "final_clip" in locals() and final_clip:
                 final_clip.close()
+
+            # 一時ファイルをクリーンアップ
+            try:
+                if hasattr(self, "temp_frames_dir") and os.path.exists(
+                    self.temp_frames_dir
+                ):
+                    import shutil
+
+                    shutil.rmtree(self.temp_frames_dir, ignore_errors=True)
+                    logger.info(
+                        f"一時フレームディレクトリを削除しました: {self.temp_frames_dir}"
+                    )
+            except Exception as cleanup_err:
+                logger.error(f"一時フレームディレクトリの削除に失敗: {cleanup_err}")
+
+            try:
+                if hasattr(self, "temp_audio_file") and os.path.exists(
+                    self.temp_audio_file
+                ):
+                    os.remove(self.temp_audio_file)
+                    logger.info(
+                        f"一時音声ファイルを削除しました: {self.temp_audio_file}"
+                    )
+            except Exception as cleanup_err:
+                logger.error(f"一時音声ファイルの削除に失敗: {cleanup_err}")
+
             logger.info("動画保存処理を終了します。")
 
     def stop_recording(self):
@@ -992,7 +1025,7 @@ class SlideCaptureApp:
         # ボタン状態は stop_all_tasks で制御
 
         # 動画ファイルを保存
-        if self.recorded_frames:
+        if self.frame_count > 0:
             now = datetime.now().strftime("%Y%m%d_%H%M%S")
             output_filename = f"recording_{now}.mp4"
             # ★★★ 保存パスは self.save_folder_name.get() から取得 ★★★
