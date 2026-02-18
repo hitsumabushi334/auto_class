@@ -13,3 +13,6 @@ wheels/
 autoclass
 # Virtual environments
 .venv
+Results/
+.serena/
+.agent/

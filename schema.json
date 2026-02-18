@@ -1,0 +1,246 @@
+{
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "動画（講義）のタイトル"
+    },
+    "summary": {
+      "type": "string",
+      "description": "動画全体の要約（目安: 3000字以内）。講義の主張・流れ・結論が分かる形で。"
+    },
+    "topics": {
+      "type": "array",
+      "description": "動画内のトピック",
+      "items": {
+        "type": "object",
+        "properties": {
+          "topic_title": {
+            "type": "string",
+            "description": "トピックのタイトル"
+          },
+          "topic_time_range": {
+            "type": "object",
+            "description": "そのトピックに関するタイムスタンプ（取れる場合のみ）。",
+            "properties": {
+              "start_time": {
+                "type": "string",
+                "description": "動画でのトピックの開始時間（フォーマット:MM:SS）。例: 12:34"
+              },
+              "end_time": {
+                "type": "string",
+                "description": "動画でのトピックの終了時間（フォーマット:MM:SS）。例: 18:02"
+              }
+            },
+            "required": ["start_time", "end_time"],
+            "propertyOrdering": ["start_time", "end_time"]
+          },
+          "topic_keywords": {
+            "type": "array",
+            "description": "検索用キーワード（任意）。無ければ空配列。",
+            "items": {
+              "type": "string"
+            }
+          },
+          "topic_summary": {
+            "type": "string",
+            "description": "トピック要約（目安: 1000字以内）。「〜について説明しています」のようなメタ的紹介文ではなく、論点・主張・結論を含んだ具体的な内容の要約を記述する。"
+          },
+          "topic_points": {
+            "type": "array",
+            "description": "重要ポイント（箇条書き）。“暗記”ではなく“理解の支点”になる粒度で。",
+            "items": {
+              "type": "string"
+            }
+          },
+          "important_knowledge": {
+            "type": "array",
+            "description": "このトピックで“重要だから残す知識”。初出かどうかは厳密に判定せず、重要性優先。含める内容の例: 定義/概念、前提条件、手順/アルゴリズム、式/関係、例（適用ケース）、落とし穴（誤解しやすい点）。",
+            "items": {
+              "type": "object",
+              "properties": {
+                "statement": {
+                  "type": "string",
+                  "description": "知識の核（1〜2文で言い切り）"
+                },
+                "explanation": {
+                  "type": "string",
+                  "description": "大学生向けの補足説明（なぜ重要か、成立条件、使いどころ等）。長文化しない。"
+                },
+                "source": {
+                  "type": "string",
+                  "description": "出所: lecture_explicit=講義で明示 / lecture_inferred=講義内容から推論 / model_background=一般知識補完（講義で言っていない可能性あり）",
+                  "enum": [
+                    "lecture_explicit",
+                    "lecture_inferred",
+                    "model_background"
+                  ]
+                },
+                "evidence": {
+                  "type": "object",
+                  "description": "動画内で根拠が触れられている部分のタイムスタンプ。確実でない場合は空配列（捏造を避ける）。",
+                  "properties": {
+                    "start_time": {
+                      "type": "string",
+                      "description": "根拠の開始時間（MM:SS）"
+                    },
+                    "end_time": {
+                      "type": "string",
+                      "description": "根拠の終了時間（MM:SS）"
+                    }
+                  },
+                  "required": ["start_time", "end_time"],
+                  "propertyOrdering": ["start_time", "end_time"]
+                },
+                "importance": {
+                  "type": "integer",
+                  "description": "任意：重要度（1〜5）",
+                  "minimum": 1,
+                  "maximum": 5
+                }
+              },
+              "required": ["statement", "explanation", "source", "evidence"],
+              "propertyOrdering": [
+                "statement",
+                "explanation",
+                "source",
+                "evidence",
+                "importance"
+              ]
+            }
+          },
+          "technical_term": {
+            "type": "array",
+            "description": "トピックで触れられた専門用語とその解説",
+            "items": {
+              "type": "object",
+              "properties": {
+                "word": {
+                  "type": "string",
+                  "description": "専門用語"
+                },
+                "explanation": {
+                  "type": "string",
+                  "description": "大学生向けの平易な説明（1〜5文）。何のための概念か/どこで使うかが分かる形。"
+                },
+                "lecture_definition": {
+                  "type": "string",
+                  "description": "講義内で明示された定義（取れる場合のみ。取れなければ省略）。"
+                },
+                "pitfall": {
+                  "type": "string",
+                  "description": "誤解・混同ポイント･あると学習が捗る補足説明（あれば。無ければ省略）。"
+                },
+                "evidence": {
+                  "type": "array",
+                  "description": "用語が説明・登場した根拠タイムスタンプ（任意）。捏造防止のため必須にしない。",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "start_time": {
+                        "type": "string",
+                        "description": "根拠の開始時間（MM:SS）"
+                      },
+                      "end_time": {
+                        "type": "string",
+                        "description": "根拠の終了時間（MM:SS）"
+                      }
+                    },
+                    "required": ["start_time", "end_time"],
+                    "propertyOrdering": ["start_time", "end_time"]
+                  }
+                },
+                "frequency": {
+                  "type": "string",
+                  "description": "この用語がトピック内で登場した頻度。repeated=複数回言及 / once=一度だけ言及 / background=スライド表示のみ等。",
+                  "enum": ["repeated", "once", "background"]
+                }
+              },
+              "required": ["word", "explanation"],
+              "propertyOrdering": [
+                "word",
+                "explanation",
+                "lecture_definition",
+                "pitfall",
+                "evidence",
+                "frequency"
+              ]
+            }
+          }
+        },
+        "required": [
+          "topic_title",
+          "topic_summary",
+          "topic_points",
+          "topic_keywords",
+          "important_knowledge"
+        ],
+        "propertyOrdering": [
+          "topic_title",
+          "topic_time_range",
+          "topic_keywords",
+          "topic_summary",
+          "topic_points",
+          "important_knowledge",
+          "technical_term"
+        ]
+      }
+    },
+    "assignments": {
+      "type": "array",
+      "description": "課題・提出物・今後やるべきこと（講義内で指示があったもの中心）。",
+      "items": {
+        "type": "object",
+        "properties": {
+          "task_title": {
+            "type": "string",
+            "description": "課題/タスク名（例: レポート1、演習#3、次回までの予習 など）"
+          },
+          "task_detail": {
+            "type": "string",
+            "description": "内容・要求（提出物、分量、形式、評価観点、参照範囲など）"
+          },
+          "due_date": {
+            "type": "string",
+            "format": "date",
+            "description": "提出期限（日付のみが分かる場合のみ記入）。例: 2026-02-20"
+          },
+          "due_datetime": {
+            "type": "string",
+            "format": "date-time",
+            "description": "提出期限（日時まで分かる場合）。例: 2026-02-20T23:59:00+09:00"
+          },
+          "evidence": {
+            "type": "array",
+            "description": "課題指示が出た根拠となるタイムスタンプ。確実でない場合は空配列でよい。",
+            "items": {
+              "type": "object",
+              "properties": {
+                "start_time": {
+                  "type": "string",
+                  "description": "根拠の開始時間（MM:SS）。例: 42:10"
+                },
+                "end_time": {
+                  "type": "string",
+                  "description": "根拠の終了時間（MM:SS）。例: 43:05"
+                }
+              },
+              "required": ["start_time", "end_time"],
+              "propertyOrdering": ["start_time", "end_time"]
+            }
+          }
+        },
+        "required": ["task_title", "task_detail"],
+        "propertyOrdering": [
+          "task_title",
+          "task_detail",
+          "due_date",
+          "due_datetime",
+          "evidence"
+        ]
+      }
+    }
+  },
+  "required": ["title", "summary", "topics"],
+  "propertyOrdering": ["title", "summary", "topics", "assignments"]
+}
