@@ -27,7 +27,7 @@ json.topics[0].topic_points
 
 - json.topics[0].important_knowledge[0].statement
   詳細: json.topics[0].important_knowledge[0].explanation
-  根拠: json.topics[0].important_knowledge[0].source (lecture_explicit=講義で明示 / lecture_inferred=講義内容から推論 / model_background=一般知識補完 に変換するにしてほしい)
+  根拠: json.topics[0].important_knowledge[0].source (lecture_explicit=講義で明示 / lecture_inferred=講義内容から推論 / model_background=一般知識補完 に変換してほしい)
   重要度: json.topics[0].important_knowledge[0].importanceの数だけ★をつける <!-- optional -->
   タイムスタンプ: json.topics[0].important_knowledge[0].evidence.start_time 〜 json.topics[0].important_knowledge[0].evidence.end_time
 - 以下続く...
