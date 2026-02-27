@@ -32,7 +32,7 @@ import mss  # 画面キャプチャのため追加
 import cv2
 from PIL import Image, UnidentifiedImageError
 import numpy as np
-from dotenv import load_dotenv
+
 from config_manager import get_config_manager
 
 # --- ロギング設定 ---
@@ -124,7 +124,6 @@ class SlideCaptureApp:
 
         # --- Gemini API 設定 ---
         try:
-            load_dotenv()  # .env ファイルを読み込む
             api_key = self.config.get_api_key()  # 設定から API キーを取得
             if not api_key or api_key == "MOCK_API_KEY_FOR_DEVELOPMENT":
                 logger.warning(

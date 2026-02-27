@@ -1,0 +1,35 @@
+{
+  "api": {
+    "gemini_api_key": "YOUR_GEMINI_API_KEY_HERE",
+    "models": [
+      {
+        "model_name": "gemini-3-flash-preview",
+        "description": "一般用途、無料枠"
+      },
+      {
+        "model_name": "gemini-3.1-pro-preview",
+        "description": "高性能モデル、有料枠のみ使用可"
+      }
+    ],
+    "default_model_index": 0
+  },
+  "audio": {
+    "no_sound_timeout_seconds": 180,
+    "silence_threshold": 0.01
+  },
+  "screenshot": {
+    "similarity_threshold": 0.83,
+    "diff_pixel_threshold": 10
+  },
+  "ui": {
+    "window_width": 600,
+    "window_height": 550,
+    "min_width": 600,
+    "min_height": 550
+  },
+  "logging": {
+    "level": "INFO",
+    "filename": "slide_capture_app.log",
+    "format": "%(asctime)s - %(levelname)s - %(threadName)s - %(message)s"
+  }
+}

@@ -2,8 +2,12 @@
 """
 Configuration management module for auto_class application.
 Handles loading and validation of application configuration.
+
+起動時に設定ファイルが存在しない、あるいは不正な場合は
+DEFAULT_CONFIG を使って自動的にファイルを生成してから読み込む。
 """
 
+import copy
 import json
 import os
 import sys
@@ -12,107 +16,214 @@ from typing import Dict, Any, List, Optional
 
 logger = logging.getLogger(__name__)
 
+# --------------------------------------------------------------------------- #
+# デフォルト設定 (新方式: api.models にオブジェクトリストを使用)
+# --------------------------------------------------------------------------- #
+DEFAULT_CONFIG: Dict[str, Any] = {
+    "api": {
+        "gemini_api_key": "",
+        "models": [
+            {
+                "model_name": "gemini-3-flash-preview",
+                "description": "一般用途、無料枠",
+            },
+            {
+                "model_name": "gemini-3.1-pro-preview",
+                "description": "高性能モデル、有料枠のみ使用可",
+            },
+        ],
+        "default_model_index": 0,
+    },
+    "audio": {
+        "no_sound_timeout_seconds": 180,
+        "silence_threshold": 0.01,
+    },
+    "screenshot": {
+        "similarity_threshold": 0.83,
+        "diff_pixel_threshold": 10,
+    },
+    "ui": {
+        "window_width": 600,
+        "window_height": 550,
+        "min_width": 600,
+        "min_height": 550,
+    },
+    "logging": {
+        "level": "INFO",
+        "filename": "slide_capture_app.log",
+        "format": "%(asctime)s - %(levelname)s - %(threadName)s - %(message)s",
+    },
+}
+
+
+def _is_valid_config(data: Any) -> bool:
+    """設定データが新方式として有効かを検証する。
+
+    必須条件:
+    - dict 型
+    - "api" キーが存在
+    - "api.models" が list[dict] 型（model_name キーを持つ）
+    """
+    if not isinstance(data, dict):
+        return False
+    api = data.get("api")
+    if not isinstance(api, dict):
+        return False
+    models = api.get("models")
+    if not isinstance(models, list) or len(models) == 0:
+        return False
+    # 全要素が dict で model_name を持つ場合のみ有効
+    return all(isinstance(m, dict) and "model_name" in m for m in models)
+
 
 class ConfigManager:
-    """Manages application configuration loading and validation."""
+    """アプリケーション設定の読み込みと検証を管理するクラス。"""
 
     def __init__(self, config_path: Optional[str] = None):
-        """
-        Initialize configuration manager.
+        """ConfigManager を初期化する。
 
         Args:
-            config_path (str | None): Path to config file. If None/empty, auto-detect 'config.json'
+            config_path: 設定ファイルのパス。None または空の場合は自動探索する。
         """
         self.config_path = self._resolve_config_path(config_path)
-        self._config = {}
+        self._config: Dict[str, Any] = {}
         self.load_config()
 
+    # ----------------------------------------------------------------------- #
+    # パス解決
+    # ----------------------------------------------------------------------- #
+
     def _resolve_config_path(self, config_path: Optional[str]) -> str:
-        """Resolve config.json path for both source and PyInstaller builds.
+        """config.json のパスを解決する。
 
-        Priority:
-        1) Explicit path when provided (and non-empty)
-        2) Next to the executable when frozen (PyInstaller onefile/onedir)
-        3) Next to this module (source run)
-        4) Current working directory
-        Returns the first existing path; if none exist, returns the preferred path
-        (exe dir or module dir) so the error message is meaningful.
+        優先順位:
+        1. 明示的に指定されたパス
+        2. PyInstaller でビルドされた場合は exe と同じディレクトリ
+        3. このモジュールと同じディレクトリ
+        4. カレントワーキングディレクトリ
         """
-        # 1) explicit
+        # 1. 明示的に指定されたパス
         if config_path:
-            abs_path = os.path.abspath(config_path)
-            if os.path.isfile(abs_path):
-                return abs_path
-            return abs_path  # keep for error message
+            return os.path.abspath(config_path)
 
-        # 2) exe dir when frozen
+        # 2. exe と同じディレクトリ (frozen)
         if getattr(sys, "frozen", False):
-            exe_dir = os.path.dirname(sys.executable)
-            exe_path = os.path.join(exe_dir, "config.json")
-            if os.path.isfile(exe_path):
-                return exe_path
-            # Remember as preferred for error when nothing matches
-            preferred = exe_path
-        else:
-            preferred = os.path.join(
-                os.path.dirname(os.path.abspath(__file__)), "config.json"
-            )
+            return os.path.join(os.path.dirname(sys.executable), "config.json")
 
-        # 3) module dir
+        # 3. モジュールと同じディレクトリ
         module_path = os.path.join(
             os.path.dirname(os.path.abspath(__file__)), "config.json"
         )
         if os.path.isfile(module_path):
             return module_path
 
-        # 4) CWD
+        # 4. カレントワーキングディレクトリ
         cwd_path = os.path.join(os.getcwd(), "config.json")
         if os.path.isfile(cwd_path):
             return cwd_path
 
-        return preferred
+        # どこにも存在しない場合はモジュールディレクトリの config.json を返す
+        if getattr(sys, "frozen", False):
+            return os.path.join(os.path.dirname(sys.executable), "config.json")
+        return os.path.join(os.path.dirname(os.path.abspath(__file__)), "config.json")
 
-    def load_config(self) -> None:
-        """Load configuration from file."""
-        try:
-            if not os.path.exists(self.config_path):
-                candidates = [
-                    self.config_path,
-                    (
-                        os.path.join(os.path.dirname(sys.executable), "config.json")
-                        if getattr(sys, "frozen", False)
-                        else None
-                    ),
-                    os.path.join(
-                        os.path.dirname(os.path.abspath(__file__)), "config.json"
-                    ),
-                    os.path.join(os.getcwd(), "config.json"),
-                ]
-                candidates = [c for c in candidates if c]
-                tips = "\n - ".join(candidates)
-                raise FileNotFoundError(
-                    "Configuration file not found. Searched paths:\n - " + tips
-                )
+    # ----------------------------------------------------------------------- #
+    # 設定ファイルの書き込み (デフォルト値で生成/上書き)
+    # ----------------------------------------------------------------------- #
 
-            with open(self.config_path, "r", encoding="utf-8") as f:
-                self._config = json.load(f)
-
-            logger.info(f"Configuration loaded from: {self.config_path}")
-
-        except Exception as e:
-            logger.error(f"Failed to load configuration: {e}")
-            raise
-
-    def get(self, key: str, default: Any = None) -> Any:
-        """
-        Get configuration value by dot-notation key.
-
-        Args:
-            key (str): Configuration key in dot notation (e.g., 'api.gemini_api_key')
-            default (Any): Default value if key is not found
+    def _write_default_config(self) -> bool:
+        """DEFAULT_CONFIG を config_path に書き込む。
 
         Returns:
-            Any: Configuration value
+            書き込み成功時 True、PermissionError 等の失敗時は False。
+        """
+        try:
+            os.makedirs(os.path.dirname(self.config_path), exist_ok=True)
+        except (OSError, ValueError):
+            pass  # ルートディレクトリなど makedirs が不要なケース
+
+        try:
+            with open(self.config_path, "w", encoding="utf-8") as f:
+                json.dump(DEFAULT_CONFIG, f, ensure_ascii=False, indent=2)
+            logger.info(f"デフォルト設定ファイルを生成しました: {self.config_path}")
+            return True
+        except PermissionError as e:
+            logger.error(
+                f"設定ファイルへの書き込み権限がありません。インメモリのデフォルト設定で起動します。"
+                f" path={self.config_path}, error={e}"
+            )
+            return False
+        except OSError as e:
+            logger.error(
+                f"設定ファイルの書き込みに失敗しました。インメモリのデフォルト設定で起動します。"
+                f" path={self.config_path}, error={e}"
+            )
+            return False
+
+    # ----------------------------------------------------------------------- #
+    # 設定の読み込み
+    # ----------------------------------------------------------------------- #
+
+    def load_config(self) -> None:
+        """設定ファイルを読み込む。
+
+        ファイルが存在しない、パースエラー、または不正なフォーマット（旧形式を含む）の場合は
+        DEFAULT_CONFIG でファイルを上書き生成してから読み込む。
+        """
+        needs_overwrite = False
+        reason = ""
+
+        # ファイルが存在しない場合
+        if not os.path.exists(self.config_path):
+            reason = f"設定ファイルが見つかりません (path={self.config_path})"
+            needs_overwrite = True
+        else:
+            try:
+                with open(self.config_path, "r", encoding="utf-8") as f:
+                    data = json.load(f)
+                if not _is_valid_config(data):
+                    reason = (
+                        f"設定ファイルのフォーマットが不正です（旧形式または必須キー不足）。"
+                        f" path={self.config_path}"
+                    )
+                    needs_overwrite = True
+                else:
+                    self._config = data
+                    logger.info(f"設定ファイルを読み込みました: {self.config_path}")
+                    return
+            except json.JSONDecodeError as e:
+                reason = f"設定ファイルの JSON パースに失敗しました。 error={e}"
+                needs_overwrite = True
+
+        if needs_overwrite:
+            logger.warning(f"{reason} — デフォルト設定でファイルを上書き生成します。")
+            wrote = self._write_default_config()
+            if wrote:
+                # 書き込んだファイルを読み込む
+                try:
+                    with open(self.config_path, "r", encoding="utf-8") as f:
+                        self._config = json.load(f)
+                    return
+                except Exception as e:
+                    logger.error(f"上書きした設定ファイルの読み込みに失敗しました: {e}")
+
+            # 書き込み不可などでファイルが読めない場合はインメモリで対応
+            logger.warning("インメモリのデフォルト設定を使用します。")
+            self._config = copy.deepcopy(DEFAULT_CONFIG)
+
+    # ----------------------------------------------------------------------- #
+    # 汎用 getter
+    # ----------------------------------------------------------------------- #
+
+    def get(self, key: str, default: Any = None) -> Any:
+        """ドット区切りのキーで設定値を取得する。
+
+        Args:
+            key: ドット区切りのキー (例: 'api.gemini_api_key')
+            default: キーが存在しない場合のデフォルト値
+
+        Returns:
+            設定値
         """
         keys = key.split(".")
         value = self._config
@@ -124,57 +235,60 @@ class ConfigManager:
         except (KeyError, TypeError):
             if default is not None:
                 return default
-            raise KeyError(f"Configuration key not found: {key}")
+            raise KeyError(f"設定キーが見つかりません: {key}")
+
+    # ----------------------------------------------------------------------- #
+    # ドメイン固有 getter
+    # ----------------------------------------------------------------------- #
 
     def get_api_key(self) -> str:
-        """Get API key, preferring environment variable over config file."""
-        # First try environment variable
-        env_key = os.environ.get("GEMINI_API_KEY")
-        if env_key:
-            return env_key
-
-        # Fall back to config file
-        return self.get("api.gemini_api_key")
+        """APIキーを取得する（設定ファイルの値のみを使用）。"""
+        return self.get("api.gemini_api_key", "")
 
     def get_model_options(self) -> List[str]:
-        """Get available Gemini model options."""
-        return self.get("api.models", [])
+        """利用可能なモデル名の一覧を返す。"""
+        models = self.get("api.models", [])
+        return [
+            m["model_name"] for m in models if isinstance(m, dict) and "model_name" in m
+        ]
 
     def get_default_model(self) -> str:
-        """Get default Gemini model."""
+        """デフォルトモデル名を返す。"""
         models = self.get_model_options()
-        default_index = self.get("api.default_model_index", 0)
-
         if not models:
-            raise ValueError("No models configured")
-
+            raise ValueError("モデルが設定されていません")
+        default_index = self.get("api.default_model_index", 0)
         if default_index >= len(models):
-            logger.warning(f"Default model index {default_index} out of range, using 0")
+            logger.warning(
+                f"default_model_index ({default_index}) がモデル数 ({len(models)}) を超えています。0 を使用します。"
+            )
             default_index = 0
-
         return models[default_index]
 
     def get_model_description(self, model_name: str) -> str:
-        """Get description for a specific model."""
-        descriptions = self.get("api.model_descriptions", {})
-        return descriptions.get(model_name, "用途: 不明")
+        """指定したモデルの説明文を返す。"""
+        models = self.get("api.models", [])
+        for m in models:
+            if isinstance(m, dict) and m.get("model_name") == model_name:
+                return m.get("description", "用途: 不明")
+        return "用途: 不明"
 
     def get_audio_settings(self) -> Dict[str, Any]:
-        """Get audio configuration settings."""
+        """音声設定を返す。"""
         return {
             "no_sound_timeout_seconds": self.get("audio.no_sound_timeout_seconds", 180),
             "silence_threshold": self.get("audio.silence_threshold", 0.01),
         }
 
     def get_screenshot_settings(self) -> Dict[str, Any]:
-        """Get screenshot configuration settings."""
+        """スクリーンショット設定を返す。"""
         return {
             "similarity_threshold": self.get("screenshot.similarity_threshold", 0.83),
             "diff_pixel_threshold": self.get("screenshot.diff_pixel_threshold", 10),
         }
 
     def get_ui_settings(self) -> Dict[str, Any]:
-        """Get UI configuration settings."""
+        """UI設定を返す。"""
         return {
             "window_width": self.get("ui.window_width", 600),
             "window_height": self.get("ui.window_height", 550),
@@ -183,7 +297,7 @@ class ConfigManager:
         }
 
     def get_logging_settings(self) -> Dict[str, Any]:
-        """Get logging configuration settings."""
+        """ロギング設定を返す。"""
         return {
             "level": self.get("logging.level", "INFO"),
             "filename": self.get("logging.filename", "slide_capture_app.log"),
@@ -194,12 +308,15 @@ class ConfigManager:
         }
 
 
-# Global configuration instance
-_config_manager = None
+# --------------------------------------------------------------------------- #
+# グローバルインスタンス管理
+# --------------------------------------------------------------------------- #
+
+_config_manager: Optional[ConfigManager] = None
 
 
 def get_config_manager() -> ConfigManager:
-    """Get global configuration manager instance."""
+    """グローバルな ConfigManager インスタンスを返す。"""
     global _config_manager
     if _config_manager is None:
         _config_manager = ConfigManager()
@@ -207,7 +324,7 @@ def get_config_manager() -> ConfigManager:
 
 
 def reload_config() -> None:
-    """Reload configuration from file."""
+    """設定ファイルを再読み込みする。"""
     global _config_manager
     if _config_manager is not None:
         _config_manager.load_config()
