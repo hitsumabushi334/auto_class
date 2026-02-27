@@ -9369,3 +9369,29 @@ google.genai.errors.ClientError: 404 NOT_FOUND. {'error': {'code': 404, 'message
 2026-02-27 17:40:05,301 - INFO - MainThread - 画面スリープ防止を無効化しました。
 2026-02-27 17:40:06,821 - INFO - MainThread - アプリケーション終了処理を開始します。
 2026-02-27 17:40:06,932 - INFO - MainThread - アプリケーションを終了しました。
+2026-02-27 17:43:20,035 - INFO - MainThread - DPI Awareness を Per-Monitor V2 (2) に設定しました。
+2026-02-27 17:43:20,288 - INFO - MainThread - Gemini API クライアントを設定しました。
+2026-02-27 17:43:21,617 - INFO - MainThread - アプリケーションを初期化しました。
+2026-02-27 17:43:21,618 - INFO - MainThread - ウィンドウリストを更新します。
+2026-02-27 17:43:21,627 - INFO - MainThread - 13 個のウィンドウが見つかりました。
+2026-02-27 17:43:21,628 - INFO - MainThread - Geminiモデル 'gemini-3-flash-preview' が選択されました。用途: 一般用途、無料枠
+2026-02-27 17:43:32,631 - INFO - MainThread - Geminiモデル 'gemini-3.1-pro-preview' が選択されました。用途: 高性能モデル、有料枠のみ使用可
+2026-02-27 17:44:35,926 - INFO - MainThread - アプリケーション終了処理を開始します。
+2026-02-27 17:44:36,173 - INFO - MainThread - アプリケーションを終了しました。
+2026-02-27 17:46:15,061 - INFO - MainThread - DPI Awareness を Per-Monitor V2 (2) に設定しました。
+2026-02-27 17:46:15,357 - INFO - MainThread - Gemini API クライアントを設定しました。
+2026-02-27 17:46:16,490 - INFO - MainThread - アプリケーションを初期化しました。
+2026-02-27 17:46:16,491 - INFO - MainThread - ウィンドウリストを更新します。
+2026-02-27 17:46:16,498 - INFO - MainThread - 13 個のウィンドウが見つかりました。
+2026-02-27 17:46:16,499 - INFO - MainThread - Geminiモデル 'gemini-3-flash-preview' が選択されました。用途: 一般用途、無料枠
+2026-02-27 17:46:18,920 - INFO - MainThread - Geminiモデル 'gemini-3.1-pro-preview' が選択されました。用途: 高性能モデル、有料枠のみ使用可
+2026-02-27 17:46:33,730 - INFO - MainThread - アプリケーション終了処理を開始します。
+2026-02-27 17:46:33,858 - INFO - MainThread - アプリケーションを終了しました。
+2026-02-27 17:48:16,878 - INFO - MainThread - DPI Awareness を Per-Monitor V2 (2) に設定しました。
+2026-02-27 17:48:17,167 - INFO - MainThread - Gemini API クライアントを設定しました。
+2026-02-27 17:48:18,242 - INFO - MainThread - アプリケーションを初期化しました。
+2026-02-27 17:48:18,245 - INFO - MainThread - ウィンドウリストを更新します。
+2026-02-27 17:48:18,267 - INFO - MainThread - 13 個のウィンドウが見つかりました。
+2026-02-27 17:48:18,272 - INFO - MainThread - Geminiモデル 'gemini-3-flash-preview' が選択されました。用途: 一般用途、無料枠
+2026-02-27 17:49:50,730 - INFO - MainThread - アプリケーション終了処理を開始します。
+2026-02-27 17:49:50,861 - INFO - MainThread - アプリケーションを終了しました。

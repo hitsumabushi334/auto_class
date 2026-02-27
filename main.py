@@ -205,9 +205,17 @@ class SlideCaptureApp:
             "<<ComboboxSelected>>", self._on_gemini_model_selected
         )  # イベントハンドラをバインド
 
-        # 用途表示ラベルを追加
-        self.gemini_model_description_label = ttk.Label(model_selection_frame, text="")
-        self.gemini_model_description_label.pack(side=tk.LEFT, fill=tk.X, expand=True)
+        # 用途表示ラベルを追加（モデル選択フレームの下に配置）
+        model_description_frame = ttk.Frame(root, padding=(10, 0, 10, 5))
+        model_description_frame.pack(fill=tk.X)
+        self.gemini_model_description_label = ttk.Label(
+            model_description_frame,
+            text="",
+            anchor=tk.W,
+            justify=tk.LEFT,
+            wraplength=500,
+        )
+        self.gemini_model_description_label.pack(fill=tk.X)
 
         # --- 操作ボタン (統合) ---
         button_frame = ttk.Frame(root, padding="10")
@@ -378,7 +386,7 @@ class SlideCaptureApp:
     def _on_gemini_model_selected(self, event=None):
         """Geminiモデル選択コンボボックスの値が変更されたときに呼び出される"""
         selected_model = self.selected_gemini_model.get()
-        description = self.config.get_model_description(selected_model)
+        description = f"用途: {self.config.get_model_description(selected_model)}"
         if description == "用途: 不明":
             logger.warning(f"不明なGeminiモデルが選択されました: {selected_model}")
 
