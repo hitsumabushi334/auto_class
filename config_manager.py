@@ -87,6 +87,9 @@ class ConfigManager:
         """
         self.config_path = self._resolve_config_path(config_path)
         self._config: Dict[str, Any] = {}
+        # 設定ファイルの自動生成・上書きが発生したかを記録するフラグ（UI側で通知に使用）
+        self.config_was_auto_generated: bool = False
+        self.config_auto_generated_reason: str = ""
         self.load_config()
 
     # ----------------------------------------------------------------------- #
@@ -197,6 +200,8 @@ class ConfigManager:
 
         if needs_overwrite:
             logger.warning(f"{reason} — デフォルト設定でファイルを上書き生成します。")
+            self.config_was_auto_generated = True
+            self.config_auto_generated_reason = reason
             wrote = self._write_default_config()
             if wrote:
                 # 書き込んだファイルを読み込む

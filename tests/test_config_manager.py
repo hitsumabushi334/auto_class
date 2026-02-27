@@ -26,6 +26,14 @@ class TestConfigManagerDefaultGeneration(unittest.TestCase):
             manager = ConfigManager(config_path=config_path)
             self.assertTrue(os.path.exists(config_path))
 
+    def test_flag_set_when_file_is_missing(self):
+        """config.json が存在しない場合、config_was_auto_generated フラグが True になること"""
+        with tempfile.TemporaryDirectory() as tmpdir:
+            config_path = os.path.join(tmpdir, "config.json")
+            manager = ConfigManager(config_path=config_path)
+            self.assertTrue(manager.config_was_auto_generated)
+            self.assertNotEqual(manager.config_auto_generated_reason, "")
+
     def test_generated_config_has_new_models_format(self):
         """生成された config.json が新方式の models 形式（リスト of dict）を持つこと"""
         with tempfile.TemporaryDirectory() as tmpdir:

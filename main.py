@@ -307,6 +307,17 @@ class SlideCaptureApp:
         self.refresh_window_list()  # 初期ウィンドウリスト表示
         self._on_gemini_model_selected()  # 初期モデルの用途を表示
 
+        # 設定ファイルの自動生成・上書きが発生した場合、UI で通知する
+        if self.config.config_was_auto_generated:
+            messagebox.showwarning(
+                "設定ファイルの初期化",
+                f"設定ファイルを初期化しました。\n\n"
+                f"理由: {self.config.config_auto_generated_reason}\n\n"
+                f"デフォルト設定で動作します。\n"
+                f"APIキーを設定するには {self.config.config_path} を開いて\n"
+                f"api.gemini_api_key に APIキーを入力してください。",
+            )
+
     # --- ウィンドウ選択関連メソッド ---
     def refresh_window_list(self):
         """実行中のウィンドウリストを取得し、リストボックスを更新する"""
