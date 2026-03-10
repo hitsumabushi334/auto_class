@@ -353,14 +353,18 @@ class SlideCaptureApp:
         """設定タブを構築し、self.notebook に追加する。"""
         settings_tab = ttk.Frame(self.notebook, padding=5)
         self.notebook.add(settings_tab, text="設定")
-        self._settings_tab_frame = settings_tab  # タブ自体は Frame として参照不要、indexで操作
+        self._settings_tab_frame = (
+            settings_tab  # タブ自体は Frame として参照不要、indexで操作
+        )
 
         # スクロール可能エリア
         canvas_frame = ttk.Frame(settings_tab)
         canvas_frame.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
 
         canvas = tk.Canvas(canvas_frame)
-        scrollbar = ttk.Scrollbar(canvas_frame, orient=tk.VERTICAL, command=canvas.yview)
+        scrollbar = ttk.Scrollbar(
+            canvas_frame, orient=tk.VERTICAL, command=canvas.yview
+        )
         canvas.configure(yscrollcommand=scrollbar.set)
         scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
         canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
@@ -391,12 +395,12 @@ class SlideCaptureApp:
         btn_frame.pack(side=tk.BOTTOM, fill=tk.X)
         btn_inner = ttk.Frame(btn_frame)
         btn_inner.pack(anchor=tk.CENTER)
-        ttk.Button(btn_inner, text="保存", command=self._on_settings_save, width=15).pack(
-            side=tk.LEFT, padx=10
-        )
-        ttk.Button(btn_inner, text="リセット", command=self._on_settings_reset, width=15).pack(
-            side=tk.LEFT, padx=10
-        )
+        ttk.Button(
+            btn_inner, text="保存", command=self._on_settings_save, width=15
+        ).pack(side=tk.LEFT, padx=10)
+        ttk.Button(
+            btn_inner, text="リセット", command=self._on_settings_reset, width=15
+        ).pack(side=tk.LEFT, padx=10)
 
     def _build_settings_widgets(self, parent):
         """設定フォームのウィジェット群を構築する（Gridレイアウト）。"""
@@ -405,64 +409,108 @@ class SlideCaptureApp:
         # column 0: Label, 1: Widget, 2: Description
         parent.columnconfigure(0, weight=0, minsize=160)
         parent.columnconfigure(1, weight=0, minsize=80)
-        parent.columnconfigure(2, weight=1) # 説明文が伸びるように
+        parent.columnconfigure(2, weight=1)  # 説明文が伸びるように
 
         self._current_row = 0
 
         def section(text):
-            ttk.Separator(parent, orient=tk.HORIZONTAL).grid(row=self._current_row, column=0, columnspan=3, sticky="we", pady=(15, 5))
+            ttk.Separator(parent, orient=tk.HORIZONTAL).grid(
+                row=self._current_row, column=0, columnspan=3, sticky="we", pady=(15, 5)
+            )
             self._current_row += 1
-            ttk.Label(parent, text=text, font=("", 10, "bold")).grid(row=self._current_row, column=0, columnspan=3, sticky="w", padx=5, pady=(0, 5))
+            ttk.Label(parent, text=text, font=("", 10, "bold")).grid(
+                row=self._current_row,
+                column=0,
+                columnspan=3,
+                sticky="w",
+                padx=5,
+                pady=(0, 5),
+            )
             self._current_row += 1
 
         def row_field(key, label_text, description, widget_type="entry", options=None):
-            ttk.Label(parent, text=label_text).grid(row=self._current_row, column=0, sticky="w", padx=5, pady=5)
-            
+            ttk.Label(parent, text=label_text).grid(
+                row=self._current_row, column=0, sticky="w", padx=5, pady=5
+            )
+
             widget_frame = ttk.Frame(parent)
-            widget_frame.grid(row=self._current_row, column=1, sticky="w", padx=5, pady=5)
-            
+            widget_frame.grid(
+                row=self._current_row, column=1, sticky="w", padx=5, pady=5
+            )
+
             var = None
             if widget_type == "entry":
                 var = tk.StringVar(value=str(self.config.get(key, "")))
                 ttk.Entry(widget_frame, textvariable=var, width=15).pack(fill=tk.X)
             elif widget_type == "combobox":
                 var = tk.StringVar(value=str(self.config.get(key, "")))
-                ttk.Combobox(widget_frame, textvariable=var, values=options, state="readonly", width=13).pack(fill=tk.X)
+                ttk.Combobox(
+                    widget_frame,
+                    textvariable=var,
+                    values=options,
+                    state="readonly",
+                    width=13,
+                ).pack(fill=tk.X)
             elif widget_type == "bool":
                 var = tk.BooleanVar(value=bool(self.config.get(key, False)))
                 ttk.Checkbutton(widget_frame, variable=var).pack(side=tk.LEFT)
-            
+
             if var is not None:
                 self._settings_vars[key] = var
-                
+
             desc_label = ttk.Label(parent, text=description, foreground="gray")
-            desc_label.grid(row=self._current_row, column=2, sticky="we", padx=5, pady=5)
+            desc_label.grid(
+                row=self._current_row, column=2, sticky="we", padx=5, pady=5
+            )
             # 見切れを防ぐため、実際の幅から少しマージン（-10px）を引いた値をwraplengthに設定する
-            desc_label.bind('<Configure>', lambda e, l=desc_label: l.config(wraplength=max(50, e.width - 10)))
-            
+            desc_label.bind(
+                "<Configure>",
+                lambda e, l=desc_label: l.config(wraplength=max(50, e.width - 10)),
+            )
+
             self._current_row += 1
 
         # --- API ---
         section("API設定")
-        row_field("api.gemini_api_key", "Gemini APIキー", "Google AI Studio から取得したAPIキー。")
-        row_field("api.default_model_index", "デフォルトモデル (ｲﾝﾃﾞｯｸｽ)", "使用するモデルリストのインデックス (0始まり)。")
-        
+        row_field(
+            "api.gemini_api_key",
+            "Gemini APIキー",
+            "Google AI Studio から取得したAPIキー。",
+        )
+        row_field(
+            "api.default_model_index",
+            "デフォルトモデル (ｲﾝﾃﾞｯｸｽ)",
+            "使用するモデルリストのインデックス (0始まり)。",
+        )
+
         # models の動的エディタ
         self._build_models_editor(parent)
 
         # --- 音声 ---
         section("音声設定")
-        row_field("audio.no_sound_timeout_seconds", "無音タイムアウト (秒)",
-            "この秒数を超えて無音が続くと録画を停止します。大きくすると長い無音を許容。")
-        row_field("audio.silence_threshold", "無音判定閾値",
-            "この振幅以下の音声を「無音」と判定します。小さくするとより小さな音を拾います。")
+        row_field(
+            "audio.no_sound_timeout_seconds",
+            "無音タイムアウト (秒)",
+            "この秒数を超えて無音が続くと録画を停止します。大きくすると長い無音を許容。",
+        )
+        row_field(
+            "audio.silence_threshold",
+            "無音判定閾値",
+            "この振幅以下の音声を「無音」と判定します。小さくするとより小さな音を拾います。",
+        )
 
         # --- スクリーンショット ---
         section("スクリーンショット設定")
-        row_field("screenshot.similarity_threshold", "類似度閾値",
-            "0〜1の値。大きくするほど判定が厳しくなり、差分が小さい変化を保存しやすくなります。")
-        row_field("screenshot.diff_pixel_threshold", "差分ピクセル閾値",
-            "差分として扱う最小ピクセル数。小さくすると微細な変化も保存します。")
+        row_field(
+            "screenshot.similarity_threshold",
+            "類似度閾値",
+            "0〜1の値。大きくするほど判定が厳しくなり、差分が小さい変化を保存しやすくなります。",
+        )
+        row_field(
+            "screenshot.diff_pixel_threshold",
+            "差分ピクセル閾値",
+            "差分として扱う最小ピクセル数。小さくすると微細な変化も保存します。",
+        )
 
         # --- UI ---
         section("ウィンドウ設定")
@@ -473,39 +521,60 @@ class SlideCaptureApp:
 
         # --- ログ ---
         section("ログ設定")
-        row_field("logging.level", "ログレベル", "出力するログの深刻度を指定します。DEBUGは全詳細、INFOは通常動作、WARNINGは警告のみを出力します。",
-            widget_type="combobox", options=["DEBUG", "INFO", "WARNING", "ERROR"])
+        row_field(
+            "logging.level",
+            "ログレベル",
+            "出力するログの深刻度を指定します。DEBUGは全詳細、INFOは通常動作、WARNINGは警告のみを出力します。",
+            widget_type="combobox",
+            options=["DEBUG", "INFO", "WARNING", "ERROR"],
+        )
         row_field("logging.filename", "ログファイル名", "ログを保存するファイル名。")
         row_field("logging.format", "ログフォーマット", "ログ行のフォーマット文字列。")
 
         # --- アプリ ---
         section("アプリ設定")
-        row_field("app.note_output_mode", "ノート出力形式",
+        row_field(
+            "app.note_output_mode",
+            "ノート出力形式",
             "MD: Markdownファイル (.md) / Word: Word文書 (.docx) を選択。",
-            widget_type="combobox", options=["MD", "Word"])
-        row_field("app.developer_mode", "開発者モード",
+            widget_type="combobox",
+            options=["MD", "Word"],
+        )
+        row_field(
+            "app.developer_mode",
+            "開発者モード",
             "オンにするとコンソール (ターミナル) にもログが出力されます。",
-            widget_type="bool")
+            widget_type="bool",
+        )
 
     def _build_models_editor(self, parent):
         """api.models を動的に編集するリストUIを構築する。"""
         self.models_container = ttk.Frame(parent)
-        self.models_container.grid(row=self._current_row, column=0, columnspan=3, sticky="we", padx=5, pady=5)
+        self.models_container.grid(
+            row=self._current_row, column=0, columnspan=3, sticky="we", padx=5, pady=5
+        )
         self._current_row += 1
-        
+
         header_frame = ttk.Frame(self.models_container)
         header_frame.pack(fill=tk.X, pady=(0, 5))
         ttk.Label(header_frame, text="モデルリスト:").pack(side=tk.LEFT)
-        ttk.Label(header_frame, text="モデル名と説明のペアを定義します。", foreground="gray").pack(side=tk.LEFT, padx=5)
-        
+        ttk.Label(
+            header_frame, text="モデル名と説明のペアを定義します。", foreground="gray"
+        ).pack(side=tk.LEFT, padx=5)
+
         self.models_list_frame = ttk.Frame(self.models_container)
         self.models_list_frame.pack(fill=tk.BOTH, expand=True)
-        
-        self._model_entries = [] # type: list[dict]
+
+        self._model_entries = []  # type: list[dict]
 
         self._refresh_models_list_ui()
 
-        ttk.Button(self.models_container, text="＋ モデルを追加", width=15, command=lambda: self._add_model_row()).pack(anchor="w", pady=5)
+        ttk.Button(
+            self.models_container,
+            text="＋ モデルを追加",
+            width=15,
+            command=lambda: self._add_model_row(),
+        ).pack(anchor="w", pady=5)
 
     def _refresh_models_list_ui(self):
         """models_list_frame の中身を現在の設定から再構築する。"""
@@ -524,24 +593,30 @@ class SlideCaptureApp:
         """モデル追加UIの一行を追加する。"""
         row_frame = ttk.Frame(self.models_list_frame)
         row_frame.pack(fill=tk.X, pady=2)
-        
+
         ttk.Label(row_frame, text="名前:").pack(side=tk.LEFT)
         name_var = tk.StringVar(value=model_name)
-        ttk.Entry(row_frame, textvariable=name_var, width=15).pack(side=tk.LEFT, padx=(2, 10))
-        
+        ttk.Entry(row_frame, textvariable=name_var, width=15).pack(
+            side=tk.LEFT, padx=(2, 10)
+        )
+
         ttk.Label(row_frame, text="説明:").pack(side=tk.LEFT)
         desc_var = tk.StringVar(value=description)
-        ttk.Entry(row_frame, textvariable=desc_var, width=30).pack(side=tk.LEFT, expand=True, fill=tk.X, padx=(2, 5))
-        
+        ttk.Entry(row_frame, textvariable=desc_var, width=30).pack(
+            side=tk.LEFT, expand=True, fill=tk.X, padx=(2, 5)
+        )
+
         entry_dict = {"name": name_var, "desc": desc_var, "frame": row_frame}
         self._model_entries.append(entry_dict)
-        
+
         def remove_self():
             row_frame.destroy()
             if entry_dict in self._model_entries:
                 self._model_entries.remove(entry_dict)
-        
-        ttk.Button(row_frame, text="－", width=3, command=remove_self).pack(side=tk.LEFT)
+
+        ttk.Button(row_frame, text="－", width=3, command=remove_self).pack(
+            side=tk.LEFT
+        )
 
     def _apply_settings_to_app(self, new_config: dict):
         """保存した設定を self に即時反映する。"""
@@ -549,13 +624,19 @@ class SlideCaptureApp:
 
         # audio
         audio = new_config.get("audio", {})
-        self.no_sound_timeout_seconds = audio.get("no_sound_timeout_seconds", self.no_sound_timeout_seconds)
+        self.no_sound_timeout_seconds = audio.get(
+            "no_sound_timeout_seconds", self.no_sound_timeout_seconds
+        )
         self.silence_threshold = audio.get("silence_threshold", self.silence_threshold)
 
         # screenshot
         screenshot = new_config.get("screenshot", {})
-        self.similarity_threshold = screenshot.get("similarity_threshold", self.similarity_threshold)
-        self.diff_pixel_threshold = screenshot.get("diff_pixel_threshold", self.diff_pixel_threshold)
+        self.similarity_threshold = screenshot.get(
+            "similarity_threshold", self.similarity_threshold
+        )
+        self.diff_pixel_threshold = screenshot.get(
+            "diff_pixel_threshold", self.diff_pixel_threshold
+        )
 
         # ui (window geometry)
         ui = new_config.get("ui", {})
@@ -574,20 +655,22 @@ class SlideCaptureApp:
         # logging: レベル・フォーマット・ハンドラの動的切り替え (P3 修正)
         logging_settings = new_config.get("logging", {})
         root_logger = _logging.getLogger()
-        
+
         # 1. ログレベルの更新
         level_str = logging_settings.get("level", "INFO").upper()
         root_logger.setLevel(getattr(_logging, level_str, _logging.INFO))
-        
+
         # 2. フォーマットの更新
-        format_str = logging_settings.get("format", "%(asctime)s - %(levelname)s - %(threadName)s - %(message)s")
+        format_str = logging_settings.get(
+            "format", "%(asctime)s - %(levelname)s - %(threadName)s - %(message)s"
+        )
         formatter = _logging.Formatter(format_str)
-        
+
         # 3. ハンドラの更新 (FileHandler と StreamHandler)
         file_filename = logging_settings.get("filename", "slide_capture_app.log")
         has_stream = False
         has_file = False
-        
+
         # 既存ハンドラの更新・削除
         handlers_to_remove = []
         for h in root_logger.handlers:
@@ -604,31 +687,37 @@ class SlideCaptureApp:
                     has_stream = True
                 else:
                     handlers_to_remove.append(h)
-                    
+
         for h in handlers_to_remove:
             root_logger.removeHandler(h)
             try:
-                h.close()
+                # uvコマンド等のラッパーによるsys.stderrの永久クローズを防ぐため、
+                # FileHandler 以外は close() を呼ばないようにする
+                if isinstance(h, _logging.FileHandler):
+                    h.close()
             except Exception:
                 pass
-                
+
         # 不足ハンドラの追加
         if not has_file:
             fh = _logging.FileHandler(file_filename, encoding="utf-8")
             fh.setFormatter(formatter)
             root_logger.addHandler(fh)
         if self.developer_mode and not has_stream:
-            sh = _logging.StreamHandler()
+            import sys
+            sh = _logging.StreamHandler(sys.stdout)
             sh.setFormatter(formatter)
             root_logger.addHandler(sh)
 
         # gemini model (Comboboxも更新)
         api = new_config.get("api", {})
         self.gemini_model_options = [
-            m["model_name"] for m in api.get("models", []) if isinstance(m, dict) and "model_name" in m
+            m["model_name"]
+            for m in api.get("models", [])
+            if isinstance(m, dict) and "model_name" in m
         ]
         self.model_combobox["values"] = self.gemini_model_options
-        
+
         # P2: アクティブなモデル選択を更新する
         current_selection = self.selected_gemini_model.get()
         if self.gemini_model_options:
@@ -638,16 +727,22 @@ class SlideCaptureApp:
                 if default_idx >= len(self.gemini_model_options):
                     default_idx = 0
                 self.selected_gemini_model.set(self.gemini_model_options[default_idx])
-                self._on_gemini_model_selected() # UI説明文を更新
+                self._on_gemini_model_selected()  # UI説明文を更新
         else:
             self.selected_gemini_model.set("")
             self.gemini_model_description_label.config(text="用途: -")
 
         # P2: APIキーが変わった（またはクリアされた）場合、クライアントを再初期化・クリア
         api_key = api.get("gemini_api_key", "").strip()
-        if not api_key or api_key == "YOUR_GEMINI_API_KEY_HERE" or api_key == "MOCK_API_KEY_FOR_DEVELOPMENT":
+        if (
+            not api_key
+            or api_key == "YOUR_GEMINI_API_KEY_HERE"
+            or api_key == "MOCK_API_KEY_FOR_DEVELOPMENT"
+        ):
             self.gemini_client = None
-            logger.info("APIキーが無効または未設定のため、Gemini APIクライアントをクリアしました。")
+            logger.info(
+                "APIキーが無効または未設定のため、Gemini APIクライアントをクリアしました。"
+            )
         else:
             try:
                 self.gemini_client = genai.Client(api_key=api_key)
@@ -659,6 +754,7 @@ class SlideCaptureApp:
     def _on_settings_save(self):
         """設定保存ボタンの処理。バリデーション -> ConfigManager 更新 -> 即時反映。"""
         import json as _json
+
         new_config = {}
         errors = []
         for key, var in self._settings_vars.items():
@@ -669,7 +765,11 @@ class SlideCaptureApp:
             # 型変換
             default = self.config.get(key, None)
             if isinstance(default, bool):
-                value = bool(var.get()) if isinstance(var, tk.BooleanVar) else (raw.lower() == "true")
+                value = (
+                    bool(var.get())
+                    if isinstance(var, tk.BooleanVar)
+                    else (raw.lower() == "true")
+                )
             elif isinstance(default, int):
                 try:
                     value = int(raw)
@@ -688,7 +788,7 @@ class SlideCaptureApp:
             if section_key not in new_config:
                 new_config[section_key] = {}
             new_config[section_key][field_key] = value
-            
+
         # --- api.models の読み取りとバリデーション ---
         models_data = []
         for entry in self._model_entries:
@@ -696,25 +796,33 @@ class SlideCaptureApp:
             m_desc = entry["desc"].get().strip()
             if m_name:
                 models_data.append({"model_name": m_name, "description": m_desc})
-        
+
         if not models_data:
             errors.append("api.models: 1件以上のモデル名を設定してください。")
         else:
             if "api" not in new_config:
                 new_config["api"] = {}
             new_config["api"]["models"] = models_data
-            
+
             default_idx = new_config["api"].get("default_model_index", 0)
-            if not isinstance(default_idx, int) or default_idx < 0 or default_idx >= len(models_data):
-                errors.append(f"api.default_model_index: 0 から {len(models_data)-1} の間の整数値を入力してください。")
+            if (
+                not isinstance(default_idx, int)
+                or default_idx < 0
+                or default_idx >= len(models_data)
+            ):
+                errors.append(
+                    f"api.default_model_index: 0 から {len(models_data)-1} の間の整数値を入力してください。"
+                )
 
         if errors:
             from tkinter import messagebox as _mb
+
             _mb.showerror("入力エラー", "\n".join(errors))
             return
 
         # 変更前設定をマージ（設定外のキーを保持）
         import copy as _copy
+
         merged = _copy.deepcopy(self.config.get_current_config())
         for section_key, fields in new_config.items():
             if section_key not in merged:
@@ -728,11 +836,13 @@ class SlideCaptureApp:
         self._apply_settings_to_app(merged)
 
         from tkinter import messagebox as _mb
+
         _mb.showinfo("保存完了", "設定を保存し、即時反映しました。")
 
     def _on_settings_reset(self):
         """リセットボタンの処理。ConfigManager をデフォルトに戻し、UIと状態変数を更新。"""
         from tkinter import messagebox as _mb
+
         if not _mb.askyesno("リセット確認", "すべての設定をデフォルト値に戻しますか？"):
             return
 
@@ -746,7 +856,7 @@ class SlideCaptureApp:
                 var.set(bool(current_val))
             else:
                 var.set(str(current_val))
-                
+
         # モデルリストUIを再構築
         self._refresh_models_list_ui()
 
@@ -2312,13 +2422,17 @@ important_knowledgeは、そのトピックで最も重要な知識を構造化�
                         topics = summary_data.get("topics", [])
                         if topics:
                             for i, topic in enumerate(topics):
-                                topic_title = topic.get("topic_title", f"トピック {i+1}")
+                                topic_title = topic.get(
+                                    "topic_title", f"トピック {i+1}"
+                                )
                                 doc.add_heading(topic_title, level=2)
                                 keywords = topic.get("topic_keywords", [])
                                 if keywords:
                                     doc.add_paragraph("キーワード:")
                                     for kw in keywords:
-                                        doc.add_paragraph(f"- {kw}", style="List Bullet")
+                                        doc.add_paragraph(
+                                            f"- {kw}", style="List Bullet"
+                                        )
                                 topic_summary = topic.get("topic_summary", "要約なし")
                                 doc.add_paragraph("要約:")
                                 doc.add_paragraph(topic_summary)
@@ -2326,7 +2440,9 @@ important_knowledgeは、そのトピックで最も重要な知識を構造化�
                                 if points:
                                     doc.add_paragraph("ポイント:")
                                     for pt in points:
-                                        doc.add_paragraph(f"- {pt}", style="List Bullet")
+                                        doc.add_paragraph(
+                                            f"- {pt}", style="List Bullet"
+                                        )
                                 terms = topic.get("technical_term", [])
                                 if terms:
                                     doc.add_paragraph("専門用語:")
@@ -2334,14 +2450,17 @@ important_knowledgeは、そのトピックで最も重要な知識を構造化�
                                         word_text = term.get("word", "")
                                         explanation = term.get("explanation", "")
                                         doc.add_paragraph(
-                                            f"- {word_text} : {explanation}", style="List Bullet"
+                                            f"- {word_text} : {explanation}",
+                                            style="List Bullet",
                                         )
                                 doc.add_paragraph()
                         else:
                             doc.add_paragraph("トピック情報はありません。")
                         doc.save(doc_filepath)
                         logger.info(f"Wordファイルを保存しました: {doc_filepath}")
-                        self.root.after(0, self.finish_note_creation, True, doc_filepath)
+                        self.root.after(
+                            0, self.finish_note_creation, True, doc_filepath
+                        )
 
                     else:
                         # --- MD 出力 (デフォルト) ---
@@ -2356,7 +2475,9 @@ important_knowledgeは、そのトピックで最も重要な知識を構造化�
                         topics = summary_data.get("topics", [])
                         if topics:
                             for i, topic in enumerate(topics):
-                                topic_title = topic.get("topic_title", f"トピック {i+1}")
+                                topic_title = topic.get(
+                                    "topic_title", f"トピック {i+1}"
+                                )
                                 markd.add_header(topic_title, 3)
                                 keywords = topic.get("topic_keywords", [])
                                 if keywords:
@@ -2378,7 +2499,9 @@ important_knowledgeは、そのトピックで最も重要な知識を構造化�
                                     for term in terms:
                                         word_text = term.get("word", "")
                                         explanation = term.get("explanation", "")
-                                        markd.add_list_item(f"{word_text} : {explanation}")
+                                        markd.add_list_item(
+                                            f"{word_text} : {explanation}"
+                                        )
                                 markd.add_linebreak()
                         else:
                             markd.add_text("トピック情報はありません。")
@@ -3036,6 +3159,8 @@ if __name__ == "__main__":
             logger.warning(f"DPI Awareness 設定中に予期せぬエラー: {e}")
 
         root = tk.Tk()
+        photo = tk.PhotoImage(file="icon/icon.png")
+        root.iconphoto(True, photo)
         app = SlideCaptureApp(root)
         root.mainloop()
     except Exception as e:
