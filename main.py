@@ -437,7 +437,8 @@ class SlideCaptureApp:
                 
             desc_label = ttk.Label(parent, text=description, foreground="gray")
             desc_label.grid(row=self._current_row, column=2, sticky="we", padx=5, pady=5)
-            desc_label.bind('<Configure>', lambda e, l=desc_label: l.config(wraplength=l.winfo_width()))
+            # 見切れを防ぐため、実際の幅から少しマージン（-10px）を引いた値をwraplengthに設定する
+            desc_label.bind('<Configure>', lambda e, l=desc_label: l.config(wraplength=max(50, e.width - 10)))
             
             self._current_row += 1
 
@@ -472,7 +473,7 @@ class SlideCaptureApp:
 
         # --- ログ ---
         section("ログ設定")
-        row_field("logging.level", "ログレベル", "DEBUG / INFO / WARNING / ERROR",
+        row_field("logging.level", "ログレベル", "出力するログの深刻度を指定します。DEBUGは全詳細、INFOは通常動作、WARNINGは警告のみを出力します。",
             widget_type="combobox", options=["DEBUG", "INFO", "WARNING", "ERROR"])
         row_field("logging.filename", "ログファイル名", "ログを保存するファイル名。")
         row_field("logging.format", "ログフォーマット", "ログ行のフォーマット文字列。")
