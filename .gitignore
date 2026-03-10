@@ -5,7 +5,6 @@ build/
 dist/
 wheels/
 *.egg-info
-*.png
 *.mp4
 *.docx
 *.spec

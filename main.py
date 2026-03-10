@@ -705,6 +705,7 @@ class SlideCaptureApp:
             root_logger.addHandler(fh)
         if self.developer_mode and not has_stream:
             import sys
+
             sh = _logging.StreamHandler(sys.stdout)
             sh.setFormatter(formatter)
             root_logger.addHandler(sh)
@@ -3159,7 +3160,7 @@ if __name__ == "__main__":
             logger.warning(f"DPI Awareness 設定中に予期せぬエラー: {e}")
 
         root = tk.Tk()
-        photo = tk.PhotoImage(file="icon/icon.png")
+        photo = tk.PhotoImage(file="icon/app_icon.png")
         root.iconphoto(True, photo)
         app = SlideCaptureApp(root)
         root.mainloop()
