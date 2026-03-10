@@ -356,19 +356,23 @@ class SlideCaptureApp:
         self._settings_tab_frame = settings_tab  # タブ自体は Frame として参照不要、indexで操作
 
         # スクロール可能エリア
-        canvas = tk.Canvas(settings_tab)
-        scrollbar = ttk.Scrollbar(settings_tab, orient=tk.VERTICAL, command=canvas.yview)
+        canvas_frame = ttk.Frame(settings_tab)
+        canvas_frame.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
+
+        canvas = tk.Canvas(canvas_frame)
+        scrollbar = ttk.Scrollbar(canvas_frame, orient=tk.VERTICAL, command=canvas.yview)
         canvas.configure(yscrollcommand=scrollbar.set)
         scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
         canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
 
-        inner_frame = ttk.Frame(canvas)
+        inner_frame = ttk.Frame(canvas, padding=10)
         inner_window = canvas.create_window((0, 0), window=inner_frame, anchor=tk.NW)
 
         def _on_inner_configure(event):
             canvas.configure(scrollregion=canvas.bbox("all"))
 
         def _on_canvas_configure(event):
+            # inner_frameの幅をCanvasの幅に合わせる（スクロールバー分を引く）
             canvas.itemconfig(inner_window, width=event.width)
 
         inner_frame.bind("<Configure>", _on_inner_configure)
@@ -382,96 +386,161 @@ class SlideCaptureApp:
 
         self._build_settings_widgets(inner_frame)
 
-        # 下部: 保存・リセットボタン
-        btn_frame = ttk.Frame(settings_tab, padding=(0, 5))
+        # 下部: 保存・リセットボタン (中央配置)
+        btn_frame = ttk.Frame(settings_tab, padding=(0, 10))
         btn_frame.pack(side=tk.BOTTOM, fill=tk.X)
-        ttk.Button(btn_frame, text="保存", command=self._on_settings_save).pack(
-            side=tk.LEFT, padx=5
+        btn_inner = ttk.Frame(btn_frame)
+        btn_inner.pack(anchor=tk.CENTER)
+        ttk.Button(btn_inner, text="保存", command=self._on_settings_save, width=15).pack(
+            side=tk.LEFT, padx=10
         )
-        ttk.Button(btn_frame, text="リセット", command=self._on_settings_reset).pack(
-            side=tk.LEFT, padx=5
+        ttk.Button(btn_inner, text="リセット", command=self._on_settings_reset, width=15).pack(
+            side=tk.LEFT, padx=10
         )
 
     def _build_settings_widgets(self, parent):
-        """設定フォームのウィジェット群を構築する。"""
-        import copy
+        """設定フォームのウィジェット群を構築する（Gridレイアウト）。"""
         self._settings_vars = {}  # key: "section.key" -> tk.Variable
 
-        def section(text):
-            ttk.Separator(parent, orient=tk.HORIZONTAL).pack(fill=tk.X, pady=(10, 2))
-            ttk.Label(parent, text=text, font=("", 10, "bold")).pack(anchor=tk.W, padx=5)
+        # column 0: Label, 1: Widget, 2: Description
+        parent.columnconfigure(0, weight=0, minsize=160)
+        parent.columnconfigure(1, weight=0, minsize=80)
+        parent.columnconfigure(2, weight=1) # 説明文が伸びるように
 
-        def row(key, label, description, widget_type="entry", options=None):
-            frame = ttk.Frame(parent, padding=(5, 2))
-            frame.pack(fill=tk.X)
-            ttk.Label(frame, text=label, width=30, anchor=tk.W).pack(side=tk.LEFT)
+        self._current_row = 0
+
+        def section(text):
+            ttk.Separator(parent, orient=tk.HORIZONTAL).grid(row=self._current_row, column=0, columnspan=3, sticky="we", pady=(15, 5))
+            self._current_row += 1
+            ttk.Label(parent, text=text, font=("", 10, "bold")).grid(row=self._current_row, column=0, columnspan=3, sticky="w", padx=5, pady=(0, 5))
+            self._current_row += 1
+
+        def row_field(key, label_text, description, widget_type="entry", options=None):
+            ttk.Label(parent, text=label_text).grid(row=self._current_row, column=0, sticky="w", padx=5, pady=5)
+            
+            widget_frame = ttk.Frame(parent)
+            widget_frame.grid(row=self._current_row, column=1, sticky="w", padx=5, pady=5)
+            
+            var = None
             if widget_type == "entry":
                 var = tk.StringVar(value=str(self.config.get(key, "")))
-                ttk.Entry(frame, textvariable=var, width=25).pack(side=tk.LEFT)
+                ttk.Entry(widget_frame, textvariable=var, width=15).pack(fill=tk.X)
             elif widget_type == "combobox":
                 var = tk.StringVar(value=str(self.config.get(key, "")))
-                ttk.Combobox(frame, textvariable=var, values=options, state="readonly", width=23).pack(side=tk.LEFT)
+                ttk.Combobox(widget_frame, textvariable=var, values=options, state="readonly", width=13).pack(fill=tk.X)
             elif widget_type == "bool":
                 var = tk.BooleanVar(value=bool(self.config.get(key, False)))
-                ttk.Checkbutton(frame, variable=var).pack(side=tk.LEFT)
-            elif widget_type == "text":
-                var = tk.StringVar(value=str(self.config.get(key, "")))
-                txt = tk.Text(frame, width=30, height=5, wrap=tk.WORD)
-                import json as _json
-                try:
-                    txt.insert(tk.END, _json.dumps(self.config.get(key, []), ensure_ascii=False, indent=2))
-                except Exception:
-                    txt.insert(tk.END, str(self.config.get(key, "")))
-                txt.pack(side=tk.LEFT)
-                var = None  # Text は別途取得
-                self._settings_vars[key] = txt
+                ttk.Checkbutton(widget_frame, variable=var).pack(side=tk.LEFT)
+            
             if var is not None:
                 self._settings_vars[key] = var
-            ttk.Label(frame, text=description, foreground="gray", wraplength=200).pack(side=tk.LEFT, padx=(8, 0))
+                
+            desc_label = ttk.Label(parent, text=description, foreground="gray")
+            desc_label.grid(row=self._current_row, column=2, sticky="we", padx=5, pady=5)
+            desc_label.bind('<Configure>', lambda e, l=desc_label: l.config(wraplength=l.winfo_width()))
+            
+            self._current_row += 1
 
         # --- API ---
         section("API設定")
-        row("api.gemini_api_key", "Gemini APIキー", "Google AI Studio から取得したAPIキー。")
-        row("api.default_model_index", "デフォルトモデル (インデックス)", "使用するモデルリストのインデックス (0始まり)。")
-        row("api.models", "モデルリスト (JSON)", "使用可能なモデルをJSON配列で定義。model_name とdescriptionを含む。",
-            widget_type="text")
+        row_field("api.gemini_api_key", "Gemini APIキー", "Google AI Studio から取得したAPIキー。")
+        row_field("api.default_model_index", "デフォルトモデル (ｲﾝﾃﾞｯｸｽ)", "使用するモデルリストのインデックス (0始まり)。")
+        
+        # models の動的エディタ
+        self._build_models_editor(parent)
 
         # --- 音声 ---
         section("音声設定")
-        row("audio.no_sound_timeout_seconds", "無音タイムアウト (秒)",
+        row_field("audio.no_sound_timeout_seconds", "無音タイムアウト (秒)",
             "この秒数を超えて無音が続くと録画を停止します。大きくすると長い無音を許容。")
-        row("audio.silence_threshold", "無音判定閾値",
+        row_field("audio.silence_threshold", "無音判定閾値",
             "この振幅以下の音声を「無音」と判定します。小さくするとより小さな音を拾います。")
 
         # --- スクリーンショット ---
         section("スクリーンショット設定")
-        row("screenshot.similarity_threshold", "類似度閾値",
+        row_field("screenshot.similarity_threshold", "類似度閾値",
             "0〜1の値。大きくするほど判定が厳しくなり、差分が小さい変化を保存しやすくなります。")
-        row("screenshot.diff_pixel_threshold", "差分ピクセル閾値",
+        row_field("screenshot.diff_pixel_threshold", "差分ピクセル閾値",
             "差分として扱う最小ピクセル数。小さくすると微細な変化も保存します。")
 
         # --- UI ---
         section("ウィンドウ設定")
-        row("ui.window_width", "ウィンドウ幅", "アプリウィンドウの幅 (px)。")
-        row("ui.window_height", "ウィンドウ高さ", "アプリウィンドウの高さ (px)。")
-        row("ui.min_width", "最小幅", "ウィンドウの最小幅 (px)。")
-        row("ui.min_height", "最小高さ", "ウィンドウの最小高さ (px)。")
+        row_field("ui.window_width", "ウィンドウ幅", "アプリウィンドウの幅 (px)。")
+        row_field("ui.window_height", "ウィンドウ高さ", "アプリウィンドウの高さ (px)。")
+        row_field("ui.min_width", "最小幅", "ウィンドウの最小幅 (px)。")
+        row_field("ui.min_height", "最小高さ", "ウィンドウの最小高さ (px)。")
 
         # --- ログ ---
         section("ログ設定")
-        row("logging.level", "ログレベル", "DEBUG / INFO / WARNING / ERROR",
+        row_field("logging.level", "ログレベル", "DEBUG / INFO / WARNING / ERROR",
             widget_type="combobox", options=["DEBUG", "INFO", "WARNING", "ERROR"])
-        row("logging.filename", "ログファイル名", "ログを保存するファイル名。")
-        row("logging.format", "ログフォーマット", "ログ行のフォーマット文字列。")
+        row_field("logging.filename", "ログファイル名", "ログを保存するファイル名。")
+        row_field("logging.format", "ログフォーマット", "ログ行のフォーマット文字列。")
 
         # --- アプリ ---
         section("アプリ設定")
-        row("app.note_output_mode", "ノート出力形式",
+        row_field("app.note_output_mode", "ノート出力形式",
             "MD: Markdownファイル (.md) / Word: Word文書 (.docx) を選択。",
             widget_type="combobox", options=["MD", "Word"])
-        row("app.developer_mode", "開発者モード",
+        row_field("app.developer_mode", "開発者モード",
             "オンにするとコンソール (ターミナル) にもログが出力されます。",
             widget_type="bool")
+
+    def _build_models_editor(self, parent):
+        """api.models を動的に編集するリストUIを構築する。"""
+        self.models_container = ttk.Frame(parent)
+        self.models_container.grid(row=self._current_row, column=0, columnspan=3, sticky="we", padx=5, pady=5)
+        self._current_row += 1
+        
+        header_frame = ttk.Frame(self.models_container)
+        header_frame.pack(fill=tk.X, pady=(0, 5))
+        ttk.Label(header_frame, text="モデルリスト:").pack(side=tk.LEFT)
+        ttk.Label(header_frame, text="モデル名と説明のペアを定義します。", foreground="gray").pack(side=tk.LEFT, padx=5)
+        
+        self.models_list_frame = ttk.Frame(self.models_container)
+        self.models_list_frame.pack(fill=tk.BOTH, expand=True)
+        
+        self._model_entries = [] # type: list[dict]
+
+        self._refresh_models_list_ui()
+
+        ttk.Button(self.models_container, text="＋ モデルを追加", width=15, command=lambda: self._add_model_row()).pack(anchor="w", pady=5)
+
+    def _refresh_models_list_ui(self):
+        """models_list_frame の中身を現在の設定から再構築する。"""
+        # 既存のエントリをクリア
+        for widget in self.models_list_frame.winfo_children():
+            widget.destroy()
+        self._model_entries.clear()
+
+        current_models = self.config.get("api.models", [])
+        for m in current_models:
+            m_name = m.get("model_name", "")
+            m_desc = m.get("description", "")
+            self._add_model_row(m_name, m_desc)
+
+    def _add_model_row(self, model_name="", description=""):
+        """モデル追加UIの一行を追加する。"""
+        row_frame = ttk.Frame(self.models_list_frame)
+        row_frame.pack(fill=tk.X, pady=2)
+        
+        ttk.Label(row_frame, text="名前:").pack(side=tk.LEFT)
+        name_var = tk.StringVar(value=model_name)
+        ttk.Entry(row_frame, textvariable=name_var, width=15).pack(side=tk.LEFT, padx=(2, 10))
+        
+        ttk.Label(row_frame, text="説明:").pack(side=tk.LEFT)
+        desc_var = tk.StringVar(value=description)
+        ttk.Entry(row_frame, textvariable=desc_var, width=30).pack(side=tk.LEFT, expand=True, fill=tk.X, padx=(2, 5))
+        
+        entry_dict = {"name": name_var, "desc": desc_var, "frame": row_frame}
+        self._model_entries.append(entry_dict)
+        
+        def remove_self():
+            row_frame.destroy()
+            if entry_dict in self._model_entries:
+                self._model_entries.remove(entry_dict)
+        
+        ttk.Button(row_frame, text="－", width=3, command=remove_self).pack(side=tk.LEFT)
 
     def _apply_settings_to_app(self, new_config: dict):
         """保存した設定を self に即時反映する。"""
@@ -595,47 +664,48 @@ class SlideCaptureApp:
             parts = key.split(".")
             section_key, field_key = parts[0], parts[1]
 
-            # Text ウィジェット (api.models)
-            if isinstance(var, tk.Text):
-                raw = var.get("1.0", tk.END).strip()
+            raw = var.get()
+            # 型変換
+            default = self.config.get(key, None)
+            if isinstance(default, bool):
+                value = bool(var.get()) if isinstance(var, tk.BooleanVar) else (raw.lower() == "true")
+            elif isinstance(default, int):
                 try:
-                    value = _json.loads(raw)
-                except _json.JSONDecodeError as e:
-                    errors.append(f"{key}: JSON パースエラー - {e}")
+                    value = int(raw)
+                except ValueError:
+                    errors.append(f"{key}: 整数値を入力してください (入力値: {raw})")
                     continue
-                # P1: api.models の内容バリデーション
-                if key == "api.models":
-                    if not isinstance(value, list) or len(value) == 0:
-                        errors.append("api.models: 1件以上のモデルを含むリストを入力してください。")
-                        continue
-                    invalid = [m for m in value if not (isinstance(m, dict) and "model_name" in m)]
-                    if invalid:
-                        errors.append("api.models: 各エントリに 'model_name' キーが必要です。")
-                        continue
+            elif isinstance(default, float):
+                try:
+                    value = float(raw)
+                except ValueError:
+                    errors.append(f"{key}: 数値を入力してください (入力値: {raw})")
+                    continue
             else:
-                raw = var.get()
-                # 型変換
-                default = self.config.get(key, None)
-                if isinstance(default, bool):
-                    value = bool(var.get()) if isinstance(var, tk.BooleanVar) else (raw.lower() == "true")
-                elif isinstance(default, int):
-                    try:
-                        value = int(raw)
-                    except ValueError:
-                        errors.append(f"{key}: 整数値を入力してください (入力値: {raw})")
-                        continue
-                elif isinstance(default, float):
-                    try:
-                        value = float(raw)
-                    except ValueError:
-                        errors.append(f"{key}: 数値を入力してください (入力値: {raw})")
-                        continue
-                else:
-                    value = raw
+                value = raw
 
             if section_key not in new_config:
                 new_config[section_key] = {}
             new_config[section_key][field_key] = value
+            
+        # --- api.models の読み取りとバリデーション ---
+        models_data = []
+        for entry in self._model_entries:
+            m_name = entry["name"].get().strip()
+            m_desc = entry["desc"].get().strip()
+            if m_name:
+                models_data.append({"model_name": m_name, "description": m_desc})
+        
+        if not models_data:
+            errors.append("api.models: 1件以上のモデル名を設定してください。")
+        else:
+            if "api" not in new_config:
+                new_config["api"] = {}
+            new_config["api"]["models"] = models_data
+            
+            default_idx = new_config["api"].get("default_model_index", 0)
+            if not isinstance(default_idx, int) or default_idx < 0 or default_idx >= len(models_data):
+                errors.append(f"api.default_model_index: 0 から {len(models_data)-1} の間の整数値を入力してください。")
 
         if errors:
             from tkinter import messagebox as _mb
@@ -662,7 +732,6 @@ class SlideCaptureApp:
     def _on_settings_reset(self):
         """リセットボタンの処理。ConfigManager をデフォルトに戻し、UIと状態変数を更新。"""
         from tkinter import messagebox as _mb
-        import json as _json
         if not _mb.askyesno("リセット確認", "すべての設定をデフォルト値に戻しますか？"):
             return
 
@@ -672,16 +741,13 @@ class SlideCaptureApp:
         # ウィジェットの表示値を更新
         for key, var in self._settings_vars.items():
             current_val = self.config.get(key, "")
-            if isinstance(var, tk.Text):
-                var.delete("1.0", tk.END)
-                try:
-                    var.insert(tk.END, _json.dumps(current_val, ensure_ascii=False, indent=2))
-                except Exception:
-                    var.insert(tk.END, str(current_val))
-            elif isinstance(var, tk.BooleanVar):
+            if isinstance(var, tk.BooleanVar):
                 var.set(bool(current_val))
             else:
                 var.set(str(current_val))
+                
+        # モデルリストUIを再構築
+        self._refresh_models_list_ui()
 
         _mb.showinfo("リセット完了", "設定をデフォルト値に戻しました。")
 

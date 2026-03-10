@@ -9524,3 +9524,76 @@ google.genai.errors.ClientError: 404 NOT_FOUND. {'error': {'code': 404, 'message
 2026-03-10 16:37:53,114 - INFO - MainThread - ノート作成成功: C:\auto_class\capture_20260310_163701\note_recording_20260310_163703.docx
 2026-03-10 16:37:56,253 - INFO - MainThread - GUI操作制限を解除します。
 2026-03-10 16:37:56,325 - INFO - MainThread - 画面スリープ防止を無効化しました。
+2026-03-10 16:46:02,535 - INFO - MainThread - prepare_save_folder - UIから取得した初期フォルダ名: 'C:\auto_class\capture_20260310_163701'
+2026-03-10 16:46:02,554 - INFO - MainThread - prepare_save_folder - 現在の作業ディレクトリ: C:\auto_class
+2026-03-10 16:46:02,554 - INFO - MainThread - prepare_save_folder - 入力されたフォルダ名は絶対パスとして扱います: C:\auto_class\capture_20260310_163701
+2026-03-10 16:46:02,555 - INFO - MainThread - prepare_save_folder - 最終的な保存先フォルダ (os.makedirs対象): C:\auto_class\capture_20260310_163701
+2026-03-10 16:46:02,555 - INFO - MainThread - prepare_save_folder - フォルダは既に存在します: C:\auto_class\capture_20260310_163701
+2026-03-10 16:46:02,555 - INFO - MainThread - prepare_save_folder - 書き込み権限テストファイルを作成します: C:\auto_class\capture_20260310_163701\.permission_test
+2026-03-10 16:46:02,564 - INFO - MainThread - prepare_save_folder - フォルダへの書き込み権限を確認しました: C:\auto_class\capture_20260310_163701
+2026-03-10 16:46:02,564 - INFO - MainThread - スクリーンショットはユーザー設定によりスキップされます。
+2026-03-10 16:46:02,566 - INFO - MainThread - 録画を開始します。対象ウィンドウハンドル: 13045142
+2026-03-10 16:46:02,568 - INFO - MainThread - 一時ファイル保存先: C:\auto_class\capture_20260310_163701\_temp_frames
+2026-03-10 16:46:02,573 - INFO - RecordingThread - 録画ループを開始します。対象ウィンドウハンドル: 13045142
+2026-03-10 16:46:02,590 - INFO - AudioRecordingThread - 音声録音ループ (SoundCard) を開始します
+2026-03-10 16:46:02,610 - INFO - MainThread - 画面スリープ防止を有効化しました。
+2026-03-10 16:46:02,615 - INFO - RecordingThread - 対象ウィンドウの位置とサイズ: (-9, -9, 1938, 1038)
+2026-03-10 16:46:02,664 - INFO - AudioRecordingThread - 取得したマイクデバイス: Headphone (Realtek(R) Audio)
+2026-03-10 16:46:02,665 - INFO - AudioRecordingThread - マイクデバイスの型: <class 'soundcard.mediafoundation._Microphone'>
+2026-03-10 16:46:02,665 - INFO - AudioRecordingThread - デバイス情報 - サンプルレート: 48000, チャンネル数: 2
+2026-03-10 16:46:02,666 - INFO - AudioRecordingThread - 音声データ一時ファイル: C:\auto_class\capture_20260310_163701\_temp_audio.raw
+2026-03-10 16:46:03,642 - INFO - AudioRecordingThread - レコーダーオブジェクトの型: <class 'soundcard.mediafoundation._Recorder'>
+2026-03-10 16:46:03,648 - INFO - AudioRecordingThread - 録音中: Headphone (Realtek(R) Audio) (ループバック)
+2026-03-10 16:46:04,471 - INFO - MainThread - 全てのタスクの停止処理を開始します。
+2026-03-10 16:46:04,472 - INFO - MainThread - 録画停止処理を開始します。
+2026-03-10 16:46:04,473 - INFO - MainThread - 録画スレッドの終了を待機します...
+2026-03-10 16:46:04,496 - INFO - AudioRecordingThread - 音声一時ファイルを閉じました
+2026-03-10 16:46:04,496 - INFO - AudioRecordingThread - 音声録音ループ (SoundCard) を終了します
+2026-03-10 16:46:04,616 - INFO - RecordingThread - 録画ループを終了します。合計フレーム数: 2
+2026-03-10 16:46:04,621 - INFO - MainThread - 録画スレッドが終了しました。
+2026-03-10 16:46:04,622 - INFO - MainThread - 動画ファイルの保存を開始します: C:\auto_class\capture_20260310_163701\recording_20260310_164604.mp4
+2026-03-10 16:46:04,624 - INFO - MainThread - 動画保存スレッドを開始しました。
+2026-03-10 16:46:04,624 - INFO - VideoSaveThread - 合計 2 フレームを動画クリップに使用します。
+2026-03-10 16:46:04,630 - INFO - VideoSaveThread - 推定FPS: 1.00
+2026-03-10 16:46:04,630 - INFO - MainThread - 録画停止処理を完了しました。
+2026-03-10 16:46:04,636 - INFO - MainThread - 録画を停止しました。動画保存とノート作成がバックグラウンドで実行されます（成功した場合）。
+2026-03-10 16:46:04,646 - INFO - MainThread - 全てのタスクの停止処理を完了しました。
+2026-03-10 16:46:04,861 - INFO - VideoSaveThread - 音声ファイルを読み込みます: C:\auto_class\capture_20260310_163701\_temp_audio.raw
+2026-03-10 16:46:04,864 - INFO - VideoSaveThread - 音声データを読み込みました。サンプル数: 75776, dtype: float32
+2026-03-10 16:46:04,865 - INFO - VideoSaveThread - 1次元の音声配列を2チャンネルに整形します。
+2026-03-10 16:46:04,866 - WARNING - VideoSaveThread - 音声クリップ (0.79s) が動画クリップ (2.00s) より短いです。
+2026-03-10 16:46:04,867 - INFO - VideoSaveThread - AudioArrayClipを作成しました。Duration: 0.79秒
+2026-03-10 16:46:04,869 - INFO - VideoSaveThread - 動画と音声を結合しました。
+2026-03-10 16:46:04,870 - INFO - VideoSaveThread - 動画ファイルを書き出します: C:\auto_class\capture_20260310_163701\recording_20260310_164604.mp4
+2026-03-10 16:46:05,335 - INFO - VideoSaveThread - 動画ファイルを保存しました: C:\auto_class\capture_20260310_163701\recording_20260310_164604.mp4
+2026-03-10 16:46:05,336 - INFO - VideoSaveThread - 動画保存成功、ノート作成をトリガーします: C:\auto_class\capture_20260310_163701\recording_20260310_164604.mp4
+2026-03-10 16:46:05,338 - INFO - MainThread - ノート作成開始: GUI操作を制限します。
+2026-03-10 16:46:05,341 - INFO - VideoSaveThread - 一時フレームディレクトリを削除しました: C:\auto_class\capture_20260310_163701\_temp_frames
+2026-03-10 16:46:05,343 - INFO - VideoSaveThread - 一時音声ファイルを削除しました: C:\auto_class\capture_20260310_163701\_temp_audio.raw
+2026-03-10 16:46:05,345 - INFO - VideoSaveThread - 動画保存処理を終了します。
+2026-03-10 16:46:05,345 - INFO - MainThread - 画面スリープ防止を有効化しました。
+2026-03-10 16:46:05,348 - INFO - MainThread - ノート作成処理を開始します。対象動画: C:\auto_class\capture_20260310_163701\recording_20260310_164604.mp4
+2026-03-10 16:46:05,350 - INFO - NoteCreationThread - 動画ファイルをアップロード開始: C:\auto_class\capture_20260310_163701\recording_20260310_164604.mp4
+2026-03-10 16:46:05,361 - INFO - NoteCreationThread - 動画ファイルアップロード試行 1/3: C:\auto_class\capture_20260310_163701\recording_20260310_164604.mp4
+2026-03-10 16:46:06,155 - INFO - NoteCreationThread - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files "HTTP/1.1 200 OK"
+2026-03-10 16:46:09,784 - INFO - NoteCreationThread - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AGQBYWyhE9s83I1LcZADIXMyQgu307ea-7lB0eS6xoAsGZQzHZiDMz_GhttFN9B6FehJ0-X4BioDrF85InAI4PsoXEmz1QJtXnyenwrTNb1Jpkg&upload_protocol=resumable "HTTP/1.1 200 OK"
+2026-03-10 16:46:09,788 - INFO - NoteCreationThread - アップロード開始: files/71pfm8k4pxeu, State: FileState.PROCESSING
+2026-03-10 16:46:09,789 - INFO - NoteCreationThread - 動画処理中... (FileState.PROCESSING, 0.0秒)
+2026-03-10 16:46:15,113 - INFO - NoteCreationThread - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/71pfm8k4pxeu "HTTP/1.1 200 OK"
+2026-03-10 16:46:15,115 - INFO - NoteCreationThread - ファイルがACTIVEになりました: files/71pfm8k4pxeu
+2026-03-10 16:46:15,117 - INFO - NoteCreationThread - Gemini APIに要約リクエストを送信します...
+2026-03-10 16:46:15,117 - INFO - NoteCreationThread - Gemini API呼び出し試行 1/3
+2026-03-10 16:46:15,119 - INFO - NoteCreationThread - 使用する Gemini モデル: gemini-3-flash-preview
+2026-03-10 16:46:15,124 - INFO - NoteCreationThread - AFC is enabled with max remote calls: 10.
+2026-03-10 16:46:56,663 - INFO - NoteCreationThread - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-03-10 16:46:56,733 - INFO - NoteCreationThread - AFC remote call 1 is done.
+2026-03-10 16:46:58,569 - INFO - NoteCreationThread - HTTP Request: DELETE https://generativelanguage.googleapis.com/v1beta/files/71pfm8k4pxeu "HTTP/1.1 200 OK"
+2026-03-10 16:46:58,574 - INFO - NoteCreationThread - Gemini API から応答を取得しました。
+2026-03-10 16:46:58,577 - INFO - NoteCreationThread - 応答のJSONパースに成功しました。
+2026-03-10 16:46:58,580 - INFO - NoteCreationThread - Wordファイルを生成します: C:\auto_class\capture_20260310_163701\note_recording_20260310_164604.docx
+2026-03-10 16:46:59,026 - INFO - NoteCreationThread - Wordファイルを保存しました: C:\auto_class\capture_20260310_163701\note_recording_20260310_164604.docx
+2026-03-10 16:46:59,034 - INFO - MainThread - ノート作成成功: C:\auto_class\capture_20260310_163701\note_recording_20260310_164604.docx
+2026-03-10 16:47:07,096 - INFO - MainThread - GUI操作制限を解除します。
+2026-03-10 16:47:07,278 - INFO - MainThread - 画面スリープ防止を無効化しました。
+2026-03-10 16:47:13,201 - INFO - MainThread - 設定ファイルを保存しました: C:\auto_class\config.json
+2026-03-10 16:47:13,210 - INFO - MainThread - 設定を更新してファイルに保存しました。
