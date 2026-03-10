@@ -97,6 +97,11 @@ class SlideCaptureApp:
         self.audio_channels = None  # SoundCard で取得したチャンネル数を保存
         self.last_sound_time = None  # 最後に音声を検知した時刻
 
+        # Load app settings (note output mode / developer mode)
+        app_settings = self.config.get_app_settings()
+        self.note_output_mode = app_settings["note_output_mode"]  # "MD" or "Word"
+        self.developer_mode = app_settings["developer_mode"]
+
         # Load audio settings from configuration
         audio_settings = self.config.get_audio_settings()
         self.no_sound_timeout_seconds = audio_settings[
@@ -147,8 +152,18 @@ class SlideCaptureApp:
 
         # --- UI要素の作成 ---
 
+        # --- タブ構成: ttk.Notebook ---
+        self.notebook = ttk.Notebook(root)
+        self.notebook.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
+
+        home_tab = ttk.Frame(self.notebook, padding=5)
+        self.notebook.add(home_tab, text="Home")
+
+        # Settings タブは _build_settings_tab() で別途追加
+        self._build_settings_tab()
+
         # --- 保存フォルダ設定 ---
-        folder_frame = ttk.Frame(root, padding="10")
+        folder_frame = ttk.Frame(home_tab, padding="10")
         folder_frame.pack(fill=tk.X)
         folder_label = ttk.Label(folder_frame, text="保存フォルダ名:")
         folder_label.pack(side=tk.LEFT, padx=(0, 5))
@@ -159,7 +174,7 @@ class SlideCaptureApp:
 
         # --- ウィンドウ選択 ---
         window_selection_frame = ttk.LabelFrame(
-            root, text="録画対象ウィンドウ選択", padding="10"
+            home_tab, text="録画対象ウィンドウ選択", padding="10"
         )
         window_selection_frame.pack(fill=tk.X, padx=10, pady=5)
 
@@ -186,7 +201,7 @@ class SlideCaptureApp:
 
         # --- Gemini モデル選択 ---
         model_selection_frame = ttk.LabelFrame(
-            root, text="Gemini モデル選択", padding="10"
+            home_tab, text="Gemini モデル選択", padding="10"
         )
         model_selection_frame.pack(fill=tk.X, padx=10, pady=5)
 
@@ -206,7 +221,7 @@ class SlideCaptureApp:
         )  # イベントハンドラをバインド
 
         # 用途表示ラベルを追加（モデル選択フレームの下に配置）
-        model_description_frame = ttk.Frame(root, padding=(10, 0, 10, 5))
+        model_description_frame = ttk.Frame(home_tab, padding=(10, 0, 10, 5))
         model_description_frame.pack(fill=tk.X)
         self.gemini_model_description_label = ttk.Label(
             model_description_frame,
@@ -218,7 +233,7 @@ class SlideCaptureApp:
         self.gemini_model_description_label.pack(fill=tk.X)
 
         # --- 操作ボタン (統合) ---
-        button_frame = ttk.Frame(root, padding="10")
+        button_frame = ttk.Frame(home_tab, padding="10")
         button_frame.pack(fill=tk.X)
 
         self.start_button = ttk.Button(
@@ -256,7 +271,7 @@ class SlideCaptureApp:
         self.capturing_checkbox.pack(side=tk.LEFT, padx=5)
 
         # --- ステータス表示 ---
-        status_frame = ttk.Frame(root, padding="10")
+        status_frame = ttk.Frame(home_tab, padding="10")
         status_frame.pack(fill=tk.BOTH, expand=True)
 
         # スクリーンショットステータス
@@ -315,6 +330,9 @@ class SlideCaptureApp:
         self.refresh_window_list()  # 初期ウィンドウリスト表示
         self._on_gemini_model_selected()  # 初期モデルの用途を表示
 
+        # 起動時に developer_mode を適用 (StreamHandler を除去 or 維持)
+        self._apply_settings_to_app(self.config.get_current_config())
+
         # 設定ファイルの自動生成・上書きが発生した場合、UI で通知する
         if self.config.config_was_auto_generated:
             messagebox.showwarning(
@@ -327,6 +345,361 @@ class SlideCaptureApp:
             )
 
     # --- ウィンドウ選択関連メソッド ---
+    # ----------------------------------------------------------------------- #
+    # 設定タブ構築
+    # ----------------------------------------------------------------------- #
+
+    def _build_settings_tab(self):
+        """設定タブを構築し、self.notebook に追加する。"""
+        settings_tab = ttk.Frame(self.notebook, padding=5)
+        self.notebook.add(settings_tab, text="設定")
+        self._settings_tab_frame = settings_tab  # タブ自体は Frame として参照不要、indexで操作
+
+        # スクロール可能エリア
+        canvas = tk.Canvas(settings_tab)
+        scrollbar = ttk.Scrollbar(settings_tab, orient=tk.VERTICAL, command=canvas.yview)
+        canvas.configure(yscrollcommand=scrollbar.set)
+        scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+        canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+
+        inner_frame = ttk.Frame(canvas)
+        inner_window = canvas.create_window((0, 0), window=inner_frame, anchor=tk.NW)
+
+        def _on_inner_configure(event):
+            canvas.configure(scrollregion=canvas.bbox("all"))
+
+        def _on_canvas_configure(event):
+            canvas.itemconfig(inner_window, width=event.width)
+
+        inner_frame.bind("<Configure>", _on_inner_configure)
+        canvas.bind("<Configure>", _on_canvas_configure)
+
+        # マウスホイールでスクロール
+        def _on_mousewheel(event):
+            canvas.yview_scroll(int(-1 * (event.delta / 120)), "units")
+
+        canvas.bind_all("<MouseWheel>", _on_mousewheel)
+
+        self._build_settings_widgets(inner_frame)
+
+        # 下部: 保存・リセットボタン
+        btn_frame = ttk.Frame(settings_tab, padding=(0, 5))
+        btn_frame.pack(side=tk.BOTTOM, fill=tk.X)
+        ttk.Button(btn_frame, text="保存", command=self._on_settings_save).pack(
+            side=tk.LEFT, padx=5
+        )
+        ttk.Button(btn_frame, text="リセット", command=self._on_settings_reset).pack(
+            side=tk.LEFT, padx=5
+        )
+
+    def _build_settings_widgets(self, parent):
+        """設定フォームのウィジェット群を構築する。"""
+        import copy
+        self._settings_vars = {}  # key: "section.key" -> tk.Variable
+
+        def section(text):
+            ttk.Separator(parent, orient=tk.HORIZONTAL).pack(fill=tk.X, pady=(10, 2))
+            ttk.Label(parent, text=text, font=("", 10, "bold")).pack(anchor=tk.W, padx=5)
+
+        def row(key, label, description, widget_type="entry", options=None):
+            frame = ttk.Frame(parent, padding=(5, 2))
+            frame.pack(fill=tk.X)
+            ttk.Label(frame, text=label, width=30, anchor=tk.W).pack(side=tk.LEFT)
+            if widget_type == "entry":
+                var = tk.StringVar(value=str(self.config.get(key, "")))
+                ttk.Entry(frame, textvariable=var, width=25).pack(side=tk.LEFT)
+            elif widget_type == "combobox":
+                var = tk.StringVar(value=str(self.config.get(key, "")))
+                ttk.Combobox(frame, textvariable=var, values=options, state="readonly", width=23).pack(side=tk.LEFT)
+            elif widget_type == "bool":
+                var = tk.BooleanVar(value=bool(self.config.get(key, False)))
+                ttk.Checkbutton(frame, variable=var).pack(side=tk.LEFT)
+            elif widget_type == "text":
+                var = tk.StringVar(value=str(self.config.get(key, "")))
+                txt = tk.Text(frame, width=30, height=5, wrap=tk.WORD)
+                import json as _json
+                try:
+                    txt.insert(tk.END, _json.dumps(self.config.get(key, []), ensure_ascii=False, indent=2))
+                except Exception:
+                    txt.insert(tk.END, str(self.config.get(key, "")))
+                txt.pack(side=tk.LEFT)
+                var = None  # Text は別途取得
+                self._settings_vars[key] = txt
+            if var is not None:
+                self._settings_vars[key] = var
+            ttk.Label(frame, text=description, foreground="gray", wraplength=200).pack(side=tk.LEFT, padx=(8, 0))
+
+        # --- API ---
+        section("API設定")
+        row("api.gemini_api_key", "Gemini APIキー", "Google AI Studio から取得したAPIキー。")
+        row("api.default_model_index", "デフォルトモデル (インデックス)", "使用するモデルリストのインデックス (0始まり)。")
+        row("api.models", "モデルリスト (JSON)", "使用可能なモデルをJSON配列で定義。model_name とdescriptionを含む。",
+            widget_type="text")
+
+        # --- 音声 ---
+        section("音声設定")
+        row("audio.no_sound_timeout_seconds", "無音タイムアウト (秒)",
+            "この秒数を超えて無音が続くと録画を停止します。大きくすると長い無音を許容。")
+        row("audio.silence_threshold", "無音判定閾値",
+            "この振幅以下の音声を「無音」と判定します。小さくするとより小さな音を拾います。")
+
+        # --- スクリーンショット ---
+        section("スクリーンショット設定")
+        row("screenshot.similarity_threshold", "類似度閾値",
+            "0〜1の値。大きくするほど判定が厳しくなり、差分が小さい変化を保存しやすくなります。")
+        row("screenshot.diff_pixel_threshold", "差分ピクセル閾値",
+            "差分として扱う最小ピクセル数。小さくすると微細な変化も保存します。")
+
+        # --- UI ---
+        section("ウィンドウ設定")
+        row("ui.window_width", "ウィンドウ幅", "アプリウィンドウの幅 (px)。")
+        row("ui.window_height", "ウィンドウ高さ", "アプリウィンドウの高さ (px)。")
+        row("ui.min_width", "最小幅", "ウィンドウの最小幅 (px)。")
+        row("ui.min_height", "最小高さ", "ウィンドウの最小高さ (px)。")
+
+        # --- ログ ---
+        section("ログ設定")
+        row("logging.level", "ログレベル", "DEBUG / INFO / WARNING / ERROR",
+            widget_type="combobox", options=["DEBUG", "INFO", "WARNING", "ERROR"])
+        row("logging.filename", "ログファイル名", "ログを保存するファイル名。")
+        row("logging.format", "ログフォーマット", "ログ行のフォーマット文字列。")
+
+        # --- アプリ ---
+        section("アプリ設定")
+        row("app.note_output_mode", "ノート出力形式",
+            "MD: Markdownファイル (.md) / Word: Word文書 (.docx) を選択。",
+            widget_type="combobox", options=["MD", "Word"])
+        row("app.developer_mode", "開発者モード",
+            "オンにするとコンソール (ターミナル) にもログが出力されます。",
+            widget_type="bool")
+
+    def _apply_settings_to_app(self, new_config: dict):
+        """保存した設定を self に即時反映する。"""
+        import logging as _logging
+
+        # audio
+        audio = new_config.get("audio", {})
+        self.no_sound_timeout_seconds = audio.get("no_sound_timeout_seconds", self.no_sound_timeout_seconds)
+        self.silence_threshold = audio.get("silence_threshold", self.silence_threshold)
+
+        # screenshot
+        screenshot = new_config.get("screenshot", {})
+        self.similarity_threshold = screenshot.get("similarity_threshold", self.similarity_threshold)
+        self.diff_pixel_threshold = screenshot.get("diff_pixel_threshold", self.diff_pixel_threshold)
+
+        # ui (window geometry)
+        ui = new_config.get("ui", {})
+        w = ui.get("window_width", self.config.get("ui.window_width", 600))
+        h = ui.get("window_height", self.config.get("ui.window_height", 550))
+        mw = ui.get("min_width", self.config.get("ui.min_width", 600))
+        mh = ui.get("min_height", self.config.get("ui.min_height", 550))
+        self.root.geometry(f"{w}x{h}")
+        self.root.minsize(mw, mh)
+
+        # app settings
+        app = new_config.get("app", {})
+        self.note_output_mode = app.get("note_output_mode", "MD")
+        self.developer_mode = app.get("developer_mode", False)
+
+        # logging: レベル・フォーマット・ハンドラの動的切り替え (P3 修正)
+        logging_settings = new_config.get("logging", {})
+        root_logger = _logging.getLogger()
+        
+        # 1. ログレベルの更新
+        level_str = logging_settings.get("level", "INFO").upper()
+        root_logger.setLevel(getattr(_logging, level_str, _logging.INFO))
+        
+        # 2. フォーマットの更新
+        format_str = logging_settings.get("format", "%(asctime)s - %(levelname)s - %(threadName)s - %(message)s")
+        formatter = _logging.Formatter(format_str)
+        
+        # 3. ハンドラの更新 (FileHandler と StreamHandler)
+        file_filename = logging_settings.get("filename", "slide_capture_app.log")
+        has_stream = False
+        has_file = False
+        
+        # 既存ハンドラの更新・削除
+        handlers_to_remove = []
+        for h in root_logger.handlers:
+            if isinstance(h, _logging.FileHandler):
+                # ファイル名が変わった場合は古いものを削除
+                if h.baseFilename != os.path.abspath(file_filename):
+                    handlers_to_remove.append(h)
+                else:
+                    h.setFormatter(formatter)
+                    has_file = True
+            elif isinstance(h, _logging.StreamHandler):
+                if self.developer_mode:
+                    h.setFormatter(formatter)
+                    has_stream = True
+                else:
+                    handlers_to_remove.append(h)
+                    
+        for h in handlers_to_remove:
+            root_logger.removeHandler(h)
+            try:
+                h.close()
+            except Exception:
+                pass
+                
+        # 不足ハンドラの追加
+        if not has_file:
+            fh = _logging.FileHandler(file_filename, encoding="utf-8")
+            fh.setFormatter(formatter)
+            root_logger.addHandler(fh)
+        if self.developer_mode and not has_stream:
+            sh = _logging.StreamHandler()
+            sh.setFormatter(formatter)
+            root_logger.addHandler(sh)
+
+        # gemini model (Comboboxも更新)
+        api = new_config.get("api", {})
+        self.gemini_model_options = [
+            m["model_name"] for m in api.get("models", []) if isinstance(m, dict) and "model_name" in m
+        ]
+        self.model_combobox["values"] = self.gemini_model_options
+        
+        # P2: アクティブなモデル選択を更新する
+        current_selection = self.selected_gemini_model.get()
+        if self.gemini_model_options:
+            if current_selection not in self.gemini_model_options:
+                # 現在の選択がリストから消えた場合はデフォルト(または先頭)に戻す
+                default_idx = api.get("default_model_index", 0)
+                if default_idx >= len(self.gemini_model_options):
+                    default_idx = 0
+                self.selected_gemini_model.set(self.gemini_model_options[default_idx])
+                self._on_gemini_model_selected() # UI説明文を更新
+        else:
+            self.selected_gemini_model.set("")
+            self.gemini_model_description_label.config(text="用途: -")
+
+        # P2: APIキーが変わった（またはクリアされた）場合、クライアントを再初期化・クリア
+        api_key = api.get("gemini_api_key", "").strip()
+        if not api_key or api_key == "YOUR_GEMINI_API_KEY_HERE" or api_key == "MOCK_API_KEY_FOR_DEVELOPMENT":
+            self.gemini_client = None
+            logger.info("APIキーが無効または未設定のため、Gemini APIクライアントをクリアしました。")
+        else:
+            try:
+                self.gemini_client = genai.Client(api_key=api_key)
+                logger.info("Gemini APIクライアントを再初期化しました。")
+            except Exception as e:
+                logger.error(f"Gemini APIクライアントの再初期化に失敗しました: {e}")
+                self.gemini_client = None
+
+    def _on_settings_save(self):
+        """設定保存ボタンの処理。バリデーション -> ConfigManager 更新 -> 即時反映。"""
+        import json as _json
+        new_config = {}
+        errors = []
+        for key, var in self._settings_vars.items():
+            parts = key.split(".")
+            section_key, field_key = parts[0], parts[1]
+
+            # Text ウィジェット (api.models)
+            if isinstance(var, tk.Text):
+                raw = var.get("1.0", tk.END).strip()
+                try:
+                    value = _json.loads(raw)
+                except _json.JSONDecodeError as e:
+                    errors.append(f"{key}: JSON パースエラー - {e}")
+                    continue
+                # P1: api.models の内容バリデーション
+                if key == "api.models":
+                    if not isinstance(value, list) or len(value) == 0:
+                        errors.append("api.models: 1件以上のモデルを含むリストを入力してください。")
+                        continue
+                    invalid = [m for m in value if not (isinstance(m, dict) and "model_name" in m)]
+                    if invalid:
+                        errors.append("api.models: 各エントリに 'model_name' キーが必要です。")
+                        continue
+            else:
+                raw = var.get()
+                # 型変換
+                default = self.config.get(key, None)
+                if isinstance(default, bool):
+                    value = bool(var.get()) if isinstance(var, tk.BooleanVar) else (raw.lower() == "true")
+                elif isinstance(default, int):
+                    try:
+                        value = int(raw)
+                    except ValueError:
+                        errors.append(f"{key}: 整数値を入力してください (入力値: {raw})")
+                        continue
+                elif isinstance(default, float):
+                    try:
+                        value = float(raw)
+                    except ValueError:
+                        errors.append(f"{key}: 数値を入力してください (入力値: {raw})")
+                        continue
+                else:
+                    value = raw
+
+            if section_key not in new_config:
+                new_config[section_key] = {}
+            new_config[section_key][field_key] = value
+
+        if errors:
+            from tkinter import messagebox as _mb
+            _mb.showerror("入力エラー", "\n".join(errors))
+            return
+
+        # 変更前設定をマージ（設定外のキーを保持）
+        import copy as _copy
+        merged = _copy.deepcopy(self.config.get_current_config())
+        for section_key, fields in new_config.items():
+            if section_key not in merged:
+                merged[section_key] = {}
+            merged[section_key].update(fields)
+
+        # ConfigManager 経由で保存（インメモリ + ファイル同時更新）
+        self.config.update_config(merged)
+
+        # main.py の各状態変数に即時反映
+        self._apply_settings_to_app(merged)
+
+        from tkinter import messagebox as _mb
+        _mb.showinfo("保存完了", "設定を保存し、即時反映しました。")
+
+    def _on_settings_reset(self):
+        """リセットボタンの処理。ConfigManager をデフォルトに戻し、UIと状態変数を更新。"""
+        from tkinter import messagebox as _mb
+        import json as _json
+        if not _mb.askyesno("リセット確認", "すべての設定をデフォルト値に戻しますか？"):
+            return
+
+        self.config.reset_to_default()
+        self._apply_settings_to_app(self.config.get_current_config())
+
+        # ウィジェットの表示値を更新
+        for key, var in self._settings_vars.items():
+            current_val = self.config.get(key, "")
+            if isinstance(var, tk.Text):
+                var.delete("1.0", tk.END)
+                try:
+                    var.insert(tk.END, _json.dumps(current_val, ensure_ascii=False, indent=2))
+                except Exception:
+                    var.insert(tk.END, str(current_val))
+            elif isinstance(var, tk.BooleanVar):
+                var.set(bool(current_val))
+            else:
+                var.set(str(current_val))
+
+        _mb.showinfo("リセット完了", "設定をデフォルト値に戻しました。")
+
+    # 設定タブのロック/アンロック
+    def _lock_settings_tab(self):
+        """録画/処理中に設定タブを無効化する。"""
+        try:
+            self.notebook.tab(1, state="disabled")
+        except tk.TclError:
+            pass
+
+    def _unlock_settings_tab(self):
+        """録画/処理完了後に設定タブを有効化する。"""
+        try:
+            self.notebook.tab(1, state="normal")
+        except tk.TclError:
+            pass
+
     def refresh_window_list(self):
         """実行中のウィンドウリストを取得し、リストボックスを更新する"""
         logger.info("ウィンドウリストを更新します。")
@@ -445,6 +818,9 @@ class SlideCaptureApp:
             logger.warning("既にタスクが実行中です。")
             return
 
+        # 録画/処理中は設定タブを無効化
+        self._lock_settings_tab()
+
         hwnd = self.selected_window_handle.get()
 
         if not self.recording_enabled and not self.capturing_enabled:
@@ -457,10 +833,12 @@ class SlideCaptureApp:
             )
             messagebox.showwarning("処理を開始できません", warning_message)
             self._update_start_button_state()
+            self._unlock_settings_tab()  # P2: アボート時に設定タブを復元
             return
 
         # フォルダ設定は共通で最初に行う
         if not self.prepare_save_folder():
+            self._unlock_settings_tab()  # P2: アボート時に設定タブを復元
             return
 
         tasks_started = False
@@ -1108,6 +1486,8 @@ class SlideCaptureApp:
             self._restore_sleep()
         except Exception:
             pass
+        # ノート作成完了後に設定タブを再度有効化
+        self._unlock_settings_tab()
 
     def _prevent_sleep(self):
         """Windowsのスリープ/ディスプレイオフを一時的に防止する。"""
@@ -1841,96 +2221,104 @@ important_knowledgeは、そのトピックで最も重要な知識を構造化�
                 # --- ステータス更新: 応答処理中 ---
                 self.root.after(0, self.note_creation_status.set, "応答を処理中...")
 
-                # mdファイル生成
+                # ノートファイル生成 (MD or Word)
                 try:
                     summary_data = json.loads(summary_text)
                     logger.info("応答のJSONパースに成功しました。")
 
-                    md_filename = f"note_{os.path.splitext(os.path.basename(video_filepath))[0]}.md"
-                    md_filepath = os.path.join(
-                        os.path.dirname(video_filepath), md_filename
-                    )
-                    logger.info(f"Markdownファイルを生成します: {md_filepath}")
+                    base_name = os.path.splitext(os.path.basename(video_filepath))[0]
+                    output_dir = os.path.dirname(video_filepath)
+                    os.makedirs(output_dir, exist_ok=True)
 
-                    markd = Markdown()
-                    markd.add_header(summary_data.get("title", "タイトルなし"))
-                    markd.add_header("全体要約", 2)
-                    markd.add_text(summary_data.get("summary", "要約なし"))
-                    markd.add_header("トピック詳細", 2)
-                    topics = summary_data.get("topics", [])
-                    if topics:
-                        for i, topic in enumerate(topics):
-                            topic_title = topic.get("topic_title", f"トピック {i+1}")
-                            markd.add_header(topic_title, 3)
-                            keywords = topic.get("topic_keywords", [])
-                            if keywords:
-                                markd.add_text("キーワード:")
-                                for kw in keywords:
-                                    markd.add_list_item(f"{kw}")
-                            markd.add_linebreak()
-                            topic_summary = topic.get("topic_summary", "要約なし")
-                            markd.add_text("要約:")
-                            markd.add_text(topic_summary)
-                            points = topic.get("topic_points", [])
-                            if points:
-                                markd.add_text("ポイント:")
-                                for pt in points:
-                                    markd.add_list_item(f"{pt}")
-                            terms = topic.get("technical_term", [])
-                            if terms:
-                                markd.add_text("専門用語:")
-                                for term in terms:
-                                    word = term.get("word", "")
-                                    explanation = term.get("explanation", "")
-                                    markd.add_list_item(f"{word} : {explanation}")
-                            markd.add_linebreak()
+                    note_output_mode = getattr(self, "note_output_mode", "MD")
+
+                    if note_output_mode == "Word":
+                        # --- Word 出力 ---
+                        doc_filename = f"note_{base_name}.docx"
+                        doc_filepath = os.path.join(output_dir, doc_filename)
+                        logger.info(f"Wordファイルを生成します: {doc_filepath}")
+                        doc = Document()
+                        doc.add_heading(summary_data.get("title", "タイトルなし"), 0)
+                        doc.add_heading("全体要約", level=1)
+                        doc.add_paragraph(summary_data.get("summary", "要約なし"))
+                        doc.add_heading("トピック詳細", level=1)
+                        topics = summary_data.get("topics", [])
+                        if topics:
+                            for i, topic in enumerate(topics):
+                                topic_title = topic.get("topic_title", f"トピック {i+1}")
+                                doc.add_heading(topic_title, level=2)
+                                keywords = topic.get("topic_keywords", [])
+                                if keywords:
+                                    doc.add_paragraph("キーワード:")
+                                    for kw in keywords:
+                                        doc.add_paragraph(f"- {kw}", style="List Bullet")
+                                topic_summary = topic.get("topic_summary", "要約なし")
+                                doc.add_paragraph("要約:")
+                                doc.add_paragraph(topic_summary)
+                                points = topic.get("topic_points", [])
+                                if points:
+                                    doc.add_paragraph("ポイント:")
+                                    for pt in points:
+                                        doc.add_paragraph(f"- {pt}", style="List Bullet")
+                                terms = topic.get("technical_term", [])
+                                if terms:
+                                    doc.add_paragraph("専門用語:")
+                                    for term in terms:
+                                        word_text = term.get("word", "")
+                                        explanation = term.get("explanation", "")
+                                        doc.add_paragraph(
+                                            f"- {word_text} : {explanation}", style="List Bullet"
+                                        )
+                                doc.add_paragraph()
+                        else:
+                            doc.add_paragraph("トピック情報はありません。")
+                        doc.save(doc_filepath)
+                        logger.info(f"Wordファイルを保存しました: {doc_filepath}")
+                        self.root.after(0, self.finish_note_creation, True, doc_filepath)
+
                     else:
-                        markd.add_text("トピック情報はありません。")
-                    # doc = Document()
-                    # doc.add_heading(summary_data.get("title", "タイトルなし"), 0)
-                    # doc.add_heading("全体要約", level=1)
-                    # doc.add_paragraph(summary_data.get("summary", "要約なし"))
-                    # doc.add_heading("トピック詳細", level=1)
-                    # topics = summary_data.get("topics", [])
-                    # if topics:
-                    #     for i, topic in enumerate(topics):
-                    #         topic_title = topic.get("topic_title", f"トピック {i+1}")
-                    #         doc.add_heading(topic_title, level=2)
-                    #         keywords = topic.get("topic_keywords", [])
-                    #         if keywords:
-                    #             doc.add_paragraph("キーワード:")
-                    #             for kw in keywords:
-                    #                 doc.add_paragraph(f"- {kw}", style="List Bullet")
-                    #         topic_summary = topic.get("topic_summary", "要約なし")
-                    #         doc.add_paragraph("要約:")
-                    #         doc.add_paragraph(topic_summary)
-                    #         points = topic.get("topic_points", [])
-                    #         if points:
-                    #             doc.add_paragraph("ポイント:")
-                    #             for pt in points:
-                    #                 doc.add_paragraph(f"- {pt}", style="List Bullet")
-                    #         terms = topic.get("technical_term", [])
-                    #         if terms:
-                    #             doc.add_paragraph("専門用語:")
-                    #             for term in terms:
-                    #                 md = term.get("md", "")
-                    #                 explanation = term.get("explanation", "")
-                    #                 doc.add_paragraph(
-                    #                     f"- {md} : {explanation}", style="List Bullet"
-                    #                 )
-                    #         doc.add_paragraph()
-                    # else:
-                    #     doc.add_paragraph("トピック情報はありません。")
-                    markdown = markd.content
-                    directory = os.path.dirname(md_filepath)
-                    if not os.path.exists(directory):
-                        os.makedirs(directory, exist_ok=True)
-                    with open(md_filepath, "w", encoding="utf-8") as f:
-                        f.write(markdown)
-                        # doc.save(f)
-                    logger.info(f"mdファイルを保存しました: {md_filepath}")
-                    # UIスレッドでステータスを更新 (成功)
-                    self.root.after(0, self.finish_note_creation, True, md_filepath)
+                        # --- MD 出力 (デフォルト) ---
+                        md_filename = f"note_{base_name}.md"
+                        md_filepath = os.path.join(output_dir, md_filename)
+                        logger.info(f"Markdownファイルを生成します: {md_filepath}")
+                        markd = Markdown()
+                        markd.add_header(summary_data.get("title", "タイトルなし"))
+                        markd.add_header("全体要約", 2)
+                        markd.add_text(summary_data.get("summary", "要約なし"))
+                        markd.add_header("トピック詳細", 2)
+                        topics = summary_data.get("topics", [])
+                        if topics:
+                            for i, topic in enumerate(topics):
+                                topic_title = topic.get("topic_title", f"トピック {i+1}")
+                                markd.add_header(topic_title, 3)
+                                keywords = topic.get("topic_keywords", [])
+                                if keywords:
+                                    markd.add_text("キーワード:")
+                                    for kw in keywords:
+                                        markd.add_list_item(f"{kw}")
+                                markd.add_linebreak()
+                                topic_summary = topic.get("topic_summary", "要約なし")
+                                markd.add_text("要約:")
+                                markd.add_text(topic_summary)
+                                points = topic.get("topic_points", [])
+                                if points:
+                                    markd.add_text("ポイント:")
+                                    for pt in points:
+                                        markd.add_list_item(f"{pt}")
+                                terms = topic.get("technical_term", [])
+                                if terms:
+                                    markd.add_text("専門用語:")
+                                    for term in terms:
+                                        word_text = term.get("word", "")
+                                        explanation = term.get("explanation", "")
+                                        markd.add_list_item(f"{word_text} : {explanation}")
+                                markd.add_linebreak()
+                        else:
+                            markd.add_text("トピック情報はありません。")
+                        with open(md_filepath, "w", encoding="utf-8") as f:
+                            f.write(markd.content)
+                        logger.info(f"Markdownファイルを保存しました: {md_filepath}")
+                        self.root.after(0, self.finish_note_creation, True, md_filepath)
 
                 except json.JSONDecodeError as json_err:
                     logger.error(f"Gemini応答JSON解析失敗: {json_err}")
@@ -2090,6 +2478,8 @@ important_knowledgeは、そのトピックで最も重要な知識を構造化�
                 self.root.protocol("WM_DELETE_WINDOW", self.original_on_closing)
             else:
                 self.root.protocol("WM_DELETE_WINDOW", self.root.destroy)
+            # スクリーンショットのみ停止時も設定タブを解放
+            self._unlock_settings_tab()
 
         logger.info("全てのタスクの停止処理を完了しました。")
 

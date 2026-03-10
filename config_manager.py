@@ -53,6 +53,10 @@ DEFAULT_CONFIG: Dict[str, Any] = {
         "filename": "slide_capture_app.log",
         "format": "%(asctime)s - %(levelname)s - %(threadName)s - %(message)s",
     },
+    "app": {
+        "note_output_mode": "MD",
+        "developer_mode": False,
+    },
 }
 
 
@@ -310,6 +314,56 @@ class ConfigManager:
                 "logging.format",
                 "%(asctime)s - %(levelname)s - %(threadName)s - %(message)s",
             ),
+        }
+
+
+    # ----------------------------------------------------------------------- #
+    # 設定の更新・保存・リセット
+    # ----------------------------------------------------------------------- #
+
+    def update_config(self, new_config: Dict[str, Any]) -> None:
+        """設定を更新し、ファイルに保存する。
+
+        Args:
+            new_config: 新しい設定値の辞書。self._config を丸ごと置き換える。
+        """
+        self._config = new_config
+        self._write_config_to_file(self._config)
+        logger.info("設定を更新してファイルに保存しました。")
+
+    def reset_to_default(self) -> None:
+        """設定をデフォルト値にリセットし、ファイルに保存する。"""
+        self._config = copy.deepcopy(DEFAULT_CONFIG)
+        self._write_config_to_file(self._config)
+        logger.info("設定をデフォルト値にリセットしてファイルに保存しました。")
+
+    def _write_config_to_file(self, config: Dict[str, Any]) -> None:
+        """設定辞書をJSONファイルに書き込む。
+
+        Args:
+            config: 書き込む設定辞書。
+        """
+        try:
+            os.makedirs(os.path.dirname(self.config_path), exist_ok=True)
+        except (OSError, ValueError):
+            pass
+
+        try:
+            with open(self.config_path, "w", encoding="utf-8") as f:
+                json.dump(config, f, ensure_ascii=False, indent=2)
+            logger.info(f"設定ファイルを保存しました: {self.config_path}")
+        except (PermissionError, OSError) as e:
+            logger.error(f"設定ファイルの書き込みに失敗しました: {e}")
+
+    def get_current_config(self) -> Dict[str, Any]:
+        """現在の設定辞書のディープコピーを返す。"""
+        return copy.deepcopy(self._config)
+
+    def get_app_settings(self) -> Dict[str, Any]:
+        """アプリ固有設定を返す。"""
+        return {
+            "note_output_mode": self.get("app.note_output_mode", "MD"),
+            "developer_mode": self.get("app.developer_mode", False),
         }
 
 

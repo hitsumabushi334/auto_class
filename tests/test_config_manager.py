@@ -178,5 +178,244 @@ class TestConfigManagerGetters(unittest.TestCase):
             self.assertEqual(key, "test-api-key")
 
 
+# ===================================================================
+# 新機能のテスト: update_config / reset_to_default / get_app_settings
+# ===================================================================
+
+
+class TestConfigManagerUpdateConfig(unittest.TestCase):
+    """update_config メソッドのテスト"""
+
+    def setUp(self):
+        self.tmpdir = tempfile.mkdtemp()
+        self.config_path = os.path.join(self.tmpdir, "config.json")
+        # 正常な設定ファイルを用意
+        initial_config = {
+            "api": {
+                "gemini_api_key": "initial-key",
+                "models": [{"model_name": "model-a", "description": "説明A"}],
+                "default_model_index": 0,
+            },
+            "audio": {"no_sound_timeout_seconds": 180, "silence_threshold": 0.01},
+            "screenshot": {"similarity_threshold": 0.83, "diff_pixel_threshold": 10},
+            "ui": {"window_width": 600, "window_height": 550, "min_width": 600, "min_height": 550},
+            "logging": {"level": "INFO", "filename": "app.log", "format": "%(asctime)s"},
+            "app": {"note_output_mode": "MD", "developer_mode": False},
+        }
+        with open(self.config_path, "w", encoding="utf-8") as f:
+            json.dump(initial_config, f, ensure_ascii=False)
+        self.manager = ConfigManager(config_path=self.config_path)
+
+    def tearDown(self):
+        import shutil
+        shutil.rmtree(self.tmpdir, ignore_errors=True)
+
+    def test_update_config_updates_in_memory_state(self):
+        """update_config 呼び出し後、get_api_key が新しいキーを返すこと"""
+        new_config = {
+            "api": {
+                "gemini_api_key": "new-key",
+                "models": [{"model_name": "model-a", "description": "説明A"}],
+                "default_model_index": 0,
+            },
+            "audio": {"no_sound_timeout_seconds": 180, "silence_threshold": 0.01},
+            "screenshot": {"similarity_threshold": 0.83, "diff_pixel_threshold": 10},
+            "ui": {"window_width": 600, "window_height": 550, "min_width": 600, "min_height": 550},
+            "logging": {"level": "INFO", "filename": "app.log", "format": "%(asctime)s"},
+            "app": {"note_output_mode": "MD", "developer_mode": False},
+        }
+        self.manager.update_config(new_config)
+        self.assertEqual(self.manager.get_api_key(), "new-key")
+
+    def test_update_config_writes_to_file(self):
+        """update_config 呼び出し後、config.json が新しい値で上書きされること"""
+        new_config = {
+            "api": {
+                "gemini_api_key": "file-check-key",
+                "models": [{"model_name": "model-a", "description": "説明A"}],
+                "default_model_index": 0,
+            },
+            "audio": {"no_sound_timeout_seconds": 180, "silence_threshold": 0.01},
+            "screenshot": {"similarity_threshold": 0.83, "diff_pixel_threshold": 10},
+            "ui": {"window_width": 600, "window_height": 550, "min_width": 600, "min_height": 550},
+            "logging": {"level": "INFO", "filename": "app.log", "format": "%(asctime)s"},
+            "app": {"note_output_mode": "MD", "developer_mode": False},
+        }
+        self.manager.update_config(new_config)
+        with open(self.config_path, encoding="utf-8") as f:
+            saved = json.load(f)
+        self.assertEqual(saved["api"]["gemini_api_key"], "file-check-key")
+
+    def test_update_config_subsequent_get_returns_new_value(self):
+        """update_config 後、get() でも新しい値が返ること（キャッシュ不整合がないこと）"""
+        new_config = {
+            "api": {
+                "gemini_api_key": "another-key",
+                "models": [{"model_name": "model-a", "description": "説明A"}],
+                "default_model_index": 0,
+            },
+            "audio": {"no_sound_timeout_seconds": 300, "silence_threshold": 0.02},
+            "screenshot": {"similarity_threshold": 0.9, "diff_pixel_threshold": 5},
+            "ui": {"window_width": 800, "window_height": 600, "min_width": 800, "min_height": 600},
+            "logging": {"level": "DEBUG", "filename": "debug.log", "format": "%(asctime)s"},
+            "app": {"note_output_mode": "Word", "developer_mode": True},
+        }
+        self.manager.update_config(new_config)
+        self.assertEqual(self.manager.get("audio.no_sound_timeout_seconds"), 300)
+        self.assertEqual(self.manager.get("app.note_output_mode"), "Word")
+
+
+class TestConfigManagerResetToDefault(unittest.TestCase):
+    """reset_to_default メソッドのテスト"""
+
+    def setUp(self):
+        self.tmpdir = tempfile.mkdtemp()
+        self.config_path = os.path.join(self.tmpdir, "config.json")
+        # カスタム設定を書き込む
+        custom_config = {
+            "api": {
+                "gemini_api_key": "custom-key",
+                "models": [{"model_name": "custom-model", "description": "カスタムモデル"}],
+                "default_model_index": 0,
+            },
+            "audio": {"no_sound_timeout_seconds": 9999, "silence_threshold": 0.99},
+            "screenshot": {"similarity_threshold": 0.5, "diff_pixel_threshold": 100},
+            "ui": {"window_width": 1200, "window_height": 900, "min_width": 1200, "min_height": 900},
+            "logging": {"level": "DEBUG", "filename": "custom.log", "format": "%(message)s"},
+            "app": {"note_output_mode": "Word", "developer_mode": True},
+        }
+        with open(self.config_path, "w", encoding="utf-8") as f:
+            json.dump(custom_config, f, ensure_ascii=False)
+        self.manager = ConfigManager(config_path=self.config_path)
+
+    def tearDown(self):
+        import shutil
+        shutil.rmtree(self.tmpdir, ignore_errors=True)
+
+    def test_reset_to_default_clears_in_memory_state(self):
+        """reset_to_default 後、audio 設定がデフォルト値になること"""
+        self.manager.reset_to_default()
+        audio = self.manager.get_audio_settings()
+        self.assertEqual(audio["no_sound_timeout_seconds"], 180)
+
+    def test_reset_to_default_writes_default_to_file(self):
+        """reset_to_default 後、config.json の api_key がデフォルト（空文字）になること"""
+        self.manager.reset_to_default()
+        with open(self.config_path, encoding="utf-8") as f:
+            saved = json.load(f)
+        self.assertEqual(saved["api"]["gemini_api_key"], "")
+
+    def test_reset_to_default_restores_app_section_defaults(self):
+        """reset_to_default 後、app.note_output_mode が 'MD' に戻ること"""
+        self.manager.reset_to_default()
+        mode = self.manager.get("app.note_output_mode")
+        self.assertEqual(mode, "MD")
+
+
+class TestConfigManagerGetCurrentConfig(unittest.TestCase):
+    """get_current_config メソッドのテスト"""
+
+    def setUp(self):
+        self.tmpdir = tempfile.mkdtemp()
+        self.config_path = os.path.join(self.tmpdir, "config.json")
+        cfg = {
+            "api": {
+                "gemini_api_key": "test",
+                "models": [{"model_name": "m", "description": "d"}],
+                "default_model_index": 0,
+            },
+            "audio": {"no_sound_timeout_seconds": 180, "silence_threshold": 0.01},
+            "screenshot": {"similarity_threshold": 0.83, "diff_pixel_threshold": 10},
+            "ui": {"window_width": 600, "window_height": 550, "min_width": 600, "min_height": 550},
+            "logging": {"level": "INFO", "filename": "app.log", "format": "%(asctime)s"},
+            "app": {"note_output_mode": "MD", "developer_mode": False},
+        }
+        with open(self.config_path, "w", encoding="utf-8") as f:
+            json.dump(cfg, f, ensure_ascii=False)
+        self.manager = ConfigManager(config_path=self.config_path)
+
+    def tearDown(self):
+        import shutil
+        shutil.rmtree(self.tmpdir, ignore_errors=True)
+
+    def test_get_current_config_returns_dict_copy(self):
+        """get_current_config が辞書を返し、変更してもインスタンスに影響しないこと"""
+        cfg = self.manager.get_current_config()
+        self.assertIsInstance(cfg, dict)
+        cfg["api"]["gemini_api_key"] = "mutated"
+        # インスタンスの内部状態が変わっていないこと
+        self.assertEqual(self.manager.get_api_key(), "test")
+
+
+class TestConfigManagerAppSettings(unittest.TestCase):
+    """app セクション (note_output_mode / developer_mode) のテスト"""
+
+    def _make_manager(self, app_section):
+        tmpdir = tempfile.mkdtemp()
+        config_path = os.path.join(tmpdir, "config.json")
+        cfg = {
+            "api": {
+                "gemini_api_key": "",
+                "models": [{"model_name": "m", "description": "d"}],
+                "default_model_index": 0,
+            },
+            "audio": {"no_sound_timeout_seconds": 180, "silence_threshold": 0.01},
+            "screenshot": {"similarity_threshold": 0.83, "diff_pixel_threshold": 10},
+            "ui": {"window_width": 600, "window_height": 550, "min_width": 600, "min_height": 550},
+            "logging": {"level": "INFO", "filename": "app.log", "format": "%(asctime)s"},
+            "app": app_section,
+        }
+        with open(config_path, "w", encoding="utf-8") as f:
+            json.dump(cfg, f, ensure_ascii=False)
+        return ConfigManager(config_path=config_path), tmpdir
+
+    def test_get_app_settings_returns_md_mode_by_default(self):
+        """DEFAULT_CONFIG の app.note_output_mode が 'MD' であること"""
+        manager, tmpdir = self._make_manager({"note_output_mode": "MD", "developer_mode": False})
+        try:
+            settings = manager.get_app_settings()
+            self.assertEqual(settings["note_output_mode"], "MD")
+        finally:
+            import shutil
+            shutil.rmtree(tmpdir, ignore_errors=True)
+
+    def test_get_app_settings_returns_word_mode_when_set(self):
+        """app.note_output_mode が 'Word' のとき get_app_settings で 'Word' が返ること"""
+        manager, tmpdir = self._make_manager({"note_output_mode": "Word", "developer_mode": False})
+        try:
+            settings = manager.get_app_settings()
+            self.assertEqual(settings["note_output_mode"], "Word")
+        finally:
+            import shutil
+            shutil.rmtree(tmpdir, ignore_errors=True)
+
+    def test_get_app_settings_returns_developer_mode_false_by_default(self):
+        """app.developer_mode が False であること"""
+        manager, tmpdir = self._make_manager({"note_output_mode": "MD", "developer_mode": False})
+        try:
+            settings = manager.get_app_settings()
+            self.assertFalse(settings["developer_mode"])
+        finally:
+            import shutil
+            shutil.rmtree(tmpdir, ignore_errors=True)
+
+    def test_default_config_has_app_section(self):
+        """DEFAULT_CONFIG に 'app' セクションが含まれること"""
+        from config_manager import DEFAULT_CONFIG
+        self.assertIn("app", DEFAULT_CONFIG)
+        self.assertIn("note_output_mode", DEFAULT_CONFIG["app"])
+        self.assertIn("developer_mode", DEFAULT_CONFIG["app"])
+
+    def test_default_config_app_note_output_mode_is_md(self):
+        """DEFAULT_CONFIG の app.note_output_mode が 'MD' であること"""
+        from config_manager import DEFAULT_CONFIG
+        self.assertEqual(DEFAULT_CONFIG["app"]["note_output_mode"], "MD")
+
+    def test_default_config_app_developer_mode_is_false(self):
+        """DEFAULT_CONFIG の app.developer_mode が False であること"""
+        from config_manager import DEFAULT_CONFIG
+        self.assertFalse(DEFAULT_CONFIG["app"]["developer_mode"])
+
+
 if __name__ == "__main__":
     unittest.main()
