@@ -9614,3 +9614,314 @@ google.genai.errors.ClientError: 404 NOT_FOUND. {'error': {'code': 404, 'message
 2026-03-10 18:28:07,838 - INFO - MainThread - Gemini APIクライアントを再初期化しました。
 2026-03-10 18:28:14,800 - INFO - MainThread - 設定ファイルを保存しました: C:\auto_class\config.json
 2026-03-10 18:28:14,800 - INFO - MainThread - 設定を更新してファイルに保存しました。
+2026-03-25 19:08:10,781 - INFO - MainThread - DPI Awareness を Per-Monitor V2 (2) に設定しました。
+2026-03-25 19:08:11,145 - WARNING - MainThread - APIキーが設定されていないか、モックキーが使用されています。ノート作成機能は利用できません。
+2026-03-25 19:08:13,292 - INFO - MainThread - アプリケーションを初期化しました。
+2026-03-25 19:08:13,292 - INFO - MainThread - ウィンドウリストを更新します。
+2026-03-25 19:08:13,295 - INFO - MainThread - 6 個のウィンドウが見つかりました。
+2026-03-25 19:08:13,295 - INFO - MainThread - Geminiモデル 'gemini-3-flash-preview' が選択されました。用途: 用途: 一般用途、無料枠
+2026-03-25 19:08:13,295 - INFO - MainThread - APIキーが無効または未設定のため、Gemini APIクライアントをクリアしました。
+2026-03-25 19:08:38,275 - INFO - MainThread - 設定ファイルを保存しました: C:\Users\issho\auto_ss\auto_class\config.json
+2026-03-25 19:08:38,275 - INFO - MainThread - 設定を更新してファイルに保存しました。
+2026-03-25 19:08:38,275 - INFO - MainThread - APIキーが無効または未設定のため、Gemini APIクライアントをクリアしました。
+2026-03-25 19:46:18,168 - INFO - MainThread - Geminiモデル 'gemini-3.1-pro-preview' が選択されました。用途: 用途: 高性能モデル、有料枠のみ使用可
+2026-03-25 19:46:32,320 - INFO - MainThread - 設定ファイルを保存しました: C:\Users\issho\auto_ss\auto_class\config.json
+2026-03-25 19:46:32,320 - INFO - MainThread - 設定を更新してファイルに保存しました。
+2026-03-25 19:46:32,320 - INFO - MainThread - APIキーが無効または未設定のため、Gemini APIクライアントをクリアしました。
+2026-03-25 19:46:36,853 - INFO - MainThread - アプリケーション終了処理を開始します。
+2026-03-25 19:46:37,080 - INFO - MainThread - アプリケーションを終了しました。
+2026-03-25 19:52:53,692 - INFO - MainThread - DPI Awareness を Per-Monitor V2 (2) に設定しました。
+2026-03-25 19:52:53,795 - WARNING - MainThread - APIキーが設定されていないか、モックキーが使用されています。ノート作成機能は利用できません。
+2026-03-25 19:52:54,962 - INFO - MainThread - アプリケーションを初期化しました。
+2026-03-25 19:52:54,962 - INFO - MainThread - ウィンドウリストを更新します。
+2026-03-25 19:52:54,963 - INFO - MainThread - 7 個のウィンドウが見つかりました。
+2026-03-25 19:52:54,964 - INFO - MainThread - Geminiモデル 'gemini-3-flash-preview' が選択されました。用途: 用途: 一般用途、無料枠
+2026-03-25 19:52:54,964 - INFO - MainThread - APIキーが無効または未設定のため、Gemini APIクライアントをクリアしました。
+2026-03-25 19:55:43,329 - INFO - MainThread - アプリケーション終了処理を開始します。
+2026-03-25 19:55:43,407 - INFO - MainThread - アプリケーションを終了しました。
+2026-03-25 20:25:28,441 - INFO - MainThread - DPI Awareness を Per-Monitor V2 (2) に設定しました。
+2026-03-25 20:25:28,558 - WARNING - MainThread - APIキーが設定されていないか、モックキーが使用されています。ノート作成機能は利用できません。
+2026-03-25 20:25:30,670 - INFO - MainThread - アプリケーションを初期化しました。
+2026-03-25 20:25:30,671 - INFO - MainThread - ウィンドウリストを更新します。
+2026-03-25 20:25:30,672 - INFO - MainThread - 7 個のウィンドウが見つかりました。
+2026-03-25 20:25:30,672 - INFO - MainThread - Geminiモデル 'gemini-3-flash-preview' が選択されました。用途: 用途: 一般用途、無料枠
+2026-03-25 20:25:30,673 - INFO - MainThread - APIキーが無効または未設定のため、Gemini APIクライアントをクリアしました。
+2026-03-25 20:25:33,355 - INFO - MainThread - アプリケーション終了処理を開始します。
+2026-03-25 20:25:33,427 - INFO - MainThread - アプリケーションを終了しました。
+2026-03-25 20:25:56,758 - INFO - MainThread - DPI Awareness を Per-Monitor V2 (2) に設定しました。
+2026-03-25 20:25:56,869 - WARNING - MainThread - APIキーが設定されていないか、モックキーが使用されています。ノート作成機能は利用できません。
+2026-03-25 20:25:58,086 - INFO - MainThread - アプリケーションを初期化しました。
+2026-03-25 20:25:58,087 - INFO - MainThread - ウィンドウリストを更新します。
+2026-03-25 20:25:58,088 - INFO - MainThread - 7 個のウィンドウが見つかりました。
+2026-03-25 20:25:58,089 - INFO - MainThread - Geminiモデル 'gemini-3-flash-preview' が選択されました。用途: 用途: 一般用途、無料枠
+2026-03-25 20:25:58,089 - INFO - MainThread - APIキーが無効または未設定のため、Gemini APIクライアントをクリアしました。
+2026-03-25 20:26:01,826 - INFO - MainThread - 設定ファイルを保存しました: C:\Users\issho\auto_ss\auto_class\config.json
+2026-03-25 20:26:01,826 - INFO - MainThread - 設定を更新してファイルに保存しました。
+2026-03-25 20:26:02,165 - INFO - MainThread - Gemini APIクライアントを再初期化しました。
+2026-03-25 20:26:05,377 - INFO - MainThread - ウィンドウリストを更新します。
+2026-03-25 20:26:05,379 - INFO - MainThread - 7 個のウィンドウが見つかりました。
+2026-03-25 20:26:35,616 - INFO - MainThread - ウィンドウリストを更新します。
+2026-03-25 20:26:35,617 - INFO - MainThread - 7 個のウィンドウが見つかりました。
+2026-03-25 20:26:36,318 - INFO - MainThread - ウィンドウが選択されました: Antigravity x Opencodeで150+無料AIモデルが使える！ - YouTube - Google Chrome (HWND: 199482) (HWND: 199482)
+2026-03-25 20:26:39,142 - INFO - MainThread - スクリーンショット有効状態が変更されました: False
+2026-03-25 20:26:50,036 - INFO - MainThread - ウィンドウが選択されました: Antigravity x Opencodeで150+無料AIモデルが使える！ - YouTube - Google Chrome (HWND: 199482) (HWND: 199482)
+2026-03-25 20:26:52,964 - INFO - MainThread - prepare_save_folder - UIから取得した初期フォルダ名: ''
+2026-03-25 20:26:52,964 - INFO - MainThread - prepare_save_folder - 現在の作業ディレクトリ: C:\Users\issho\auto_ss\auto_class
+2026-03-25 20:26:52,964 - INFO - MainThread - prepare_save_folder - 保存フォルダ名が指定されなかったため、デフォルト名を生成しました: capture_20260325_202652
+2026-03-25 20:26:52,964 - INFO - MainThread - prepare_save_folder - 相対パスとして解釈し、絶対パスに変換しました (基準: C:\Users\issho\auto_ss\auto_class): C:\Users\issho\auto_ss\auto_class\capture_20260325_202652
+2026-03-25 20:26:52,964 - INFO - MainThread - prepare_save_folder - 最終的な保存先フォルダ (os.makedirs対象): C:\Users\issho\auto_ss\auto_class\capture_20260325_202652
+2026-03-25 20:26:52,965 - INFO - MainThread - prepare_save_folder - os.makedirs を呼び出します: Path='C:\Users\issho\auto_ss\auto_class\capture_20260325_202652', exist_ok=True
+2026-03-25 20:26:52,965 - INFO - MainThread - prepare_save_folder - フォルダを作成しました (または既に存在していました): C:\Users\issho\auto_ss\auto_class\capture_20260325_202652
+2026-03-25 20:26:52,965 - INFO - MainThread - prepare_save_folder - フォルダ作成後の存在確認OK: C:\Users\issho\auto_ss\auto_class\capture_20260325_202652
+2026-03-25 20:26:52,965 - INFO - MainThread - prepare_save_folder - 書き込み権限テストファイルを作成します: C:\Users\issho\auto_ss\auto_class\capture_20260325_202652\.permission_test
+2026-03-25 20:26:52,966 - INFO - MainThread - prepare_save_folder - フォルダへの書き込み権限を確認しました: C:\Users\issho\auto_ss\auto_class\capture_20260325_202652
+2026-03-25 20:26:52,966 - INFO - MainThread - スクリーンショットはユーザー設定によりスキップされます。
+2026-03-25 20:26:52,966 - INFO - MainThread - 録画を開始します。対象ウィンドウハンドル: 199482
+2026-03-25 20:26:52,967 - INFO - MainThread - 一時ファイル保存先: C:\Users\issho\auto_ss\auto_class\capture_20260325_202652\_temp_frames
+2026-03-25 20:26:52,967 - INFO - RecordingThread - 録画ループを開始します。対象ウィンドウハンドル: 199482
+2026-03-25 20:26:52,968 - INFO - AudioRecordingThread - 音声録音ループ (SoundCard) を開始します
+2026-03-25 20:26:52,983 - INFO - MainThread - 画面スリープ防止を有効化しました。
+2026-03-25 20:26:52,989 - INFO - RecordingThread - 対象ウィンドウの位置とサイズ: (1920, 0, 1920, 1080)
+2026-03-25 20:26:53,032 - INFO - AudioRecordingThread - 取得したマイクデバイス: スピーカー (Realtek(R) Audio)
+2026-03-25 20:26:53,032 - INFO - AudioRecordingThread - マイクデバイスの型: <class 'soundcard.mediafoundation._Microphone'>
+2026-03-25 20:26:53,032 - INFO - AudioRecordingThread - デバイス情報 - サンプルレート: 48000, チャンネル数: 2
+2026-03-25 20:26:53,033 - INFO - AudioRecordingThread - 音声データ一時ファイル: C:\Users\issho\auto_ss\auto_class\capture_20260325_202652\_temp_audio.raw
+2026-03-25 20:26:53,078 - INFO - AudioRecordingThread - レコーダーオブジェクトの型: <class 'soundcard.mediafoundation._Recorder'>
+2026-03-25 20:26:53,079 - INFO - AudioRecordingThread - 録音中: スピーカー (Realtek(R) Audio) (ループバック)
+2026-03-25 20:26:54,042 - WARNING - AudioRecordingThread - C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2026-03-25 20:27:02,060 - INFO - RecordingThread - 録画フレーム数: 10, 経過時間: 9.00秒
+2026-03-25 20:27:12,052 - INFO - RecordingThread - 録画フレーム数: 20, 経過時間: 19.00秒
+2026-03-25 20:27:22,046 - INFO - RecordingThread - 録画フレーム数: 30, 経過時間: 29.00秒
+2026-03-25 20:27:32,055 - INFO - RecordingThread - 録画フレーム数: 40, 経過時間: 39.00秒
+2026-03-25 20:27:42,050 - INFO - RecordingThread - 録画フレーム数: 50, 経過時間: 49.00秒
+2026-03-25 20:27:43,031 - WARNING - AudioRecordingThread - C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2026-03-25 20:27:52,055 - INFO - RecordingThread - 録画フレーム数: 60, 経過時間: 59.00秒
+2026-03-25 20:28:02,110 - INFO - RecordingThread - 録画フレーム数: 70, 経過時間: 69.00秒
+2026-03-25 20:28:06,078 - WARNING - AudioRecordingThread - C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2026-03-25 20:28:10,482 - WARNING - AudioRecordingThread - C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2026-03-25 20:28:12,093 - INFO - RecordingThread - 録画フレーム数: 80, 経過時間: 79.00秒
+2026-03-25 20:28:22,053 - INFO - RecordingThread - 録画フレーム数: 90, 経過時間: 89.00秒
+2026-03-25 20:28:22,921 - WARNING - AudioRecordingThread - C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2026-03-25 20:28:22,963 - WARNING - AudioRecordingThread - C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2026-03-25 20:28:22,965 - WARNING - AudioRecordingThread - C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2026-03-25 20:28:32,057 - INFO - RecordingThread - 録画フレーム数: 100, 経過時間: 99.00秒
+2026-03-25 20:28:35,881 - WARNING - AudioRecordingThread - C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2026-03-25 20:28:42,073 - INFO - RecordingThread - 録画フレーム数: 110, 経過時間: 109.00秒
+2026-03-25 20:28:52,059 - INFO - RecordingThread - 録画フレーム数: 120, 経過時間: 119.00秒
+2026-03-25 20:28:56,035 - WARNING - AudioRecordingThread - C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2026-03-25 20:28:57,025 - WARNING - AudioRecordingThread - C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2026-03-25 20:29:02,057 - INFO - RecordingThread - 録画フレーム数: 130, 経過時間: 129.00秒
+2026-03-25 20:29:12,054 - INFO - RecordingThread - 録画フレーム数: 140, 経過時間: 139.00秒
+2026-03-25 20:29:22,055 - INFO - RecordingThread - 録画フレーム数: 150, 経過時間: 149.00秒
+2026-03-25 20:29:32,050 - INFO - RecordingThread - 録画フレーム数: 160, 経過時間: 159.00秒
+2026-03-25 20:29:42,048 - INFO - RecordingThread - 録画フレーム数: 170, 経過時間: 169.00秒
+2026-03-25 20:29:52,051 - INFO - RecordingThread - 録画フレーム数: 180, 経過時間: 179.00秒
+2026-03-25 20:30:00,024 - WARNING - AudioRecordingThread - C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2026-03-25 20:30:02,044 - INFO - RecordingThread - 録画フレーム数: 190, 経過時間: 189.00秒
+2026-03-25 20:30:12,049 - INFO - RecordingThread - 録画フレーム数: 200, 経過時間: 199.00秒
+2026-03-25 20:30:15,038 - WARNING - AudioRecordingThread - C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2026-03-25 20:30:16,145 - WARNING - AudioRecordingThread - C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2026-03-25 20:30:16,154 - WARNING - AudioRecordingThread - C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2026-03-25 20:30:22,053 - INFO - RecordingThread - 録画フレーム数: 210, 経過時間: 209.00秒
+2026-03-25 20:30:32,058 - INFO - RecordingThread - 録画フレーム数: 220, 経過時間: 219.00秒
+2026-03-25 20:30:42,051 - INFO - RecordingThread - 録画フレーム数: 230, 経過時間: 229.00秒
+2026-03-25 20:30:45,027 - WARNING - AudioRecordingThread - C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2026-03-25 20:30:52,047 - INFO - RecordingThread - 録画フレーム数: 240, 経過時間: 239.00秒
+2026-03-25 20:31:02,055 - INFO - RecordingThread - 録画フレーム数: 250, 経過時間: 249.00秒
+2026-03-25 20:31:12,065 - INFO - RecordingThread - 録画フレーム数: 260, 経過時間: 259.00秒
+2026-03-25 20:31:13,033 - WARNING - AudioRecordingThread - C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2026-03-25 20:31:22,064 - INFO - RecordingThread - 録画フレーム数: 270, 経過時間: 269.00秒
+2026-03-25 20:31:24,304 - WARNING - AudioRecordingThread - C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2026-03-25 20:31:32,049 - INFO - RecordingThread - 録画フレーム数: 280, 経過時間: 279.00秒
+2026-03-25 20:31:42,057 - INFO - RecordingThread - 録画フレーム数: 290, 経過時間: 289.00秒
+2026-03-25 20:31:52,057 - INFO - RecordingThread - 録画フレーム数: 300, 経過時間: 299.00秒
+2026-03-25 20:32:00,041 - WARNING - AudioRecordingThread - C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2026-03-25 20:32:02,053 - INFO - RecordingThread - 録画フレーム数: 310, 経過時間: 309.00秒
+2026-03-25 20:32:12,065 - INFO - RecordingThread - 録画フレーム数: 320, 経過時間: 319.00秒
+2026-03-25 20:32:22,039 - WARNING - AudioRecordingThread - C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2026-03-25 20:32:22,075 - INFO - RecordingThread - 録画フレーム数: 330, 経過時間: 329.00秒
+2026-03-25 20:32:32,063 - INFO - RecordingThread - 録画フレーム数: 340, 経過時間: 339.00秒
+2026-03-25 20:32:35,813 - WARNING - AudioRecordingThread - C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2026-03-25 20:32:42,055 - INFO - RecordingThread - 録画フレーム数: 350, 経過時間: 349.00秒
+2026-03-25 20:32:52,055 - INFO - RecordingThread - 録画フレーム数: 360, 経過時間: 359.00秒
+2026-03-25 20:32:52,508 - WARNING - AudioRecordingThread - C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2026-03-25 20:32:52,513 - WARNING - AudioRecordingThread - C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2026-03-25 20:32:55,404 - WARNING - AudioRecordingThread - C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2026-03-25 20:32:58,043 - WARNING - AudioRecordingThread - C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2026-03-25 20:33:02,061 - INFO - RecordingThread - 録画フレーム数: 370, 経過時間: 369.00秒
+2026-03-25 20:33:03,411 - WARNING - AudioRecordingThread - C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2026-03-25 20:33:03,413 - WARNING - AudioRecordingThread - C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2026-03-25 20:33:08,926 - WARNING - AudioRecordingThread - C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2026-03-25 20:33:08,933 - WARNING - AudioRecordingThread - C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2026-03-25 20:33:12,059 - INFO - RecordingThread - 録画フレーム数: 380, 経過時間: 379.00秒
+2026-03-25 20:33:22,055 - INFO - RecordingThread - 録画フレーム数: 390, 経過時間: 389.00秒
+2026-03-25 20:33:22,953 - WARNING - AudioRecordingThread - C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2026-03-25 20:33:32,067 - INFO - RecordingThread - 録画フレーム数: 400, 経過時間: 399.00秒
+2026-03-25 20:33:42,059 - INFO - RecordingThread - 録画フレーム数: 410, 経過時間: 409.00秒
+2026-03-25 20:33:52,054 - INFO - RecordingThread - 録画フレーム数: 420, 経過時間: 419.00秒
+2026-03-25 20:34:02,122 - INFO - RecordingThread - 録画フレーム数: 430, 経過時間: 429.00秒
+2026-03-25 20:34:07,545 - WARNING - AudioRecordingThread - C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2026-03-25 20:34:12,052 - INFO - RecordingThread - 録画フレーム数: 440, 経過時間: 439.00秒
+2026-03-25 20:34:22,057 - INFO - RecordingThread - 録画フレーム数: 450, 経過時間: 449.00秒
+2026-03-25 20:34:32,055 - INFO - RecordingThread - 録画フレーム数: 460, 経過時間: 459.00秒
+2026-03-25 20:34:42,013 - WARNING - AudioRecordingThread - C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2026-03-25 20:34:42,079 - INFO - RecordingThread - 録画フレーム数: 470, 経過時間: 469.00秒
+2026-03-25 20:34:50,013 - WARNING - AudioRecordingThread - C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2026-03-25 20:34:50,085 - WARNING - AudioRecordingThread - C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2026-03-25 20:34:50,091 - WARNING - AudioRecordingThread - C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2026-03-25 20:34:52,053 - INFO - RecordingThread - 録画フレーム数: 480, 経過時間: 479.00秒
+2026-03-25 20:35:02,055 - INFO - RecordingThread - 録画フレーム数: 490, 経過時間: 489.00秒
+2026-03-25 20:35:12,040 - INFO - RecordingThread - 録画フレーム数: 500, 経過時間: 499.00秒
+2026-03-25 20:35:15,034 - WARNING - AudioRecordingThread - C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2026-03-25 20:35:16,038 - WARNING - AudioRecordingThread - C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2026-03-25 20:35:22,089 - INFO - RecordingThread - 録画フレーム数: 510, 経過時間: 509.00秒
+2026-03-25 20:35:32,052 - INFO - RecordingThread - 録画フレーム数: 520, 経過時間: 519.00秒
+2026-03-25 20:35:36,264 - WARNING - AudioRecordingThread - C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2026-03-25 20:35:36,271 - WARNING - AudioRecordingThread - C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2026-03-25 20:35:38,922 - WARNING - AudioRecordingThread - C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2026-03-25 20:35:39,413 - WARNING - AudioRecordingThread - C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2026-03-25 20:35:39,425 - WARNING - AudioRecordingThread - C:\Users\issho\auto_ss\auto_class\.venv\Lib\site-packages\soundcard\mediafoundation.py:772: SoundcardRuntimeWarning: data discontinuity in recording
+  warnings.warn("data discontinuity in recording", SoundcardRuntimeWarning)
+
+2026-03-25 20:35:41,013 - INFO - MainThread - 全てのタスクの停止処理を開始します。
+2026-03-25 20:35:41,029 - INFO - MainThread - 録画停止処理を開始します。
+2026-03-25 20:35:41,030 - INFO - MainThread - 録画スレッドの終了を待機します...
+2026-03-25 20:35:41,031 - INFO - AudioRecordingThread - 音声一時ファイルを閉じました
+2026-03-25 20:35:41,032 - INFO - AudioRecordingThread - 音声録音ループ (SoundCard) を終了します
+2026-03-25 20:35:41,989 - INFO - RecordingThread - 録画ループを終了します。合計フレーム数: 529
+2026-03-25 20:35:41,993 - INFO - MainThread - 録画スレッドが終了しました。
+2026-03-25 20:35:41,993 - INFO - MainThread - 動画ファイルの保存を開始します: C:\Users\issho\auto_ss\auto_class\capture_20260325_202652\recording_20260325_203541.mp4
+2026-03-25 20:35:41,993 - INFO - MainThread - 動画保存スレッドを開始しました。
+2026-03-25 20:35:41,994 - INFO - MainThread - 録画停止処理を完了しました。
+2026-03-25 20:35:41,994 - INFO - MainThread - 録画を停止しました。動画保存とノート作成がバックグラウンドで実行されます（成功した場合）。
+2026-03-25 20:35:41,994 - INFO - MainThread - 全てのタスクの停止処理を完了しました。
+2026-03-25 20:35:42,007 - INFO - VideoSaveThread - 合計 529 フレームを動画クリップに使用します。
+2026-03-25 20:35:42,129 - INFO - VideoSaveThread - 推定FPS: 1.00
+2026-03-25 20:35:55,635 - INFO - VideoSaveThread - 音声ファイルを読み込みます: C:\Users\issho\auto_ss\auto_class\capture_20260325_202652\_temp_audio.raw
+2026-03-25 20:35:55,734 - INFO - VideoSaveThread - 音声データを読み込みました。サンプル数: 50630656, dtype: float32
+2026-03-25 20:35:55,734 - INFO - VideoSaveThread - 1次元の音声配列を2チャンネルに整形します。
+2026-03-25 20:35:55,734 - WARNING - VideoSaveThread - 音声クリップ (527.40s) が動画クリップ (529.00s) より短いです。
+2026-03-25 20:35:55,734 - INFO - VideoSaveThread - AudioArrayClipを作成しました。Duration: 527.40秒
+2026-03-25 20:35:55,734 - INFO - VideoSaveThread - 動画と音声を結合しました。
+2026-03-25 20:35:55,734 - INFO - VideoSaveThread - 動画ファイルを書き出します: C:\Users\issho\auto_ss\auto_class\capture_20260325_202652\recording_20260325_203541.mp4
+2026-03-25 20:36:23,027 - INFO - VideoSaveThread - 動画ファイルを保存しました: C:\Users\issho\auto_ss\auto_class\capture_20260325_202652\recording_20260325_203541.mp4
+2026-03-25 20:36:23,027 - INFO - VideoSaveThread - 動画保存成功、ノート作成をトリガーします: C:\Users\issho\auto_ss\auto_class\capture_20260325_202652\recording_20260325_203541.mp4
+2026-03-25 20:36:23,028 - INFO - MainThread - ノート作成開始: GUI操作を制限します。
+2026-03-25 20:36:23,029 - INFO - MainThread - 画面スリープ防止を有効化しました。
+2026-03-25 20:36:23,029 - INFO - MainThread - ノート作成処理を開始します。対象動画: C:\Users\issho\auto_ss\auto_class\capture_20260325_202652\recording_20260325_203541.mp4
+2026-03-25 20:36:23,030 - INFO - NoteCreationThread - 動画ファイルをアップロード開始: C:\Users\issho\auto_ss\auto_class\capture_20260325_202652\recording_20260325_203541.mp4
+2026-03-25 20:36:23,030 - INFO - NoteCreationThread - 動画ファイルアップロード試行 1/3: C:\Users\issho\auto_ss\auto_class\capture_20260325_202652\recording_20260325_203541.mp4
+2026-03-25 20:36:23,173 - INFO - VideoSaveThread - 一時フレームディレクトリを削除しました: C:\Users\issho\auto_ss\auto_class\capture_20260325_202652\_temp_frames
+2026-03-25 20:36:23,190 - INFO - VideoSaveThread - 一時音声ファイルを削除しました: C:\Users\issho\auto_ss\auto_class\capture_20260325_202652\_temp_audio.raw
+2026-03-25 20:36:23,190 - INFO - VideoSaveThread - 動画保存処理を終了します。
+2026-03-25 20:36:23,719 - INFO - NoteCreationThread - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files "HTTP/1.1 200 OK"
+2026-03-25 20:36:24,149 - INFO - NoteCreationThread - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AGQBYWyN92rR3_xT8XjyOdl18Oz4lXcSVJFszeucJeaAmwl77W4ZS4m6L7uhPvC-S34pPjzb8-CiCegNhtAYwU0cgW9l-g_OJtJASxGvGsv9hA&upload_protocol=resumable "HTTP/1.1 200 OK"
+2026-03-25 20:36:24,384 - INFO - NoteCreationThread - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AGQBYWyN92rR3_xT8XjyOdl18Oz4lXcSVJFszeucJeaAmwl77W4ZS4m6L7uhPvC-S34pPjzb8-CiCegNhtAYwU0cgW9l-g_OJtJASxGvGsv9hA&upload_protocol=resumable "HTTP/1.1 200 OK"
+2026-03-25 20:36:24,626 - INFO - NoteCreationThread - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AGQBYWyN92rR3_xT8XjyOdl18Oz4lXcSVJFszeucJeaAmwl77W4ZS4m6L7uhPvC-S34pPjzb8-CiCegNhtAYwU0cgW9l-g_OJtJASxGvGsv9hA&upload_protocol=resumable "HTTP/1.1 200 OK"
+2026-03-25 20:36:27,504 - INFO - NoteCreationThread - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AGQBYWyN92rR3_xT8XjyOdl18Oz4lXcSVJFszeucJeaAmwl77W4ZS4m6L7uhPvC-S34pPjzb8-CiCegNhtAYwU0cgW9l-g_OJtJASxGvGsv9hA&upload_protocol=resumable "HTTP/1.1 200 OK"
+2026-03-25 20:36:27,698 - INFO - NoteCreationThread - アップロード開始: files/0q3xztzuool2, State: FileState.PROCESSING
+2026-03-25 20:36:27,698 - INFO - NoteCreationThread - 動画処理中... (FileState.PROCESSING, 0.0秒)
+2026-03-25 20:36:33,024 - INFO - NoteCreationThread - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/0q3xztzuool2 "HTTP/1.1 200 OK"
+2026-03-25 20:36:33,027 - INFO - NoteCreationThread - 動画処理中... (FileState.PROCESSING, 5.3秒)
+2026-03-25 20:36:38,334 - INFO - NoteCreationThread - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/0q3xztzuool2 "HTTP/1.1 200 OK"
+2026-03-25 20:36:38,336 - INFO - NoteCreationThread - 動画処理中... (FileState.PROCESSING, 10.6秒)
+2026-03-25 20:36:43,629 - INFO - NoteCreationThread - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/0q3xztzuool2 "HTTP/1.1 200 OK"
+2026-03-25 20:36:43,630 - INFO - NoteCreationThread - 動画処理中... (FileState.PROCESSING, 15.9秒)
+2026-03-25 20:36:48,934 - INFO - NoteCreationThread - HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/0q3xztzuool2 "HTTP/1.1 200 OK"
+2026-03-25 20:36:48,935 - INFO - NoteCreationThread - ファイルがACTIVEになりました: files/0q3xztzuool2
+2026-03-25 20:36:48,935 - INFO - NoteCreationThread - Gemini APIに要約リクエストを送信します...
+2026-03-25 20:36:48,935 - INFO - NoteCreationThread - Gemini API呼び出し試行 1/3
+2026-03-25 20:36:48,935 - INFO - NoteCreationThread - 使用する Gemini モデル: gemini-3-flash-preview
+2026-03-25 20:36:48,937 - INFO - NoteCreationThread - AFC is enabled with max remote calls: 10.
+2026-03-25 20:37:52,712 - INFO - NoteCreationThread - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-03-25 20:37:52,717 - INFO - NoteCreationThread - AFC remote call 1 is done.
+2026-03-25 20:37:55,487 - INFO - NoteCreationThread - HTTP Request: DELETE https://generativelanguage.googleapis.com/v1beta/files/0q3xztzuool2 "HTTP/1.1 200 OK"
+2026-03-25 20:37:55,488 - INFO - NoteCreationThread - Gemini API から応答を取得しました。
+2026-03-25 20:37:55,488 - INFO - NoteCreationThread - 応答のJSONパースに成功しました。
+2026-03-25 20:37:55,488 - INFO - NoteCreationThread - Markdownファイルを生成します: C:\Users\issho\auto_ss\auto_class\capture_20260325_202652\note_recording_20260325_203541.md
+2026-03-25 20:37:55,489 - INFO - NoteCreationThread - Markdownファイル作成完了しました: C:\Users\issho\auto_ss\auto_class\capture_20260325_202652\note_recording_20260325_203541.md
+2026-03-25 20:37:55,490 - INFO - MainThread - ノート作成成功: C:\Users\issho\auto_ss\auto_class\capture_20260325_202652\note_recording_20260325_203541.md
+2026-03-25 20:38:03,921 - INFO - MainThread - GUI操作制限を解除します。
+2026-03-25 20:38:03,938 - INFO - MainThread - 画面スリープ防止を無効化しました。
+2026-03-25 20:38:07,366 - INFO - MainThread - アプリケーション終了処理を開始します。
+2026-03-25 20:38:07,430 - INFO - MainThread - アプリケーションを終了しました。

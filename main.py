@@ -34,6 +34,7 @@ from PIL import Image, UnidentifiedImageError
 import numpy as np
 
 from config_manager import get_config_manager
+from note_formatter import populate_word_document, render_markdown_note
 
 # --- ロギング設定 ---
 config_manager = get_config_manager()
@@ -428,7 +429,13 @@ class SlideCaptureApp:
             )
             self._current_row += 1
 
-        def row_field(key, label_text, description, widget_type="entry", options=None):
+        def row_field(
+            key,
+            label_text,
+            description,
+            widget_type="entry",
+            options: list[str] | tuple[str, ...] = (),
+        ):
             ttk.Label(parent, text=label_text).grid(
                 row=self._current_row, column=0, sticky="w", padx=5, pady=5
             )
@@ -2416,100 +2423,24 @@ important_knowledgeは、そのトピックで最も重要な知識を構造化�
                         doc_filepath = os.path.join(output_dir, doc_filename)
                         logger.info(f"Wordファイルを生成します: {doc_filepath}")
                         doc = Document()
-                        doc.add_heading(summary_data.get("title", "タイトルなし"), 0)
-                        doc.add_heading("全体要約", level=1)
-                        doc.add_paragraph(summary_data.get("summary", "要約なし"))
-                        doc.add_heading("トピック詳細", level=1)
-                        topics = summary_data.get("topics", [])
-                        if topics:
-                            for i, topic in enumerate(topics):
-                                topic_title = topic.get(
-                                    "topic_title", f"トピック {i+1}"
-                                )
-                                doc.add_heading(topic_title, level=2)
-                                keywords = topic.get("topic_keywords", [])
-                                if keywords:
-                                    doc.add_paragraph("キーワード:")
-                                    for kw in keywords:
-                                        doc.add_paragraph(
-                                            f"- {kw}", style="List Bullet"
-                                        )
-                                topic_summary = topic.get("topic_summary", "要約なし")
-                                doc.add_paragraph("要約:")
-                                doc.add_paragraph(topic_summary)
-                                points = topic.get("topic_points", [])
-                                if points:
-                                    doc.add_paragraph("ポイント:")
-                                    for pt in points:
-                                        doc.add_paragraph(
-                                            f"- {pt}", style="List Bullet"
-                                        )
-                                terms = topic.get("technical_term", [])
-                                if terms:
-                                    doc.add_paragraph("専門用語:")
-                                    for term in terms:
-                                        word_text = term.get("word", "")
-                                        explanation = term.get("explanation", "")
-                                        doc.add_paragraph(
-                                            f"- {word_text} : {explanation}",
-                                            style="List Bullet",
-                                        )
-                                doc.add_paragraph()
-                        else:
-                            doc.add_paragraph("トピック情報はありません。")
+                        populate_word_document(doc, summary_data)
                         doc.save(doc_filepath)
-                        logger.info(f"Wordファイルを保存しました: {doc_filepath}")
+                        logger.info(f"Wordファイル作成完了しました: {doc_filepath}")
                         self.root.after(
                             0, self.finish_note_creation, True, doc_filepath
                         )
-
+                        return
                     else:
                         # --- MD 出力 (デフォルト) ---
                         md_filename = f"note_{base_name}.md"
                         md_filepath = os.path.join(output_dir, md_filename)
                         logger.info(f"Markdownファイルを生成します: {md_filepath}")
-                        markd = Markdown()
-                        markd.add_header(summary_data.get("title", "タイトルなし"))
-                        markd.add_header("全体要約", 2)
-                        markd.add_text(summary_data.get("summary", "要約なし"))
-                        markd.add_header("トピック詳細", 2)
-                        topics = summary_data.get("topics", [])
-                        if topics:
-                            for i, topic in enumerate(topics):
-                                topic_title = topic.get(
-                                    "topic_title", f"トピック {i+1}"
-                                )
-                                markd.add_header(topic_title, 3)
-                                keywords = topic.get("topic_keywords", [])
-                                if keywords:
-                                    markd.add_text("キーワード:")
-                                    for kw in keywords:
-                                        markd.add_list_item(f"{kw}")
-                                markd.add_linebreak()
-                                topic_summary = topic.get("topic_summary", "要約なし")
-                                markd.add_text("要約:")
-                                markd.add_text(topic_summary)
-                                points = topic.get("topic_points", [])
-                                if points:
-                                    markd.add_text("ポイント:")
-                                    for pt in points:
-                                        markd.add_list_item(f"{pt}")
-                                terms = topic.get("technical_term", [])
-                                if terms:
-                                    markd.add_text("専門用語:")
-                                    for term in terms:
-                                        word_text = term.get("word", "")
-                                        explanation = term.get("explanation", "")
-                                        markd.add_list_item(
-                                            f"{word_text} : {explanation}"
-                                        )
-                                markd.add_linebreak()
-                        else:
-                            markd.add_text("トピック情報はありません。")
+                        markdown_content = render_markdown_note(summary_data)
                         with open(md_filepath, "w", encoding="utf-8") as f:
-                            f.write(markd.content)
-                        logger.info(f"Markdownファイルを保存しました: {md_filepath}")
+                            f.write(markdown_content)
+                        logger.info(f"Markdownファイル作成完了しました: {md_filepath}")
                         self.root.after(0, self.finish_note_creation, True, md_filepath)
+                        return
 
                 except json.JSONDecodeError as json_err:
                     logger.error(f"Gemini応答JSON解析失敗: {json_err}")

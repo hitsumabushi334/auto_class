@@ -18,3 +18,4 @@ Results/
 Microsoft/
 # APIキーを含む設定ファイル (config.example.json をコピーして使用)
 config.json
+capture_*/
