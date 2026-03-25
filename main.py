@@ -35,6 +35,7 @@ import numpy as np
 
 from config_manager import get_config_manager
 from note_formatter import populate_word_document, render_markdown_note
+from pathlib import Path
 
 # --- ロギング設定 ---
 config_manager = get_config_manager()
@@ -51,6 +52,11 @@ logging.basicConfig(
     ],
 )
 logger = logging.getLogger(__name__)
+
+
+def resource_path(*parts: str) -> Path:
+    base_dir = Path(__file__).resolve().parent
+    return base_dir.joinpath(*parts)
 
 
 class SlideCaptureApp:
@@ -3091,7 +3097,7 @@ if __name__ == "__main__":
             logger.warning(f"DPI Awareness 設定中に予期せぬエラー: {e}")
 
         root = tk.Tk()
-        photo = tk.PhotoImage(file="icon/app_icon.png")
+        photo = tk.PhotoImage(file=resource_path("icon", "app_icon.png"))
         root.iconphoto(True, photo)
         app = SlideCaptureApp(root)
         root.mainloop()

@@ -10187,3 +10187,12 @@ google.genai.errors.ClientError: 404 NOT_FOUND. {'error': {'code': 404, 'message
 2026-03-25 20:53:08,077 - INFO - MainThread - 画面スリープ防止を無効化しました。
 2026-03-25 20:53:09,704 - INFO - MainThread - アプリケーション終了処理を開始します。
 2026-03-25 20:53:09,769 - INFO - MainThread - アプリケーションを終了しました。
+2026-03-25 21:18:10,718 - INFO - MainThread - DPI Awareness を Per-Monitor V2 (2) に設定しました。
+2026-03-25 21:18:10,805 - INFO - MainThread - Gemini API クライアントを設定しました。
+2026-03-25 21:18:11,315 - INFO - MainThread - アプリケーションを初期化しました。
+2026-03-25 21:18:11,315 - INFO - MainThread - ウィンドウリストを更新します。
+2026-03-25 21:18:11,318 - INFO - MainThread - 11 個のウィンドウが見つかりました。
+2026-03-25 21:18:11,319 - INFO - MainThread - Geminiモデル 'gemini-3-flash-preview' が選択されました。用途: 用途: 一般用途、無料枠
+2026-03-25 21:18:11,574 - INFO - MainThread - Gemini APIクライアントを再初期化しました。
+2026-03-25 21:18:15,943 - INFO - MainThread - アプリケーション終了処理を開始します。
+2026-03-25 21:18:15,996 - INFO - MainThread - アプリケーションを終了しました。
