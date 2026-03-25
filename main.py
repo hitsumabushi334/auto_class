@@ -36,20 +36,15 @@ import numpy as np
 from config_manager import get_config_manager
 from note_formatter import populate_word_document, render_markdown_note
 from pathlib import Path
+from app_logging import configure_initial_logging
 
 # --- ロギング設定 ---
 config_manager = get_config_manager()
 logging_settings = config_manager.get_logging_settings()
-
-log_filename = logging_settings["filename"]
-log_format = logging_settings["format"]
-logging.basicConfig(
-    level=getattr(logging, logging_settings["level"].upper()),
-    format=log_format,
-    handlers=[
-        logging.FileHandler(log_filename, encoding="utf-8"),  # ファイル出力
-        logging.StreamHandler(),  # コンソールにも出力 (デバッグ用)
-    ],
+app_settings = config_manager.get_app_settings()
+configure_initial_logging(
+    logging_settings=logging_settings,
+    developer_mode=app_settings["developer_mode"],
 )
 logger = logging.getLogger(__name__)
 
