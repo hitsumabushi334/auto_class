@@ -4,7 +4,6 @@
 import json
 import os
 import sys
-import stat
 import tempfile
 import unittest
 from pathlib import Path
@@ -13,7 +12,7 @@ from unittest.mock import patch
 # プロジェクトルートをパスに追加
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from config_manager import ConfigManager, DEFAULT_CONFIG
+from config_manager import ConfigManager
 
 
 class TestConfigManagerDefaultGeneration(unittest.TestCase):
@@ -23,7 +22,7 @@ class TestConfigManagerDefaultGeneration(unittest.TestCase):
         """config.json が存在しない場合、自動的に生成されること"""
         with tempfile.TemporaryDirectory() as tmpdir:
             config_path = os.path.join(tmpdir, "config.json")
-            manager = ConfigManager(config_path=config_path)
+            ConfigManager(config_path=config_path)
             self.assertTrue(os.path.exists(config_path))
 
     def test_flag_set_when_file_is_missing(self):

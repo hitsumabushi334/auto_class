@@ -14,7 +14,6 @@ import subprocess
 import win32gui  # ウィンドウ操作のため追加
 from google import genai
 from docx import Document  # mdファイル生成のため追加
-from docx.shared import Inches  # mdファイル生成のため追加 (必要に応じて)
 import json
 from markd import Markdown
 
@@ -762,8 +761,6 @@ class SlideCaptureApp:
 
     def _on_settings_save(self):
         """設定保存ボタンの処理。バリデーション -> ConfigManager 更新 -> 即時反映。"""
-        import json as _json
-
         new_config = {}
         errors = []
         for key, var in self._settings_vars.items():
