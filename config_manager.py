@@ -380,10 +380,3 @@ def get_config_manager() -> ConfigManager:
     if _config_manager is None:
         _config_manager = ConfigManager()
     return _config_manager
-
-
-def reload_config() -> None:
-    """設定ファイルを再読み込みする。"""
-    global _config_manager
-    if _config_manager is not None:
-        _config_manager.load_config()
