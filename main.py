@@ -19,7 +19,6 @@ import json
 from markd import Markdown
 
 # import sounddevice as sd # sounddevice を削除
-import queue  # 音声データキューのため追加
 
 # import pyaudio  # PyAudio を削除
 import soundcard as sc  # SoundCard を追加
@@ -78,11 +77,6 @@ class SlideCaptureApp:
         self.screenshot_thread = None
         self.recording_thread = None
         self.audio_recording_thread = None  # 音声録音スレッド
-        self.recorded_frames = []  # 録画フレームを一時保存するリスト
-        self.audio_queue = queue.Queue()  # 音声データを一時保存するキュー
-        self.last_screenshot_image = (
-            None  # キャプチャした最新の画像（保存されたかどうかに関わらず）
-        )
         self.last_saved_screenshot_image = None  # 最後に保存した画像（比較用）
         self.screenshot_saved_count = 0
         self.last_saved_screenshot_filename = ""
@@ -355,9 +349,6 @@ class SlideCaptureApp:
         """設定タブを構築し、self.notebook に追加する。"""
         settings_tab = ttk.Frame(self.notebook, padding=5)
         self.notebook.add(settings_tab, text="設定")
-        self._settings_tab_frame = (
-            settings_tab  # タブ自体は Frame として参照不要、indexで操作
-        )
 
         # スクロール可能エリア
         canvas_frame = ttk.Frame(settings_tab)
@@ -2818,7 +2809,6 @@ important_knowledgeは、そのトピックで最も重要な知識を構造化�
             f"スクリーンショットキャプチャループを開始します。対象ウィンドウハンドル: {hwnd if hwnd != 0 else 'プライマリモニター'}"
         )
         interval_seconds = 1  # 取得間隔（秒）
-        self.last_screenshot_image = None  # 前回の画像をリセット
         self.last_saved_screenshot_image = None  # 最後に保存した画像をリセット
 
         try:  # sct オブジェクトの初期化を try の外に出す
@@ -2910,9 +2900,6 @@ important_knowledgeは、そのトピックで最も重要な知識を構造化�
                     logger.info("最初のスクリーンショットを保存します。")
                     if self.save_screenshot_image(current_image_cv):
                         self.screenshot_saved_count += 1
-
-                # 今回の画像を保持（デバッグ用など、必要に応じて）
-                self.last_screenshot_image = current_image_cv
 
             except UnidentifiedImageError as e:
                 logger.error(f"スクリーンショット画像の形式が認識できませんでした: {e}")
