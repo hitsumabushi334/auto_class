@@ -130,8 +130,6 @@ class ConfigManager:
             return cwd_path
 
         # どこにも存在しない場合はモジュールディレクトリの config.json を返す
-        if getattr(sys, "frozen", False):
-            return os.path.join(os.path.dirname(sys.executable), "config.json")
         return os.path.join(os.path.dirname(os.path.abspath(__file__)), "config.json")
 
     # ----------------------------------------------------------------------- #
