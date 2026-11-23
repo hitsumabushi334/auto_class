@@ -16,7 +16,6 @@ from google import genai
 from docx import Document  # mdファイル生成のため追加
 from docx.shared import Inches  # mdファイル生成のため追加 (必要に応じて)
 import json
-from markd import Markdown
 
 # import sounddevice as sd # sounddevice を削除
 import queue  # 音声データキューのため追加
